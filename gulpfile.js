@@ -89,7 +89,7 @@ gulp.task("scss:build", function () {
 gulp.task("js:build", function () {
   return gulp
     .src(path.src.js)
-    .pipe(jshint("./.jshintrc"))
+    .pipe(jshint("./jshintrc"))
     .pipe(
       notify(function (file) {
         if (!file.jshint.success) {
