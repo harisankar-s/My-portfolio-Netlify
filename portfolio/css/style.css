@@ -693,7 +693,7 @@ label {
 }
 .history-item h5 {
   color: #fff;
-  font-size: 16px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.96px;
   text-transform: uppercase;
@@ -1472,18 +1472,36 @@ label {
 .custom-hex{
   display: flex;
 }
+
+
+
+
 @media screen and (max-width: 480px) {
   .page-title-new p {
-    font-size: 30px;
+    font-size: 15px;
+    margin-top: 20px;
     color: #33cd32;
     line-height: normal;
-}
 }
 
-@media screen and (max-width: 720px) {
-  .page-title-new p {
-    font-size: 30px;
-    color: #33cd32;
-    line-height: normal;
+.page-title p {
+  font-size: 14px;
+  color: #0a0909;
 }
+
+.about-author .author-thumb {
+    border: 0 none;
+    margin-bottom: 15px;
+    margin-right: 15px;
+    padding: 10px;
+}
+.about-author .author-thumb {
+    background-color: #fff;
+    border: 5px solid #1e2530;
+    margin-right: 30px;
+    padding: 5px;
+    display: grid;
+    place-items: center;
+}
+
 }
