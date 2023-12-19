@@ -1472,3 +1472,18 @@ label {
 .custom-hex{
   display: flex;
 }
+@media screen and (max-width: 480px) {
+  .page-title-new p {
+    font-size: 30px;
+    color: #33cd32;
+    line-height: normal;
+}
+}
+
+@media screen and (max-width: 720px) {
+  .page-title-new p {
+    font-size: 30px;
+    color: #33cd32;
+    line-height: normal;
+}
+}
