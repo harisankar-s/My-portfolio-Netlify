@@ -1472,7 +1472,9 @@ label {
 .custom-hex{
   display: flex;
 }
-
+.history-text-color-change{
+color: #dddee3;
+}
 
 
 
