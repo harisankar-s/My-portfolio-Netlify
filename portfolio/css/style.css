@@ -1484,6 +1484,11 @@ label {
     line-height: normal;
 }
 
+.page-title-2 p {
+  font-size: 12px;
+  color: white;
+  line-height: normal;
+}
 .page-title p {
   font-size: 14px;
   color: #0a0909;
