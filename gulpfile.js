@@ -21,7 +21,7 @@ var path = {
     incdir: "source/partials/",
     plugins: "source/plugins/**/*.*",
     js: "source/js/*.js",
-    scss: "source/scss/**/*.scss",
+    scss:  "source/css/**/*.css",
     images: "source/images/**/*.+(png|jpg|gif|svg)",
     fonts: "source/fonts/**/*.+(eot|ttf|woff|woff2|otf)",
   },
@@ -60,29 +60,9 @@ gulp.task("html:build", function () {
 // SCSS
 gulp.task("scss:build", function () {
   return gulp
-    .src(path.src.scss)
-    .pipe(sourcemaps.init())
-    .pipe(
-      sass({
-        outputStyle: "expanded",
-      }).on("error", sass.logError)
-    )
-    .pipe(autoprefixer())
-    .pipe(sourcemaps.write("/"))
-    .pipe(
-      comments(`
-    WEBSITE: https://themefisher.com
-    TWITTER: https://twitter.com/themefisher
-    FACEBOOK: https://www.facebook.com/themefisher
-    GITHUB: https://github.com/themefisher/
-    `)
-    )
+    .src("source/css/**/*.css")
     .pipe(gulp.dest(path.build.dirDev + "css/"))
-    .pipe(
-      bs.reload({
-        stream: true,
-      })
-    );
+    .pipe(bs.reload({ stream: true }));
 });
 
 // Javascript

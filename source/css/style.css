@@ -1512,3 +1512,35 @@ color: #dddee3;
 }
 
 }
+
+/* ===============================
+   FIX: particles behind content
+================================ */
+
+#particles-js {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+}
+
+#particles-js canvas {
+  position: absolute !important;
+  z-index: 0 !important;
+}
+
+.site-wrapper {
+  position: relative;
+  z-index: 10;
+}
+
+.page-home,
+.pt-table,
+.pt-tablecell {
+  position: relative;
+  z-index: 10;
+}
+
+#particles-js,
+#particles-js canvas {
+  pointer-events: none;
+}
