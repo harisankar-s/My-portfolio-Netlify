@@ -1,67 +1,109 @@
 # Harisankar Sivankutty — Portfolio
 
-A single-page, zero-dependency redesign of [harisankarsivankutty.in](https://harisankarsivankutty.in/).
+Single-page portfolio for [harisankarsivankutty.in](https://harisankarsivankutty.in/).
+Custom-designed, zero build step, deploys anywhere static.
 
 ## What's in this folder
 
 ```
 harisankar-portfolio/
-├── index.html      ← everything (HTML + CSS + JS inline, ~52 KB)
-├── images/         ← your photo + 6 client logos
+├── index.html      ← everything (HTML + CSS + JS inline, ~60 KB)
+├── images/         ← portrait + 6 client logos + favicon
 └── README.md
 ```
 
-That's it. No build step, no npm, no gulp, no jQuery.
+No npm, no gulp, no jQuery. Just open `index.html` in a browser and it works.
 
-## Deploy to Netlify
+## Test locally
 
-**Option 1 — drag & drop (easiest):**
-1. Zip the `harisankar-portfolio` folder (or just its contents)
-2. Go to [app.netlify.com/drop](https://app.netlify.com/drop)
-3. Drag the folder in — live in ~10 seconds
+Pick any of these — they all work:
 
-**Option 2 — replace your existing site:**
-Drop `index.html` and the `images/` folder into your existing Netlify repo,
-replace everything else. Keep your domain config as-is.
-
-**Option 3 — Git:**
 ```bash
-git init
+# Python (already on macOS/Linux)
+python3 -m http.server 8000
+# → http://localhost:8000
+
+# Node
+npx serve
+# → http://localhost:3000
+
+# Or just double-click index.html
+```
+
+## Deploy to Netlify via Git
+
+Assuming your Netlify site is already connected to your repo and auto-deploys on push to `main`:
+
+```bash
+# Create a preview branch (recommended — don't push straight to main)
+git checkout -b redesign
+
+# Drop the new files in (at your repo root)
+cp -r /path/to/harisankar-portfolio/* .
+
+# Commit & push
 git add .
 git commit -m "Portfolio redesign"
-git remote add origin <your-repo>
-git push -u origin main
+git push origin redesign
 ```
-Then connect the repo in Netlify.
 
-## What to personalize before going live
+Netlify will generate a preview URL (format: `redesign--yoursite.netlify.app`).
+Verify it, then merge to main:
 
-Search `index.html` for these strings and swap in your real values:
+```bash
+git checkout main
+git merge redesign
+git push origin main
+```
 
-| Placeholder | Where | Change to |
-|---|---|---|
-| `hello@harisankarsivankutty.in` | Contact section (2 places: `mailto:` + visible text) | Your actual email |
-| `within 48h` | Contact meta | Your real response time, if different |
+**Important — Netlify build settings:**
+This site needs no build step. In your Netlify dashboard under
+**Site configuration → Build & deploy → Build settings**, set:
 
-Everything else — role, years, stats, company descriptions, education, languages —
-is already populated from your existing site.
+- **Build command:** leave empty
+- **Publish directory:** `.` (root)
 
-## Design spec (for reference)
+(If your current setup uses `npm run build` publishing to `theme/`, change those.)
 
-- **Fonts:** Instrument Serif (display, italic accents) + JetBrains Mono (body + labels)
+## What's on the page
+
+1. **Hero** — name, status badge, role + tagline, stats (10+ yrs · 6+ clients · 3 clouds · 2 certs), tech ticker
+2. **About** — decade-of-engineering intro, portrait, meta (expertise, certifications, languages, education, location)
+3. **Credentials** — AWS Solutions Architect · Associate · RHCE · Current role
+4. **Experience** — timeline: Thoughtworks → Ayla → Bayer → 6D Technologies
+5. **Clients & Domains** — Ayla, Bayer, Ooredoo, Airtel, Etisalat, AIS Thailand
+6. **Tech Stack** — 9-block grid: Data/Big Data · Cloud · GenAI · Data Platform & Quality · Languages · Delivery · Certs · Domains & IoT · Always-learning note
+7. **Contact** — Topmate booking CTA · Email · LinkedIn · Twitter · response/timezone/availability
+8. **Footer**
+
+## Personalize before merging to main
+
+Find-and-replace in `index.html`:
+
+| Currently in file | Change to |
+|---|---|
+| `hello@harisankarsivankutty.in` | Your real email (used in contact section `mailto:` + visible text) |
+| `Within 48 hours` | Your real response time, if different |
+
+Everything else — role, experience, companies, certifications, Topmate link,
+LinkedIn, Twitter — is already wired to your real values.
+
+## Design spec
+
+- **Fonts:** Instrument Serif (display) · JetBrains Mono (body/labels) — via Google Fonts CDN
 - **Palette:** `#0A0A0B` bg · `#EDEDEB` fg · `#D4FF4A` electric-lime accent
-- **Aesthetic:** editorial-tech / terminal-log hybrid
-- **Browser support:** all modern browsers (uses IntersectionObserver, CSS custom props, `aspect-ratio`)
+- **No external JS libraries** — vanilla JS, ~40 lines (IntersectionObserver for reveal-on-scroll, smooth anchor scroll)
 - **Accessibility:** respects `prefers-reduced-motion`, semantic HTML, keyboard-focusable nav
-- **Mobile:** fully responsive, breakpoints at 900px / 720px / 560px / 480px
+- **Browser support:** all modern browsers (uses IntersectionObserver, CSS custom properties, `aspect-ratio`)
 
-## Editing
+## Common edits
 
-Everything is in one file. Common edits:
+All in one file. Ctrl/Cmd+F for these markers:
 
-- **Change accent color:** search for `--accent: #D4FF4A` in `:root`, swap hex
-- **Add a new timeline entry:** copy a `<div class="timeline-item">…</div>` block under Experience
-- **Add a client:** copy a `<article class="client-card">…</article>` block under Clients
-- **Add a stack category:** copy a `<div class="stack-group">…</div>` block
+- **Change accent color:** search `--accent: #D4FF4A` in `:root`
+- **Add a timeline entry:** copy a `<div class="timeline-item">…</div>` block
+- **Add a client:** copy an `<article class="client-card">…</article>` block
+- **Add a skill category:** copy a `<div class="stack-group">…</div>` block — note the grid is sized for 9 items (3×3); adding more needs a grid adjustment
+- **Update Topmate link:** search `topmate.io/harisankar_sivankutty` (appears in nav CTA + contact button)
 
-No compilation needed — save and refresh.
+Save and refresh — no compile step needed.
