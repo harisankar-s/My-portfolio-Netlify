@@ -552,6 +552,7 @@
     <ul class="nav-links">
       <li><a href="#about">about</a></li>
       <li><a href="#experience">experience</a></li>
+      <li><a href="#projects">projects</a></li>
       <li><a href="#clients">clients</a></li>
       <li><a href="#stack">stack</a></li>
     </ul>
@@ -591,7 +592,7 @@
             <div class="stat-label">Years experience</div>
           </div>
           <div class="stat">
-            <div class="stat-num">6<span class="plus">+</span></div>
+            <div class="stat-num">8<span class="plus">+</span></div>
             <div class="stat-label">Enterprise clients</div>
           </div>
           <div class="stat">
@@ -599,7 +600,7 @@
             <div class="stat-label">Cloud platforms</div>
           </div>
           <div class="stat">
-            <div class="stat-num">2</div>
+            <div class="stat-num">3</div>
             <div class="stat-label">Certifications</div>
           </div>
         </div>
@@ -661,7 +662,8 @@
           <p class="about-body">
             An IT professional with around ten years of experience in design and development of IT,
             data engineering, and analytics solutions — building scalable platforms, end-to-end pipelines,
-            and cloud-native systems for enterprises across telecom, IoT, agriculture, and GenAI.
+            and cloud-native systems for enterprises across telecom, IoT, agriculture, retail, e-commerce,
+            and GenAI.
           </p>
           <p class="about-body">
             Hands-on expertise spans on-premise and multi-cloud environments (AWS, Azure, GCP),
@@ -726,9 +728,22 @@
             </svg>
           </div>
           <div class="cred-body">
+            <span class="cred-issuer">Google Cloud</span>
+            <h4 class="cred-title">Data Engineer- Professional</h4>
+            <span class="cred-meta">Professional certification (2024) </span>
+          </div>
+        </div>
+        <div class="cred-card">
+          <div class="cred-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2L3 7v6c0 5 3.8 9.3 9 10 5.2-.7 9-5 9-10V7l-9-5z"/>
+              <path d="M9 12l2 2 4-4"/>
+            </svg>
+          </div>
+          <div class="cred-body">
             <span class="cred-issuer">Amazon Web Services</span>
             <h4 class="cred-title">Solutions Architect — Associate</h4>
-            <span class="cred-meta">Professional certification</span>
+            <span class="cred-meta">Professional certification (2022) </span>
           </div>
         </div>
 
@@ -742,7 +757,7 @@
           <div class="cred-body">
             <span class="cred-issuer">Red Hat</span>
             <h4 class="cred-title">Red Hat Certified Engineer (RHCE)</h4>
-            <span class="cred-meta">Professional certification</span>
+            <span class="cred-meta">Professional certification (2016)</span>
           </div>
         </div>
 
@@ -763,7 +778,7 @@
 
       <h2 class="section-heading">
         A <span class="italic">decade of delivery</span> —<br/>
-        across telecoms, IoT, agriculture, and GenAI.
+        across telecom, IoT, agriculture, retail, and GenAI.
       </h2>
 
       <div class="timeline">
@@ -780,8 +795,11 @@
             <h3 class="tl-role">Senior Consultant · Data Engineer</h3>
             <div class="tl-company">Thoughtworks</div>
             <p class="tl-desc">
-              Advising and architecting data platforms for enterprise clients — blending modern data
-              stack practices with GenAI-driven workflows, observability, and platform engineering.
+              Advising and architecting enterprise data platforms for global clients including
+              <strong style="color: var(--fg); font-weight:500;">JCPenney (USA)</strong> and
+              <strong style="color: var(--fg); font-weight:500;">Otto GmbH (Germany)</strong> —
+              blending modern data stack practices (dbt, Great Expectations, DataHub) with Spark,
+              Kafka, and multi-cloud analytics. See Featured Projects for details.
             </p>
           </div>
         </div>
@@ -846,20 +864,156 @@
       </div>
     </section>
 
-    <!-- CLIENTS / DOMAINS -->
-    <section id="clients" class="clients reveal">
-      <div class="section-label"><span class="idx">[03]</span> Clients · Domains</div>
+    <!-- FEATURED PROJECTS -->
+    <section id="projects" class="projects reveal">
+      <div class="section-label"><span class="idx">[03]</span> Featured projects · Case studies</div>
 
       <h2 class="section-heading">
-        Trusted by <span class="italic">telecom giants, IoT platforms,</span><br/>
-        and Fortune 500 R&amp;D teams.
+        Recent work that shows what the <span class="italic">infrastructure</span><br/>actually builds.
       </h2>
 
       <p class="section-sub">
-        Experience shipping data and platform work across Telecom, IoT, Agriculture, and enterprise SaaS.
+        Deep-dive case studies from recent Thoughtworks engagements — modern data stack, quality
+        frameworks, and scalable ingestion for global retail and e-commerce clients.
       </p>
 
+      <article class="project-card">
+        <span class="project-num">01</span>
+        <div class="project-header">
+          <span>Project 01 / 02</span>
+          <span class="project-via">via Thoughtworks · 2025 -> Present</span>
+        </div>
+        <h3 class="project-title">Assortment Analytics Platform</h3>
+        <div class="project-meta-row">
+          <span class="client-name">Otto GmbH</span>
+          <span class="sep-dot"></span>
+          <span>Germany</span>
+          <span class="project-industry">E-commerce</span>
+        </div>
+        <p class="project-desc">
+          A data-driven platform to analyse product assortment strategy using scraped data from a
+          range of e-commerce platforms — structured for long-term flexibility and analytical scale.
+        </p>
+
+        <div class="project-contributions">
+          <div class="project-section-label">Key contributions</div>
+          <ul>
+            <li>Supported data modelling using the <strong>Data Vault</strong> methodology, ensuring flexibility and long-term scalability of the data warehouse.</li>
+            <li>Developed and maintained quarterly web scraping pipelines, feeding structured insights into <strong>BigQuery</strong> for analytics and reporting.</li>
+            <li>Designed and built a framework and end-to-end pipeline to transfer data from <strong>BigQuery into Snowflake</strong> — enabling downstream analytics consumption.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="project-section-label">Stack</div>
+          <div class="project-stack">
+            <span class="stack-chip">BigQuery</span>
+            <span class="stack-chip">Snowflake</span>
+            <span class="stack-chip">Data Vault</span>
+            <span class="stack-chip">Python</span>
+            <span class="stack-chip">Web Scraping</span>
+            <span class="stack-chip">Airflow</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 02 — JCPenney -->
+      <article class="project-card">
+        <span class="project-num">02</span>
+        <div class="project-header">
+          <span>Project 02 / 02</span>
+          <span class="project-via">via Thoughtworks · 2024 → 2025</span>
+        </div>
+        <h3 class="project-title">Enterprise Data Platform Modernisation</h3>
+        <div class="project-meta-row">
+          <span class="client-name">JCPenney</span>
+          <span class="sep-dot"></span>
+          <span>United States</span>
+          <span class="project-industry">Retail</span>
+        </div>
+        <p class="project-desc">
+          Supported the end-to-end implementation of an enterprise data platform — rebuilding
+          pipeline reliability, data quality controls, and large-scale transformation workloads
+          across Spark, Kafka, and Oracle sources.
+        </p>
+
+        <div class="project-contributions">
+          <div class="project-section-label">Key contributions</div>
+          <ul>
+            <li>Developed a data quality framework using <strong>Great Expectations</strong>, integrated with <strong>DataHub</strong> — measurably improving data quality and operational efficiency across the platform.</li>
+            <li>Led the setup of <strong>dbt</strong> and <strong>Oracle</strong> ingestion frameworks, enhancing pipeline reliability and enabling faster delivery of new data products.</li>
+            <li>Designed and managed distributed <strong>Apache Spark</strong> jobs on <strong>AWS EMR</strong> for large-scale data transformations and processing.</li>
+            <li>Resolved critical DataHub integration issues — aligning pipeline performance and metadata coverage with core business objectives.</li>
+            <li>Built <strong>Kafka</strong>-based ingestion for scalable data operations, improving visibility across downstream business processes.</li>
+            <li>Contributed to the development of API-based ingestion frameworks.</li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="project-section-label">Stack</div>
+          <div class="project-stack">
+            <span class="stack-chip">Great Expectations</span>
+            <span class="stack-chip">DataHub</span>
+            <span class="stack-chip">dbt</span>
+            <span class="stack-chip">Apache Spark</span>
+            <span class="stack-chip">AWS EMR</span>
+            <span class="stack-chip">Kafka</span>
+            <span class="stack-chip">Oracle</span>
+            <span class="stack-chip">Python</span>
+          </div>
+        </div>
+      </article>
+
+
+    </section>
+
+    <!-- CLIENTS / DOMAINS -->
+    <section id="clients" class="clients reveal">
+      <div class="section-label"><span class="idx">[04]</span> Clients · Domains</div>
+
+      <h2 class="section-heading">
+        Trusted by <span class="italic">telecom giants, IoT platforms,</span><br/>
+        global retail, and Fortune 500 R&amp;D teams.
+      </h2>
+
+      <p class="section-sub">
+        Shipping data and platform work across Telecom, IoT, Agriculture R&amp;D, Retail, E-commerce,
+        and enterprise SaaS — directly and through Thoughtworks consulting engagements.
+      </p>
+      
+
       <div class="clients-grid">
+
+        <article class="client-card">
+          <div class="client-hex client-hex--text">
+            <span class="hex-mark">otto</span>
+          </div>
+          <div class="client-info">
+            <div class="client-header">
+              <h4>Otto GmbH</h4>
+              <span class="client-year">2025 · Present</span>
+            </div>
+            <span class="client-sector">E-commerce · Germany</span>
+            <p>Assortment Analytics Platform — Data Vault modelling, quarterly web scraping pipelines into BigQuery, BQ-to-Snowflake transfer framework. See Featured Projects.</p>
+          </div>
+        </article>
+
+        <article class="client-card">
+          <div class="client-hex client-hex--text">
+            <span class="hex-mark">JCP</span>
+          </div>
+          <div class="client-info">
+            <div class="client-header">
+              <h4>JCPenney</h4>
+              <span class="client-year">2024 · 2025</span>
+            </div>
+            <span class="client-sector">Retail · USA</span>
+            <p>Enterprise Data Platform modernisation — data quality framework (Great Expectations + DataHub), Spark on AWS EMR, dbt ingestion, Kafka streams. See Featured Projects.</p>
+          </div>
+        </article>
+
+
+
         <article class="client-card">
           <div class="client-hex">
             <img src="images/ayla.jpg" alt="Ayla Networks" loading="lazy" />
@@ -948,7 +1102,7 @@
 
     <!-- STACK -->
     <section id="stack" class="stack reveal">
-      <div class="section-label"><span class="idx">[04]</span> Tech stack &amp; skills</div>
+      <div class="section-label"><span class="idx">[05]</span> Tech stack &amp; skills</div>
 
       <h2 class="section-heading">
         Opinionated tools. <span class="italic">Pragmatic choices.</span>
@@ -964,8 +1118,10 @@
             <li>dbt</li>
             <li>Databricks</li>
             <li>Snowflake</li>
+            <li>BigQuery</li>
+            <li>AWS EMR</li>
+            <li>DataHub</li>
             <li>Delta Lake</li>
-            <li>Hadoop ecosystem</li>
           </ul>
         </div>
 
@@ -1003,6 +1159,7 @@
             <li>Metadata management</li>
             <li>Great Expectations</li>
             <li>Hackolade (data modelling)</li>
+            <li>Data Vault methodology</li>
             <li>API-driven integration</li>
             <li>Streaming &amp; batch</li>
           </ul>
@@ -1044,6 +1201,8 @@
         <div class="stack-group">
           <h5 class="stack-title">Domains &amp; IoT</h5>
           <ul class="stack-list">
+            <li>Retail</li>
+            <li>E-commerce</li>
             <li>Telecom</li>
             <li>IoT platforms</li>
             <li>Agriculture R&amp;D</li>
@@ -1065,7 +1224,7 @@
 
     <!-- CONTACT -->
     <section id="contact" class="contact reveal">
-      <div class="section-label"><span class="idx">[05]</span> Contact</div>
+      <div class="section-label"><span class="idx">[06]</span> Contact</div>
 
       <div class="contact-card">
         <div class="contact-left">
@@ -1083,7 +1242,7 @@
               <span>Book a 1:1 on Topmate</span>
               <span class="arrow">↗</span>
             </a>
-            <a href="mailto:hello@harisankarsivankutty.in" class="btn-ghost">Email</a>
+            <a href="mailto:harisankar.sivankutty@gmail.com" class="btn-ghost">Email</a>
             <a href="https://www.linkedin.com/in/harisankar-s-99935922/" target="_blank" rel="noopener" class="btn-ghost">LinkedIn</a>
             <a href="https://twitter.com/Harisankar2523" target="_blank" rel="noopener" class="btn-ghost">Twitter</a>
           </div>
@@ -1598,6 +1757,28 @@
       filter: grayscale(0) contrast(1.1);
     }
 
+    .client-hex--text {
+      display: grid;
+      place-items: center;
+      background: linear-gradient(140deg, rgba(212,255,74,0.10), rgba(255,255,255,0.02));
+      border-color: rgba(212, 255, 74, 0.20);
+    }
+
+    .hex-mark {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-style: italic;
+      font-size: 22px;
+      line-height: 1;
+      color: var(--accent);
+      letter-spacing: 0.01em;
+      transition: transform 0.4s var(--ease);
+    }
+
+    .client-card:hover .hex-mark {
+      transform: scale(1.1);
+    }
+
     .client-info { min-width: 0; }
 
     .client-header {
@@ -1659,6 +1840,219 @@
         align-items: flex-start;
         gap: 4px;
       }
+    }
+
+    /* ============================================================
+       FEATURED PROJECTS
+       ============================================================ */
+    .project-card {
+      position: relative;
+      padding: clamp(28px, 4vw, 48px);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.015), transparent);
+      overflow: hidden;
+      transition: all 0.5s var(--ease);
+      margin-top: 24px;
+    }
+
+    .project-card:hover {
+      border-color: var(--border-strong);
+      background: linear-gradient(to bottom right, rgba(212, 255, 74, 0.03), transparent);
+      transform: translateY(-2px);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.5s var(--ease);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-num {
+      position: absolute;
+      top: 16px;
+      right: clamp(20px, 4vw, 40px);
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-style: italic;
+      font-size: clamp(80px, 11vw, 160px);
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(212, 255, 74, 0.18);
+      pointer-events: none;
+      transition: all 0.5s var(--ease);
+      z-index: 0;
+    }
+
+    .project-card:hover .project-num {
+      -webkit-text-stroke-color: rgba(212, 255, 74, 0.35);
+    }
+
+    .project-header {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--fg-muted);
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .project-header .project-via {
+      color: var(--accent);
+      text-transform: none;
+      letter-spacing: 0.05em;
+    }
+
+    .project-title {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(26px, 3.6vw, 42px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--fg);
+      margin-bottom: 16px;
+      max-width: 780px;
+    }
+
+    .project-meta-row {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--fg-muted);
+      margin-bottom: 24px;
+    }
+
+    .project-meta-row .client-name {
+      color: var(--fg);
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .project-meta-row .sep-dot {
+      width: 3px;
+      height: 3px;
+      background: var(--fg-dim);
+      border-radius: 50%;
+    }
+
+    .project-industry {
+      padding: 3px 10px;
+      border: 1px solid rgba(212, 255, 74, 0.25);
+      border-radius: 4px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .project-desc {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--fg);
+      margin-bottom: 32px;
+      max-width: 860px;
+    }
+
+    .project-section-label {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .project-contributions {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 32px;
+    }
+
+    .project-contributions ul {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+    }
+
+    .project-contributions li {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--fg-muted);
+      padding-left: 22px;
+      position: relative;
+      max-width: 860px;
+    }
+
+    .project-contributions li strong {
+      color: var(--fg);
+      font-weight: 500;
+    }
+
+    .project-contributions li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--accent);
+    }
+
+    .project-stack {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .stack-chip {
+      padding: 6px 13px;
+      font-family: var(--font-mono);
+      font-size: 11.5px;
+      border: 1px solid var(--border-strong);
+      border-radius: 5px;
+      color: var(--fg);
+      background: rgba(255, 255, 255, 0.02);
+      transition: all 0.3s var(--ease);
+      cursor: default;
+    }
+
+    .stack-chip:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+      transform: translateY(-1px);
     }
 
     /* ============================================================

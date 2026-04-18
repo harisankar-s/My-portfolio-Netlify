@@ -7,7 +7,7 @@ Custom-designed, zero build step, deploys anywhere static.
 
 ```
 harisankar-portfolio/
-├── index.html      ← everything (HTML + CSS + JS inline, ~60 KB)
+├── index.html      ← everything (HTML + CSS + JS inline, ~72 KB)
 ├── images/         ← portrait + 6 client logos + favicon
 └── README.md
 ```
@@ -15,8 +15,6 @@ harisankar-portfolio/
 No npm, no gulp, no jQuery. Just open `index.html` in a browser and it works.
 
 ## Test locally
-
-Pick any of these — they all work:
 
 ```bash
 # Python (already on macOS/Linux)
@@ -32,10 +30,8 @@ npx serve
 
 ## Deploy to Netlify via Git
 
-Assuming your Netlify site is already connected to your repo and auto-deploys on push to `main`:
-
 ```bash
-# Create a preview branch (recommended — don't push straight to main)
+# Create a preview branch (recommended)
 git checkout -b redesign
 
 # Drop the new files in (at your repo root)
@@ -47,8 +43,7 @@ git commit -m "Portfolio redesign"
 git push origin redesign
 ```
 
-Netlify will generate a preview URL (format: `redesign--yoursite.netlify.app`).
-Verify it, then merge to main:
+Netlify generates a preview URL (`redesign--yoursite.netlify.app`). Verify it, then:
 
 ```bash
 git checkout main
@@ -56,24 +51,24 @@ git merge redesign
 git push origin main
 ```
 
-**Important — Netlify build settings:**
-This site needs no build step. In your Netlify dashboard under
-**Site configuration → Build & deploy → Build settings**, set:
+**Netlify build settings** — this site needs no build step:
 
 - **Build command:** leave empty
 - **Publish directory:** `.` (root)
 
-(If your current setup uses `npm run build` publishing to `theme/`, change those.)
+(Change from `npm run build` / `theme/` if that's your current setup.)
 
-## What's on the page
+## Page structure
 
-1. **Hero** — name, status badge, role + tagline, stats (10+ yrs · 6+ clients · 3 clouds · 2 certs), tech ticker
-2. **About** — decade-of-engineering intro, portrait, meta (expertise, certifications, languages, education, location)
-3. **Credentials** — AWS Solutions Architect · Associate · RHCE · Current role
-4. **Experience** — timeline: Thoughtworks → Ayla → Bayer → 6D Technologies
-5. **Clients & Domains** — Ayla, Bayer, Ooredoo, Airtel, Etisalat, AIS Thailand
-6. **Tech Stack** — 9-block grid: Data/Big Data · Cloud · GenAI · Data Platform & Quality · Languages · Delivery · Certs · Domains & IoT · Always-learning note
-7. **Contact** — Topmate booking CTA · Email · LinkedIn · Twitter · response/timezone/availability
+1. **[01] About** — decade-of-engineering intro, portrait, meta
+2. **Credentials** — AWS Solutions Architect · Associate · RHCE · Current role
+3. **[02] Experience · Work history** — timeline: Thoughtworks → Ayla → Bayer → 6D Technologies
+4. **[03] Featured Projects · Case studies** — deep-dive case studies:
+   - **JCPenney (USA)** — Enterprise Data Platform Modernisation. Great Expectations + DataHub, dbt, Spark on AWS EMR, Kafka
+   - **Otto GmbH (Germany)** — Assortment Analytics Platform. Data Vault modelling, BigQuery-to-Snowflake pipeline
+5. **[04] Clients · Domains** — 8 clients with hex tiles
+6. **[05] Tech stack & skills** — 9-block grid: Data · Cloud · GenAI · Data Platform · Languages · Delivery · Certs · Domains · Always-learning note
+7. **[06] Contact** — Topmate booking CTA · Email · LinkedIn · Twitter
 8. **Footer**
 
 ## Personalize before merging to main
@@ -82,28 +77,27 @@ Find-and-replace in `index.html`:
 
 | Currently in file | Change to |
 |---|---|
-| `hello@harisankarsivankutty.in` | Your real email (used in contact section `mailto:` + visible text) |
+| `hello@harisankarsivankutty.in` | Your real email (2 places in Contact) |
 | `Within 48 hours` | Your real response time, if different |
 
-Everything else — role, experience, companies, certifications, Topmate link,
-LinkedIn, Twitter — is already wired to your real values.
+Everything else — roles, experience, project details, certifications, Topmate link, LinkedIn, Twitter — is wired to your real values.
 
 ## Design spec
 
 - **Fonts:** Instrument Serif (display) · JetBrains Mono (body/labels) — via Google Fonts CDN
 - **Palette:** `#0A0A0B` bg · `#EDEDEB` fg · `#D4FF4A` electric-lime accent
-- **No external JS libraries** — vanilla JS, ~40 lines (IntersectionObserver for reveal-on-scroll, smooth anchor scroll)
+- **Zero external JS libraries** — vanilla JS (~40 lines: IntersectionObserver for reveals, smooth anchor scroll, nav scroll state)
 - **Accessibility:** respects `prefers-reduced-motion`, semantic HTML, keyboard-focusable nav
-- **Browser support:** all modern browsers (uses IntersectionObserver, CSS custom properties, `aspect-ratio`)
+- **Mobile:** responsive breakpoints at 900px / 720px / 560px / 480px
 
-## Common edits
+## Adding a new project / client / skill
 
-All in one file. Ctrl/Cmd+F for these markers:
+All in one file. Find these anchors with Ctrl/Cmd+F:
 
-- **Change accent color:** search `--accent: #D4FF4A` in `:root`
-- **Add a timeline entry:** copy a `<div class="timeline-item">…</div>` block
-- **Add a client:** copy an `<article class="client-card">…</article>` block
-- **Add a skill category:** copy a `<div class="stack-group">…</div>` block — note the grid is sized for 9 items (3×3); adding more needs a grid adjustment
+- **Add a project case study:** find `<!-- Project 02 — Otto -->`, copy the entire `<article class="project-card">…</article>` block below it, update the number to `03`, fill in content. Don't forget to update the heading "`Project 03 / 03`" in other cards if you want the counter accurate.
+- **Add a client:** find `<!-- CLIENTS / DOMAINS -->`, copy any `<article class="client-card">…</article>` block. For logo tiles, use `<div class="client-hex"><img src="..."></div>`. For text tiles, use `<div class="client-hex client-hex--text"><span class="hex-mark">XYZ</span></div>`.
+- **Add a timeline entry:** copy a `<div class="timeline-item">…</div>` block under `<!-- EXPERIENCE -->`
+- **Change accent color:** `--accent: #D4FF4A` in `:root`
 - **Update Topmate link:** search `topmate.io/harisankar_sivankutty` (appears in nav CTA + contact button)
 
-Save and refresh — no compile step needed.
+Save and refresh — no compile step.
