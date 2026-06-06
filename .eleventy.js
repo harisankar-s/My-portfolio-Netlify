@@ -48,6 +48,13 @@ module.exports = function (eleventyConfig) {
     return Math.max(1, Math.round(words / 200));
   });
 
+  // Filter: first <img> src in rendered content (used for blog thumbnails)
+  eleventyConfig.addFilter("firstImage", function (content) {
+    if (!content) return "";
+    const m = content.match(/<img[^>]+src=["']([^"']+)["']/i);
+    return m ? m[1] : "";
+  });
+
   return {
     dir: {
       input: "src",

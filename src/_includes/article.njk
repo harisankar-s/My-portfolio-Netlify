@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="author" content="Harisankar Sivankutty" />
-  <meta name="theme-color" content="#F9F8F4" />
+  <meta name="theme-color" content="#FFFFFF" />
   <meta name="description" content="{{ subtitle or description or 'Writing by Harisankar Sivankutty.' }}" />
   <meta property="og:title" content="{{ title }} — Harisankar Sivankutty" />
   <meta property="og:description" content="{{ subtitle or description or '' }}" />
@@ -15,21 +15,22 @@
   <link rel="icon" href="/images/favicon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600&family=Lora:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #F9F8F4; --bg-elevated: #F0EEE6; --surface: #E8E6DC;
+      --bg: #FFFFFF; --bg-elevated: #F9FAFB; --surface: #F3F4F6;
       --border: rgba(0,0,0,0.08); --border-strong: rgba(0,0,0,0.16);
-      --fg: #1A1A18; --fg-muted: #3E3E38; --fg-dim: #8A8A80;
-      --accent: #B8910A; --accent-dim: rgba(184,145,10,0.10); --accent-glow: rgba(184,145,10,0.22);
-      --font-sans:    'Inter', system-ui, sans-serif;
-      --font-article: 'Lora', 'Georgia', serif;
-      --font-serif: 'Instrument Serif', 'Georgia', serif;
+      --fg: #111827; --fg-muted: #4B5563; --fg-dim: #9CA3AF;
+      --accent: #1F2937; --accent-dim: rgba(17,24,39,0.10); --accent-glow: rgba(17,24,39,0.22); --pop: #F59E0B; --pop-glow: rgba(245,158,11,0.45);
+      --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
+      --font-article: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+      --font-serif:   'Inter', system-ui, -apple-system, sans-serif;
       --font-mono:  'JetBrains Mono', ui-monospace, monospace;
-      --max-w: 1280px; --content-w: 680px;
+      --reading: #242424;
+      --max-w: 1280px; --content-w: 720px;
       --pad-x: clamp(20px, 4vw, 56px); --ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
 
@@ -52,22 +53,22 @@
     ::selection { background: var(--accent); color: var(--bg); }
 
     /* NAV */
-    .nav {
+    .nav { --accent: #E5E7EB;
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 18px var(--pad-x);
       display: flex; align-items: center; justify-content: space-between;
-      background: #1C1814; border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: #111827; border-bottom: 1px solid rgba(255,255,255,0.06);
       transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
     }
-    .nav.scrolled { border-bottom-color: rgba(255,255,255,0.10); background: rgba(24,21,16,0.98); }
-    .nav-brand { font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-spacing: -0.01em; color: #EDE9E0; display: flex; align-items: center; gap: 10px; }
+    .nav.scrolled { border-bottom-color: rgba(255,255,255,0.10); background: rgba(17,24,39,0.98); }
+    .nav-brand { font-family: var(--font-mono); font-size: 13px; font-weight: 500; letter-spacing: -0.01em; color: #E5E7EB; display: flex; align-items: center; gap: 10px; }
     .nav-brand .dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent-glow); animation: pulse 2.6s ease-in-out infinite; }
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.45;transform:scale(0.8)} }
     .nav-right { display: flex; align-items: center; gap: 6px; }
-    .nav-link { font-family: var(--font-sans); font-size: 13.5px; font-weight: 500; color: rgba(237,233,224,0.55); padding: 6px 12px; border-radius: 6px; transition: color 0.2s, background 0.2s; }
-    .nav-link:hover { color: #EDE9E0; background: rgba(255,255,255,0.06); }
-    .nav-cta { font-family: var(--font-sans); font-size: 13px; font-weight: 500; padding: 7px 16px; border: 1px solid rgba(237,233,224,0.2); border-radius: 999px; color: #EDE9E0; transition: all 0.25s var(--ease); display: inline-flex; align-items: center; gap: 6px; margin-left: 4px; }
-    .nav-cta:hover { background: var(--accent); border-color: var(--accent); color: #1E1B15; }
+    .nav-link { font-family: var(--font-sans); font-size: 13.5px; font-weight: 500; color: rgba(229,231,235,0.55); padding: 6px 12px; border-radius: 6px; transition: color 0.2s, background 0.2s; }
+    .nav-link:hover { color: #E5E7EB; background: rgba(255,255,255,0.06); }
+    .nav-cta { font-family: var(--font-sans); font-size: 13px; font-weight: 500; padding: 7px 16px; border: 1px solid rgba(229,231,235,0.2); border-radius: 999px; color: #E5E7EB; transition: all 0.25s var(--ease); display: inline-flex; align-items: center; gap: 6px; margin-left: 4px; }
+    .nav-cta:hover { background: var(--accent); border-color: var(--accent); color: #111827; }
     @media (max-width: 640px) { .nav-link { display: none; } }
 
     /* LAYOUT */
@@ -82,34 +83,34 @@
     .breadcrumb a:hover { color: var(--accent); }
     .breadcrumb-sep { color: var(--border-strong); }
     .article-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
-    .article-tag { font-family: var(--font-mono); font-size: 10.5px; padding: 4px 12px; border: 1px solid var(--border); border-radius: 4px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; background: var(--accent-dim); }
-    .article-title { font-family: var(--font-serif); font-weight: 400; font-size: clamp(32px,5vw,56px); line-height: 1.1; letter-spacing: -0.02em; color: var(--fg); margin-bottom: 24px; }
-    .article-subtitle { font-family: var(--font-sans); font-size: 17px; line-height: 1.65; color: var(--fg-muted); margin-bottom: 36px; max-width: 560px; }
+    .article-tag { font-family: var(--font-sans); font-size: 12px; font-weight: 500; padding: 5px 13px; border-radius: 999px; color: var(--fg-muted); letter-spacing: 0; background: var(--surface); }
+    .article-title { font-family: var(--font-sans); font-weight: 700; font-size: clamp(32px,5vw,46px); line-height: 1.18; letter-spacing: -0.022em; color: var(--reading); margin-bottom: 20px; }
+    .article-subtitle { font-family: var(--font-article); font-size: clamp(19px,2.4vw,22px); line-height: 1.5; color: #6B6B6B; margin-bottom: 40px; max-width: 620px; }
     .article-byline { display: flex; align-items: center; gap: 14px; padding-top: 24px; border-top: 1px solid var(--border); }
-    .byline-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border); }
-    .byline-avatar-placeholder { width: 40px; height: 40px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-size: 18px; color: var(--bg); flex-shrink: 0; }
+    .byline-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 1px solid var(--border); }
+    .byline-avatar-placeholder { width: 44px; height: 44px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--font-sans); font-weight: 600; font-size: 18px; color: #fff; flex-shrink: 0; }
     .byline-info { display: flex; flex-direction: column; gap: 2px; }
-    .byline-name { font-family: var(--font-sans); font-size: 13.5px; font-weight: 600; color: var(--fg); }
-    .byline-meta { font-family: var(--font-sans); font-size: 12px; color: var(--fg-dim); }
+    .byline-name { font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: var(--reading); }
+    .byline-meta { font-family: var(--font-sans); font-size: 14px; color: var(--fg-dim); }
 
     /* ARTICLE BODY */
     .article-body { padding: 0 var(--pad-x) clamp(64px,10vh,120px); max-width: calc(var(--content-w) + var(--pad-x) * 2); margin: 0 auto; }
-    .article-body p { font-family: var(--font-article); font-size: 18px; line-height: 1.85; color: var(--fg-muted); margin-bottom: 26px; }
-    .article-body p:first-child { font-size: 19px; color: var(--fg); font-weight: 400; }
-    .article-body h2 { font-family: var(--font-serif); font-weight: 400; font-size: clamp(22px,3vw,34px); letter-spacing: -0.015em; color: var(--fg); margin-top: 60px; margin-bottom: 20px; line-height: 1.15; }
-    .article-body h3 { font-family: var(--font-sans); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-top: 40px; margin-bottom: 14px; }
-    .article-body ul, .article-body ol { padding-left: 24px; margin-bottom: 26px; }
-    .article-body li { font-family: var(--font-article); font-size: 18px; line-height: 1.8; color: var(--fg-muted); margin-bottom: 8px; }
-    .article-body ul li::marker { color: var(--accent); }
-    .article-body strong { color: var(--fg); font-weight: 700; }
+    .article-body > * { max-width: var(--content-w); }
+    .article-body p { font-family: var(--font-article); font-size: 20px; line-height: 1.75; color: var(--reading); margin-bottom: 28px; letter-spacing: -0.003em; }
+    .article-body h2 { font-family: var(--font-sans); font-weight: 700; font-size: clamp(26px,3.4vw,32px); letter-spacing: -0.018em; color: var(--reading); margin-top: 56px; margin-bottom: 12px; line-height: 1.25; }
+    .article-body h3 { font-family: var(--font-sans); font-weight: 700; font-size: 22px; letter-spacing: -0.01em; color: var(--reading); margin-top: 40px; margin-bottom: 10px; line-height: 1.3; }
+    .article-body ul, .article-body ol { padding-left: 26px; margin-bottom: 28px; }
+    .article-body li { font-family: var(--font-article); font-size: 20px; line-height: 1.7; color: var(--reading); margin-bottom: 10px; }
+    .article-body ul li::marker { color: var(--fg-dim); }
+    .article-body strong { color: var(--reading); font-weight: 700; }
     .article-body em { font-style: italic; }
-    .article-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-    .article-body a:hover { opacity: 0.75; }
-    .article-body blockquote { margin: 36px 0; padding: 22px 28px; border-left: 3px solid var(--accent); background: var(--accent-dim); border-radius: 0 8px 8px 0; }
-    .article-body blockquote p { font-family: var(--font-article); font-size: 20px; font-style: italic; color: var(--fg); margin: 0; line-height: 1.55; }
-    .article-body code { font-family: var(--font-mono); font-size: 13px; background: var(--surface); border: 1px solid var(--border); padding: 2px 7px; border-radius: 4px; color: var(--fg); }
-    .article-body pre { background: #1C1814; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 24px; overflow-x: auto; margin: 28px 0; }
-    .article-body pre code { background: transparent; border: none; padding: 0; font-size: 13px; color: #F0EDE4; line-height: 1.7; }
+    .article-body a { color: var(--reading); text-decoration: underline; text-underline-offset: 2px; text-decoration-thickness: 1px; text-decoration-color: var(--fg-dim); }
+    .article-body a:hover { text-decoration-color: var(--reading); }
+    .article-body blockquote { margin: 36px 0; padding: 4px 0 4px 24px; border-left: 3px solid var(--reading); }
+    .article-body blockquote p { font-family: var(--font-article); font-size: 23px; font-style: italic; color: var(--reading); margin: 0; line-height: 1.5; }
+    .article-body code { font-family: var(--font-mono); font-size: 0.85em; background: var(--surface); padding: 2px 6px; border-radius: 4px; color: var(--reading); }
+    .article-body pre { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 8px; padding: 20px 22px; overflow-x: auto; margin: 28px 0; }
+    .article-body pre code { background: transparent; border: none; padding: 0; font-size: 13.5px; color: var(--reading); line-height: 1.65; }
     .article-body hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
     .article-body img { border-radius: 8px; margin: 32px 0; border: 1px solid var(--border); max-width: 100%; }
     .article-body figure { margin: 32px 0; }
@@ -136,6 +137,18 @@
     .footer-brand .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 8px var(--accent-glow); }
     .footer-year { color: var(--fg-dim); }
     .footer-right { color: var(--fg-dim); font-size: 11px; }
+  
+    /* amber pop accents */
+    .nav-brand .dot { background: var(--pop); box-shadow: 0 0 10px var(--pop-glow); }
+    .footer-brand .dot { background: var(--pop); box-shadow: 0 0 8px var(--pop-glow); }
+    ::selection { background: var(--pop); color: #111827; }
+    .article-body ul li::marker { color: var(--pop); }
+    .article-body blockquote { border-left-color: var(--pop); }
+    .article-body a:hover { text-decoration-color: var(--pop); }
+    .callout-title { color: var(--pop); }
+    .callout { border-left: 3px solid var(--pop); }
+    .back-link:hover { color: var(--pop); }
+
   </style>
 </head>
 <body>
@@ -157,9 +170,7 @@
 
     <header class="article-header">
       <nav class="breadcrumb" aria-label="breadcrumb">
-        <a href="/">home</a>
-        <span class="breadcrumb-sep">/</span>
-        <a href="/blog/">writing</a>
+        <a href="/">blog</a>
         <span class="breadcrumb-sep">/</span>
         <span>{{ page.fileSlug }}</span>
       </nav>
@@ -194,8 +205,8 @@
     </article>
 
     <div class="article-footer">
-      <a href="/blog/" class="back-link">
-        <span>←</span> Back to writing
+      <a href="/" class="back-link">
+        <span>←</span> Back to blog
       </a>
     </div>
 
@@ -206,7 +217,7 @@
       <div class="footer-left">
         <span class="footer-brand">
           <span class="dot"></span>
-          harisankarsivankutty.in
+          Harisankar Sivankutty
         </span>
         <span class="footer-year">© 2026 · All rights reserved</span>
       </div>

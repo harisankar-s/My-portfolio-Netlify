@@ -1,17 +1,17 @@
 ---
-title: "Building an Enterprise Data Platform from Scratch: What I Learned Over 19 Months"
+title: "Building an Enterprise Data Platform from Scratch: What I Learned Over 9 Months"
 subtitle: "An honest account of modernizing a legacy data stack — the wins, the chaos, and the lessons that stuck."
 date: 2026-02-10
 tags:
   - Data Engineering
   - Architecture
   - AWS
-excerpt: "Nineteen months, twenty thousand jobs, petabytes of data. Here's what I learned building an enterprise data platform from scratch — the architecture decisions, the human dynamics, and six lessons I'd tell myself at the start."
+excerpt: "Nine months, twenty thousand jobs, petabytes of data. Here's what I learned building an enterprise data platform from scratch — the architecture decisions, the human dynamics, and six lessons I'd tell myself at the start."
 ---
 
 ## The Call
 
-Nineteen months ago, I walked into an engagement that looked straightforward on paper: help a large retail company migrate off a legacy Cloudera platform and build something modern in its place. Twenty thousand jobs. Petabytes of data. Dozens of source systems.
+Nine months ago, I walked into an engagement that looked straightforward on paper: help a large retail company migrate off a legacy Cloudera platform and build something modern in its place. Twenty thousand jobs. Petabytes of data. Dozens of source systems.
 
 What followed was one of the most formative experiences of my career.
 
@@ -172,7 +172,7 @@ The depth of coverage had to be calibrated to actual skill levels, not assumed o
 
 ## Closing Thought
 
-Nineteen months is a long time to spend on a single platform. But looking back, the work that mattered most wasn't the Terraform modules or the Snowflake schemas — it was the moments where the team made the invisible visible: quality scores surfaced in a catalog, lineage traced across hundreds of jobs, pipelines monitored in near real-time.
+Nine months is a long time to spend on a single platform. But looking back, the work that mattered most wasn't the Terraform modules or the Snowflake schemas — it was the moments where the team made the invisible visible: quality scores surfaced in a catalog, lineage traced across hundreds of jobs, pipelines monitored in near real-time.
 
 Data platforms earn trust slowly and lose it quickly. The technical decisions are important, but they're in service of something more fundamental: giving people the confidence to act on data.
 

@@ -42,7 +42,25 @@ The requirement was clear: take approximately 30 tables from a BigQuery mart dat
 
 After evaluating the options, we landed on a three-stage extract-stage-load pattern using GCS as an intermediate layer.
 
-┌─────────────────────────────────────────────────────────┐│                                                         ││  Cloud Composer (Airflow)                               ││  — schedules weekly on Monday 06:00 UTC                 ││         │                                               ││         ▼                                               ││  Cloud Run Job (containerised Python)                   ││         │                                               ││    ┌────┴────────────────────────────────┐              ││    │                                     │              ││    ▼                                     ▼              ││  BigQuery                            Snowflake          ││  mart dataset          GCS           target schema      ││  (source)     ───►  (Parquet)  ───►  (TRUNCATE +        ││                     staging         INSERT)             ││                                                         │└─────────────────────────────────────────────────────────┘
+```text
+┌─────────────────────────────────────────────────────────┐
+│                                                         │
+│  Cloud Composer (Airflow)                               │
+│  — schedules weekly on Monday 06:00 UTC                 │
+│         │                                               │
+│         ▼                                               │
+│  Cloud Run Job (containerised Python)                   │
+│         │                                               │
+│    ┌────┴────────────────────────────────┐              │
+│    │                                     │              │
+│    ▼                                     ▼              │
+│  BigQuery                            Snowflake          │
+│  mart dataset          GCS           target schema      │
+│  (source)     ───►  (Parquet)  ───►  (TRUNCATE +        │
+│                     staging         INSERT)             │
+│                                                         │
+└─────────────────────────────────────────────────────────┘
+```
 The sequence diagram below shows exactly how these components interact across a single pipeline run:
 
 
@@ -156,13 +174,54 @@ Adding a new table to the pipeline requires no code change, no Docker rebuild, n
 
 The pipeline is a single Python container, roughly 600 lines across a handful of modules:
 
-src/├── main.py                   ← orchestration — calls BQ, GCS, Snowflake in order├── helper.py                 ← logging utilities├── bigquery_services.py      ← BQ temp table cleanup├── bucket_services.py        ← GCS path cleanup before each run└── model/    ├── MirroringConfig.py    ← dataclass loaded from the config JSON    ├── MirroringObjectConfigs.py  ← per-table paths and table names    └── PreparedSnowflakeColumns.py  ← column SQL for INSERT statements
+```text
+src/
+├── main.py                   ← orchestration — calls BQ, GCS, Snowflake in order
+├── helper.py                 ← logging utilities
+├── bigquery_services.py      ← BQ temp table cleanup
+├── bucket_services.py        ← GCS path cleanup before each run
+└── model/
+    ├── MirroringConfig.py             ← dataclass loaded from the config JSON
+    ├── MirroringObjectConfigs.py      ← per-table paths and table names
+    └── PreparedSnowflakeColumns.py    ← column SQL for INSERT statements
+```
 The entry point in `main.py` follows a simple loop per table:
 
-for table_name in full_load_tables:    # 1. Clean previous run's GCS files    cleanup_bucket(bucket, table_path)    # 2. Export BQ table → GCS as Parquet/Snappy    bq_rowcount, columns = bigquery_to_gcs(table_name, config)    # 3. COPY INTO Snowflake temp table from External Stage    #    FILE_FORMAT = (TYPE=PARQUET SNAPPY_COMPRESSION=TRUE USE_LOGICAL_TYPE=TRUE)    #    MATCH_BY_COLUMN_NAME = CASE_INSENSITIVE    # 4. TRUNCATE target table    # 5. INSERT INTO target SELECT * FROM temp table    # 6. Compare row counts BQ vs Snowflake    # 7. DROP temp table
+```python
+for table_name in full_load_tables:
+    # 1. Clean previous run's GCS files
+    cleanup_bucket(bucket, table_path)
+    # 2. Export BQ table → GCS as Parquet/Snappy
+    bq_rowcount, columns = bigquery_to_gcs(table_name, config)
+    # 3. COPY INTO Snowflake temp table from External Stage
+    #    FILE_FORMAT = (TYPE=PARQUET SNAPPY_COMPRESSION=TRUE USE_LOGICAL_TYPE=TRUE)
+    #    MATCH_BY_COLUMN_NAME = CASE_INSENSITIVE
+    # 4. TRUNCATE target table
+    # 5. INSERT INTO target SELECT * FROM temp table
+    # 6. Compare row counts BQ vs Snowflake
+    # 7. DROP temp table
+```
 The Snowflake connection uses RSA key-pair authentication. The private key is fetched from Secret Manager at runtime and loaded directly into memory using Python’s `cryptography` library — the key bytes are passed straight to the Snowflake connector without ever touching disk:
 
-private_key = serialization.load_pem_private_key(    private_key_str.encode(),    password=passphrase_str.encode(),    backend=default_backend())private_key_bytes = private_key.private_bytes(    encoding=serialization.Encoding.DER,    format=serialization.PrivateFormat.PKCS8,    encryption_algorithm=serialization.NoEncryption())ctx = snowflake.connector.connect(    host=f"{account}.privatelink.snowflakecomputing.com",    account=account,    user=user,    private_key=private_key_bytes,    ...)
+```python
+private_key = serialization.load_pem_private_key(
+    private_key_str.encode(),
+    password=passphrase_str.encode(),
+    backend=default_backend()
+)
+private_key_bytes = private_key.private_bytes(
+    encoding=serialization.Encoding.DER,
+    format=serialization.PrivateFormat.PKCS8,
+    encryption_algorithm=serialization.NoEncryption()
+)
+ctx = snowflake.connector.connect(
+    host=f"{account}.privatelink.snowflakecomputing.com",
+    account=account,
+    user=user,
+    private_key=private_key_bytes,
+    ...
+)
+```
 One pattern worth noting: the Snowflake connection is reused across tables within a single run, but the code checks liveness before each table and reconnects if the session has closed. Long-running exports on large tables can outlive an idle Snowflake session.
 
 
@@ -171,13 +230,28 @@ One pattern worth noting: the Snowflake connection is reused across tables withi
 
 Every GCP resource in this pipeline is managed by Terraform — a single `core/` module with an `env` variable that drives everything:
 
-deployment/terraform/core/├── config.tf         ← project = "myproject-${var.env}", region, VPC connector path├── backend.tf        ← GCS state bucket (passed via -backend-config at init time)├── provider.tf       ← GCP provider├── variables.tf      ← env variable (dev | prd)├── bucket.tf         ← GCS staging bucket├── iam.tf            ← service account, all IAM bindings└── cloud_run_job.tf  ← Cloud Run Job with env vars, VPC access, image reference
+```text
+deployment/terraform/core/
+├── config.tf         ← project = "myproject-${var.env}", region, VPC connector path
+├── backend.tf        ← GCS state bucket (passed via -backend-config at init time)
+├── provider.tf       ← GCP provider
+├── variables.tf      ← env variable (dev | prd)
+├── bucket.tf         ← GCS staging bucket
+├── iam.tf            ← service account, all IAM bindings
+└── cloud_run_job.tf  ← Cloud Run Job with env vars, VPC access, image reference
+```
 Running `terraform apply -var="env=dev"` targets the dev project; `terraform apply -var="env=prd"` targets production. The Terraform state is stored in a separate GCS bucket per environment, switched at init time:
 
 
-bash
+```bash
+# dev
+terraform init -backend-config="bucket=myproject-dev-tf-state"
+terraform apply -var="env=dev"
 
-# devterraform init -backend-config="bucket=myproject-dev-tf-state"terraform apply -var="env=dev"# prdterraform init -reconfigure -backend-config="bucket=myproject-prd-tf-state"terraform apply -var="env=prd"
+# prd
+terraform init -reconfigure -backend-config="bucket=myproject-prd-tf-state"
+terraform apply -var="env=prd"
+```
 There’s one cross-environment dependency worth calling out: both the dev and production Cloud Run Jobs pull their Docker image from a single Artifact Registry repository in the dev project. We tag images by environment (`pipeline-dev:latest`, `pipeline-prd:latest`) but store them in one place. This means the production service account and Cloud Run Service Agent both need `artifactregistry.reader` on the dev registry — bindings managed in the dev Terraform state.
 
 
@@ -187,9 +261,20 @@ The consequence: **always apply dev Terraform before production**. The dev state
 A Cloud Build pipeline (`cloudbuild-rollout.yaml`) automates the full sequence:
 
 
-yaml
-
-steps:  - id: build-and-push    # docker build + push for the right env tag  - id: terraform-apply    name: hashicorp/terraform:1.2.5    args:      - terraform init -backend-config="bucket=myproject-${_ENV}-tf-state"      - terraform apply -var="env=${_ENV}" -auto-approve  - id: upload-config    # gcloud storage cp configs/pipeline-${_ENV}.json gs://...  - id: deploy-dag    # gcloud storage cp dags/pipeline_dag.py gs://airflow-bucket/dags/
+```yaml
+steps:
+  - id: build-and-push
+    # docker build + push for the right env tag
+  - id: terraform-apply
+    name: hashicorp/terraform:1.2.5
+    args:
+      - terraform init -backend-config="bucket=myproject-${_ENV}-tf-state"
+      - terraform apply -var="env=${_ENV}" -auto-approve
+  - id: upload-config
+    # gcloud storage cp configs/pipeline-${_ENV}.json gs://...
+  - id: deploy-dag
+    # gcloud storage cp dags/pipeline_dag.py gs://airflow-bucket/dags/
+```
 The substitution `_ENV` is passed at trigger time — the same YAML file deploys both dev and production.
 
 

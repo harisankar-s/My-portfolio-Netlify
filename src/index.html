@@ -8,7 +8,7 @@ permalink: /about/index.html
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Harisankar Sivankutty — Data Engineering Architect with 10+ years designing and delivering enterprise data platforms, AI-driven pipelines, and cloud-native analytics across AWS, Azure, and GCP." />
   <meta name="author" content="Harisankar Sivankutty" />
-  <meta name="theme-color" content="#F9F8F4" />
+  <meta name="theme-color" content="#FFFFFF" />
 
   <meta property="og:title" content="Harisankar Sivankutty — Data Engineering Architect" />
   <meta property="og:description" content="10+ years engineering enterprise data platforms, GenAI systems, and cloud-native analytics. AWS Solutions Architect · RHCE." />
@@ -37,18 +37,18 @@ permalink: /about/index.html
     }
 
     :root {
-      --bg: #F9F8F4;
-      --bg-elevated: #F0EEE6;
-      --surface: #E8E6DC;
+      --bg: #FFFFFF;
+      --bg-elevated: #F9FAFB;
+      --surface: #F3F4F6;
       --border: rgba(0, 0, 0, 0.09);
       --border-strong: rgba(0, 0, 0, 0.18);
-      --fg: #1A1A18;
-      --fg-muted: #52524C;
-      --fg-dim: #9A9A8F;
-      --accent: #B8910A;
-      --accent-dim: rgba(184, 145, 10, 0.12);
-      --accent-glow: rgba(184, 145, 10, 0.22);
-      --warm: #C84F1A;
+      --fg: #111827;
+      --fg-muted: #4B5563;
+      --fg-dim: #9CA3AF;
+      --accent: #1F2937;
+      --accent-dim: rgba(17, 24, 39, 0.12);
+      --accent-glow: rgba(17, 24, 39, 0.22); --pop: #F59E0B; --pop-glow: rgba(245,158,11,0.45);
+      --warm: #1F2937;
 
       --font-serif: 'Instrument Serif', 'Times New Roman', serif;
       --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -123,7 +123,7 @@ permalink: /about/index.html
     /* ============================================================
        NAVIGATION
        ============================================================ */
-    .nav {
+    .nav { --accent: #E5E7EB;
       position: fixed;
       top: 0;
       left: 0;
@@ -133,14 +133,14 @@ permalink: /about/index.html
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: #1C1814;
+      background: #111827;
       border-bottom: 1px solid rgba(255,255,255,0.06);
       transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
     }
 
     .nav.scrolled {
       border-bottom-color: rgba(255,255,255,0.10);
-      background: rgba(24, 21, 16, 0.98);
+      background: rgba(17, 24, 39, 0.98);
     }
 
     .nav-logo {
@@ -148,7 +148,7 @@ permalink: /about/index.html
       font-size: 13px;
       font-weight: 500;
       letter-spacing: -0.01em;
-      color: #F0EDE4;
+      color: #E5E7EB;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -173,7 +173,7 @@ permalink: /about/index.html
       gap: 28px;
       list-style: none;
       font-size: 12.5px;
-      color: rgba(240, 237, 228, 0.55);
+      color: rgba(229, 231, 235, 0.55);
     }
 
     .nav-links a {
@@ -183,7 +183,7 @@ permalink: /about/index.html
     }
 
     .nav-links a:hover {
-      color: #F0EDE4;
+      color: #E5E7EB;
     }
 
     .nav-links a::before {
@@ -205,9 +205,9 @@ permalink: /about/index.html
       font-family: var(--font-mono);
       font-size: 12px;
       padding: 8px 16px;
-      border: 1px solid rgba(240, 237, 228, 0.22);
+      border: 1px solid rgba(229, 231, 235, 0.22);
       border-radius: 999px;
-      color: #F0EDE4;
+      color: #E5E7EB;
       transition: all 0.3s var(--ease);
       display: inline-flex;
       align-items: center;
@@ -216,7 +216,7 @@ permalink: /about/index.html
 
     .nav-cta:hover {
       background: var(--accent);
-      color: #1C1814;
+      color: #111827;
       border-color: var(--accent);
     }
 
@@ -248,9 +248,9 @@ permalink: /about/index.html
     }
 
     /* Alternating section backgrounds */
-    .about, .credentials { background: #EDE9DE; }
-    .experience, .clients { background: #E6E1D4; }
-    .contact { background: #EDE9DE; }
+    .about, .credentials { background: #F9FAFB; }
+    .experience, .clients { background: #F3F4F6; }
+    .contact { background: #F9FAFB; }
 
     .section-label {
       font-family: var(--font-mono);
@@ -304,8 +304,8 @@ permalink: /about/index.html
       pointer-events: none;
       z-index: 0;
       background:
-        radial-gradient(ellipse 80% 60% at 55% 38%, rgba(184, 145, 10, 0.13) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(200, 79, 26, 0.07) 0%, transparent 55%);
+        radial-gradient(ellipse 80% 60% at 55% 38%, rgba(17, 24, 39, 0.13) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(17, 24, 39, 0.07) 0%, transparent 55%);
     }
 
     .hero > * {
@@ -336,7 +336,7 @@ permalink: /about/index.html
       padding: 5px 12px;
       border: 1px solid var(--border);
       border-radius: 999px;
-      background: rgba(212, 255, 74, 0.04);
+      background: rgba(17, 24, 39, 0.04);
     }
 
     .hero-meta .status .live-dot {
@@ -363,7 +363,7 @@ permalink: /about/index.html
       color: var(--fg);
       margin-bottom: 28px;
       animation: fadeUp 1.1s var(--ease) 0.1s both;
-      text-shadow: 0 2px 40px rgba(184, 145, 10, 0.10);
+      text-shadow: 0 2px 40px rgba(17, 24, 39, 0.10);
     }
 
     .hero h1 .italic {
@@ -616,13 +616,12 @@ permalink: /about/index.html
     <ul class="nav-links">
       <li><a href="#about">about</a></li>
       <li><a href="#experience">experience</a></li>
-      <li><a href="#projects">projects</a></li>
       <li><a href="#clients">clients</a></li>
       <li><a href="#stack">stack</a></li>
-      <li><a href="#writing">writing</a></li>
+      <li><a href="#blog">blog</a></li>
     </ul>
-    <a href="https://topmate.io/harisankar_sivankutty" target="_blank" rel="noopener" class="nav-cta">
-      Book a 1:1
+    <a href="/" class="nav-cta">
+      Blog
       <span class="arrow">↗</span>
     </a>
   </nav>
@@ -631,6 +630,8 @@ permalink: /about/index.html
 
     <!-- HERO -->
     <section class="hero">
+      <div class="hero-head">
+        <div class="hero-intro">
       <div class="hero-meta">
         <span class="status"><span class="live-dot"></span>Available for consulting</span>
         <span class="loc">◉ Hyderabad, IN</span>
@@ -663,7 +664,16 @@ permalink: /about/index.html
           </svg>
           <span>Medium</span>
         </a>
+        <a href="https://topmate.io/harisankar_sivankutty" target="_blank" rel="noopener" class="social-link">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+          <span>Book a 1:1</span>
+        </a>
       </div>
+        </div><!-- /hero-intro -->
+        <aside class="hero-portrait">
+          <img src="/images/hari.jpg" alt="Harisankar Sivankutty" />
+        </aside>
+      </div><!-- /hero-head -->
 
       <div class="hero-bottom">
         <div class="hero-stats">
@@ -737,33 +747,39 @@ permalink: /about/index.html
       <div class="about-grid">
         <div class="about-intro">
           <h2 class="section-heading">
-            A decade of engineering <span class="italic">enterprise data<br/>platforms</span> and AI-driven solutions.
+            A decade building <span class="italic">enterprise data<br/>platforms</span> — and leading the teams that ship them.
           </h2>
           <p class="about-body">
-            An IT professional with around ten years of experience in design and development of IT,
-            data engineering, and analytics solutions — building scalable platforms, end-to-end pipelines,
-            and cloud-native systems for enterprises across telecom, IoT, agriculture, retail, e-commerce,
-            and GenAI.
+            I'm a data and AI engineering leader with over ten years designing, building, and
+            delivering enterprise-scale platforms for clients across telecom, IoT, agriculture,
+            retail, e-commerce, and GenAI. My work sits where architecture meets delivery — turning
+            ambiguous, high-stakes problems into systems that hold up in production.
           </p>
           <p class="about-body">
-            Hands-on expertise spans on-premise and multi-cloud environments (AWS, Azure, GCP),
-            modern data stack tooling (dbt, Great Expectations, Hackolade), and GenAI systems —
-            including Retrieval-Augmented Generation, LangChain, and LLM integration. Alongside
-            engineering, I lead delivery — project planning, team management, and quality audits.
+            That reach spans the full breadth of modern data engineering — distributed processing
+            with Spark and Kafka, the modern data stack (dbt, Great Expectations, DataHub), and
+            multi-cloud architecture across AWS, Azure, and GCP — alongside production GenAI systems
+            built on Retrieval-Augmented Generation, LangChain, and LLM integration.
           </p>
           <p class="about-body">
-            Currently <span class="hl">Senior Consultant Data Engineer at Thoughtworks</span>,
-            working at the intersection of GenAI, modern data stacks, and cloud-native architecture.
+            Beyond the code, I own delivery end to end: shaping architecture, mentoring engineers,
+            running quality audits, and keeping stakeholders aligned. Today I do this as a
+            <span class="hl">Senior Consultant at Thoughtworks</span>, advising global enterprises on
+            data platforms, GenAI, and cloud-native architecture.
           </p>
 
           <div class="about-meta">
             <div class="meta-row">
-              <span class="meta-key">Expertise</span>
-              <span class="meta-val">Data Platforms · GenAI &amp; RAG · Cloud Architecture · Delivery Management</span>
+              <span class="meta-key">Focus</span>
+              <span class="meta-val">Data Platforms · GenAI &amp; RAG · Cloud Architecture · Delivery Leadership</span>
+            </div>
+            <div class="meta-row">
+              <span class="meta-key">Experience</span>
+              <span class="meta-val">10+ years · 8+ enterprise clients across telecom, retail, IoT &amp; agriculture</span>
             </div>
             <div class="meta-row">
               <span class="meta-key">Certifications</span>
-              <span class="meta-val">AWS Solutions Architect – Associate · Red Hat Certified Engineer (RHCE)</span>
+              <span class="meta-val">Google Cloud Professional Data Engineer · AWS Solutions Architect – Associate · RHCE</span>
             </div>
             <div class="meta-row">
               <span class="meta-key">Languages</span>
@@ -771,84 +787,40 @@ permalink: /about/index.html
             </div>
             <div class="meta-row">
               <span class="meta-key">Education</span>
-              <span class="meta-val">B.Tech Electronics &amp; Communication, CUSAT · 2012–2016</span>
+              <span class="meta-val">B.Tech, Electronics &amp; Communication · CUSAT, 2012–2016</span>
             </div>
             <div class="meta-row">
               <span class="meta-key">Based in</span>
-              <span class="meta-val">Hyderabad, India · Open to remote engagements</span>
+              <span class="meta-val">Hyderabad, India · Available for remote engagements</span>
             </div>
           </div>
         </div>
 
-        <aside class="about-portrait">
-          <div class="portrait-frame">
-            <img src="/images/hari.jpg" alt="Harisankar Sivankutty" loading="lazy" />
-            <div class="portrait-border"></div>
-          </div>
-          <div class="portrait-caption">
-            <span class="portrait-name">Harisankar Sivankutty</span>
-            <span class="portrait-role">Data Engineering Architect</span>
-          </div>
-          <div class="portrait-corner tl"></div>
-          <div class="portrait-corner tr"></div>
-          <div class="portrait-corner bl"></div>
-          <div class="portrait-corner br"></div>
-        </aside>
       </div>
     </section>
 
-    <!-- CREDENTIALS -->
+    <!-- CERTIFICATIONS -->
     <section class="credentials reveal" aria-label="Certifications">
+      <span class="creds-eyebrow">Certifications</span>
       <div class="creds-grid">
-        <div class="cred-card">
-          <div class="cred-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 2L3 7v6c0 5 3.8 9.3 9 10 5.2-.7 9-5 9-10V7l-9-5z"/>
-              <path d="M9 12l2 2 4-4"/>
-            </svg>
-          </div>
-          <div class="cred-body">
-            <span class="cred-issuer">Google Cloud</span>
-            <h4 class="cred-title">Data Engineer- Professional</h4>
-            <span class="cred-meta">Professional certification (2024) </span>
-          </div>
-        </div>
-        <div class="cred-card">
-          <div class="cred-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 2L3 7v6c0 5 3.8 9.3 9 10 5.2-.7 9-5 9-10V7l-9-5z"/>
-              <path d="M9 12l2 2 4-4"/>
-            </svg>
-          </div>
-          <div class="cred-body">
-            <span class="cred-issuer">Amazon Web Services</span>
-            <h4 class="cred-title">Solutions Architect — Associate</h4>
-            <span class="cred-meta">Professional certification (2022) </span>
-          </div>
-        </div>
-
-        <div class="cred-card">
-          <div class="cred-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 2L3 7v6c0 5 3.8 9.3 9 10 5.2-.7 9-5 9-10V7l-9-5z"/>
-              <path d="M9 12l2 2 4-4"/>
-            </svg>
-          </div>
-          <div class="cred-body">
-            <span class="cred-issuer">Red Hat</span>
-            <h4 class="cred-title">Red Hat Certified Engineer (RHCE)</h4>
-            <span class="cred-meta">Professional certification (2016)</span>
-          </div>
-        </div>
-
-        <div class="cred-card cred-card--accent">
-          <div class="cred-body">
-            <span class="cred-issuer">Currently</span>
-            <h4 class="cred-title">Senior Consultant · Thoughtworks</h4>
-            <span class="cred-meta">Data Engineering · GenAI · Cloud</span>
-          </div>
-          <span class="cred-dot"></span>
-        </div>
+        <article class="cred-card">
+          <div class="cred-icon"><img class="cred-logo" src="/images/logos/gcp.svg" alt="Google Cloud" /></div>
+          <span class="cred-issuer">Google Cloud</span>
+          <h4 class="cred-title">Professional Data Engineer</h4>
+          <span class="cred-meta">Issued 2025</span>
+        </article>
+        <article class="cred-card">
+          <div class="cred-icon"><img class="cred-logo" src="/images/logos/aws.svg" alt="Amazon Web Services" /></div>
+          <span class="cred-issuer">Amazon Web Services</span>
+          <h4 class="cred-title">Solutions Architect — Associate</h4>
+          <span class="cred-meta">Issued 2022</span>
+        </article>
+        <article class="cred-card">
+          <div class="cred-icon"><img class="cred-logo" src="/images/logos/redhat.svg" alt="Red Hat" /></div>
+          <span class="cred-issuer">Red Hat</span>
+          <h4 class="cred-title">Certified Engineer (RHCE)</h4>
+          <span class="cred-meta">Issued 2016</span>
+        </article>
       </div>
     </section>
 
@@ -875,12 +847,50 @@ permalink: /about/index.html
             <h3 class="tl-role">Senior Consultant · Data Engineer</h3>
             <div class="tl-company">Thoughtworks</div>
             <p class="tl-desc">
-              Advising and architecting enterprise data platforms for global clients including
-              <strong style="color: var(--fg); font-weight:500;">JCPenney (USA)</strong> and
-              <strong style="color: var(--fg); font-weight:500;">Otto GmbH (Germany)</strong> —
-              blending modern data stack practices (dbt, Great Expectations, DataHub) with Spark,
-              Kafka, and multi-cloud analytics. See Featured Projects for details.
+              Advising and architecting enterprise data platforms for global retail and
+              e-commerce clients — blending modern data stack practices (dbt, Great Expectations,
+              DataHub) with Spark, Kafka, and multi-cloud analytics.
             </p>
+
+            <details class="tl-projects">
+              <summary>
+                <span class="tl-proj-label">Projects at Thoughtworks</span>
+                <span class="tl-proj-count">2</span>
+                <span class="tl-proj-chev" aria-hidden="true">▾</span>
+              </summary>
+              <div class="tl-projects-body">
+                <article class="exp-project">
+                  <div class="exp-project-top">
+                    <h4 class="exp-project-title">Assortment Analytics Platform</h4>
+                    <span class="exp-project-meta">Germany · E-commerce · 2025–Present</span>
+                  </div>
+                  <p class="exp-project-desc">A data-driven platform to analyse product assortment strategy using scraped data from a range of e-commerce platforms — structured for long-term flexibility and analytical scale.</p>
+                  <ul class="exp-project-points">
+                    <li>Data modelling with the <strong>Data Vault</strong> methodology for long-term scalability.</li>
+                    <li>Quarterly web-scraping pipelines feeding structured insights into <strong>BigQuery</strong>.</li>
+                    <li>Built an end-to-end framework to transfer data from <strong>BigQuery into Snowflake</strong>.</li>
+                  </ul>
+                  <div class="exp-project-stack">
+                    <span class="stack-chip">BigQuery</span><span class="stack-chip">Snowflake</span><span class="stack-chip">Data Vault</span><span class="stack-chip">Python</span><span class="stack-chip">Airflow</span>
+                  </div>
+                </article>
+                <article class="exp-project">
+                  <div class="exp-project-top">
+                    <h4 class="exp-project-title">Enterprise Data Platform Modernisation</h4>
+                    <span class="exp-project-meta">United States · Retail · 2024–2025</span>
+                  </div>
+                  <p class="exp-project-desc">End-to-end implementation of an enterprise data platform — rebuilding pipeline reliability, data quality controls, and large-scale transformation workloads across Spark, Kafka, and Oracle.</p>
+                  <ul class="exp-project-points">
+                    <li>Data quality framework using <strong>Great Expectations</strong> integrated with <strong>DataHub</strong>.</li>
+                    <li><strong>dbt</strong> and <strong>Oracle</strong> ingestion frameworks for reliable, faster delivery.</li>
+                    <li>Distributed <strong>Apache Spark</strong> jobs on <strong>AWS EMR</strong>; <strong>Kafka</strong>-based ingestion.</li>
+                  </ul>
+                  <div class="exp-project-stack">
+                    <span class="stack-chip">Great Expectations</span><span class="stack-chip">DataHub</span><span class="stack-chip">dbt</span><span class="stack-chip">Spark</span><span class="stack-chip">AWS EMR</span><span class="stack-chip">Kafka</span><span class="stack-chip">Oracle</span>
+                  </div>
+                </article>
+              </div>
+            </details>
           </div>
         </div>
 
@@ -944,129 +954,27 @@ permalink: /about/index.html
       </div>
     </section>
 
-    <!-- FEATURED PROJECTS -->
-    <section id="projects" class="projects reveal">
-      <div class="section-label"><span class="idx">[03]</span> Featured projects · Case studies</div>
-
-      <h2 class="section-heading">
-        Recent work that shows what the <span class="italic">infrastructure</span><br/>actually builds.
-      </h2>
-
-      <p class="section-sub">
-        Deep-dive case studies from recent Thoughtworks engagements — modern data stack, quality
-        frameworks, and scalable ingestion for global retail and e-commerce clients.
-      </p>
-
-      <article class="project-card">
-        <span class="project-num">01</span>
-        <div class="project-header">
-          <span>Project 01 / 02</span>
-          <span class="project-via">via Thoughtworks · 2025 -> Present</span>
-        </div>
-        <h3 class="project-title">Assortment Analytics Platform</h3>
-        <div class="project-meta-row">
-          <span class="client-name">Otto GmbH</span>
-          <span class="sep-dot"></span>
-          <span>Germany</span>
-          <span class="project-industry">E-commerce</span>
-        </div>
-        <p class="project-desc">
-          A data-driven platform to analyse product assortment strategy using scraped data from a
-          range of e-commerce platforms — structured for long-term flexibility and analytical scale.
-        </p>
-
-        <div class="project-contributions">
-          <div class="project-section-label">Key contributions</div>
-          <ul>
-            <li>Supported data modelling using the <strong>Data Vault</strong> methodology, ensuring flexibility and long-term scalability of the data warehouse.</li>
-            <li>Developed and maintained quarterly web scraping pipelines, feeding structured insights into <strong>BigQuery</strong> for analytics and reporting.</li>
-            <li>Designed and built a framework and end-to-end pipeline to transfer data from <strong>BigQuery into Snowflake</strong> — enabling downstream analytics consumption.</li>
-          </ul>
-        </div>
-
-        <div>
-          <div class="project-section-label">Stack</div>
-          <div class="project-stack">
-            <span class="stack-chip">BigQuery</span>
-            <span class="stack-chip">Snowflake</span>
-            <span class="stack-chip">Data Vault</span>
-            <span class="stack-chip">Python</span>
-            <span class="stack-chip">Web Scraping</span>
-            <span class="stack-chip">Airflow</span>
-          </div>
-        </div>
-      </article>
-
-      <!-- Project 02 — JCPenney -->
-      <article class="project-card">
-        <span class="project-num">02</span>
-        <div class="project-header">
-          <span>Project 02 / 02</span>
-          <span class="project-via">via Thoughtworks · 2024 → 2025</span>
-        </div>
-        <h3 class="project-title">Enterprise Data Platform Modernisation</h3>
-        <div class="project-meta-row">
-          <span class="client-name">JCPenney</span>
-          <span class="sep-dot"></span>
-          <span>United States</span>
-          <span class="project-industry">Retail</span>
-        </div>
-        <p class="project-desc">
-          Supported the end-to-end implementation of an enterprise data platform — rebuilding
-          pipeline reliability, data quality controls, and large-scale transformation workloads
-          across Spark, Kafka, and Oracle sources.
-        </p>
-
-        <div class="project-contributions">
-          <div class="project-section-label">Key contributions</div>
-          <ul>
-            <li>Developed a data quality framework using <strong>Great Expectations</strong>, integrated with <strong>DataHub</strong> — measurably improving data quality and operational efficiency across the platform.</li>
-            <li>Led the setup of <strong>dbt</strong> and <strong>Oracle</strong> ingestion frameworks, enhancing pipeline reliability and enabling faster delivery of new data products.</li>
-            <li>Designed and managed distributed <strong>Apache Spark</strong> jobs on <strong>AWS EMR</strong> for large-scale data transformations and processing.</li>
-            <li>Resolved critical DataHub integration issues — aligning pipeline performance and metadata coverage with core business objectives.</li>
-            <li>Built <strong>Kafka</strong>-based ingestion for scalable data operations, improving visibility across downstream business processes.</li>
-            <li>Contributed to the development of API-based ingestion frameworks.</li>
-          </ul>
-        </div>
-
-        <div>
-          <div class="project-section-label">Stack</div>
-          <div class="project-stack">
-            <span class="stack-chip">Great Expectations</span>
-            <span class="stack-chip">DataHub</span>
-            <span class="stack-chip">dbt</span>
-            <span class="stack-chip">Apache Spark</span>
-            <span class="stack-chip">AWS EMR</span>
-            <span class="stack-chip">Kafka</span>
-            <span class="stack-chip">Oracle</span>
-            <span class="stack-chip">Python</span>
-          </div>
-        </div>
-      </article>
-
-
-    </section>
-
     <!-- CLIENTS / DOMAINS -->
     <section id="clients" class="clients reveal">
-      <div class="section-label"><span class="idx">[04]</span> Clients · Domains</div>
+      <div class="section-label"><span class="idx">[03]</span> Clients · Domains</div>
 
       <h2 class="section-heading">
-        Trusted by <span class="italic">telecom giants, IoT platforms,</span><br/>
-        global retail, and Fortune 500 R&amp;D teams.
+        Companies I've <span class="italic">delivered for</span> — across<br/>
+        telecom, IoT, agriculture, retail, and e-commerce.
       </h2>
 
       <p class="section-sub">
-        Shipping data and platform work across Telecom, IoT, Agriculture R&amp;D, Retail, E-commerce,
-        and enterprise SaaS — directly and through Thoughtworks consulting engagements.
+        Over the past decade I've had the opportunity to work with these organisations —
+        building data platforms, pipelines, and analytics across their domains, both directly
+        and through Thoughtworks consulting engagements.
       </p>
       
 
       <div class="clients-grid">
 
                 <article class="client-card">
-          <div class="client-hex client-hex--text">
-            <span class="hex-mark">otto</span>
+          <div class="client-hex">
+            <img src="/images/logos/otto.svg" alt="Otto GmbH" loading="lazy" />
           </div>
           <div class="client-info">
             <div class="client-header">
@@ -1078,8 +986,8 @@ permalink: /about/index.html
           </div>
         </article>
         <article class="client-card">
-          <div class="client-hex client-hex--text">
-            <span class="hex-mark">JCP</span>
+          <div class="client-hex">
+            <img src="/images/logos/jcpenney.svg" alt="JCPenney" loading="lazy" />
           </div>
           <div class="client-info">
             <div class="client-header">
@@ -1181,7 +1089,7 @@ permalink: /about/index.html
 
     <!-- STACK -->
     <section id="stack" class="stack reveal">
-      <div class="section-label"><span class="idx">[05]</span> Tech stack &amp; skills</div>
+      <div class="section-label"><span class="idx">[04]</span> Tech stack &amp; skills</div>
 
       <h2 class="section-heading">
         Opinionated tools. <span class="italic">Pragmatic choices.</span>
@@ -1228,6 +1136,19 @@ permalink: /about/index.html
             <li>Prompt engineering</li>
             <li>Deep Learning</li>
             <li>ML algorithms</li>
+            <li>Snowflake Cortex AI</li>
+          </ul>
+        </div>
+
+        <div class="stack-group">
+          <h5 class="stack-title">LLM Training &amp; MLOps</h5>
+          <ul class="stack-list">
+            <li>Fine-tuning · LoRA / QLoRA</li>
+            <li>Axolotl</li>
+            <li>DeepSpeed</li>
+            <li>FSDP</li>
+            <li>MLflow</li>
+            <li>Model deployment</li>
           </ul>
         </div>
 
@@ -1266,12 +1187,16 @@ permalink: /about/index.html
             <li>Quality audits</li>
             <li>Stakeholder alignment</li>
             <li>Architecture reviews</li>
+            <li>RFP reviews</li>
+            <li>SOW preparation</li>
+            <li>HLD &amp; LLD design</li>
           </ul>
         </div>
 
         <div class="stack-group">
           <h5 class="stack-title">Certifications</h5>
           <ul class="stack-list">
+            <li>Google Cloud Professional Data Engineer</li>
             <li>AWS Solutions Architect – Associate</li>
             <li>Red Hat Certified Engineer (RHCE)</li>
           </ul>
@@ -1291,19 +1216,12 @@ permalink: /about/index.html
           </ul>
         </div>
 
-        <div class="stack-group stack-group--note">
-          <h5 class="stack-title">Always learning</h5>
-          <p class="stack-note">
-            Continuously exploring new tools, frameworks, and methodologies — happy to take on
-            new challenging roles that push the boundaries of data, AI, and cloud engineering.
-          </p>
-        </div>
       </div>
     </section>
 
     <!-- WRITING -->
-    <section id="writing" class="writing reveal">
-      <div class="section-label"><span class="idx">[06]</span> Writing · Blog</div>
+    <section id="blog" class="writing reveal">
+      <div class="section-label"><span class="idx">[05]</span> Blog</div>
 
       <h2 class="section-heading">
         Thoughts from <span class="italic">the trenches</span> of data engineering.
@@ -1316,52 +1234,25 @@ permalink: /about/index.html
 
       <div class="writing-grid">
 
-        <article class="writing-card featured-writing">
-          <div class="writing-card-meta">
-            <span class="writing-tag">GenAI</span>
-            <span class="writing-tag">Architecture</span>
-            <span class="writing-date">May 2026 · 8 min</span>
-          </div>
-          <h3 class="writing-title">Building Production-Grade RAG Pipelines on AWS</h3>
-          <p class="writing-excerpt">
-            Lessons from shipping RAG to enterprise clients: chunking strategies that work,
-            vector store trade-offs, evaluation pipelines, and the failure modes that will get you.
-          </p>
-          <a href="/blog/building-rag-pipeline-aws/" class="writing-link">
-            Read post <span class="arrow">↗</span>
-          </a>
-        </article>
-
-        <article class="writing-card">
-          <div class="writing-card-meta">
-            <span class="writing-tag">Data Engineering</span>
-            <span class="writing-tag">Cloud</span>
-            <span class="writing-date">Apr 2026 · 6 min</span>
-          </div>
-          <h3 class="writing-title">Data Vault 2.0 in BigQuery: Lessons from a Real Migration</h3>
-          <p class="writing-excerpt">
-            What the textbooks don't tell you about satellite loads, link table cardinality,
-            and PIT tables that betray you at 3am.
-          </p>
-          <a href="/blog/data-vault-bigquery/" class="writing-link">
-            Read post <span class="arrow">↗</span>
-          </a>
-        </article>
-
-        <article class="writing-card">
-          <div class="writing-card-meta">
-            <span class="writing-tag">Data Engineering</span>
-            <span class="writing-date">Mar 2026 · 5 min</span>
-          </div>
-          <h3 class="writing-title">Why Your dbt Tests Are Lying to You</h3>
-          <p class="writing-excerpt">
-            not_null and unique will pass while your pipeline silently corrupts downstream
-            aggregates. Here's how to build a test suite that catches real problems.
-          </p>
-          <a href="/blog/dbt-testing-guide/" class="writing-link">
-            Read post <span class="arrow">↗</span>
-          </a>
-        </article>
+        {% for post in collections.posts %}
+          {% if loop.index <= 3 %}
+          <article class="writing-card{{ ' featured-writing' if loop.first else '' }}">
+            <div class="writing-card-meta">
+              {% for tag in post.data.tags %}
+                {% if loop.index <= 2 %}<span class="writing-tag">{{ tag }}</span>{% endif %}
+              {% endfor %}
+              <span class="writing-date">{{ post.date | postDate }} · {{ post.templateContent | readTime }} min</span>
+            </div>
+            <h3 class="writing-title">{{ post.data.title }}</h3>
+            {% if post.data.excerpt %}
+            <p class="writing-excerpt">{{ post.data.excerpt }}</p>
+            {% endif %}
+            <a href="{{ post.url }}" class="writing-link">
+              Read post <span class="arrow">↗</span>
+            </a>
+          </article>
+          {% endif %}
+        {% endfor %}
 
       </div>
 
@@ -1373,61 +1264,21 @@ permalink: /about/index.html
       </div>
     </section>
 
-    <!-- CONTACT -->
-    <section id="contact" class="contact reveal">
-      <div class="section-label"><span class="idx">[07]</span> Contact</div>
-
-      <div class="contact-card">
-        <div class="contact-left">
-          <h2 class="contact-heading">
-            Have a <span class="italic">complex data challenge?</span><br/>
-            Let's engineer it together.
-          </h2>
-          <p class="contact-sub">
-            Available for consulting engagements, data platform architecture reviews, GenAI
-            integration, and delivery advisory. Open to interesting, high-impact work.
-          </p>
-
-          <div class="contact-actions">
-            <a href="https://topmate.io/harisankar_sivankutty" target="_blank" rel="noopener" class="btn-primary">
-              <span>Book a 1:1 on Topmate</span>
-              <span class="arrow">↗</span>
-            </a>
-            <a href="mailto:harisankar.sivankutty@gmail.com" class="btn-ghost">Email</a>
-            <a href="https://www.linkedin.com/in/harisankar-s-99935922/" target="_blank" rel="noopener" class="btn-ghost">LinkedIn</a>
-            <a href="https://twitter.com/Harisankar2523" target="_blank" rel="noopener" class="btn-ghost">Twitter</a>
-          </div>
-        </div>
-
-        <div class="contact-right">
-          <div class="contact-meta-item">
-            <span class="k">Response time</span>
-            <span class="v">Within 48 hours</span>
-          </div>
-          <div class="contact-meta-item">
-            <span class="k">Timezone</span>
-            <span class="v">IST · UTC+5:30</span>
-          </div>
-          <div class="contact-meta-item">
-            <span class="k">Availability</span>
-            <span class="v"><span class="live-dot-sm"></span> Open to consulting</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- FOOTER -->
     <footer class="footer">
       <div class="footer-inner">
         <div class="footer-left">
           <span class="footer-brand">
             <span class="dot"></span>
-            harisankarsivankutty.in
+            Harisankar Sivankutty
           </span>
           <span class="footer-year">© 2026 · All rights reserved</span>
         </div>
         <div class="footer-right">
-          <span>Harisankar Sivankutty · Data Engineering Architect</span>
+          <a href="mailto:harisankar.sivankutty@gmail.com" class="footer-contact" aria-label="Email Harisankar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <span>Contact</span>
+          </a>
         </div>
       </div>
     </footer>
@@ -1631,12 +1482,12 @@ permalink: /about/index.html
     .cred-card:hover {
       border-color: var(--border-strong);
       transform: translateY(-2px);
-      background: linear-gradient(to bottom right, rgba(184, 145, 10, 0.05), transparent);
+      background: linear-gradient(to bottom right, rgba(17, 24, 39, 0.05), transparent);
     }
 
     .cred-card--accent {
-      border-color: rgba(184, 145, 10, 0.35);
-      background: linear-gradient(to bottom right, rgba(184, 145, 10, 0.07), transparent);
+      border-color: rgba(17, 24, 39, 0.35);
+      background: linear-gradient(to bottom right, rgba(17, 24, 39, 0.07), transparent);
     }
 
     .cred-icon {
@@ -1648,7 +1499,7 @@ permalink: /about/index.html
       border: 1px solid var(--border-strong);
       border-radius: 8px;
       color: var(--accent);
-      background: rgba(184, 145, 10, 0.08);
+      background: rgba(17, 24, 39, 0.08);
     }
 
     .cred-icon svg { width: 20px; height: 20px; }
@@ -1761,7 +1612,7 @@ permalink: /about/index.html
 
     .timeline-item:hover .tl-content {
       border-color: var(--border-strong);
-      background: linear-gradient(to bottom right, rgba(184, 145, 10, 0.05), transparent);
+      background: linear-gradient(to bottom right, rgba(17, 24, 39, 0.05), transparent);
       transform: translateX(4px);
     }
 
@@ -1874,7 +1725,7 @@ permalink: /about/index.html
     .client-card:hover {
       border-color: var(--border-strong);
       transform: translateY(-3px);
-      background: linear-gradient(to bottom right, rgba(184, 145, 10, 0.05), transparent);
+      background: linear-gradient(to bottom right, rgba(17, 24, 39, 0.05), transparent);
     }
 
     .client-card:hover::before {
@@ -1911,8 +1762,8 @@ permalink: /about/index.html
     .client-hex--text {
       display: grid;
       place-items: center;
-      background: linear-gradient(140deg, rgba(184,145,10,0.10), rgba(0,0,0,0.02));
-      border-color: rgba(184, 145, 10, 0.25);
+      background: linear-gradient(140deg, rgba(17,24,39,0.10), rgba(0,0,0,0.02));
+      border-color: rgba(17, 24, 39, 0.25);
     }
 
     .hex-mark {
@@ -1965,7 +1816,7 @@ permalink: /about/index.html
       letter-spacing: 0.1em;
       margin-bottom: 10px;
       padding: 3px 8px;
-      border: 1px solid rgba(184, 145, 10, 0.30);
+      border: 1px solid rgba(17, 24, 39, 0.30);
       border-radius: 4px;
       background: var(--accent-dim);
     }
@@ -2009,7 +1860,7 @@ permalink: /about/index.html
 
     .project-card:hover {
       border-color: var(--border-strong);
-      background: linear-gradient(to bottom right, rgba(184, 145, 10, 0.05), transparent);
+      background: linear-gradient(to bottom right, rgba(17, 24, 39, 0.05), transparent);
       transform: translateY(-2px);
     }
 
@@ -2039,14 +1890,14 @@ permalink: /about/index.html
       font-size: clamp(80px, 11vw, 160px);
       line-height: 1;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(184, 145, 10, 0.22);
+      -webkit-text-stroke: 1px rgba(17, 24, 39, 0.22);
       pointer-events: none;
       transition: all 0.5s var(--ease);
       z-index: 0;
     }
 
     .project-card:hover .project-num {
-      -webkit-text-stroke-color: rgba(184, 145, 10, 0.40);
+      -webkit-text-stroke-color: rgba(17, 24, 39, 0.40);
     }
 
     .project-header {
@@ -2114,7 +1965,7 @@ permalink: /about/index.html
 
     .project-industry {
       padding: 3px 10px;
-      border: 1px solid rgba(184, 145, 10, 0.30);
+      border: 1px solid rgba(17, 24, 39, 0.30);
       border-radius: 4px;
       background: var(--accent-dim);
       color: var(--accent);
@@ -2285,7 +2136,7 @@ permalink: /about/index.html
     }
 
     .stack-group--note {
-      background: linear-gradient(to bottom right, rgba(184, 145, 10, 0.06), transparent);
+      background: linear-gradient(to bottom right, rgba(17, 24, 39, 0.06), transparent);
     }
 
     .stack-note {
@@ -2304,7 +2155,7 @@ permalink: /about/index.html
       border: 1px solid var(--border);
       border-radius: 12px;
       background:
-        radial-gradient(ellipse at top left, rgba(184, 145, 10, 0.07), transparent 60%),
+        radial-gradient(ellipse at top left, rgba(17, 24, 39, 0.07), transparent 60%),
         linear-gradient(to bottom right, var(--bg-elevated), var(--bg));
       display: grid;
       grid-template-columns: 1.6fr 1fr;
@@ -2321,7 +2172,7 @@ permalink: /about/index.html
       right: 0;
       width: 60%;
       height: 100%;
-      background: radial-gradient(circle at 80% 50%, rgba(184, 145, 10, 0.05), transparent 60%);
+      background: radial-gradient(circle at 80% 50%, rgba(17, 24, 39, 0.05), transparent 60%);
       pointer-events: none;
     }
 
@@ -2373,7 +2224,7 @@ permalink: /about/index.html
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(212, 255, 74, 0.25);
+      box-shadow: 0 8px 24px rgba(17, 24, 39, 0.25);
     }
 
     .btn-primary .arrow {
@@ -2560,7 +2411,7 @@ permalink: /about/index.html
 
     .writing-card.featured-writing {
       background: var(--accent-dim);
-      border-color: rgba(184, 145, 10, 0.25);
+      border-color: rgba(17, 24, 39, 0.25);
     }
 
     .writing-card-meta {
@@ -2655,6 +2506,107 @@ permalink: /about/index.html
         transform: none;
       }
     }
+  
+    /* amber pop accents */
+    .nav-logo .dot { background: var(--pop); box-shadow: 0 0 12px var(--pop-glow); }
+    .footer-brand .dot { background: var(--pop); box-shadow: 0 0 8px var(--pop-glow); }
+    ::selection { background: var(--pop); color: #111827; }
+    .section-label::before { background: var(--pop); }
+    .hero-meta .status .live-dot { background: var(--pop); box-shadow: 0 0 8px var(--pop-glow); }
+    .stat-num .plus { color: var(--pop); }
+    .tl-status { background: var(--pop); color: #111827; }
+    .cred-dot { background: var(--pop); box-shadow: 0 0 10px var(--pop-glow); }
+    .live-dot-sm { background: var(--pop); box-shadow: 0 0 8px var(--pop-glow); }
+    .writing-card::before,
+    .project-card::before,
+    .client-card::before { background: linear-gradient(to right, transparent, var(--pop), transparent); }
+    .writing-card.featured-writing { box-shadow: inset 0 3px 0 var(--pop); }
+
+  
+    /* ===== about page v2 ===== */
+    .hero-head { display: grid; grid-template-columns: 1fr auto; gap: clamp(28px,5vw,72px); align-items: center; }
+    .hero-head h1 { font-size: clamp(46px, 8.5vw, 104px); }
+    .hero-portrait { flex-shrink: 0; }
+    .hero-portrait img { width: clamp(150px, 17vw, 220px); aspect-ratio: 1 / 1; object-fit: cover; border-radius: 22px; border: 1px solid var(--border-strong); filter: grayscale(0.12) contrast(1.02); box-shadow: 0 20px 48px rgba(0,0,0,0.12); }
+    @media (max-width: 820px) { .hero-head { grid-template-columns: 1fr; } .hero-portrait { order: -1; } .hero-portrait img { width: 116px; border-radius: 18px; } }
+
+    .about-grid { grid-template-columns: 1fr; max-width: 860px; }
+
+    /* certifications */
+    .credentials { padding-top: clamp(36px,5vh,56px); padding-bottom: clamp(48px,7vh,80px); }
+    .creds-eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-dim); display: inline-flex; align-items: center; gap: 12px; margin-bottom: 26px; }
+    .creds-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--pop); }
+    .creds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .cred-card { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; padding: 24px 24px 22px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg); transition: border-color .3s var(--ease), transform .3s var(--ease), box-shadow .3s var(--ease); }
+    .cred-card:hover { border-color: var(--border-strong); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.07); }
+    .cred-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 10px; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.30); color: var(--pop); margin-bottom: 8px; }
+    .cred-icon svg { width: 22px; height: 22px; }
+    .cred-issuer { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-dim); }
+    .cred-title { font-family: var(--font-sans); font-weight: 700; font-size: 17px; line-height: 1.25; color: var(--fg); }
+    .cred-meta { font-family: var(--font-mono); font-size: 12px; color: var(--fg-muted); margin-top: 2px; }
+    @media (max-width: 760px) { .creds-grid { grid-template-columns: 1fr; } }
+
+    /* experience -> collapsible projects */
+    .tl-projects { margin-top: 18px; border-top: 1px dashed var(--border-strong); padding-top: 12px; }
+    .tl-projects > summary { list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 12px; font-weight: 500; color: var(--fg); padding: 6px 0; user-select: none; }
+    .tl-projects > summary::-webkit-details-marker { display: none; }
+    .tl-projects > summary:hover { color: var(--pop); }
+    .tl-proj-count { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; color: #111827; background: var(--pop); border-radius: 999px; padding: 1px 8px; }
+    .tl-proj-chev { color: var(--pop); transition: transform .25s var(--ease); }
+    .tl-projects[open] .tl-proj-chev { transform: rotate(180deg); }
+    .tl-projects[open] > summary { color: var(--pop); }
+    .tl-projects-body { display: grid; gap: 14px; margin-top: 16px; }
+    .exp-project { border: 1px solid var(--border); border-left: 3px solid var(--pop); border-radius: 8px; padding: 18px 20px; background: var(--bg-elevated); }
+    .exp-project-top { margin-bottom: 8px; }
+    .exp-project-title { font-family: var(--font-sans); font-weight: 700; font-size: 16px; color: var(--fg); line-height: 1.3; margin-bottom: 2px; }
+    .exp-project-meta { font-family: var(--font-mono); font-size: 11px; color: var(--fg-muted); }
+    .exp-project-desc { font-family: var(--font-sans); font-size: 13px; line-height: 1.6; color: var(--fg-muted); margin-bottom: 10px; }
+    .exp-project-points { list-style: none; display: grid; gap: 6px; margin-bottom: 12px; padding: 0; }
+    .exp-project-points li { font-family: var(--font-sans); font-size: 12.5px; line-height: 1.55; color: var(--fg-muted); padding-left: 18px; position: relative; }
+    .exp-project-points li::before { content: '→'; position: absolute; left: 0; color: var(--pop); }
+    .exp-project-points strong { color: var(--fg); font-weight: 600; }
+    .exp-project-stack { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    /* clients: 4 x 2 compact listing */
+    .clients-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .clients-grid .client-card { grid-template-columns: 1fr; justify-items: center; text-align: center; padding: 24px 16px; gap: 12px; }
+    .clients-grid .client-hex { width: 58px; height: 66px; }
+    .clients-grid .client-info { min-width: 0; width: 100%; }
+    .clients-grid .client-info p { display: none; }
+    .clients-grid .client-header { flex-direction: column; align-items: center; gap: 3px; }
+    .clients-grid .client-header h4 { font-size: 16px; }
+    .clients-grid .client-sector { margin-bottom: 0; }
+    @media (max-width: 900px) { .clients-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* tech stack: highlighted */
+    .stack { background: var(--bg-elevated); }
+    .stack .stack-grid { box-shadow: 0 16px 44px rgba(0,0,0,0.07); border-color: var(--border-strong); }
+    .stack .stack-group { background: var(--bg); }
+    .stack .stack-group:hover { background: #fff; box-shadow: inset 0 2.5px 0 var(--pop); }
+    .stack .stack-title { color: var(--fg); display: flex; align-items: center; gap: 9px; }
+    .stack .stack-title::before { content: ''; width: 16px; height: 2px; border-radius: 2px; background: var(--pop); flex-shrink: 0; }
+    .stack .stack-list li:hover { color: var(--pop); }
+    .stack .stack-list li:hover::before { color: var(--pop); }
+    .stack .stack-group--note { background: linear-gradient(to bottom right, rgba(245,158,11,0.12), transparent); }
+
+  
+    /* ===== logos ===== */
+    .cred-icon { width: auto; height: 32px; display: flex; align-items: center; justify-content: flex-start; background: none; border: none; padding: 0; margin-bottom: 14px; }
+    .cred-logo { height: 30px; width: auto; max-width: 130px; display: block; }
+    .sk-logo { width: 16px; height: 16px; object-fit: contain; flex-shrink: 0; }
+    .stack-list li.has-logo::before { content: none; }
+    .ti-logo { width: 18px; height: 18px; object-fit: contain; vertical-align: middle; }
+
+  
+    /* footer contact + client logo wall */
+    .footer-contact { display: inline-flex; align-items: center; gap: 8px; color: var(--fg-muted); transition: color .2s var(--ease); }
+    .footer-contact:hover { color: var(--pop); }
+    .footer-contact svg { width: 17px; height: 17px; }
+    .clients-grid .client-hex { clip-path: none; width: 100%; height: 44px; background: none; border: none; border-radius: 0; display: grid; place-items: center; padding: 0; }
+    .clients-grid .client-hex img { width: auto; max-width: 120px; max-height: 30px; height: auto; object-fit: contain; filter: none; mix-blend-mode: multiply; }
+    .clients-grid .client-card:hover .client-hex { transform: none; }
+    .clients-grid .client-card:hover .client-hex img { filter: none; }
+
   </style>
 
   <script>
@@ -2698,6 +2650,30 @@ permalink: /about/index.html
         }
       });
     });
+  </script>
+
+
+  <script>
+    (function () {
+      var L = {
+        'python':'python','apache spark':'spark','spark':'spark','kafka':'kafka','airflow':'airflow',
+        'databricks':'databricks','snowflake':'snowflake','snowflake cortex ai':'snowflake',
+        'bigquery':'bigquery','aws':'aws','aws emr':'aws','azure':'azure','gcp':'gcp',
+        'kubernetes':'kubernetes','terraform':'terraform','docker':'docker','langchain':'langchain',
+        'postgresql':'postgresql','mongodb':'mongodb','redis':'redis','scala':'scala','mlflow':'mlflow'
+      };
+      function add(el, cls, markClass) {
+        var slug = L[(el.textContent || '').trim().toLowerCase()];
+        if (!slug) return;
+        var img = document.createElement('img');
+        img.src = '/images/logos/' + slug + '.svg';
+        img.alt = ''; img.loading = 'lazy'; img.className = cls;
+        el.insertBefore(img, el.firstChild);
+        if (markClass) el.classList.add(markClass);
+      }
+      document.querySelectorAll('.stack-list li').forEach(function (li) { add(li, 'sk-logo', 'has-logo'); });
+      document.querySelectorAll('.ticker-item').forEach(function (t) { add(t, 'ti-logo'); });
+    })();
   </script>
 
 </body>

@@ -84,7 +84,30 @@ Inspired by GE’s internal `DataHubValidationAction`, we built custom assertion
 
 Here’s an example for the `expect_column_values_to_not_be_null` expectation:
 
-class ExpectColumnValuesToNotBeNullFactory(AssertionInfoFactory):    def create_assertion_info(self):        column_name = self.expectation_config["kwargs"]["column"]        assertion_urn = (            f"urn:li:assertion:expect_column_values_to_not_be_null-"            f"{self.domain_name}-{self.source_name}-{self.dataset_name}-"            f"{self.job_stage}-{self.environment}-{column_name}"        )        assertion_info = AssertionInfo(            type=AssertionType.DATASET,            datasetAssertion=DatasetAssertionInfo(                scope=DatasetAssertionScope.DATASET_COLUMN,                operator=AssertionStdOperator.NOT_NULL,                aggregation=AssertionStdAggregation.IDENTITY,                nativeType="expect_column_values_to_not_be_null",                fields=[make_schema_field_urn(self.dataset_urn, column_name)],                dataset=self.dataset_urn,                parameters=AssertionStdParameters(),            ),            customProperties={"suite_name": self.ge_results["meta"]["expectation_suite_name"]},        )        return assertion_urn, assertion_info
+```python
+class ExpectColumnValuesToNotBeNullFactory(AssertionInfoFactory):
+    def create_assertion_info(self):
+        column_name = self.expectation_config["kwargs"]["column"]
+        assertion_urn = (
+            f"urn:li:assertion:expect_column_values_to_not_be_null-"
+            f"{self.domain_name}-{self.source_name}-{self.dataset_name}-"
+            f"{self.job_stage}-{self.environment}-{column_name}"
+        )
+        assertion_info = AssertionInfo(
+            type=AssertionType.DATASET,
+            datasetAssertion=DatasetAssertionInfo(
+                scope=DatasetAssertionScope.DATASET_COLUMN,
+                operator=AssertionStdOperator.NOT_NULL,
+                aggregation=AssertionStdAggregation.IDENTITY,
+                nativeType="expect_column_values_to_not_be_null",
+                fields=[make_schema_field_urn(self.dataset_urn, column_name)],
+                dataset=self.dataset_urn,
+                parameters=AssertionStdParameters(),
+            ),
+            customProperties={"suite_name": self.ge_results["meta"]["expectation_suite_name"]},
+        )
+        return assertion_urn, assertion_info
+```
 This factory generates a unique assertion URN and metadata that DataHub uses to track this validation.
 
 
@@ -96,13 +119,77 @@ We use the `DatahubRestEmitter` class to send metadata change proposals (MCPs) a
 
 Here’s a simplified function demonstrating the emission process:
 
-from datahub.emitter.rest_emitter import DatahubRestEmitterfrom datahub.metadata.schema_classes import MetadataChangeProposalWrapperdef publish_to_datahub(ge_results, dataset_name, gms_server, token, environment, job_stage, datahub_cert_path, quality_score):    emitter = DatahubRestEmitter(        gms_server=gms_server,        token=token,        ca_certificate_path=datahub_cert_path    )    environment = environment.upper()    for result in ge_results["results"]:        expectation_config = result["expectation_config"]        expectation_type = expectation_config["expectation_type"]        success = result["success"]        result_data = result["result"]        dataset_urn = make_dataset_urn(dataset_name, job_stage, environment)        dataset_properties = DatasetProperties(name=dataset_name)        # Emit dataset metadata        emitter.emit_mcp(MetadataChangeProposalWrapper(entityUrn=dataset_urn, aspect=dataset_properties))        # Add quality score property        for patch_mcp in DatasetPatchBuilder(dataset_urn).add_custom_property("Quality Score", f"{round(quality_score)} %").build():            emitter.emit(patch_mcp)        # Create and emit assertion metadata        assertion_urn, assertion_info = create_assertion_info(            expectation_type, dataset_name, dataset_urn, expectation_config,            ge_results, job_stage, environment        )        emitter.emit_mcp(MetadataChangeProposalWrapper(entityUrn=assertion_urn, aspect=assertion_info))        # Link assertion to Great Expectations platform        assertion_platform = DataPlatformInstance(platform=builder.make_data_platform_urn("great-expectations"))        emitter.emit_mcp(MetadataChangeProposalWrapper(entityUrn=assertion_urn, aspect=assertion_platform))        # Emit assertion run event        assertion_run_event = AssertionRunEvent(            timestampMillis=int(time.time() * 1000),            assertionUrn=assertion_urn,            asserteeUrn=dataset_urn,            runId=str(uuid.uuid4()),            status=AssertionRunStatus.COMPLETE,            result=AssertionResult(                type=AssertionResultType.SUCCESS if success else AssertionResultType.FAILURE,                rowCount=parse_int_or_default(result_data.get("element_count")),                missingCount=parse_int_or_default(result_data.get("missing_count")),                unexpectedCount=parse_int_or_default(result_data.get("unexpected_count")),                actualAggValue=result_data.get("observed_value") if isinstance(result_data.get("observed_value"), (int, float)) else None,                nativeResults={                    k: convert_to_string(v)                    for k, v in result_data.items()                    if k in ["observed_value", "details", "unexpected_percent"] and v                },            ),        )        send_assertion_result_to_datahub(assertion_run_event, emitter)\
+```python
+from datahub.emitter.rest_emitter import DatahubRestEmitter
+from datahub.metadata.schema_classes import MetadataChangeProposalWrapper
+
+def publish_to_datahub(ge_results, dataset_name, gms_server, token, environment, job_stage, datahub_cert_path, quality_score):
+    emitter = DatahubRestEmitter(
+        gms_server=gms_server,
+        token=token,
+        ca_certificate_path=datahub_cert_path
+    )
+    environment = environment.upper()
+    for result in ge_results["results"]:
+        expectation_config = result["expectation_config"]
+        expectation_type = expectation_config["expectation_type"]
+        success = result["success"]
+        result_data = result["result"]
+        dataset_urn = make_dataset_urn(dataset_name, job_stage, environment)
+        dataset_properties = DatasetProperties(name=dataset_name)
+
+        # Emit dataset metadata
+        emitter.emit_mcp(MetadataChangeProposalWrapper(entityUrn=dataset_urn, aspect=dataset_properties))
+
+        # Add quality score property
+        for patch_mcp in DatasetPatchBuilder(dataset_urn).add_custom_property("Quality Score", f"{round(quality_score)} %").build():
+            emitter.emit(patch_mcp)
+
+        # Create and emit assertion metadata
+        assertion_urn, assertion_info = create_assertion_info(
+            expectation_type, dataset_name, dataset_urn, expectation_config,
+            ge_results, job_stage, environment
+        )
+        emitter.emit_mcp(MetadataChangeProposalWrapper(entityUrn=assertion_urn, aspect=assertion_info))
+
+        # Link assertion to Great Expectations platform
+        assertion_platform = DataPlatformInstance(platform=builder.make_data_platform_urn("great-expectations"))
+        emitter.emit_mcp(MetadataChangeProposalWrapper(entityUrn=assertion_urn, aspect=assertion_platform))
+
+        # Emit assertion run event
+        assertion_run_event = AssertionRunEvent(
+            timestampMillis=int(time.time() * 1000),
+            assertionUrn=assertion_urn,
+            asserteeUrn=dataset_urn,
+            runId=str(uuid.uuid4()),
+            status=AssertionRunStatus.COMPLETE,
+            result=AssertionResult(
+                type=AssertionResultType.SUCCESS if success else AssertionResultType.FAILURE,
+                rowCount=parse_int_or_default(result_data.get("element_count")),
+                missingCount=parse_int_or_default(result_data.get("missing_count")),
+                unexpectedCount=parse_int_or_default(result_data.get("unexpected_count")),
+                actualAggValue=result_data.get("observed_value") if isinstance(result_data.get("observed_value"), (int, float)) else None,
+                nativeResults={
+                    k: convert_to_string(v)
+                    for k, v in result_data.items()
+                    if k in ["observed_value", "details", "unexpected_percent"] and v
+                },
+            ),
+        )
+        send_assertion_result_to_datahub(assertion_run_event, emitter)
+```
 **Verifying the Integration**
 
 
 We also used the emitter’s `test_connection()` method during development to verify network connectivity and credentials with DataHub’s GMS service:
 
-emitter = DatahubRestEmitter(gms_server, token, ca_certificate_path)if emitter.test_connection():    print("DataHub connection successful!")else:    print("Failed to connect to DataHub.")
+```python
+emitter = DatahubRestEmitter(gms_server, token, ca_certificate_path)
+if emitter.test_connection():
+    print("DataHub connection successful!")
+else:
+    print("Failed to connect to DataHub.")
+```
 By building on top of Great Expectations and extending its native capabilities with a custom DataHub REST emitter and assertion factories, we successfully:
 
 
@@ -142,7 +229,47 @@ We configured the `AsyncExecutor` using GE's concurrency context and the availab
 
 #### 🔁 Code Snippet (Simplified)
 
-from great_expectations.validation_operators import ActionListValidationOperatorfrom great_expectations.core.batch import RuntimeBatchRequestfrom great_expectations.async_executor import AsyncExecutor# Construct batch requestbatch_request = RuntimeBatchRequest(    datasource_name="filesystem_datasource",    data_connector_name="runtime_data_connector",    data_asset_name="your_dataset_name",    batch_identifiers={"batch_id": "your_batch_id"},    runtime_parameters={"batch_data": input_df})# Prepare validator and contextge_validator = DataValidator(batch_request, secrets_manager)ge_validator.apply_validations(expectation_config, "your_suite_name")context = ge_validator.get_or_create_context()# Define validation actionsaction_list = ge_validator.get_action_list()worker_cores = self.key_value_parser.get_value("worker_node_count")# Async execution blockwith AsyncExecutor(context.concurrency, worker_cores) as async_executor:    validation_operator = ActionListValidationOperator(        data_context=context,        action_list=action_list,        result_format="SUMMARY",        name="async-validation-operator"    )    async_result = async_executor.submit(        validation_operator.run,        assets_to_validate=[ge_validator.validator],        run_id=datetime.datetime.now().strftime('%Y%m%d'),        checkpoint_name="async-checkpoint"    )# Wait and fetch results    validation_results = async_result.result()
+```python
+from great_expectations.validation_operators import ActionListValidationOperator
+from great_expectations.core.batch import RuntimeBatchRequest
+from great_expectations.async_executor import AsyncExecutor
+
+# Construct batch request
+batch_request = RuntimeBatchRequest(
+    datasource_name="filesystem_datasource",
+    data_connector_name="runtime_data_connector",
+    data_asset_name="your_dataset_name",
+    batch_identifiers={"batch_id": "your_batch_id"},
+    runtime_parameters={"batch_data": input_df}
+)
+
+# Prepare validator and context
+ge_validator = DataValidator(batch_request, secrets_manager)
+ge_validator.apply_validations(expectation_config, "your_suite_name")
+context = ge_validator.get_or_create_context()
+
+# Define validation actions
+action_list = ge_validator.get_action_list()
+worker_cores = self.key_value_parser.get_value("worker_node_count")
+
+# Async execution block
+with AsyncExecutor(context.concurrency, worker_cores) as async_executor:
+    validation_operator = ActionListValidationOperator(
+        data_context=context,
+        action_list=action_list,
+        result_format="SUMMARY",
+        name="async-validation-operator"
+    )
+    async_result = async_executor.submit(
+        validation_operator.run,
+        assets_to_validate=[ge_validator.validator],
+        run_id=datetime.datetime.now().strftime('%Y%m%d'),
+        checkpoint_name="async-checkpoint"
+    )
+
+    # Wait and fetch results
+    validation_results = async_result.result()
+```
 #### Impact
 
 

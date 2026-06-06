@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="author" content="Harisankar Sivankutty" />
-  <meta name="theme-color" content="#F9F8F4" />
+  <meta name="theme-color" content="#FFFFFF" />
   <meta name="description" content="{{ description or 'Writing by Harisankar Sivankutty — data engineering, GenAI, cloud architecture.' }}" />
   <meta property="og:title" content="{{ title or 'Harisankar Sivankutty' }}" />
   <meta property="og:description" content="{{ description or 'Writing by Harisankar Sivankutty — data engineering, GenAI, cloud architecture.' }}" />
@@ -21,18 +21,18 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #F9F8F4;
-      --bg-elevated: #F0EEE6;
-      --surface: #E8E6DC;
+      --bg: #FFFFFF;
+      --bg-elevated: #F9FAFB;
+      --surface: #F3F4F6;
       --border: rgba(0, 0, 0, 0.09);
       --border-strong: rgba(0, 0, 0, 0.18);
-      --fg: #1A1A18;
-      --fg-muted: #52524C;
-      --fg-dim: #9A9A8F;
-      --accent: #B8910A;
-      --accent-dim: rgba(184, 145, 10, 0.12);
-      --accent-glow: rgba(184, 145, 10, 0.22);
-      --warm: #C84F1A;
+      --fg: #111827;
+      --fg-muted: #4B5563;
+      --fg-dim: #9CA3AF;
+      --accent: #1F2937;
+      --accent-dim: rgba(17, 24, 39, 0.12);
+      --accent-glow: rgba(17, 24, 39, 0.22); --pop: #F59E0B; --pop-glow: rgba(245,158,11,0.45);
+      --warm: #1F2937;
 
       --font-serif: 'Instrument Serif', 'Times New Roman', serif;
       --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -67,18 +67,18 @@
     ::selection { background: var(--accent); color: var(--bg); }
 
     /* NAV */
-    .nav {
+    .nav { --accent: #E5E7EB;
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       padding: 18px var(--pad-x);
       display: flex; align-items: center; justify-content: space-between;
-      background: #1C1814;
+      background: #111827;
       border-bottom: 1px solid rgba(255,255,255,0.06);
       transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
     }
-    .nav.scrolled { border-bottom-color: rgba(255,255,255,0.10); background: rgba(24,21,16,0.98); }
+    .nav.scrolled { border-bottom-color: rgba(255,255,255,0.10); background: rgba(17,24,39,0.98); }
     .nav-logo {
       font-family: var(--font-mono); font-size: 13px; font-weight: 500;
-      letter-spacing: -0.01em; color: #F0EDE4;
+      letter-spacing: -0.01em; color: #E5E7EB;
       display: flex; align-items: center; gap: 10px;
     }
     .nav-logo .dot {
@@ -93,10 +93,10 @@
     }
     .nav-links {
       display: flex; gap: 28px; list-style: none;
-      font-size: 12.5px; color: rgba(240, 237, 228, 0.55);
+      font-size: 12.5px; color: rgba(229, 231, 235, 0.55);
     }
     .nav-links a { position: relative; padding: 4px 0; }
-    .nav-links a:hover, .nav-links a.active { color: #F0EDE4; }
+    .nav-links a:hover, .nav-links a.active { color: #E5E7EB; }
     .nav-links a::before {
       content: ''; position: absolute; left: 0; bottom: 0;
       width: 0; height: 1px; background: var(--accent);
@@ -106,12 +106,12 @@
     .nav-cta {
       font-family: var(--font-mono); font-size: 12px;
       padding: 8px 16px;
-      border: 1px solid rgba(240,237,228,0.22); border-radius: 999px;
-      color: #F0EDE4;
+      border: 1px solid rgba(229,231,235,0.22); border-radius: 999px;
+      color: #E5E7EB;
       transition: all 0.3s var(--ease);
       display: inline-flex; align-items: center; gap: 8px;
     }
-    .nav-cta:hover { background: var(--accent); color: #1C1814; border-color: var(--accent); }
+    .nav-cta:hover { background: var(--accent); color: #111827; border-color: var(--accent); }
     .nav-cta .arrow { transition: transform 0.3s var(--ease); }
     .nav-cta:hover .arrow { transform: translateX(2px) translateY(-2px); }
     @media (max-width: 720px) { .nav-links { display: none; } }
@@ -136,6 +136,12 @@
     }
     .footer-year { color: var(--fg-dim); }
     .footer-right { color: var(--fg-dim); font-size: 11px; }
+  
+    /* amber pop accents */
+    .nav-logo .dot, .nav-brand .dot { background: var(--pop); box-shadow: 0 0 12px var(--pop-glow); }
+    .footer-brand .dot { background: var(--pop); box-shadow: 0 0 8px var(--pop-glow); }
+    ::selection { background: var(--pop); color: #111827; }
+
   </style>
 
   {% block head %}{% endblock %}
@@ -145,7 +151,7 @@
   <nav class="nav" id="nav">
     <a href="/" class="nav-logo">
       <span class="dot"></span>
-      harisankar.s<span style="color: rgba(240,237,228,0.4);">/</span>writing
+      harisankar.s<span style="color: rgba(229,231,235,0.4);">/</span>writing
     </a>
     <ul class="nav-links">
       <li><a href="/#about">about</a></li>
@@ -167,7 +173,7 @@
       <div class="footer-left">
         <span class="footer-brand">
           <span class="dot"></span>
-          harisankarsivankutty.in
+          Harisankar Sivankutty
         </span>
         <span class="footer-year">© 2026 · All rights reserved</span>
       </div>
