@@ -36,7 +36,7 @@ They didn't just need a data warehouse refresh. They needed a platform that coul
 At the architecture level, we went with a hybrid stack: AWS for infrastructure, Snowflake as the data warehouse, and open-source tooling (Spark, Hudi, Airflow, Great Expectations, DataHub) to fill the gaps. Data lived in an S3-based data lake (Parquet + Hudi for Data Science use cases) and flowed into Snowflake for enterprise reporting.
 
 <figure>
-  <iframe src="/images/posts/enterprise-data-platform/enterprise_data_platform_architecture.html" width="100%" height="440" frameborder="0" style="border-radius:8px;border:1px solid rgba(0,0,0,0.08);display:block;" title="Enterprise data platform architecture diagram"></iframe>
+  <iframe src="/images/posts/enterprise-data-platform/enterprise_data_platform_architecture.html?v=2" width="100%" height="440" frameborder="0" style="border-radius:8px;border:1px solid rgba(0,0,0,0.08);display:block;" title="Enterprise data platform architecture diagram"></iframe>
   <figcaption>End-to-end data platform architecture — from raw sources through lake layers to warehouse and consumption.</figcaption>
 </figure>
 
@@ -64,7 +64,7 @@ We supported EMR Serverless, EMR on EKS, and EMR on EC2, with Spot Instances for
 We launched DataHub as the central metadata platform and built a *Data Producer Playbook* — a practical guide covering responsibilities, SLAs, governance checkpoints, and step-by-step onboarding flows. This wasn't just documentation; it was the mechanism for scaling the platform beyond our team.
 
 <figure>
-  <img src="/images/posts/enterprise-data-platform/tech_stack_grid.svg" alt="Tech stack grid — AWS, DevOps, Snowflake, and open-source tooling" />
+  <img src="/images/posts/enterprise-data-platform/tech_stack_grid.svg?v=2" alt="Tech stack grid — AWS, DevOps, Snowflake, and open-source tooling" />
   <figcaption>The hybrid tech stack — combining AWS managed services, open-source tooling, and a cloud data warehouse.</figcaption>
 </figure>
 
@@ -75,7 +75,7 @@ We launched DataHub as the central metadata platform and built a *Data Producer 
 One thing I'm genuinely proud of from this engagement is how we approached the codebase itself. A platform of this scale — ingesting TBs daily across a dozen source types — can easily become an unmaintainable tangle if you don't make deliberate structural choices early. We made a few that paid off significantly.
 
 <figure>
-  <img src="/images/posts/enterprise-data-platform/repo_structure_diagram.svg" alt="Monorepo structure diagram showing module layout" />
+  <img src="/images/posts/enterprise-data-platform/repo_structure_diagram.svg?v=2" alt="Monorepo structure diagram showing module layout" />
   <figcaption>Monorepo structure — each module owns its pipeline concern, with shared logging and job control across the platform.</figcaption>
 </figure>
 
@@ -96,7 +96,7 @@ The entire platform lived in a single repository, organized into discrete, indep
 The four patterns that mattered most in practice:
 
 <figure>
-  <iframe src="/images/posts/enterprise-data-platform/coding_patterns_snippet_1_factory.html" width="100%" height="1600" frameborder="0" style="border-radius:8px;border:1px solid rgba(0,0,0,0.08);display:block;" title="Four code patterns: Factory, Config-driven, ETL logging, Spark testing"></iframe>
+  <iframe src="/images/posts/enterprise-data-platform/coding_patterns_snippet_1_factory.html?v=2" width="100%" height="1600" frameborder="0" style="border-radius:8px;border:1px solid rgba(0,0,0,0.08);display:block;" title="Four code patterns: Factory, Config-driven, ETL logging, Spark testing"></iframe>
   <figcaption>Four patterns that kept the codebase clean across 19 months and multiple contributors.</figcaption>
 </figure>
 
