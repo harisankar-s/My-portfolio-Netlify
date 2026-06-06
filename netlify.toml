@@ -1,0 +1,26 @@
+[build]
+  command   = "npm run build"
+  publish   = "_site"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from   = "/blog/"
+  to     = "/"
+  status = 301
+
+[[redirects]]
+  from   = "/blog/edp_medium_article/"
+  to     = "/blog/building-enterprise-data-platform-lessons-learned/"
+  status = 301
+
+[[redirects]]
+  from   = "/blog/data-vault-bigquery.html"
+  to     = "/blog/data-vault-bigquery/"
+  status = 301
+
+[[redirects]]
+  from   = "/blog/dbt-testing-guide.html"
+  to     = "/blog/dbt-testing-guide/"
+  status = 301

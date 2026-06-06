@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-background-primary:   #F9F8F4;
+    --color-background-secondary: #F0EEE6;
+    --color-border-tertiary:      rgba(0, 0, 0, 0.08);
+    --color-text-primary:         #1A1A18;
+    --color-text-secondary:       #4A4A44;
+    --color-text-tertiary:        #8A8A80;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { background: var(--color-background-primary); }
+  body { padding: 4px 0 12px; font-family: var(--font-mono); }
+</style>
+</head>
+<body>
+
+<style>
+.panel{background:var(--color-background-secondary);border-radius:12px;border:0.5px solid var(--color-border-tertiary);overflow:hidden;margin-bottom:16px}
+.panel-header{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
+.badge{font-size:11px;font-weight:500;padding:2px 8px;border-radius:4px}
+.badge-purple{background:#EEEDFE;color:#3C3489}
+.badge-teal{background:#E1F5EE;color:#085041}
+.badge-amber{background:#FAEEDA;color:#633806}
+.badge-blue{background:#E6F1FB;color:#0C447C}
+.fname{font-size:12px;color:var(--color-text-secondary);font-family:var(--font-mono)}
+pre{margin:0;padding:14px 16px;font-size:12px;line-height:1.7;font-family:var(--font-mono);color:var(--color-text-primary);overflow-x:auto;white-space:pre}
+.kw{color:#534AB7}
+.cl{color:#185FA5}
+.fn{color:#0F6E56}
+.st{color:#993C1D}
+.cm{color:var(--color-text-tertiary);font-style:italic}
+.hl{background:#EEEDFE;display:block;margin:0 -16px;padding:0 16px}
+.label{font-size:11px;font-weight:500;color:var(--color-text-secondary);padding:8px 16px 2px;letter-spacing:.04em;text-transform:uppercase}
+</style>
+
+<div style="padding:4px 0 8px">
+
+  <div class="panel">
+    <div class="panel-header">
+      <span class="badge badge-purple">Pattern 1</span>
+      <span style="font-size:13px;font-weight:500;color:var(--color-text-primary)">Factory + dynamic module loader</span>
+      <span class="fname">transformation/src/core/jobs/common/job_factory.py</span>
+    </div>
+    <div class="label">The framework — zero knowledge of individual sources</div>
+    <pre><span class="kw">class</span> <span class="cl">JobFactory</span>:
+
+    <span class="kw">@staticmethod</span>
+    <span class="kw">def</span> <span class="fn">get_job</span>(job_type, io_handler, key_value_parser, spark, logger):
+
+        <span class="kw">if</span> job_type == JobType.BRONZE_TO_SILVER.value:
+            source_name  = key_value_parser.get_value(<span class="st">"source_name"</span>)
+            dataset_name = key_value_parser.get_value(<span class="st">"dataset_name"</span>)
+
+<span class="hl">            <span class="cm"># dynamically imports  src.source.{source}.src.transformer.{dataset}_transform</span>
+</span><span class="hl">            conf_module  = <span class="cl">DynamicMod</span>().import_source_trans(source_name, dataset_name)
+</span><span class="hl">            transformer  = <span class="cl">DynamicMod</span>().get_src_class(conf_module, <span class="st">"Transformer"</span>)(io_handler)
+</span>
+            <span class="kw">return</span> <span class="cl">S3ReaderJob</span>(key_value_parser, io_handler, transformer, logger)
+
+        <span class="kw">elif</span> job_type == JobType.SILVER_TO_GOLD.value:
+            <span class="kw">return</span> <span class="cl">S3ReaderJob</span>(key_value_parser, io_handler, <span class="st">""</span>, logger)</pre>
+    <div class="label">Each source — plug in by convention, no core changes</div>
+    <pre><span class="cm"># transformation/src/source/cdm/src/transformer/customer_attributes_transform.py</span>
+
+<span class="kw">class</span> <span class="cl">Transformer</span>:           <span class="cm"># name is the contract — DynamicMod finds it</span>
+
+    <span class="kw">def</span> <span class="fn">apply_transformations</span>(<span class="kw">self</span>, input_df, source_date):
+        input_df = <span class="cl">CommonTransformer</span>.remove_white_spaces_from_col(<span class="kw">self</span>, input_df)
+        input_df = <span class="cl">CommonTransformer</span>.convert_to_lower_case(<span class="kw">self</span>, input_df)
+        input_df = <span class="cl">CommonTransformer</span>.add_audit_column_to_dataframe(<span class="kw">self</span>, input_df)
+<span class="hl">        input_df = input_df.withColumn(<span class="st">"source_date"</span>, F.to_date(F.lit(source_date), <span class="st">"yyyyMMdd"</span>))
+</span>        <span class="kw">return</span> input_df</pre>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <span class="badge badge-teal">Pattern 2</span>
+      <span style="font-size:13px;font-weight:500;color:var(--color-text-primary)">Config-driven pipelines — one framework, every source type</span>
+      <span class="fname">ingestion/src/core/ingestion_driver.py</span>
+    </div>
+    <div class="label">Source type resolved from config at runtime — no bespoke pipelines</div>
+    <pre><span class="kw">def</span> <span class="fn">ingest</span>(<span class="kw">self</span>):
+    source_type = <span class="kw">self</span>.keyvalue_parser.get_value(<span class="st">"source_type"</span>)  <span class="cm"># from job args</span>
+
+<span class="hl">    <span class="kw">if</span>   source_type == <span class="st">'oracle'</span>  : db_util = <span class="cl">OracleUtil</span>   (spark, parser, ...)
+</span><span class="hl">    <span class="kw">elif</span> source_type == <span class="st">'cassandra'</span>: db_util = <span class="cl">CassandraUtil</span>(spark, parser, ...)
+</span><span class="hl">    <span class="kw">elif</span> source_type == <span class="st">'kafka'</span>   : db_util = <span class="cl">KafkaUtil</span>    (spark, parser, ...)
+</span><span class="hl">    <span class="kw">elif</span> source_type == <span class="st">'adobe'</span>   : db_util = <span class="cl">AdobeUtil</span>    (spark, parser, ...)
+</span>    <span class="kw">else</span>: <span class="kw">raise</span> <span class="cl">Exception</span>(<span class="st">f"Unsupported source type: </span>{source_type}<span class="st">"</span>)
+
+    db_util.execute()     <span class="cm"># same interface, every source</span></pre>
+    <div class="label">Kafka stream config — env-specific, no hardcoding</div>
+    <pre><span class="cm"># ingestion/src/core/util/streaming/configs/dev/order_header.conf</span>
+
+input {
+<span class="hl">    schema_registry_id    = <span class="st">"100248"</span>
+</span>    read_start_position   = <span class="st">"earliest"</span>
+    groupId               = <span class="st">"order-header-dev-group"</span>
+}
+processing {
+<span class="hl">    file_output_format    = <span class="st">"parquet"</span>
+</span>    batch_interval        = <span class="st">"60 seconds"</span>
+    max_records_per_batch = <span class="st">500</span>
+    <span class="cm"># prod/ qa/ uat/ each have their own copy — zero env hardcoding</span>
+}</pre>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <span class="badge badge-amber">Pattern 3</span>
+      <span style="font-size:13px;font-weight:500;color:var(--color-text-primary)">Structured ETL logging — every job, fully traceable</span>
+      <span class="fname">logger/src/common/log.py</span>
+    </div>
+    <div class="label">Every log line carries full job context — no guessing in prod</div>
+    <pre><span class="kw">class</span> <span class="cl">ETLLog</span>:
+    <span class="kw">def</span> <span class="fn">__init__</span>(<span class="kw">self</span>, job_run_id, stage, dataset_name,
+                       source_name, pipeline_id, domain_name, app_id):
+<span class="hl">        <span class="kw">self</span>.job_run_id   = job_run_id    <span class="cm"># ties every log to a DAG run</span>
+</span><span class="hl">        <span class="kw">self</span>.pipeline_id  = pipeline_id   <span class="cm"># links ingestion → transform → quality</span>
+</span><span class="hl">        <span class="kw">self</span>.domain_name  = domain_name   <span class="cm"># customer / master / crm …</span>
+</span>        <span class="kw">self</span>.app_id       = app_id         <span class="cm"># Spark app id for EMR correlation</span>
+
+    <span class="kw">def</span> <span class="fn">create_log</span>(<span class="kw">self</span>):
+        <span class="kw">return</span> (
+            <span class="st">f"{{app_id: </span>{<span class="kw">self</span>.app_id}<span class="st">, domain: </span>{<span class="kw">self</span>.domain_name}<span class="st">"</span>
+            <span class="st">f", pipeline: </span>{<span class="kw">self</span>.pipeline_id}<span class="st">, source: </span>{<span class="kw">self</span>.source_name}<span class="st">"</span>
+            <span class="st">f", stage: </span>{<span class="kw">self</span>.stage}<span class="st">, dataset: </span>{<span class="kw">self</span>.dataset_name}<span class="st">}}"</span>
+        )</pre>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      <span class="badge badge-blue">Pattern 4</span>
+      <span style="font-size:13px;font-weight:500;color:var(--color-text-primary)">Testing — co-located, Spark-aware, S3 mocked locally</span>
+      <span class="fname">transformation/tests/helper/spark_test_base.py</span>
+    </div>
+    <div class="label">Shared base class — every Spark test inherits a real local session</div>
+    <pre><span class="kw">class</span> <span class="cl">SparkTestBase</span>(unittest.TestCase):
+
+    <span class="kw">@classmethod</span>
+    <span class="kw">def</span> <span class="fn">setUpClass</span>(cls):
+<span class="hl">        cls.spark = cls.get_spark_session()    <span class="cm"># local[*] Spark, real Parquet/Hudi jars</span>
+</span><span class="hl">        cls.logger = cls.get_etl_logger().logger
+</span>
+    <span class="kw">@classmethod</span>
+    <span class="kw">def</span> <span class="fn">tearDownClass</span>(cls):
+        cls.spark.stop()
+
+    <span class="kw">def</span> <span class="fn">assert_df_equals</span>(<span class="kw">self</span>, expected, result):
+        <span class="kw">self</span>.assertEqual(expected.schema, result.schema)
+        unequal = expected.rdd.zipWithIndex().join(
+                     result.rdd.zipWithIndex()).filter(
+                         <span class="kw">lambda</span> x: x[<span class="st">1</span>][<span class="st">0</span>] != x[<span class="st">1</span>][<span class="st">1</span>])
+<span class="hl">        <span class="kw">self</span>.assertEqual([], unequal.take(<span class="st">10</span>))   <span class="cm"># row-level diff on failure</span>
+</span>
+<span class="cm">    # S3 mocked with moto — run `moto_server s3 -p 5000` before the suite</span>
+<span class="cm">    # pytest tests/ -m "not integtest"  →  unit only, no AWS credentials needed</span></pre>
+  </div>
+
+</div>
+
+</body>
+</html>

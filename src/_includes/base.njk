@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Harisankar Sivankutty" />
+  <meta name="theme-color" content="#F9F8F4" />
+  <meta name="description" content="{{ description or 'Writing by Harisankar Sivankutty — data engineering, GenAI, cloud architecture.' }}" />
+  <meta property="og:title" content="{{ title or 'Harisankar Sivankutty' }}" />
+  <meta property="og:description" content="{{ description or 'Writing by Harisankar Sivankutty — data engineering, GenAI, cloud architecture.' }}" />
+  <meta property="og:type" content="{{ ogType or 'website' }}" />
+  <title>{{ title }} — Harisankar Sivankutty</title>
+  <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
+  <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml" />
+  <link rel="icon" href="/images/favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F9F8F4;
+      --bg-elevated: #F0EEE6;
+      --surface: #E8E6DC;
+      --border: rgba(0, 0, 0, 0.09);
+      --border-strong: rgba(0, 0, 0, 0.18);
+      --fg: #1A1A18;
+      --fg-muted: #52524C;
+      --fg-dim: #9A9A8F;
+      --accent: #B8910A;
+      --accent-dim: rgba(184, 145, 10, 0.12);
+      --accent-glow: rgba(184, 145, 10, 0.22);
+      --warm: #C84F1A;
+
+      --font-serif: 'Instrument Serif', 'Times New Roman', serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+      --max-w: 1280px;
+      --pad-x: clamp(20px, 4vw, 56px);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 1;
+      opacity: 0.04; mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; text-decoration: none; transition: color 0.2s var(--ease); }
+    img { display: block; max-width: 100%; }
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px var(--pad-x);
+      display: flex; align-items: center; justify-content: space-between;
+      background: #1C1814;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+    }
+    .nav.scrolled { border-bottom-color: rgba(255,255,255,0.10); background: rgba(24,21,16,0.98); }
+    .nav-logo {
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      letter-spacing: -0.01em; color: #F0EDE4;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo .dot {
+      width: 8px; height: 8px;
+      background: var(--accent); border-radius: 50%;
+      box-shadow: 0 0 12px var(--accent-glow);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.85); }
+    }
+    .nav-links {
+      display: flex; gap: 28px; list-style: none;
+      font-size: 12.5px; color: rgba(240, 237, 228, 0.55);
+    }
+    .nav-links a { position: relative; padding: 4px 0; }
+    .nav-links a:hover, .nav-links a.active { color: #F0EDE4; }
+    .nav-links a::before {
+      content: ''; position: absolute; left: 0; bottom: 0;
+      width: 0; height: 1px; background: var(--accent);
+      transition: width 0.3s var(--ease);
+    }
+    .nav-links a:hover::before, .nav-links a.active::before { width: 100%; }
+    .nav-cta {
+      font-family: var(--font-mono); font-size: 12px;
+      padding: 8px 16px;
+      border: 1px solid rgba(240,237,228,0.22); border-radius: 999px;
+      color: #F0EDE4;
+      transition: all 0.3s var(--ease);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .nav-cta:hover { background: var(--accent); color: #1C1814; border-color: var(--accent); }
+    .nav-cta .arrow { transition: transform 0.3s var(--ease); }
+    .nav-cta:hover .arrow { transform: translateX(2px) translateY(-2px); }
+    @media (max-width: 720px) { .nav-links { display: none; } }
+
+    /* FOOTER */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 32px var(--pad-x);
+    }
+    .footer-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+      font-family: var(--font-mono); font-size: 11.5px; color: var(--fg-muted);
+    }
+    .footer-left { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+    .footer-brand { display: flex; align-items: center; gap: 8px; color: var(--fg); }
+    .footer-brand .dot {
+      width: 6px; height: 6px;
+      background: var(--accent); border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+    .footer-year { color: var(--fg-dim); }
+    .footer-right { color: var(--fg-dim); font-size: 11px; }
+  </style>
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <a href="/" class="nav-logo">
+      <span class="dot"></span>
+      harisankar.s<span style="color: rgba(240,237,228,0.4);">/</span>writing
+    </a>
+    <ul class="nav-links">
+      <li><a href="/#about">about</a></li>
+      <li><a href="/#experience">experience</a></li>
+      <li><a href="/#projects">projects</a></li>
+      <li><a href="/#clients">clients</a></li>
+      <li><a href="/#stack">stack</a></li>
+      <li><a href="/blog/" class="{{ 'active' if '/blog' in page.url else '' }}">writing</a></li>
+    </ul>
+    <a href="https://topmate.io/harisankar_sivankutty" target="_blank" rel="noopener" class="nav-cta">
+      Book a 1:1 <span class="arrow">↗</span>
+    </a>
+  </nav>
+
+  {% block body %}{% endblock %}
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <span class="footer-brand">
+          <span class="dot"></span>
+          harisankarsivankutty.in
+        </span>
+        <span class="footer-year">© 2026 · All rights reserved</span>
+      </div>
+      <div class="footer-right">Harisankar Sivankutty · Senior Consultant, Thoughtworks</div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+  </script>
+
+</body>
+</html>

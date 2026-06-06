@@ -1,3 +1,6 @@
+---
+permalink: /about/index.html
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Harisankar Sivankutty — Data Engineering Architect with 10+ years designing and delivering enterprise data platforms, AI-driven pipelines, and cloud-native analytics across AWS, Azure, and GCP." />
   <meta name="author" content="Harisankar Sivankutty" />
-  <meta name="theme-color" content="#0A0A0B" />
+  <meta name="theme-color" content="#F9F8F4" />
 
   <meta property="og:title" content="Harisankar Sivankutty — Data Engineering Architect" />
   <meta property="og:description" content="10+ years engineering enterprise data platforms, GenAI systems, and cloud-native analytics. AWS Solutions Architect · RHCE." />
@@ -14,7 +17,7 @@
 
   <title>Harisankar Sivankutty — Data Engineering Architect</title>
 
-  <link rel="icon" href="images/favicon.png" type="image/png" />
+  <link rel="icon" href="/images/favicon.png" type="image/png" />
 
   <!-- Fonts: Instrument Serif (display) + JetBrains Mono (mono) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,18 +37,18 @@
     }
 
     :root {
-      --bg: #0A0A0B;
-      --bg-elevated: #111114;
-      --surface: #16161A;
-      --border: rgba(255, 255, 255, 0.08);
-      --border-strong: rgba(255, 255, 255, 0.14);
-      --fg: #EDEDEB;
-      --fg-muted: #8A8A85;
-      --fg-dim: #5A5A55;
-      --accent: #D4FF4A;
-      --accent-dim: rgba(212, 255, 74, 0.12);
-      --accent-glow: rgba(212, 255, 74, 0.35);
-      --warm: #FF7849;
+      --bg: #F9F8F4;
+      --bg-elevated: #F0EEE6;
+      --surface: #E8E6DC;
+      --border: rgba(0, 0, 0, 0.09);
+      --border-strong: rgba(0, 0, 0, 0.18);
+      --fg: #1A1A18;
+      --fg-muted: #52524C;
+      --fg-dim: #9A9A8F;
+      --accent: #B8910A;
+      --accent-dim: rgba(184, 145, 10, 0.12);
+      --accent-glow: rgba(184, 145, 10, 0.22);
+      --warm: #C84F1A;
 
       --font-serif: 'Instrument Serif', 'Times New Roman', serif;
       --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -94,8 +97,8 @@
       pointer-events: none;
       z-index: 0;
       background-image:
-        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+        linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
       background-size: 80px 80px;
       mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
       -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
@@ -130,16 +133,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      background: rgba(10, 10, 11, 0.6);
-      border-bottom: 1px solid transparent;
+      background: #1C1814;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
     }
 
     .nav.scrolled {
-      border-bottom-color: var(--border);
-      background: rgba(10, 10, 11, 0.85);
+      border-bottom-color: rgba(255,255,255,0.10);
+      background: rgba(24, 21, 16, 0.98);
     }
 
     .nav-logo {
@@ -147,6 +148,7 @@
       font-size: 13px;
       font-weight: 500;
       letter-spacing: -0.01em;
+      color: #F0EDE4;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -171,16 +173,17 @@
       gap: 28px;
       list-style: none;
       font-size: 12.5px;
-      color: var(--fg-muted);
+      color: rgba(240, 237, 228, 0.55);
     }
 
     .nav-links a {
       position: relative;
       padding: 4px 0;
+      color: inherit;
     }
 
     .nav-links a:hover {
-      color: var(--fg);
+      color: #F0EDE4;
     }
 
     .nav-links a::before {
@@ -202,9 +205,9 @@
       font-family: var(--font-mono);
       font-size: 12px;
       padding: 8px 16px;
-      border: 1px solid var(--border-strong);
+      border: 1px solid rgba(240, 237, 228, 0.22);
       border-radius: 999px;
-      color: var(--fg);
+      color: #F0EDE4;
       transition: all 0.3s var(--ease);
       display: inline-flex;
       align-items: center;
@@ -213,7 +216,7 @@
 
     .nav-cta:hover {
       background: var(--accent);
-      color: var(--bg);
+      color: #1C1814;
       border-color: var(--accent);
     }
 
@@ -237,35 +240,49 @@
       z-index: 2;
     }
 
+    /* Full-bleed sections: padding constrains content to --max-w */
     section {
-      padding: clamp(80px, 12vh, 140px) var(--pad-x);
-      max-width: var(--max-w);
-      margin: 0 auto;
+      padding: clamp(80px, 12vh, 140px) max(var(--pad-x), calc((100vw - var(--max-w)) / 2));
       position: relative;
+      width: 100%;
     }
+
+    /* Alternating section backgrounds */
+    .about, .credentials { background: #EDE9DE; }
+    .experience, .clients { background: #E6E1D4; }
+    .contact { background: #EDE9DE; }
 
     .section-label {
       font-family: var(--font-mono);
-      font-size: 11.5px;
-      font-weight: 500;
-      letter-spacing: 0.12em;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--fg-muted);
+      color: var(--fg-dim);
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 40px;
+      margin-bottom: 44px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
     }
 
     .section-label::before {
       content: '';
-      width: 28px;
-      height: 1px;
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 48px;
+      height: 2px;
       background: var(--accent);
     }
 
     .section-label .idx {
+      font-size: 13px;
+      font-weight: 700;
       color: var(--accent);
+      letter-spacing: 0.04em;
     }
 
     /* ============================================================
@@ -278,10 +295,22 @@
       flex-direction: column;
       justify-content: center;
       position: relative;
-      max-width: var(--max-w);
-      margin: 0 auto;
-      padding-left: var(--pad-x);
-      padding-right: var(--pad-x);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 55% 38%, rgba(184, 145, 10, 0.13) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(200, 79, 26, 0.07) 0%, transparent 55%);
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
     }
 
     .hero-meta {
@@ -334,6 +363,7 @@
       color: var(--fg);
       margin-bottom: 28px;
       animation: fadeUp 1.1s var(--ease) 0.1s both;
+      text-shadow: 0 2px 40px rgba(184, 145, 10, 0.10);
     }
 
     .hero h1 .italic {
@@ -388,6 +418,40 @@
       color: var(--accent);
       font-size: clamp(17px, 1.8vw, 20px);
       padding: 0 2px;
+    }
+
+    .hero-social {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 40px;
+      animation: fadeUp 1.1s var(--ease) 0.35s both;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border: 1px solid var(--border-strong);
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 12.5px;
+      color: var(--fg-muted);
+      background: rgba(0,0,0,0.03);
+      transition: all 0.25s var(--ease);
+    }
+
+    .social-link svg {
+      width: 15px;
+      height: 15px;
+      flex-shrink: 0;
+    }
+
+    .social-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+      transform: translateY(-2px);
     }
 
     .hero-bottom {
@@ -555,6 +619,7 @@
       <li><a href="#projects">projects</a></li>
       <li><a href="#clients">clients</a></li>
       <li><a href="#stack">stack</a></li>
+      <li><a href="#writing">writing</a></li>
     </ul>
     <a href="https://topmate.io/harisankar_sivankutty" target="_blank" rel="noopener" class="nav-cta">
       Book a 1:1
@@ -583,6 +648,21 @@
         <p class="tagline">
           Over <span class="tag-italic">ten years</span> designing and delivering enterprise data platforms, AI-driven pipelines, and cloud-native analytics solutions across AWS, Azure, and GCP.
         </p>
+      </div>
+
+      <div class="hero-social">
+        <a href="https://www.linkedin.com/in/harisankarsivankutty/" target="_blank" rel="noopener" class="social-link">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+          <span>LinkedIn</span>
+        </a>
+        <a href="https://medium.com/@brainbytebyhari" target="_blank" rel="noopener" class="social-link">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"/>
+          </svg>
+          <span>Medium</span>
+        </a>
       </div>
 
       <div class="hero-bottom">
@@ -702,7 +782,7 @@
 
         <aside class="about-portrait">
           <div class="portrait-frame">
-            <img src="images/hari.jpg" alt="Harisankar Sivankutty" loading="lazy" />
+            <img src="/images/hari.jpg" alt="Harisankar Sivankutty" loading="lazy" />
             <div class="portrait-border"></div>
           </div>
           <div class="portrait-caption">
@@ -984,7 +1064,7 @@
 
       <div class="clients-grid">
 
-        <article class="client-card">
+                <article class="client-card">
           <div class="client-hex client-hex--text">
             <span class="hex-mark">otto</span>
           </div>
@@ -997,7 +1077,6 @@
             <p>Assortment Analytics Platform — Data Vault modelling, quarterly web scraping pipelines into BigQuery, BQ-to-Snowflake transfer framework. See Featured Projects.</p>
           </div>
         </article>
-
         <article class="client-card">
           <div class="client-hex client-hex--text">
             <span class="hex-mark">JCP</span>
@@ -1016,7 +1095,7 @@
 
         <article class="client-card">
           <div class="client-hex">
-            <img src="images/ayla.jpg" alt="Ayla Networks" loading="lazy" />
+            <img src="/images/ayla.jpg" alt="Ayla Networks" loading="lazy" />
           </div>
           <div class="client-info">
             <div class="client-header">
@@ -1030,7 +1109,7 @@
 
         <article class="client-card">
           <div class="client-hex">
-            <img src="images/bayer.webp" alt="Bayer Crop Science" loading="lazy" />
+            <img src="/images/bayer.webp" alt="Bayer Crop Science" loading="lazy" />
           </div>
           <div class="client-info">
             <div class="client-header">
@@ -1044,7 +1123,7 @@
 
         <article class="client-card">
           <div class="client-hex">
-            <img src="images/ooredoo.jpg" alt="Ooredoo Qatar" loading="lazy" />
+            <img src="/images/ooredoo.jpg" alt="Ooredoo Qatar" loading="lazy" />
           </div>
           <div class="client-info">
             <div class="client-header">
@@ -1058,7 +1137,7 @@
 
         <article class="client-card">
           <div class="client-hex">
-            <img src="images/airtel.jpg" alt="Bharti Airtel" loading="lazy" />
+            <img src="/images/airtel.jpg" alt="Bharti Airtel" loading="lazy" />
           </div>
           <div class="client-info">
             <div class="client-header">
@@ -1072,7 +1151,7 @@
 
         <article class="client-card">
           <div class="client-hex">
-            <img src="images/etisalat.png" alt="Etisalat" loading="lazy" />
+            <img src="/images/etisalat.png" alt="Etisalat" loading="lazy" />
           </div>
           <div class="client-info">
             <div class="client-header">
@@ -1086,7 +1165,7 @@
 
         <article class="client-card">
           <div class="client-hex">
-            <img src="images/ais.jpg" alt="AIS Thailand" loading="lazy" />
+            <img src="/images/ais.jpg" alt="AIS Thailand" loading="lazy" />
           </div>
           <div class="client-info">
             <div class="client-header">
@@ -1222,9 +1301,81 @@
       </div>
     </section>
 
+    <!-- WRITING -->
+    <section id="writing" class="writing reveal">
+      <div class="section-label"><span class="idx">[06]</span> Writing · Blog</div>
+
+      <h2 class="section-heading">
+        Thoughts from <span class="italic">the trenches</span> of data engineering.
+      </h2>
+
+      <p class="section-sub">
+        Deep dives on data platforms, GenAI systems, cloud architecture, and lessons learned
+        shipping enterprise software. No fluff.
+      </p>
+
+      <div class="writing-grid">
+
+        <article class="writing-card featured-writing">
+          <div class="writing-card-meta">
+            <span class="writing-tag">GenAI</span>
+            <span class="writing-tag">Architecture</span>
+            <span class="writing-date">May 2026 · 8 min</span>
+          </div>
+          <h3 class="writing-title">Building Production-Grade RAG Pipelines on AWS</h3>
+          <p class="writing-excerpt">
+            Lessons from shipping RAG to enterprise clients: chunking strategies that work,
+            vector store trade-offs, evaluation pipelines, and the failure modes that will get you.
+          </p>
+          <a href="/blog/building-rag-pipeline-aws/" class="writing-link">
+            Read post <span class="arrow">↗</span>
+          </a>
+        </article>
+
+        <article class="writing-card">
+          <div class="writing-card-meta">
+            <span class="writing-tag">Data Engineering</span>
+            <span class="writing-tag">Cloud</span>
+            <span class="writing-date">Apr 2026 · 6 min</span>
+          </div>
+          <h3 class="writing-title">Data Vault 2.0 in BigQuery: Lessons from a Real Migration</h3>
+          <p class="writing-excerpt">
+            What the textbooks don't tell you about satellite loads, link table cardinality,
+            and PIT tables that betray you at 3am.
+          </p>
+          <a href="/blog/data-vault-bigquery/" class="writing-link">
+            Read post <span class="arrow">↗</span>
+          </a>
+        </article>
+
+        <article class="writing-card">
+          <div class="writing-card-meta">
+            <span class="writing-tag">Data Engineering</span>
+            <span class="writing-date">Mar 2026 · 5 min</span>
+          </div>
+          <h3 class="writing-title">Why Your dbt Tests Are Lying to You</h3>
+          <p class="writing-excerpt">
+            not_null and unique will pass while your pipeline silently corrupts downstream
+            aggregates. Here's how to build a test suite that catches real problems.
+          </p>
+          <a href="/blog/dbt-testing-guide/" class="writing-link">
+            Read post <span class="arrow">↗</span>
+          </a>
+        </article>
+
+      </div>
+
+      <div class="writing-cta">
+        <a href="/" class="btn-primary">
+          <span>View all posts</span>
+          <span class="arrow">↗</span>
+        </a>
+      </div>
+    </section>
+
     <!-- CONTACT -->
     <section id="contact" class="contact reveal">
-      <div class="section-label"><span class="idx">[06]</span> Contact</div>
+      <div class="section-label"><span class="idx">[07]</span> Contact</div>
 
       <div class="contact-card">
         <div class="contact-left">
@@ -1409,7 +1560,7 @@
     .portrait-border {
       position: absolute;
       inset: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(0, 0, 0, 0.12);
       pointer-events: none;
     }
 
@@ -1473,19 +1624,19 @@
       padding: 20px 22px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      background: linear-gradient(to bottom right, rgba(255,255,255,0.015), transparent);
+      background: linear-gradient(to bottom right, rgba(0,0,0,0.018), transparent);
       transition: all 0.4s var(--ease);
     }
 
     .cred-card:hover {
       border-color: var(--border-strong);
       transform: translateY(-2px);
-      background: linear-gradient(to bottom right, rgba(212, 255, 74, 0.03), transparent);
+      background: linear-gradient(to bottom right, rgba(184, 145, 10, 0.05), transparent);
     }
 
     .cred-card--accent {
-      border-color: rgba(212, 255, 74, 0.25);
-      background: linear-gradient(to bottom right, rgba(212, 255, 74, 0.06), transparent);
+      border-color: rgba(184, 145, 10, 0.35);
+      background: linear-gradient(to bottom right, rgba(184, 145, 10, 0.07), transparent);
     }
 
     .cred-icon {
@@ -1497,7 +1648,7 @@
       border: 1px solid var(--border-strong);
       border-radius: 8px;
       color: var(--accent);
-      background: rgba(212, 255, 74, 0.05);
+      background: rgba(184, 145, 10, 0.08);
     }
 
     .cred-icon svg { width: 20px; height: 20px; }
@@ -1604,13 +1755,13 @@
       padding: 24px 28px;
       border: 1px solid var(--border);
       border-radius: 6px;
-      background: linear-gradient(to bottom right, rgba(255,255,255,0.015), transparent);
+      background: linear-gradient(to bottom right, rgba(0,0,0,0.018), transparent);
       transition: all 0.4s var(--ease);
     }
 
     .timeline-item:hover .tl-content {
       border-color: var(--border-strong);
-      background: linear-gradient(to bottom right, rgba(212, 255, 74, 0.03), transparent);
+      background: linear-gradient(to bottom right, rgba(184, 145, 10, 0.05), transparent);
       transform: translateX(4px);
     }
 
@@ -1703,7 +1854,7 @@
       padding: 24px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      background: linear-gradient(to bottom right, rgba(255,255,255,0.015), transparent);
+      background: linear-gradient(to bottom right, rgba(0,0,0,0.018), transparent);
       overflow: hidden;
       transition: all 0.4s var(--ease);
     }
@@ -1723,7 +1874,7 @@
     .client-card:hover {
       border-color: var(--border-strong);
       transform: translateY(-3px);
-      background: linear-gradient(to bottom right, rgba(212, 255, 74, 0.03), transparent);
+      background: linear-gradient(to bottom right, rgba(184, 145, 10, 0.05), transparent);
     }
 
     .client-card:hover::before {
@@ -1760,8 +1911,8 @@
     .client-hex--text {
       display: grid;
       place-items: center;
-      background: linear-gradient(140deg, rgba(212,255,74,0.10), rgba(255,255,255,0.02));
-      border-color: rgba(212, 255, 74, 0.20);
+      background: linear-gradient(140deg, rgba(184,145,10,0.10), rgba(0,0,0,0.02));
+      border-color: rgba(184, 145, 10, 0.25);
     }
 
     .hex-mark {
@@ -1814,7 +1965,7 @@
       letter-spacing: 0.1em;
       margin-bottom: 10px;
       padding: 3px 8px;
-      border: 1px solid rgba(212, 255, 74, 0.25);
+      border: 1px solid rgba(184, 145, 10, 0.30);
       border-radius: 4px;
       background: var(--accent-dim);
     }
@@ -1858,7 +2009,7 @@
 
     .project-card:hover {
       border-color: var(--border-strong);
-      background: linear-gradient(to bottom right, rgba(212, 255, 74, 0.03), transparent);
+      background: linear-gradient(to bottom right, rgba(184, 145, 10, 0.05), transparent);
       transform: translateY(-2px);
     }
 
@@ -1888,14 +2039,14 @@
       font-size: clamp(80px, 11vw, 160px);
       line-height: 1;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(212, 255, 74, 0.18);
+      -webkit-text-stroke: 1px rgba(184, 145, 10, 0.22);
       pointer-events: none;
       transition: all 0.5s var(--ease);
       z-index: 0;
     }
 
     .project-card:hover .project-num {
-      -webkit-text-stroke-color: rgba(212, 255, 74, 0.35);
+      -webkit-text-stroke-color: rgba(184, 145, 10, 0.40);
     }
 
     .project-header {
@@ -1963,7 +2114,7 @@
 
     .project-industry {
       padding: 3px 10px;
-      border: 1px solid rgba(212, 255, 74, 0.25);
+      border: 1px solid rgba(184, 145, 10, 0.30);
       border-radius: 4px;
       background: var(--accent-dim);
       color: var(--accent);
@@ -2043,7 +2194,7 @@
       border: 1px solid var(--border-strong);
       border-radius: 5px;
       color: var(--fg);
-      background: rgba(255, 255, 255, 0.02);
+      background: var(--surface);
       transition: all 0.3s var(--ease);
       cursor: default;
     }
@@ -2134,7 +2285,7 @@
     }
 
     .stack-group--note {
-      background: linear-gradient(to bottom right, rgba(212, 255, 74, 0.04), transparent);
+      background: linear-gradient(to bottom right, rgba(184, 145, 10, 0.06), transparent);
     }
 
     .stack-note {
@@ -2153,7 +2304,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       background:
-        radial-gradient(ellipse at top left, rgba(212, 255, 74, 0.06), transparent 60%),
+        radial-gradient(ellipse at top left, rgba(184, 145, 10, 0.07), transparent 60%),
         linear-gradient(to bottom right, var(--bg-elevated), var(--bg));
       display: grid;
       grid-template-columns: 1.6fr 1fr;
@@ -2170,7 +2321,7 @@
       right: 0;
       width: 60%;
       height: 100%;
-      background: radial-gradient(circle at 80% 50%, rgba(212, 255, 74, 0.05), transparent 60%);
+      background: radial-gradient(circle at 80% 50%, rgba(184, 145, 10, 0.05), transparent 60%);
       pointer-events: none;
     }
 
@@ -2357,6 +2508,126 @@
       color: var(--fg-dim);
       font-size: 11px;
       letter-spacing: 0.02em;
+    }
+
+    /* ============================================================
+       WRITING SECTION
+       ============================================================ */
+    .writing-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 900px) {
+      .writing-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .writing-grid { grid-template-columns: 1fr; }
+    }
+
+    .writing-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 28px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: linear-gradient(to bottom right, rgba(0,0,0,0.015), transparent);
+      overflow: hidden;
+      transition: all 0.4s var(--ease);
+    }
+
+    .writing-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.4s var(--ease);
+    }
+
+    .writing-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+    }
+
+    .writing-card:hover::before { opacity: 1; }
+
+    .writing-card.featured-writing {
+      background: var(--accent-dim);
+      border-color: rgba(184, 145, 10, 0.25);
+    }
+
+    .writing-card-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .writing-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 3px 9px;
+      border: 1px solid var(--border-strong);
+      border-radius: 4px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .writing-date {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--fg-dim);
+      margin-left: auto;
+    }
+
+    .writing-title {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(18px, 2vw, 22px);
+      line-height: 1.2;
+      letter-spacing: -0.01em;
+      color: var(--fg);
+      margin-bottom: 12px;
+      transition: color 0.3s var(--ease);
+    }
+
+    .writing-card:hover .writing-title { color: var(--accent); }
+
+    .writing-excerpt {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--fg-muted);
+      flex: 1;
+      margin-bottom: 20px;
+    }
+
+    .writing-link {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: auto;
+      transition: gap 0.3s var(--ease);
+    }
+
+    .writing-link:hover { gap: 10px; }
+    .writing-link .arrow { font-size: 13px; }
+
+    .writing-cta {
+      display: flex;
+      gap: 16px;
     }
 
     /* ============================================================
