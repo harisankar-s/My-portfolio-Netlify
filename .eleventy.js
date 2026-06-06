@@ -13,14 +13,20 @@ module.exports = function (eleventyConfig) {
       .sort((a, b) => b.date - a.date);
   });
 
+  // Coerce a frontmatter date (JS Date or ISO string) into a Luxon DateTime
+  const toDateTime = (dateObj) =>
+    dateObj instanceof Date
+      ? DateTime.fromJSDate(dateObj, { zone: "utc" })
+      : DateTime.fromISO(String(dateObj), { zone: "utc" });
+
   // Filter: format date as "Jun 2026"
   eleventyConfig.addFilter("postDate", (dateObj) => {
-    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toFormat("LLL yyyy");
+    return toDateTime(dateObj).toFormat("LLL yyyy");
   });
 
   // Filter: RFC 3339 date for RSS/Atom feeds and sitemaps
   eleventyConfig.addFilter("dateToRfc3339", (dateObj) => {
-    return DateTime.fromJSDate(dateObj, { zone: "utc" }).toISO();
+    return toDateTime(dateObj).toISO();
   });
 
   // Filter: URL-safe slug for tag pages
