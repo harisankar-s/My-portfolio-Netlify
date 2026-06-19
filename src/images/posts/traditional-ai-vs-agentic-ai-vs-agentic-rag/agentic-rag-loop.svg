@@ -1,0 +1,71 @@
+<svg width="100%" viewBox="0 0 600 455" role="img" xmlns="http://www.w3.org/2000/svg" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif">
+  <title>Agentic RAG — retrieval plus reasoning loop</title>
+  <desc>Specify Task and Fetch Useful Data branch to Search APIs and External Operation, merge into Design Multi-Step Process, then a closed loop: Apply Iterative Logic, Implement Actions, Query APIs, Refresh Memory, Produce and Verify Results, Adapt for Reuse, feeding back to Apply Iterative Logic.</desc>
+  <defs>
+    <marker id="arrowB" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#185FA5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrowBd" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#378ADD" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <rect x="2" y="2" width="596" height="451" rx="14" fill="#EBF3FC" stroke="#85B7EB" stroke-width="0.8"/>
+
+  <!-- Row 1 -->
+  <rect x="24" y="28" width="166" height="46" rx="8" fill="#185FA5"/>
+  <text x="107" y="51" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB" font-size="13" font-weight="500">Specify Task</text>
+  <rect x="217" y="28" width="166" height="46" rx="8" fill="#185FA5"/>
+  <text x="300" y="51" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB" font-size="13" font-weight="500">Fetch Useful Data</text>
+
+  <line x1="190" y1="51" x2="215" y2="51" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrowB)"/>
+
+  <!-- branch -->
+  <line x1="290" y1="74" x2="210" y2="116" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrowB)"/>
+  <line x1="310" y1="74" x2="390" y2="116" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrowB)"/>
+
+  <!-- Row 2 retrieval -->
+  <rect x="120" y="120" width="160" height="46" rx="8" fill="#378ADD"/>
+  <text x="200" y="143" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-size="13" font-weight="500">Search / APIs</text>
+  <rect x="320" y="120" width="160" height="46" rx="8" fill="#378ADD"/>
+  <text x="400" y="143" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF" font-size="13" font-weight="500">External Operation</text>
+
+  <line x1="210" y1="166" x2="288" y2="203" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrowB)"/>
+  <line x1="390" y1="166" x2="312" y2="203" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrowB)"/>
+
+  <!-- Row 3 merge -->
+  <rect x="217" y="205" width="166" height="46" rx="8" fill="#185FA5"/>
+  <text x="300" y="228" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB" font-size="13" font-weight="500">Multi-Step Plan</text>
+
+  <line x1="280" y1="251" x2="130" y2="300" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrowB)"/>
+
+  <!-- Loop region -->
+  <rect x="12" y="288" width="576" height="124" rx="12" fill="#DCEAF9" stroke="#85B7EB" stroke-width="0.8" stroke-dasharray="5 4"/>
+  <text x="24" y="282" fill="#185FA5" font-size="11" font-weight="700" letter-spacing="0.5">RETRIEVAL + REASONING LOOP</text>
+
+  <!-- Loop top row L→R -->
+  <rect x="24" y="300" width="166" height="46" rx="8" fill="#0C447C"/>
+  <text x="107" y="323" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB" font-size="13" font-weight="500">Iterative Logic</text>
+  <rect x="217" y="300" width="166" height="46" rx="8" fill="#0C447C"/>
+  <text x="300" y="323" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB" font-size="13" font-weight="500">Implement Actions</text>
+  <rect x="410" y="300" width="166" height="46" rx="8" fill="#0C447C"/>
+  <text x="493" y="323" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB" font-size="13" font-weight="500">Query APIs</text>
+
+  <line x1="190" y1="323" x2="215" y2="323" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrowB)"/>
+  <line x1="383" y1="323" x2="408" y2="323" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrowB)"/>
+  <line x1="493" y1="346" x2="493" y2="360" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrowB)"/>
+
+  <!-- Loop bottom row R→L -->
+  <rect x="410" y="362" width="166" height="46" rx="8" fill="#0C447C"/>
+  <text x="493" y="385" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB" font-size="13" font-weight="500">Refresh Memory</text>
+  <rect x="217" y="362" width="166" height="46" rx="8" fill="#0C447C"/>
+  <text x="300" y="385" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB" font-size="13" font-weight="500">Verify Results</text>
+  <rect x="24" y="362" width="166" height="46" rx="8" fill="#0C447C"/>
+  <text x="107" y="385" text-anchor="middle" dominant-baseline="central" fill="#E6F1FB" font-size="13" font-weight="500">Adapt for Reuse</text>
+
+  <line x1="410" y1="385" x2="385" y2="385" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrowB)"/>
+  <line x1="217" y1="385" x2="192" y2="385" stroke="#185FA5" stroke-width="1.4" marker-end="url(#arrowB)"/>
+  <line x1="107" y1="362" x2="107" y2="348" stroke="#378ADD" stroke-width="1.4" stroke-dasharray="5 4" marker-end="url(#arrowBd)"/>
+
+  <text x="300" y="435" text-anchor="middle" fill="#185FA5" font-size="11.5" font-weight="500">Retrieval is one step in a loop — verifies results, refreshes memory, adapts for next time</text>
+</svg>
