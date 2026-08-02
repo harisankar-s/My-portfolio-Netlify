@@ -1,0 +1,38 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ site.url }}/</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site.url }}/about/</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site.url }}/now/</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  {% for post in collections.posts %}
+  <url>
+    <loc>{{ site.url }}{{ post.url }}</loc>
+    <lastmod>{{ post.date | dateToRfc3339 }}</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  {% endfor %}
+  {% set seenTags = [] %}
+  {% for post in collections.posts %}
+    {% for tag in post.data.tags %}
+      {% if tag not in seenTags %}
+  <url>
+    <loc>{{ site.url }}/tags/{{ tag | slugify }}/</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+        {% set seenTags = (seenTags.push(tag), seenTags) %}
+      {% endif %}
+    {% endfor %}
+  {% endfor %}
+</urlset>

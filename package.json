@@ -1,0 +1,25 @@
+{
+  "name": "my-portfolio-netlify",
+  "version": "1.0.0",
+  "description": "Portfolio and blog for harisankarsivankutty.in, built with Eleventy.",
+  "scripts": {
+    "build": "eleventy",
+    "start": "eleventy --serve --watch"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "luxon": "^3.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harisankar-s/My-portfolio-Netlify.git"
+  },
+  "keywords": [],
+  "author": "Harisankar Sivankutty",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/harisankar-s/My-portfolio-Netlify/issues"
+  },
+  "homepage": "https://github.com/harisankar-s/My-portfolio-Netlify#readme"
+}

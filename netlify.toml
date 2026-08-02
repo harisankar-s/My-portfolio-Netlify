@@ -1,0 +1,50 @@
+[build]
+  command   = "npm run build"
+  publish   = "_site"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from   = "/blog/"
+  to     = "/"
+  status = 301
+
+[[redirects]]
+  from   = "/blog/edp_medium_article/"
+  to     = "/blog/building-enterprise-data-platform-lessons-learned/"
+  status = 301
+
+[[redirects]]
+  from   = "/blog/data-vault-bigquery.html"
+  to     = "/blog/data-vault-bigquery/"
+  status = 301
+
+[[redirects]]
+  from   = "/blog/dbt-testing-guide.html"
+  to     = "/blog/dbt-testing-guide/"
+  status = 301
+
+# Security headers (applied to every response)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options        = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+    Permissions-Policy     = "camera=(), microphone=(), geolocation=(), browsing-topics=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Content-Security-Policy = "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'self'; frame-src 'self'; img-src 'self' data: https://cdn-images-1.medium.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; connect-src 'self' https://cdn.jsdelivr.net; form-action 'self'; upgrade-insecure-requests"
+
+# Long-cache static brand/photo assets — safe, rarely change
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2592000"
+
+# Post diagrams (HTML/SVG embedded via iframe/img) must revalidate so updates
+# and header changes propagate instead of sticking in browser cache
+[[headers]]
+  for = "/images/posts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

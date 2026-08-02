@@ -1,0 +1,83 @@
+/* =====================================================
+   ABOUT PAGE – ISOLATED OVERRIDES (SAFE)
+   ===================================================== */
+
+/* Disable particles ONLY on about page */
+.page-about #particles-js,
+.page-about #particles-js canvas {
+  display: none !important;
+}
+
+/* Disable theme overlay */
+.page-about .overlay {
+  display: none !important;
+}
+
+/* Ensure content is visible */
+.page-about {
+  position: relative;
+  z-index: 10;
+  background: transparent;
+}
+
+.page-about .pt-tablecell,
+.page-about .container {
+  position: relative;
+  z-index: 20;
+}
+
+/* Typography */
+.page-about p,
+.page-about li {
+  color: #e0e0e0;
+  line-height: 28px;
+}
+
+/* Profile image */
+.about-avatar {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 4px solid #079f5d;
+  object-fit: cover;
+}
+
+/* Sections */
+.about-section {
+  margin-top: 60px;
+}
+
+.about-section h3 {
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #079f5d;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+/* Skill tags */
+.skill-tags {
+  list-style: none;
+  padding: 0;
+}
+
+.skill-tags li {
+  display: inline-block;
+  background: #079f5d;
+  color: #fff;
+  padding: 7px 14px;
+  margin: 6px 6px 0 0;
+  border-radius: 20px;
+  font-size: 13px;
+}
+
+/* Experience */
+.experience-item {
+  margin-bottom: 30px;
+}
+
+.experience-item span {
+  font-size: 13px;
+  color: #aaa;
+}

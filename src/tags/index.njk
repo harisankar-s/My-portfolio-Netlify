@@ -1,0 +1,157 @@
+---
+layout: base.njk
+pagination:
+  data: collections
+  size: 1
+  alias: tag
+  filter:
+    - all
+    - posts
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  title: "{{ tag }}"
+  description: "Articles tagged {{ tag }} — Harisankar Sivankutty"
+permalink: /tags/{{ tag | slugify }}/
+---
+
+{% block head %}
+<link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml" />
+<style>
+  .tag-page { position: relative; z-index: 2; padding-top: 70px; }
+
+  .tag-header {
+    padding: clamp(48px, 7vh, 80px) var(--pad-x) clamp(32px, 4vh, 48px);
+    max-width: 860px; margin: 0 auto;
+    border-bottom: 1px solid var(--border);
+  }
+  .tag-breadcrumb {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.10em;
+    text-transform: uppercase; color: var(--fg-dim);
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 28px;
+  }
+  .tag-breadcrumb a:hover { color: var(--accent); }
+  .tag-breadcrumb-sep { color: var(--border-strong, rgba(0,0,0,0.18)); }
+  .tag-title {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(36px, 5vw, 58px); line-height: 1.1;
+    letter-spacing: -0.02em; color: var(--fg);
+    display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .tag-count {
+    font-family: var(--font-mono); font-size: 13px; font-weight: 400;
+    color: var(--fg-dim); letter-spacing: 0;
+  }
+
+  .tag-feed {
+    max-width: 860px; margin: 0 auto;
+    padding: 40px var(--pad-x) 80px;
+  }
+
+  .t-entry {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 0 28px;
+    padding: 26px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .t-entry:last-child { border-bottom: none; }
+  .t-entry-date-col { padding-top: 4px; }
+  .t-date {
+    font-family: var(--font-mono); font-size: 11px;
+    color: var(--fg-dim); letter-spacing: 0.04em; line-height: 1.5;
+  }
+  .t-read-time {
+    font-family: var(--font-mono); font-size: 10.5px;
+    color: var(--fg-dim); margin-top: 4px;
+  }
+  .t-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 9px; }
+  .t-tag {
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 500;
+    padding: 2px 8px; border-radius: 3px;
+    color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em;
+    background: var(--accent-dim); border: 1px solid rgba(184,145,10,0.18);
+    text-decoration: none;
+    transition: background 0.15s;
+  }
+  .t-tag:hover { background: rgba(184,145,10,0.2); }
+  .t-title {
+    font-family: var(--font-serif); font-weight: 400;
+    font-size: clamp(18px, 2vw, 24px); line-height: 1.25;
+    letter-spacing: -0.01em; color: var(--fg); margin-bottom: 10px;
+  }
+  .t-title a:hover { color: var(--accent); }
+  .t-excerpt {
+    font-family: 'Inter', system-ui, sans-serif; font-size: 14px;
+    line-height: 1.7; color: var(--fg-muted); margin-bottom: 14px; max-width: 560px;
+  }
+  .t-more {
+    font-family: 'Inter', system-ui, sans-serif; font-size: 13px; font-weight: 500;
+    color: var(--accent); display: inline-flex; align-items: center; gap: 5px;
+    transition: gap 0.2s;
+  }
+  .t-more:hover { gap: 9px; }
+  .tag-back {
+    font-family: var(--font-mono); font-size: 12px;
+    color: var(--fg-muted); display: inline-flex; align-items: center; gap: 8px;
+    padding: 0 var(--pad-x) 64px;
+    max-width: 860px; margin: 0 auto; display: flex;
+    transition: color 0.2s;
+  }
+  .tag-back:hover { color: var(--accent); }
+
+  @media (max-width: 540px) {
+    .t-entry { grid-template-columns: 1fr; }
+    .t-entry-date-col { display: flex; align-items: center; gap: 10px; padding-top: 0; }
+    .t-read-time { margin-top: 0; }
+  }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="tag-page">
+
+  <div class="tag-header">
+    <nav class="tag-breadcrumb" aria-label="breadcrumb">
+      <a href="/">writing</a>
+      <span class="tag-breadcrumb-sep">/</span>
+      <a href="/tags/">tags</a>
+      <span class="tag-breadcrumb-sep">/</span>
+      <span>{{ tag }}</span>
+    </nav>
+    <h1 class="tag-title">
+      {{ tag }}
+      <span class="tag-count">{{ collections[tag] | length }} post{{ 's' if collections[tag] | length != 1 else '' }}</span>
+    </h1>
+  </div>
+
+  <div class="tag-feed">
+    {% for post in collections[tag] | reverse %}
+    <article class="t-entry">
+      <div class="t-entry-date-col">
+        <div class="t-date">{{ post.date | postDate }}</div>
+        <div class="t-read-time">{{ post.templateContent | readTime }} min</div>
+      </div>
+      <div>
+        <div class="t-tags">
+          {% for t in post.data.tags %}
+          <a href="/tags/{{ t | slugify }}/" class="t-tag">{{ t }}</a>
+          {% endfor %}
+        </div>
+        <h2 class="t-title"><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+        {% if post.data.excerpt %}<p class="t-excerpt">{{ post.data.excerpt }}</p>{% endif %}
+        <a href="{{ post.url }}" class="t-more">Read article <span>→</span></a>
+      </div>
+    </article>
+    {% else %}
+    <p style="font-family:'Inter',sans-serif;font-size:15px;color:var(--fg-muted);padding:24px 0;">
+      No posts yet.
+    </p>
+    {% endfor %}
+  </div>
+
+  <a href="/" class="tag-back">← All writing</a>
+
+</div>
+{% endblock %}
