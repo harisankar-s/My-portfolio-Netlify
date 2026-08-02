@@ -1,0 +1,614 @@
+---
+title: Notes from the data trenches
+description: "Notes on data engineering and AI engineering — the patterns, trade-offs, and hard-won lessons from 10+ years building data platforms and GenAI systems for enterprise clients."
+permalink: /
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Harisankar Sivankutty" />
+  <meta name="theme-color" content="#FFFFFF" />
+  <meta name="description" content="{{ description }}" />
+  <meta property="og:title" content="Harisankar Sivankutty — Notes from the data trenches" />
+  <meta property="og:description" content="{{ description }}" />
+  <meta property="og:type" content="website" />
+  <title>Harisankar Sivankutty — Notes from the data trenches</title>
+  <link rel="icon" href="/images/favicon.png" type="image/png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #FFFFFF;
+      --bg-elevated:  #F9FAFB;
+      --surface:      #F3F4F6;
+      --border:       rgba(0, 0, 0, 0.08);
+      --border-mid:   rgba(0, 0, 0, 0.13);
+      --fg:           #111827;
+      --fg-muted:     #4B5563;
+      --fg-dim:       #9CA3AF;
+      --accent:       #1F2937;
+      --accent-dim:   rgba(17, 24, 39, 0.10);
+      --accent-glow:  rgba(17, 24, 39, 0.22); --pop: #F59E0B; --pop-glow: rgba(245,158,11,0.45);
+
+      --font-sans:  'Inter', system-ui, -apple-system, sans-serif;
+      --font-serif: 'Instrument Serif', 'Georgia', serif;
+      --font-mono:  'JetBrains Mono', ui-monospace, monospace;
+
+      --sidebar-w: 240px;
+      --max-w:     1200px;
+      --pad-x:     clamp(20px, 4vw, 56px);
+      --ease:      cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: ''; position: fixed; inset: 0;
+      pointer-events: none; z-index: 0;
+      opacity: 0.025; mix-blend-mode: multiply;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    a { color: inherit; text-decoration: none; transition: color 0.2s var(--ease); }
+    img { display: block; max-width: 100%; }
+    ::selection { background: var(--accent); color: var(--bg); }
+
+    /* ── NAV ─────────────────────────────────────────────────────── */
+    .nav { --accent: #E5E7EB;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 var(--pad-x);
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: #111827;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+    }
+    .nav.scrolled { background: rgba(17,24,39,0.97); border-bottom-color: rgba(255,255,255,0.09); }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 500;
+      color: #E5E7EB; letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+    .nav-brand .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 10px var(--accent-glow);
+      animation: pulse 2.6s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.45;transform:scale(0.8)} }
+
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+
+    .nav-link {
+      font-family: var(--font-sans); font-size: 13.5px; font-weight: 500;
+      color: rgba(229,231,235,0.55); padding: 6px 12px; border-radius: 6px;
+      transition: color 0.2s var(--ease), background 0.2s var(--ease);
+    }
+    .nav-link:hover { color: #E5E7EB; background: rgba(255,255,255,0.06); }
+    .nav-link.active { color: #E5E7EB; }
+
+    .nav-cta {
+      font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+      padding: 7px 16px; border-radius: 999px;
+      border: 1px solid rgba(229,231,235,0.2);
+      color: #E5E7EB;
+      transition: all 0.25s var(--ease);
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-left: 4px;
+    }
+    .nav-cta:hover { background: var(--accent); border-color: var(--accent); color: #111827; }
+    @media (max-width: 640px) { .nav-link { display: none; } }
+
+    /* ── PAGE SHELL ──────────────────────────────────────────────── */
+    .page {
+      position: relative; z-index: 1;
+      padding-top: 56px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+    }
+
+    /* ── SITE HEADER ─────────────────────────────────────────────── */
+    .site-header {
+      padding: clamp(44px, 6vh, 72px) var(--pad-x) clamp(32px, 4vh, 52px);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 32px; flex-wrap: wrap;
+    }
+
+    .site-header-left { flex: 1; min-width: 220px; }
+
+    .site-title {
+      font-family: var(--font-serif);
+      font-size: clamp(38px, 5.5vw, 68px);
+      font-weight: 400; line-height: 1.0;
+      letter-spacing: -0.025em; color: var(--fg);
+      margin-bottom: 14px;
+    }
+    .site-title em { font-style: italic; color: var(--accent); }
+
+    .site-desc {
+      font-family: var(--font-sans); font-size: 15.5px;
+      color: var(--fg-muted); line-height: 1.65;
+      max-width: 480px;
+    }
+
+    .site-header-author {
+      display: flex; align-items: center; gap: 14px;
+      padding: 16px 20px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      flex-shrink: 0;
+    }
+
+    .author-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      object-fit: cover; border: 2px solid var(--border-mid);
+      flex-shrink: 0;
+    }
+    .author-avatar-fallback {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--accent); color: var(--bg);
+      font-family: var(--font-serif); font-size: 20px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .author-info { display: flex; flex-direction: column; gap: 3px; }
+    .author-name {
+      font-family: var(--font-sans); font-size: 14px; font-weight: 600;
+      color: var(--fg);
+    }
+    .author-role {
+      font-family: var(--font-sans); font-size: 12.5px;
+      color: var(--fg-muted); line-height: 1.5;
+    }
+    .author-bio {
+      font-family: var(--font-sans); font-size: 11.5px;
+      color: var(--fg-dim); line-height: 1.5; margin-top: 1px;
+    }
+    .author-profile-link {
+      font-family: var(--font-sans); font-size: 12px; font-weight: 500;
+      color: var(--accent); display: inline-flex; align-items: center; gap: 4px;
+      margin-top: 5px;
+    }
+    .author-profile-link:hover { opacity: 0.75; }
+
+    .site-topics {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      margin-top: 18px;
+    }
+    .site-topic-item {
+      font-family: var(--font-sans); font-size: 12.5px; font-weight: 500;
+      color: var(--fg-dim);
+    }
+    .site-topic-sep { color: var(--border-mid); font-size: 14px; }
+
+    @media (max-width: 700px) {
+      .site-header { flex-direction: column; }
+      .site-header-author { width: 100%; }
+    }
+
+    /* ── BODY LAYOUT ─────────────────────────────────────────────── */
+    .body-wrap {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) 1fr;
+      align-items: start;
+      padding: 0 var(--pad-x);
+    }
+    @media (max-width: 860px) { .body-wrap { grid-template-columns: 1fr; } }
+
+    /* ── SIDEBAR ─────────────────────────────────────────────────── */
+    .sidebar {
+      position: sticky; top: 72px;
+      padding: 36px 28px 36px 0;
+      border-right: 1px solid var(--border);
+      min-height: calc(100vh - 72px);
+    }
+    @media (max-width: 860px) {
+      .sidebar { position: static; border-right: none; border-bottom: 1px solid var(--border); padding: 28px 0; min-height: auto; }
+    }
+
+    .sidebar-section { margin-bottom: 32px; }
+    .sidebar-section:last-child { margin-bottom: 0; }
+
+    .sidebar-label {
+      font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--fg-dim); margin-bottom: 12px;
+    }
+
+    .topic-list { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .topic-list a {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 10px; border-radius: 6px;
+      font-family: var(--font-sans); font-size: 13.5px; color: var(--fg-muted);
+      transition: background 0.15s, color 0.15s;
+    }
+    .topic-list a:hover, .topic-list a.active {
+      background: var(--accent-dim); color: var(--accent);
+    }
+    .topic-count {
+      font-family: var(--font-mono); font-size: 11px; color: var(--fg-dim);
+    }
+
+    .sidebar-links { display: flex; flex-direction: column; gap: 6px; }
+    .sidebar-ext-link {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: var(--font-sans); font-size: 13.5px; color: var(--fg-muted);
+      padding: 5px 2px;
+      transition: color 0.15s;
+    }
+    .sidebar-ext-link:hover { color: var(--accent); }
+    .sidebar-ext-link svg { width: 15px; height: 15px; fill: currentColor; flex-shrink: 0; }
+
+    /* ── FEED ────────────────────────────────────────────────────── */
+    .feed { padding: 36px 0 56px 48px; }
+    @media (max-width: 860px) { .feed { padding: 28px 0 48px; } }
+
+    .feed-header {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 36px; padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .feed-label {
+      font-family: var(--font-mono); font-size: 10.5px; font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.14em; color: var(--fg-dim);
+    }
+    .feed-count {
+      font-family: var(--font-sans); font-size: 12.5px; color: var(--fg-dim);
+    }
+
+    /* ── ARTICLE ENTRY (card) ─────────────────────────────────────── */
+    .entry {
+      position: relative;
+      padding: 24px 26px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--bg);
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 0 28px;
+      transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease), transform 0.25s var(--ease);
+    }
+    .entry:hover {
+      border-color: var(--border-strong);
+      box-shadow: 0 10px 32px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .entry-date-col { padding-top: 2px; }
+    .entry-date {
+      font-family: var(--font-mono); font-size: 11px;
+      color: var(--fg-dim); letter-spacing: 0.04em; line-height: 1.5;
+    }
+    .entry-read-time {
+      font-family: var(--font-mono); font-size: 10.5px;
+      color: var(--fg-dim); margin-top: 4px;
+    }
+
+    .entry-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+    .entry-tag {
+      font-family: var(--font-sans); font-size: 11px; font-weight: 500;
+      padding: 3px 10px; border-radius: 999px;
+      color: var(--fg-muted); letter-spacing: 0;
+      background: var(--surface);
+      text-decoration: none; transition: background 0.15s, color 0.15s;
+    }
+    .entry-tag:hover { background: var(--fg); color: #fff; }
+
+    .entry-title {
+      font-family: var(--font-sans); font-weight: 700;
+      font-size: clamp(20px, 2.2vw, 25px); line-height: 1.3;
+      letter-spacing: -0.018em; color: var(--fg);
+      margin-bottom: 8px;
+    }
+    .entry-title a {
+      background-image: linear-gradient(currentColor, currentColor);
+      background-size: 0% 1.5px; background-repeat: no-repeat; background-position: 0 100%;
+      transition: background-size 0.3s var(--ease); padding-bottom: 1px;
+    }
+    .entry:hover .entry-title a, .entry-title a:hover { background-size: 100% 1.5px; }
+
+    .entry-excerpt {
+      font-family: var(--font-sans); font-size: 14.5px; line-height: 1.7;
+      color: var(--fg-muted); margin-bottom: 14px; max-width: 600px;
+    }
+
+    .entry-more {
+      font-family: var(--font-sans); font-size: 13px; font-weight: 600;
+      color: var(--fg); display: inline-flex; align-items: center; gap: 5px;
+      transition: gap 0.2s var(--ease);
+    }
+    .entry-more:hover { gap: 9px; }
+
+    /* Featured entry — larger, distinct */
+    .entry.featured {
+      display: block;
+      padding: 32px 32px;
+      margin-bottom: 24px;
+      border-color: var(--border-strong);
+      background: var(--bg-elevated);
+    }
+    .entry.featured .entry-title { font-size: clamp(24px, 3vw, 33px); margin-bottom: 12px; line-height: 1.22; }
+    .entry.featured .entry-excerpt { font-size: 16px; max-width: 680px; }
+    .featured-meta {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 14px;
+    }
+    .featured-badge {
+      font-family: var(--font-sans); font-size: 10.5px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      padding: 4px 11px; border-radius: 999px;
+      background: var(--fg); color: #fff;
+    }
+    .featured-date, .featured-read-time {
+      font-family: var(--font-mono); font-size: 11.5px; color: var(--fg-dim);
+    }
+
+    @media (max-width: 540px) {
+      .entry { grid-template-columns: 1fr; padding: 20px; }
+      .entry.featured { padding: 24px 22px; }
+      .entry-date-col { display: flex; align-items: center; gap: 10px; padding-top: 0; margin-bottom: 10px; }
+      .entry-read-time { margin-top: 0; }
+    }
+
+    /* ── FOOTER ──────────────────────────────────────────────────── */
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 28px var(--pad-x);
+      margin-top: 0;
+    }
+    .footer-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+      font-family: var(--font-sans); font-size: 12.5px; color: var(--fg-dim);
+    }
+    .footer-brand {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 500; color: var(--fg-muted);
+    }
+    .footer-brand .dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 6px var(--accent-glow);
+    }
+  
+    /* amber pop accents */
+    .nav-brand .dot { background: var(--pop); box-shadow: 0 0 10px var(--pop-glow); }
+    .footer-brand .dot { background: var(--pop); box-shadow: 0 0 6px var(--pop-glow); }
+    ::selection { background: var(--pop); color: #111827; }
+    .site-title em { color: var(--pop); }
+    .featured-badge { background: var(--pop); color: #111827; }
+    .entry-tag:hover { background: var(--pop); color: #111827; }
+    .entry-title a { background-image: linear-gradient(var(--pop), var(--pop)); }
+    .entry.featured { box-shadow: inset 0 3px 0 var(--pop); }
+    .entry.featured:hover { box-shadow: inset 0 3px 0 var(--pop), 0 10px 32px rgba(0,0,0,0.08); }
+
+  
+    /* sidebar brand logos + blog thumbnails */
+    .sidebar-ext-link .sidebar-logo { width: 15px; height: 15px; object-fit: contain; flex-shrink: 0; }
+    .entry-thumb { display: block; align-self: center; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); aspect-ratio: 4 / 3; background: var(--surface); }
+    .entry-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .4s var(--ease); }
+    .entry:hover .entry-thumb img { transform: scale(1.04); }
+    .entry.has-thumb { grid-template-columns: 92px 1fr 150px; }
+    .entry.featured.has-thumb { display: grid; grid-template-columns: 1fr 260px; gap: 30px; align-items: center; }
+    .entry.featured .featured-thumb { aspect-ratio: 16 / 10; }
+    @media (max-width: 640px) {
+      .entry.has-thumb, .entry.featured.has-thumb { grid-template-columns: 1fr; }
+      .entry-thumb { display: none; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <a href="/" class="nav-brand">
+      <span class="dot"></span>
+      harisankarsivankutty.in
+    </a>
+    <div class="nav-right">
+      <a href="/about/" class="nav-link">about</a>
+      <a href="https://topmate.io/harisankar_sivankutty" target="_blank" rel="noopener" class="nav-cta">
+        Book a 1:1 ↗
+      </a>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <!-- SITE HEADER -->
+    <header class="site-header">
+      <div class="site-header-left">
+        <h1 class="site-title">Notes from the<br><em>data trenches.</em></h1>
+        <p class="site-desc">
+          Data engineering and AI engineering are still young disciplines — and the
+          distance between a working prototype and something you'd trust in production
+          is wider than most write-ups admit. I've spent over a decade building
+          data platforms and last few years building AI systems for enterprise clients, and I
+          write here about what I find worth capturing: the trade-offs that tutorials
+          skip, the failure modes that surface only at scale, and the patterns that
+          actually hold up over time.
+        </p>
+        <div class="site-topics">
+          <span class="site-topic-item">Data pipelines &amp; dbt</span>
+          <span class="site-topic-sep">·</span>
+          <span class="site-topic-item">GenAI &amp; RAG systems</span>
+          <span class="site-topic-sep">·</span>
+          <span class="site-topic-item">AWS / GCP</span>
+          <span class="site-topic-sep">·</span>
+          <span class="site-topic-item">Snowflake</span>
+          <span class="site-topic-sep">·</span>
+          <span class="site-topic-item">System design</span>
+        </div>
+      </div>
+
+      <div class="site-header-author">
+        <img src="/images/profile/hari_new.png" alt="Harisankar Sivankutty" class="author-avatar"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="author-avatar-fallback" style="display:none;" aria-hidden="true">H</div>
+        <div class="author-info">
+          <span class="author-name">Harisankar Sivankutty</span>
+          <span class="author-role">Senior Consultant · Thoughtworks<br>Data &amp; AI Engineering</span>
+          <a href="/about/" class="author-profile-link">Full profile →</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="body-wrap">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Topics</div>
+          <ul class="topic-list" id="topic-list">
+            <li>
+              <a href="#" class="active" data-tag="all">
+                All <span class="topic-count">{{ collections.posts | length }}</span>
+              </a>
+            </li>
+            {% set tagCountMap = collections.posts | tagCounts %}
+            {% for tagName, count in tagCountMap %}
+            <li>
+              <a href="#" data-tag="{{ tagName | lower | replace(' ', '-') }}">
+                {{ tagName }} <span class="topic-count">{{ count }}</span>
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-label">Links</div>
+          <div class="sidebar-links">
+            <a href="https://www.linkedin.com/in/harisankarsivankutty/" target="_blank" rel="noopener" class="sidebar-ext-link">
+              <img src="/images/logos/linkedin.svg" alt="" class="sidebar-logo" />
+              LinkedIn
+            </a>
+            <a href="https://medium.com/@brainbytebyhari" target="_blank" rel="noopener" class="sidebar-ext-link">
+              <img src="/images/logos/medium.svg" alt="" class="sidebar-logo" />
+              Medium
+            </a>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- FEED -->
+      <main class="feed">
+
+        <div class="feed-header">
+          <span class="feed-label">Latest</span>
+          <span class="feed-count" id="feed-count">{{ collections.posts | length }} post{{ 's' if collections.posts | length != 1 else '' }}</span>
+        </div>
+
+        {% for post in collections.posts %}
+          {% set postTags = post.data.tags or [] %}
+          {% set tagStr = postTags | join(",") | lower | replace(" ", "-") %}
+          {% set thumb = post.templateContent | firstImage %}
+
+          {% if loop.first %}
+          <article class="entry featured{{ ' has-thumb' if thumb }}" data-tags="{{ tagStr }}">
+            <div class="entry-content">
+              <div class="featured-meta">
+                <span class="featured-badge">Latest</span>
+                <span class="featured-date">{{ post.date | postDate }}</span>
+                <span class="featured-read-time">· {{ post.templateContent | readTime }} min read</span>
+              </div>
+              <div class="entry-tags">
+                {% for tag in postTags %}<a href="/tags/{{ tag | slugify }}/" class="entry-tag">{{ tag }}</a>{% endfor %}
+              </div>
+              <h2 class="entry-title"><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+              {% if post.data.excerpt %}<p class="entry-excerpt">{{ post.data.excerpt }}</p>{% endif %}
+              <a href="{{ post.url }}" class="entry-more">Read article <span>→</span></a>
+            </div>
+            {% if thumb %}<a href="{{ post.url }}" class="entry-thumb featured-thumb"><img src="{{ thumb }}" alt="" loading="lazy" /></a>{% endif %}
+          </article>
+
+          {% else %}
+          <article class="entry{{ ' has-thumb' if thumb }}" data-tags="{{ tagStr }}">
+            <div class="entry-date-col">
+              <div class="entry-date">{{ post.date | postDate }}</div>
+              <div class="entry-read-time">{{ post.templateContent | readTime }} min</div>
+            </div>
+            <div class="entry-content">
+              <div class="entry-tags">
+                {% for tag in postTags %}<a href="/tags/{{ tag | slugify }}/" class="entry-tag">{{ tag }}</a>{% endfor %}
+              </div>
+              <h2 class="entry-title"><a href="{{ post.url }}">{{ post.data.title }}</a></h2>
+              {% if post.data.excerpt %}<p class="entry-excerpt">{{ post.data.excerpt }}</p>{% endif %}
+              <a href="{{ post.url }}" class="entry-more">Read article <span>→</span></a>
+            </div>
+            {% if thumb %}<a href="{{ post.url }}" class="entry-thumb"><img src="{{ thumb }}" alt="" loading="lazy" /></a>{% endif %}
+          </article>
+          {% endif %}
+
+        {% else %}
+          <p style="font-family:var(--font-sans);font-size:15px;color:var(--fg-muted);padding:24px 0;">
+            First article coming soon.
+          </p>
+        {% endfor %}
+
+      </main>
+
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-brand">
+        <span class="dot"></span>
+        Harisankar Sivankutty
+      </span>
+      <span>© 2026  Data & AI Engineering </span>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    document.querySelectorAll('#topic-list a').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.querySelectorAll('#topic-list a').forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+        const tag = link.dataset.tag;
+        let visible = 0;
+        document.querySelectorAll('.entry').forEach((entry) => {
+          const tags = (entry.dataset.tags || '').split(',');
+          const show = tag === 'all' || tags.includes(tag);
+          entry.style.display = show ? '' : 'none';
+          if (show) visible++;
+        });
+        document.getElementById('feed-count').textContent =
+          visible + ' post' + (visible !== 1 ? 's' : '');
+      });
+    });
+  </script>
+
+</body>
+</html>
