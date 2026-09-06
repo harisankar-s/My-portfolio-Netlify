@@ -71,10 +71,7 @@ It tells you data gets more refined as it moves right. It doesn't tell you how t
 
 Data Vault, a normalized 3NF core, one-big-table-per-domain, or a pile of denormalized joins are all "Silver" as far as the diagram is concerned. They have wildly different consequences for what it costs you to add a source next year.
 
-<figure>
-  <img src="/images/posts/medallion-is-a-vocabulary/fig1-what-medallion-leaves-to-you.png" alt="What the Medallion vocabulary specifies and what it leaves up to your team" width="100%" style="display:block;background:#fff;padding:16px;" />
-  <figcaption>Solid outlines are specified by the model. Dashed outlines are your team's decision.</figcaption>
-</figure>
+{% figure "fig1-what-medallion-leaves-to-you.png", "What the Medallion vocabulary specifies and what it leaves up to your team", "Solid outlines are specified by the model. Dashed outlines are your team's decision." %}
 
 Adopt Medallion and stop there, and you've adopted a naming convention while skipping the architecture. The layer names are your folder structure. The modelling approach is your design.
 
@@ -98,10 +95,7 @@ Pushing upstream is correct and expensive — because to move the logic, you fir
 
 I've watched this play out with a filtering rule that started life near the serving layer and eventually needed to move several layers up. Moving it was the right call. The two days spent reconstructing what it touched weren't the cost of the move. They were accumulated interest on logic that had been placed by convenience rather than by rule.
 
-<figure>
-  <img src="/images/posts/medallion-is-a-vocabulary/fig2-logic-placement-cost.png" alt="Cost of moving business logic across layers in a Medallion-based data platform" width="100%" style="display:block;background:#fff;padding:16px;" />
-  <figcaption>Neither option is free. The cheap one is the one that costs you later.</figcaption>
-</figure>
+{% figure "fig2-logic-placement-cost.png", "Cost of moving business logic across layers in a Medallion-based data platform", "Neither option is free. The cheap one is the one that costs you later." %}
 
 The diagram can't prevent this. "Which layer does this rule belong in" is precisely the question it declines to answer.
 
@@ -117,10 +111,7 @@ Silver grows with your domains.
 
 Gold grows with your **stakeholders** — and stakeholders are unbounded.
 
-<figure>
-  <img src="/images/posts/medallion-is-a-vocabulary/fig3-what-bounds-each-layer.png" alt="What bounds each Medallion layer: Bronze and Silver have fixed boundaries, Gold is stakeholder-driven" width="100%" style="display:block;background:#fff;padding:16px;" />
-  <figcaption>Bronze and Silver have a right-hand edge. Gold does not.</figcaption>
-</figure>
+{% figure "fig3-what-bounds-each-layer.png", "What bounds each Medallion layer: Bronze and Silver have fixed boundaries, Gold is stakeholder-driven", "Bronze and Silver have a right-hand edge. Gold does not." %}
 
 The diagram shows one Gold box. In practice, a healthy platform tends toward one Gold model per consumption contract. An unhealthy one tends toward one Gold table per dashboard someone requested on a Thursday.
 
