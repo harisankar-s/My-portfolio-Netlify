@@ -146,7 +146,7 @@
     addMessage(
       ui.messages,
       "assistant",
-      "Ask me anything about what Hari's written — data platforms, GenAI, LangChain, dbt, whatever's on the blog. I'll only answer from the posts themselves."
+      "Hi, I'm Trench AI ⛏️. Ask me anything about what Hari's written — data platforms, GenAI, LangChain, dbt, whatever's on the blog. I'll only answer from the posts themselves."
     );
 
     ui.input.addEventListener("keydown", function (event) {
