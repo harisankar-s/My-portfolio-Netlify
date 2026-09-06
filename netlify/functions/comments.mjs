@@ -1,4 +1,4 @@
-const { getStore } = require("@netlify/blobs");
+import { getStore } from "@netlify/blobs";
 
 const MAX_NAME_LENGTH = 60;
 const MAX_TEXT_LENGTH = 1500;
@@ -11,11 +11,7 @@ function isValidSlug(slug) {
 }
 
 function jsonResponse(statusCode, data) {
-  return {
-    statusCode,
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(data),
-  };
+  return Response.json(data, { status: statusCode });
 }
 
 async function getComments(slug) {
@@ -30,8 +26,8 @@ async function getUpvotes(slug) {
   return Array.isArray(data) ? data : [];
 }
 
-async function handleGet(event) {
-  const slug = event.queryStringParameters && event.queryStringParameters.slug;
+async function handleGet(req) {
+  const slug = new URL(req.url).searchParams.get("slug");
   if (!isValidSlug(slug)) return jsonResponse(400, { error: "Invalid or missing slug" });
 
   const [comments, upvotes] = await Promise.all([getComments(slug), getUpvotes(slug)]);
@@ -91,10 +87,10 @@ async function handlePostUpvote(slug, payload) {
   return jsonResponse(200, { upvoted, count: voters.length });
 }
 
-async function handlePost(event) {
+async function handlePost(req) {
   let payload;
   try {
-    payload = JSON.parse(event.body || "{}");
+    payload = await req.json();
   } catch {
     return jsonResponse(400, { error: "Invalid JSON body" });
   }
@@ -112,8 +108,8 @@ async function handlePost(event) {
   return jsonResponse(400, { error: "Unknown action" });
 }
 
-exports.handler = async (event) => {
-  if (event.httpMethod === "GET") return handleGet(event);
-  if (event.httpMethod === "POST") return handlePost(event);
+export default async (req) => {
+  if (req.method === "GET") return handleGet(req);
+  if (req.method === "POST") return handlePost(req);
   return jsonResponse(405, { error: "Method not allowed" });
 };
