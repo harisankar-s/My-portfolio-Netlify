@@ -13,6 +13,12 @@
 [functions]
   directory = "netlify/functions"
 
+# Splits harisankarsivankutty.in (profile) from blog.harisankarsivankutty.in
+# (blog) on top of the single Eleventy build — see netlify/edge-functions/domain-router.js.
+[[edge_functions]]
+  path     = "/*"
+  function = "domain-router"
+
 # ask-writing.js reads post markdown from src/blog/posts/ at runtime (not a
 # build-time generated file), so those files must be bundled with it.
 [functions.ask-writing]

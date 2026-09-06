@@ -20,12 +20,21 @@ Node 18 is pinned for the Netlify build (`netlify.toml`). Eleventy and Luxon are
 
 ## Architecture
 
-Static site built with **Eleventy (11ty) v3**, deployed on **Netlify**. Input `src/`, output `_site/`, config in `.eleventy.js`. Two visually distinct surfaces share one repo, and **the blog owns the root URL, not the portfolio**:
+Static site built with **Eleventy (11ty) v3**, deployed on **Netlify**. Input `src/`, output `_site/`, config in `.eleventy.js`. Two visually distinct surfaces share one repo and one build:
 
-1. **Blog** (`/`) — Eleventy-templated, **light theme** (white bg, serif body font). `src/blog/index.njk` sets `permalink: /`, so the writing listing is the actual homepage. Post markdown lives under `src/blog/posts/`.
-2. **Portfolio** (`/about/`) — `src/index.html`, a single ~70KB file with almost all HTML/CSS/JS inline (dark theme, electric-lime accent). It sets `permalink: /about/index.html` in its frontmatter and **is still run through the Nunjucks engine**, not copied verbatim: its "Recent Writing" section (`{% for post in collections.posts %}`, near the bottom of the file) pulls the 3 newest posts from the same `posts` collection the blog uses. Any edit to how posts render there needs the `postDate`/`readTime` filters below, not hand-written HTML. See `README.md` for the section-by-section anatomy and find-and-replace anchors for editing projects/clients/timeline entries (note: the README's "no build step / just open index.html" framing predates the Eleventy migration and no longer applies).
+1. **Blog** — Eleventy-templated, **light theme** (white bg, serif body font). `src/blog/index.njk` sets `permalink: /`, so within the build the writing listing is at the root. Post markdown lives under `src/blog/posts/`.
+2. **Portfolio** — `src/index.html`, a single ~70KB file with almost all HTML/CSS/JS inline (dark theme, electric-lime accent). It sets `permalink: /about/index.html` in its frontmatter and **is still run through the Nunjucks engine**, not copied verbatim: its "Recent Writing" section (`{% for post in collections.posts %}`, near the bottom of the file) pulls the 3 newest posts from the same `posts` collection the blog uses. Any edit to how posts render there needs the `postDate`/`readTime` filters below, not hand-written HTML. See `README.md` for the section-by-section anatomy and find-and-replace anchors for editing projects/clients/timeline entries (note: the README's "no build step / just open index.html" framing predates the Eleventy migration and no longer applies).
 
-Cross-links between the two surfaces are hardcoded `href="/"` and `href="/about/"` in each layout's nav — there's no shared nav partial, so a URL change to either homepage means updating both `base.njk`/`article.njk` and `src/index.html`.
+### Domain split: the build's `/` and `/about/` are not the public homepages
+
+The Eleventy build itself always puts the blog listing at `/` and the portfolio at `/about/` — but in production these two paths are presented as two separate domains, via `netlify/edge-functions/domain-router.js`:
+
+- **`harisankarsivankutty.in`** (+ `www`) — the profile/portfolio domain. The edge function internally rewrites `/` to serve the `/about/` build output. Any other path not in its small allowlist (static assets, `/api/*`, `/.netlify/*`) 301s to the blog subdomain, so blog content is never dual-indexed.
+- **`blog.harisankarsivankutty.in`** — the blog domain, served as the build outputs it (blog listing at `/`, posts at `/blog/{slug}/`, `/tags/*`, `/ask/`, `/now/`, feed, sitemap). `/about/` 301s back to the apex domain.
+
+Both domains are attached as custom domains on the **same** Netlify site — this is one build, routed by hostname, not two separate deployments.
+
+Because of this split, cross-links between the two surfaces are **absolute, cross-domain URLs**, not relative paths — relative links only work for same-domain navigation. Both domains live in `src/_data/site.json` (`url` = blog subdomain, `portfolioUrl` = apex domain) and every template references those, never a literal domain string: `src/index.html` (portfolio) links to blog posts/`/ask/`/blog home via `{{ site.url }}...`, while `base.njk`/`article.njk`/`src/blog/index.njk` (blog surfaces) link to the portfolio via `{{ site.portfolioUrl }}`, and `sitemap.njk`'s portfolio entry does the same. There's no shared nav partial, so adding a new cross-surface link means using the right `site.*` variable in whichever template needs it. The one exception is `netlify/edge-functions/domain-router.js` — it runs on Netlify's separate Deno edge pipeline and can't import `site.json`, so its hostname constants are kept in sync with `site.json` by hand (comment in the file notes this).
 
 ### Two separate layouts (do not assume they share CSS)
 
