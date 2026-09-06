@@ -125,6 +125,11 @@
   color: var(--ah-text-dim);
   font-style: italic;
 }
+.askhari-meta {
+  font-size: 10.5px;
+  color: var(--ah-text-dim);
+  margin: -4px 0 2px 2px;
+}
 
 #askhari-form {
   display: flex;

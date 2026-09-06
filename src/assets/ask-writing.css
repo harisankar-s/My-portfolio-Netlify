@@ -7,6 +7,14 @@
   padding: clamp(48px, 7vh, 80px) var(--pad-x) clamp(28px, 4vh, 40px);
   max-width: 720px; margin: 0 auto;
 }
+.askwriting-brand {
+  font-family: 'Inter', system-ui, sans-serif; font-size: 13.5px; font-weight: 700;
+  color: var(--fg); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.askwriting-brand-icon {
+  font-size: 16px; line-height: 1;
+}
 .askwriting-eyebrow {
   font-family: var(--font-mono); font-size: 10.5px; font-weight: 500;
   text-transform: uppercase; letter-spacing: 0.14em;
@@ -84,6 +92,17 @@
   box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
 }
 
+.askwriting-panelhead {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+.askwriting-panelhead-icon { font-size: 15px; line-height: 1; }
+.askwriting-panelhead-name {
+  font-size: 13px; font-weight: 700; color: var(--fg);
+}
+
 #askwriting-messages {
   min-height: 220px;
   max-height: 60vh;
@@ -112,10 +131,10 @@
   background: #111827;
   display: flex; align-items: center; justify-content: center;
   flex-shrink: 0; margin-bottom: 2px;
+  font-size: 11px;
 }
 .askwriting-avatar::after {
-  content: ''; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--pop); box-shadow: 0 0 8px var(--pop-glow);
+  content: '⛏️';
 }
 
 .askwriting-msg {
@@ -158,6 +177,37 @@
 }
 .askwriting-msg.pending {
   color: var(--fg-dim);
+}
+
+.askwriting-meta-row {
+  margin: -6px 0 4px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.askwriting-modelbadge {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--fg-dim);
+}
+.askwriting-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.askwriting-source-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--fg-muted);
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.askwriting-source-chip:hover {
+  border-color: var(--pop);
+  color: var(--pop);
 }
 .askwriting-dots {
   display: inline-flex; gap: 3px; margin-left: 4px; vertical-align: middle;

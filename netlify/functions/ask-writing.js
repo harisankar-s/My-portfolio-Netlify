@@ -8,7 +8,7 @@ const MAX_HISTORY_TURNS = 6;
 const TOP_N_POSTS = 5;
 const MAX_POST_CHARS = 3000;
 
-// Ask My Writing only ever calls free OpenRouter models — it must never
+// Trench AI only ever calls free OpenRouter models — it must never
 // spend Anthropic credits, unlike the AskHari.ai widget which is
 // Anthropic-first. Keep every entry here pinned to a ":free" OpenRouter
 // model. Tried in order; a 429/5xx from one (shared free-tier pools get
@@ -150,7 +150,7 @@ function buildSystemPrompt(posts, selectedPosts) {
     .map((p) => `### "${p.title}" (/blog/${p.slug}/)\n${p.body.slice(0, MAX_POST_CHARS)}`)
     .join("\n\n---\n\n");
 
-  return `You are "Ask My Writing", an assistant scoped only to Harisankar "Hari" Sivankutty's blog posts on data engineering, GenAI, and cloud architecture.
+  return `You are "Trench AI", an assistant scoped only to Harisankar "Hari" Sivankutty's blog posts on data engineering, GenAI, and cloud architecture.
 
 Answer ONLY using the article content and index provided below. If Hari's writing doesn't cover something, say so plainly rather than guessing or using outside knowledge. When you reference a post, name it and link it in markdown like [Post Title](/blog/slug/) so the reader can open it. Keep answers concise and conversational, not a bulleted essay.
 
@@ -179,7 +179,7 @@ async function callOpenRouterModel(model, systemPrompt, messages) {
       "content-type": "application/json",
       authorization: `Bearer ${apiKey}`,
       "HTTP-Referer": "https://harisankarsivankutty.in",
-      "X-Title": "Ask My Writing",
+      "X-Title": "Trench AI",
     },
     body: JSON.stringify({
       model,
@@ -201,21 +201,24 @@ async function callOpenRouterModel(model, systemPrompt, messages) {
   return reply.trim();
 }
 
-// A missing key or a malformed request (4xx other than 429) won't be fixed
-// by trying another model, so only fall through on rate limits/server
-// errors — anything else fails fast.
+// A missing key or a malformed request won't be fixed by trying another
+// model, so those fail fast. But 404 here means OpenRouter doesn't
+// recognize *that specific* model slug (e.g. a free tier was retired) —
+// that's a per-model problem, not a per-request one, so it's retryable
+// against the next model in the list same as 429/5xx.
 function isRetryableOpenRouterError(err) {
-  return !err.status || err.status === 429 || err.status >= 500;
+  return !err.status || err.status === 404 || err.status === 429 || err.status >= 500;
 }
 
 async function callOpenRouter(systemPrompt, messages) {
   let lastError;
   for (const model of OPENROUTER_MODELS) {
     try {
-      return await callOpenRouterModel(model, systemPrompt, messages);
+      const reply = await callOpenRouterModel(model, systemPrompt, messages);
+      return { reply, model };
     } catch (err) {
       lastError = err;
-      console.error(`Ask My Writing: model ${model} failed`, err);
+      console.error(`Trench AI: model ${model} failed`, err);
       if (!isRetryableOpenRouterError(err)) throw err;
     }
   }
@@ -253,13 +256,16 @@ exports.handler = async (event) => {
   const systemPrompt = buildSystemPrompt(posts, selected);
 
   try {
-    const reply = await callOpenRouter(systemPrompt, messages);
-    return { statusCode: 200, body: JSON.stringify({ reply, provider: "openrouter" }) };
+    const start = Date.now();
+    const { reply, model } = await callOpenRouter(systemPrompt, messages);
+    const latencyMs = Date.now() - start;
+    const sources = selected.map((p) => ({ title: p.title, slug: p.slug, url: `/blog/${p.slug}/` }));
+    return { statusCode: 200, body: JSON.stringify({ reply, provider: "openrouter", model, latencyMs, sources }) };
   } catch (openRouterError) {
-    console.error("Ask My Writing: OpenRouter failed", openRouterError);
+    console.error("Trench AI: OpenRouter failed", openRouterError);
     return {
       statusCode: 502,
-      body: JSON.stringify({ error: "Ask My Writing is temporarily unavailable. Please try again shortly." }),
+      body: JSON.stringify({ error: "Trench AI is temporarily unavailable. Please try again shortly." }),
     };
   }
 };
