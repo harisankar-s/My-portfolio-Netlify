@@ -35,10 +35,7 @@ They didn't just need a data warehouse refresh. They needed a platform that coul
 
 At the architecture level, we went with a hybrid stack: AWS for infrastructure, Snowflake as the data warehouse, and open-source tooling (Spark, Hudi, Airflow, Great Expectations, DataHub) to fill the gaps. Data lived in an S3-based data lake (Parquet + Hudi for Data Science use cases) and flowed into Snowflake for enterprise reporting.
 
-<figure>
-  <iframe src="/images/posts/enterprise-data-platform/enterprise_data_platform_architecture.html?v=2" width="100%" height="440" frameborder="0" style="border-radius:8px;border:1px solid rgba(0,0,0,0.08);display:block;" title="Enterprise data platform architecture diagram"></iframe>
-  <figcaption>End-to-end data platform architecture — from raw sources through lake layers to warehouse and consumption.</figcaption>
-</figure>
+{% diagram "enterprise_data_platform_architecture.html", "Enterprise data platform architecture diagram", "End-to-end data platform architecture — from raw sources through lake layers to warehouse and consumption.", 440, "enterprise-data-platform" %}
 
 The core pillars of the platform:
 
@@ -95,10 +92,7 @@ The entire platform lived in a single repository, organized into discrete, indep
 
 The four patterns that mattered most in practice:
 
-<figure>
-  <iframe src="/images/posts/enterprise-data-platform/coding_patterns_snippet_1_factory.html?v=2" width="100%" height="1600" frameborder="0" style="border-radius:8px;border:1px solid rgba(0,0,0,0.08);display:block;" title="Four code patterns: Factory, Config-driven, ETL logging, Spark testing"></iframe>
-  <figcaption>Four patterns that kept the codebase clean across 19 months and multiple contributors.</figcaption>
-</figure>
+{% diagram "coding_patterns_snippet_1_factory.html", "Four code patterns: Factory, Config-driven, ETL logging, Spark testing", "Four patterns that kept the codebase clean across 19 months and multiple contributors.", 1600, "enterprise-data-platform" %}
 
 **Pattern 1 — Factory + dynamic module loader.** `JobFactory` dispatches to the right job type, and `DynamicMod` imports the correct `Transformer` class at runtime by convention (`src.source.{source_name}.src.transformer.{dataset}_transform`). The framework never imports source-specific code directly. Adding a new dataset meant dropping a new `Transformer` class in the right folder — the core stayed untouched.
 

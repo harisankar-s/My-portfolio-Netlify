@@ -4,7 +4,10 @@
   "description": "Portfolio and blog for harisankarsivankutty.in, built with Eleventy.",
   "scripts": {
     "build": "eleventy",
-    "start": "eleventy --serve --watch"
+    "start": "eleventy --serve --watch",
+    "new-post": "node scripts/new-post.js",
+    "list-posts": "node scripts/list-posts.js",
+    "delete-post": "node scripts/delete-post.js"
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.6",

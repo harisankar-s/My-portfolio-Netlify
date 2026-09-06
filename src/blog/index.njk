@@ -523,7 +523,7 @@ permalink: /
         </div>
 
         {% for post in collections.posts %}
-          {% set postTags = post.data.tags %}
+          {% set postTags = post.data.tags or [] %}
           {% set tagStr = postTags | join(",") | lower | replace(" ", "-") %}
           {% set thumb = post.templateContent | firstImage %}
 
