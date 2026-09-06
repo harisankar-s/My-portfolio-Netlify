@@ -61,6 +61,37 @@ module.exports = function (eleventyConfig) {
     return m ? m[1] : "";
   });
 
+  // Shortcode: static figure image, resolved against this post's asset folder
+  // (src/images/posts/{slug}/ by default). Use in post markdown as:
+  //   {% figure "diagram.png", "alt text", "caption text" %}
+  // Pass a 4th argument to override the folder when it doesn't match the
+  // post's fileSlug (some older posts use a shorter asset folder name):
+  //   {% figure "diagram.png", "alt text", "caption text", "other-folder" %}
+  eleventyConfig.addShortcode("figure", function (filename, alt, caption, folder) {
+    const slug = folder || this.page.fileSlug;
+    return `<figure>
+  <img src="/images/posts/${slug}/${filename}" alt="${alt}" width="100%" style="display:block;background:#fff;padding:16px;" />
+  <figcaption>${caption}</figcaption>
+</figure>`;
+  });
+
+  // Shortcode: embedded interactive HTML diagram, resolved against this
+  // post's asset folder (src/images/posts/{slug}/ by default). Use in post
+  // markdown as:
+  //   {% diagram "diagram.html", "title text", "caption text" %}
+  //   {% diagram "diagram.html", "title text", "caption text", 600 %}
+  // Pass a 5th argument to override the folder when it doesn't match the
+  // post's fileSlug (some older posts use a shorter asset folder name):
+  //   {% diagram "diagram.html", "title text", "caption text", 600, "other-folder" %}
+  eleventyConfig.addShortcode("diagram", function (filename, title, caption, height, folder) {
+    const slug = folder || this.page.fileSlug;
+    const h = height || 440;
+    return `<figure>
+  <iframe src="/images/posts/${slug}/${filename}" width="100%" height="${h}" frameborder="0" style="border-radius:8px;border:1px solid rgba(0,0,0,0.08);display:block;" title="${title}"></iframe>
+  <figcaption>${caption}</figcaption>
+</figure>`;
+  });
+
   return {
     dir: {
       input: "src",
