@@ -4,6 +4,11 @@
 
 [build.environment]
   NODE_VERSION = "18"
+  # ANTHROPIC_MODEL isn't a secret, but Netlify's secrets scanner flags any
+  # configured env var whose value it finds literally in repo/build files —
+  # which happens here via the fallback default in ask-hari.js and the
+  # commented example in .env.example. Exclude it from scanning.
+  SECRETS_SCAN_OMIT_KEYS = "ANTHROPIC_MODEL"
 
 [functions]
   directory = "netlify/functions"
