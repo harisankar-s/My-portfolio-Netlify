@@ -29,6 +29,11 @@
   status = 200
 
 [[redirects]]
+  from   = "/api/comments"
+  to     = "/.netlify/functions/comments"
+  status = 200
+
+[[redirects]]
   from   = "/blog/"
   to     = "/"
   status = 301
