@@ -14,7 +14,6 @@ eleventyComputed:
 permalink: /tags/{{ tag | slugify }}/
 ---
 
-{% block head %}
 <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml" />
 <style>
   .tag-page { position: relative; z-index: 2; padding-top: 70px; }
@@ -107,9 +106,7 @@ permalink: /tags/{{ tag | slugify }}/
     .t-read-time { margin-top: 0; }
   }
 </style>
-{% endblock %}
 
-{% block body %}
 <div class="tag-page">
 
   <div class="tag-header">
@@ -154,4 +151,3 @@ permalink: /tags/{{ tag | slugify }}/
   <a href="/" class="tag-back">← All writing</a>
 
 </div>
-{% endblock %}

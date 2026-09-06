@@ -13,9 +13,19 @@
 [functions]
   directory = "netlify/functions"
 
+# ask-writing.js reads post markdown from src/blog/posts/ at runtime (not a
+# build-time generated file), so those files must be bundled with it.
+[functions.ask-writing]
+  included_files = ["src/blog/posts/*.md"]
+
 [[redirects]]
   from   = "/api/ask-hari"
   to     = "/.netlify/functions/ask-hari"
+  status = 200
+
+[[redirects]]
+  from   = "/api/ask-writing"
+  to     = "/.netlify/functions/ask-writing"
   status = 200
 
 [[redirects]]

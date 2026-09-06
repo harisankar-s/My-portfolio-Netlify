@@ -1,0 +1,46 @@
+---
+layout: base.njk
+title: "Ask My Writing Anything"
+description: "A live demo: ask a question and get an answer grounded only in Harisankar Sivankutty's own blog posts, with citations back to the source articles."
+permalink: /ask/
+---
+
+<link rel="stylesheet" href="/assets/ask-writing.css">
+
+<div class="askwriting-page">
+
+  <div class="askwriting-header">
+    <div class="askwriting-eyebrow">Cited answers only</div>
+    <h1 class="askwriting-title">Got <span class="askwriting-title-pop">questions</span> about my writing?</h1>
+    <p class="askwriting-blurb">
+      This is a small retrieval system scoped entirely to my published writing. It reads your question, pulls the most relevant posts, and answers from that content alone — citing the specific article behind each answer. Ask about platform architecture, GenAI implementations, or migrations documented here. When something isn't covered, it says so rather than guessing.
+    </p>
+  </div>
+
+  <div class="askwriting-body">
+
+    <div class="askwriting-chips">
+      <button type="button" class="askwriting-chip" data-question="What have you written about RAG and agentic AI?">What have you written about RAG and agentic AI systems? <span class="askwriting-chip-arrow">→</span></button>
+      <button type="button" class="askwriting-chip" data-question="What did you learn migrating from BigQuery to Snowflake?">What went wrong in the BigQuery → Snowflake migration? <span class="askwriting-chip-arrow">→</span></button>
+      <button type="button" class="askwriting-chip" data-question="How do you think about data quality and Great Expectations?">Where do you stand on data quality tooling? <span class="askwriting-chip-arrow">→</span></button>
+      <button type="button" class="askwriting-chip" data-question="Describe a data platform decision of yours that you'd reverse today.">A platform decision you'd reverse today? <span class="askwriting-chip-arrow">→</span></button>
+    </div>
+
+    <div id="askwriting-root">
+      <div id="askwriting-panel">
+        <div id="askwriting-messages"></div>
+        <form id="askwriting-form">
+          <textarea id="askwriting-input" rows="1" placeholder="Ask about anything Hari's written…"></textarea>
+          <button id="askwriting-send" type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+
+    <p class="askwriting-footnote">Implementation note: relevance is scored with keyword matching across each post's title, tags, and body — not embeddings. A vector store isn't justified at this scale, so this stays simple and inspectable.</p>
+
+    <a href="/" class="askwriting-back">← Back to writing</a>
+
+  </div>
+</div>
+
+<script src="/assets/ask-writing.js" defer></script>

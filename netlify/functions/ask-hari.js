@@ -5,7 +5,7 @@ const MAX_HISTORY_TURNS = 6;
 const MAX_ARTICLE_TEXT_LENGTH = 4000;
 
 const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || "claude-haiku-4-5";
-const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "meta-llama/llama-3.3-70b-instruct:free";
+const OPENROUTER_MODEL = process.env.OPENROUTER_MODEL || "google/gemma-4-31b-it:free";
 
 function buildSystemPrompt(articleContext) {
   const facts = JSON.stringify(profile, null, 2);

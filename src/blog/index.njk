@@ -10,6 +10,17 @@ permalink: /
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="author" content="Harisankar Sivankutty" />
   <meta name="theme-color" content="#FFFFFF" />
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('theme');
+        var theme = saved === 'light' || saved === 'dark'
+          ? saved
+          : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch (e) {}
+    })();
+  </script>
   <meta name="description" content="{{ description }}" />
   <meta property="og:title" content="Harisankar Sivankutty — Notes from the data trenches" />
   <meta property="og:description" content="{{ description }}" />
@@ -45,6 +56,13 @@ permalink: /
       --max-w:     1200px;
       --pad-x:     clamp(20px, 4vw, 56px);
       --ease:      cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #0B0E14; --bg-elevated: #12161F; --surface: #1A2029;
+      --border: rgba(255,255,255,0.08); --border-mid: rgba(255,255,255,0.16);
+      --fg: #E5E7EB; --fg-muted: #9CA3AF; --fg-dim: #6B7280;
+      --accent: #E5E7EB; --accent-dim: rgba(229,231,235,0.12); --accent-glow: rgba(229,231,235,0.18);
     }
 
     html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -116,6 +134,19 @@ permalink: /
     }
     .nav-cta:hover { background: var(--accent); border-color: var(--accent); color: #111827; }
     @media (max-width: 640px) { .nav-link { display: none; } }
+
+    .theme-toggle {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid rgba(229,231,235,0.22);
+      background: transparent; color: #E5E7EB; cursor: pointer;
+      transition: all 0.25s var(--ease); flex-shrink: 0;
+    }
+    .theme-toggle:hover { background: rgba(255,255,255,0.08); border-color: rgba(229,231,235,0.4); }
+    .theme-toggle svg { width: 15px; height: 15px; }
+    .theme-toggle .theme-icon-sun { display: none; }
+    :root[data-theme="dark"] .theme-toggle .theme-icon-sun { display: block; }
+    :root[data-theme="dark"] .theme-toggle .theme-icon-moon { display: none; }
 
     /* ── PAGE SHELL ──────────────────────────────────────────────── */
     .page {
@@ -313,7 +344,7 @@ permalink: /
       background: var(--surface);
       text-decoration: none; transition: background 0.15s, color 0.15s;
     }
-    .entry-tag:hover { background: var(--fg); color: #fff; }
+    .entry-tag:hover { background: var(--fg); color: var(--bg); }
 
     .entry-title {
       font-family: var(--font-sans); font-weight: 700;
@@ -427,7 +458,12 @@ permalink: /
       harisankarsivankutty.in
     </a>
     <div class="nav-right">
+      <a href="/ask/" class="nav-link">ask my writing</a>
       <a href="/about/" class="nav-link">about</a>
+      <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
+        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line></svg>
+        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+      </button>
       <a href="https://topmate.io/harisankar_sivankutty" target="_blank" rel="noopener" class="nav-cta">
         Book a 1:1 ↗
       </a>
@@ -612,6 +648,7 @@ permalink: /
 
   <link rel="stylesheet" href="/assets/ask-hari-widget.css">
   <script src="/assets/ask-hari-widget.js" defer></script>
+  <script src="/assets/theme-toggle.js" defer></script>
 
 </body>
 </html>

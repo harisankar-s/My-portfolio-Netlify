@@ -55,6 +55,28 @@ module.exports = function (eleventyConfig) {
     return Math.max(1, Math.round(words / 200));
   });
 
+  // Filter: pick related posts by shared tags with the current post, newest
+  // first as a tiebreaker; falls back to most recent other posts when no
+  // tag overlap exists (e.g. the post's only tag is unique).
+  eleventyConfig.addFilter("relatedPosts", function (posts, currentTags, currentUrl, limit) {
+    const max = limit || 3;
+    const currentSet = new Set(currentTags || []);
+
+    const scored = posts
+      .filter((post) => post.url !== currentUrl)
+      .map((post) => {
+        const overlap = (post.data.tags || []).filter((t) => currentSet.has(t)).length;
+        return { post, overlap };
+      });
+
+    const withOverlap = scored.filter((s) => s.overlap > 0);
+    const ranked = (withOverlap.length ? withOverlap : scored).sort(
+      (a, b) => b.overlap - a.overlap || b.post.date - a.post.date
+    );
+
+    return ranked.slice(0, max).map((s) => s.post);
+  });
+
   // Filter: first <img> src in rendered content (used for blog thumbnails)
   eleventyConfig.addFilter("firstImage", function (content) {
     if (!content) return "";
