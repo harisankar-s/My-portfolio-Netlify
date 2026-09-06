@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Security
+
+- Never read, open, or print the contents of `.env` while exploring or working in this codebase. It holds real API keys (`ANTHROPIC_API_KEY`, `OPENROUTER_API_KEY`). Use `.env.example` instead to see which variables exist — it only contains empty/placeholder values.
+
 ## Commands
 
 - `npm start` — local dev server with live reload (`eleventy --serve --watch`)
@@ -10,8 +14,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run list-posts` — lists every post in `src/blog/posts/` with its date and title (`scripts/list-posts.js`).
 - `npm run delete-post` — interactive picker (`scripts/delete-post.js`) that deletes a post's `.md` file and its `src/images/posts/{slug}/` folder after confirmation; pass a slug directly to skip the picker (`npm run delete-post -- some-slug`).
 - No test suite, linter, or framework build step. There is no "run a single test" — verification is visual via the dev server.
+- `npm start` (`eleventy --serve`) does **not** run Netlify Functions, so the AskHari.ai chat widget will fail its `fetch` calls under it. Use `netlify dev` (Netlify CLI, e.g. `npx netlify-cli dev`) instead when working on the assistant — it proxies Eleventy and runs `netlify/functions/*` locally. Copy `.env.example` to `.env` first.
 
-Node 18 is pinned for the Netlify build (`netlify.toml`). Eleventy and Luxon are the only dependencies.
+Node 18 is pinned for the Netlify build (`netlify.toml`). Eleventy and Luxon are the only `devDependencies`; there are no runtime `dependencies` — the AskHari.ai function uses Node 18's built-in `fetch` rather than adding an SDK.
 
 ## Architecture
 
@@ -73,3 +78,13 @@ Both default to resolving the file against `src/images/posts/{fileSlug}/`. A han
 ### Redirects
 
 `netlify.toml` redirects old `.html` blog URLs and the legacy Medium-article slug to current `/blog/{slug}/` paths. Add a redirect there when renaming a post slug.
+
+### AskHari.ai (chat assistant)
+
+A site-wide chat widget answering recruiter questions about Hari's background and reader questions about the article they're on:
+
+- `src/_data/profile.json` — the assistant's sole source of truth about Hari (certifications, skills, experience, clients). Keep it in sync with `src/index.html`'s content when either changes; nothing else reads this file at build time except the widget's backend.
+- `netlify/functions/ask-hari.js` — the backend. Calls the Anthropic Messages API first (`ANTHROPIC_API_KEY`); on any failure or missing key, falls back to OpenRouter (`OPENROUTER_API_KEY`) so the widget stays functional on a free/open-source model. `netlify.toml` proxies `/api/ask-hari` → this function so the browser never sees the `/.netlify/functions/` path.
+- `src/assets/ask-hari-widget.{css,js}` — the one shared widget UI (passthrough-copied via `.eleventy.js`), included with two `<link>`/`<script>` tags near `</body>` in all three of `base.njk`, `article.njk`, and `src/index.html` — the only intentional exception to "no shared partial" in this repo, since the alternative was tripling the widget markup.
+- On article pages the widget auto-detects `.article-body`/`.article-title` in the DOM and sends that article's text as context, so it can answer questions about the specific post being read as well as about Hari's profile.
+- Both API keys are read from env vars only, never hardcoded — see `.env.example`.

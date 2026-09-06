@@ -1,0 +1,149 @@
+{
+  "name": "Harisankar Sivankutty",
+  "headline": "Data Engineering Architect · GenAI",
+  "location": "Hyderabad / Bengaluru, India",
+  "summary": "Data and AI engineering leader with over ten years of experience designing, building, and delivering enterprise-scale platforms for clients across telecom, IoT, Biotech, retail, e-commerce, and GenAI. Work sits where architecture meets delivery — turning ambiguous, high-stakes problems into systems that hold up in production. Experience spans distributed processing with Spark and Kafka, the modern data stack (dbt, Great Expectations, DataHub), and multi-cloud architecture across AWS, GCP, Snowflake, and on-premises infrastructure, alongside production GenAI systems built on Retrieval-Augmented Generation, LangChain, and LLM integration. Owns delivery end to end: shaping architecture, mentoring engineers, running quality audits, and keeping stakeholders aligned. Currently a Senior Consultant at Thoughtworks, advising global enterprises on data platforms, GenAI, and cloud-native architecture.",
+  "stats": {
+    "yearsExperience": "10+",
+    "enterpriseClients": "8+",
+    "cloudPlatforms": 3,
+    "certifications": 3
+  },
+  "certifications": [
+    { "name": "Professional Data Engineer", "issuer": "Google Cloud", "issued": "2025" },
+    { "name": "Solutions Architect (Associate)", "issuer": "Amazon Web Services", "issued": "2022" },
+    { "name": "Certified Engineer (RHCE)", "issuer": "Red Hat", "issued": "2016" }
+  ],
+  "skills": {
+    "Data & Big Data": ["Apache Spark", "Kafka", "Airflow", "dbt", "Databricks", "Snowflake", "BigQuery", "AWS EMR", "DataHub", "Delta Lake"],
+    "Cloud & Infra": ["AWS", "Azure", "GCP", "Kubernetes", "Terraform", "Docker", "CI/CD pipelines", "On-prem & hybrid"],
+    "GenAI & ML": ["LLM integration", "RAG architectures", "LangChain", "Vector databases", "Prompt engineering", "Deep Learning", "ML algorithms", "Snowflake Cortex AI"],
+    "LLM Training & MLOps": ["Fine-tuning · LoRA / QLoRA", "Axolotl", "DeepSpeed", "FSDP", "MLflow", "Model deployment"],
+    "Data Platform & Quality": ["Enterprise data platforms", "Metadata management", "Great Expectations", "Hackolade (data modelling)", "Data Vault methodology", "API-driven integration", "Streaming & batch"],
+    "Languages & DBs": ["Python", "SQL (Advanced)", "Scala", "Java", "PostgreSQL", "MongoDB", "Redis"],
+    "Delivery & Leadership": ["Project management", "Delivery management", "Team leadership", "Quality audits", "Stakeholder alignment", "Architecture reviews", "RFP reviews", "SOW preparation", "HLD & LLD design"],
+    "Domains": ["Retail", "E-commerce", "Telecom", "IoT platforms", "Biotech R&D", "Enterprise SaaS", "Amazon Alexa", "Google Assistant / Smart Home"]
+  },
+  "experience": [
+    {
+      "company": "Thoughtworks",
+      "role": "Senior Consultant · Data Engineer",
+      "dates": "04/2024 — Present",
+      "description": "Advising and architecting enterprise data platforms for global retail and e-commerce clients — blending modern data stack practices (dbt, Great Expectations, DataHub) with Spark, Kafka, and multi-cloud analytics.",
+      "projects": [
+        {
+          "name": "Assortment Analytics Platform",
+          "client": "Otto GmbH",
+          "location": "Germany",
+          "domain": "E-commerce",
+          "dates": "2025 — Present",
+          "description": "A data-driven platform to analyse product assortment strategy using scraped data from a range of e-commerce platforms — structured for long-term flexibility and analytical scale.",
+          "highlights": [
+            "Data modelling with the Data Vault methodology for long-term scalability",
+            "Quarterly web-scraping pipelines feeding structured insights into BigQuery",
+            "Built an end-to-end framework to transfer data from BigQuery into Snowflake",
+            "Enabled data-driven assortment decisions through category gap analysis and white-space detection",
+            "Leveraged Snowflake Cortex AI to develop an Agentic AI solution on top of the assortment data"
+          ],
+          "stack": ["BigQuery", "Snowflake", "Data Vault", "Python", "Airflow", "dbt", "Snowflake Cortex AI", "RAG"]
+        },
+        {
+          "name": "Enterprise Data Platform Modernisation",
+          "client": "JCPenney",
+          "location": "United States",
+          "domain": "Retail",
+          "dates": "2024 — 2025",
+          "description": "End-to-end implementation of an enterprise data platform — rebuilding pipeline reliability, data quality controls, and large-scale transformation workloads across Spark, Kafka, and Oracle.",
+          "highlights": [
+            "Built a data quality framework using Great Expectations integrated with DataHub",
+            "Developed ingestion frameworks for API, streaming, and RDBMS sources",
+            "Distributed Apache Spark jobs on AWS EMR; Kafka-based ingestion"
+          ],
+          "stack": ["Great Expectations", "DataHub", "dbt", "Spark", "AWS EMR", "Kafka", "Oracle", "Hudi", "Athena", "OpenSearch"]
+        }
+      ]
+    },
+    {
+      "company": "Ayla Networks",
+      "role": "Lead · Voice & Cloud · SDE-III",
+      "dates": "05/2022 — 03/2024",
+      "description": "Led cloud and analytics workstreams on Ayla's IoT platform, shipping telemetry pipelines, dashboards, and data products that powered connected devices for telecom and consumer clients worldwide.",
+      "projects": []
+    },
+    {
+      "company": "Bayer",
+      "role": "Data Engineer II",
+      "dates": "03/2021 — 05/2022",
+      "description": "Part of Bayer Crop Science R&D — building big-data and cloud-based pipelines to centralise agricultural research data and generate insights for breeding and yield programmes.",
+      "projects": []
+    },
+    {
+      "company": "6D Technologies",
+      "role": "Senior Implementation Engineer",
+      "dates": "08/2016 — 03/2021",
+      "description": "Shipped large-scale telecom platforms — MDM systems, charging systems, and campaign management tooling — for carriers across MEA and APAC.",
+      "projects": [
+        {
+          "name": "Notification Gateway / DWH",
+          "client": "Ooredoo Qatar",
+          "location": "Doha, Qatar",
+          "domain": "Telecom",
+          "dates": "May 2019 — Mar 2021",
+          "description": "Transformed a national telecom operator's customer experience by migrating notifications from internal systems onto a new platform, letting customers set custom notification preferences via the mobile app, CSRs, and call centres. Owned requirement analysis, design, end-to-end deployment, testing, and delivery.",
+          "highlights": [
+            "Built a Pub-Sub model and data pipeline collecting structured and unstructured data into a data lake using Kafka streams",
+            "Supported an 18-node Cloudera cluster — NiFi & StreamSets for ingestion, Spark for transformation, Kafka for real-time streaming",
+            "Designed a data model to manage user preferences; used MySQL, Oracle, BigQuery, Tableau, Power BI, and Excel for data intelligence"
+          ],
+          "stack": ["Kafka", "NiFi", "StreamSets", "Spark", "Cloudera", "Oracle", "MySQL", "BigQuery", "Tableau", "Power BI"]
+        },
+        {
+          "name": "Digimate",
+          "client": "Bharti Airtel",
+          "location": "Bangalore, Delhi, Mumbai",
+          "domain": "Messaging",
+          "dates": "Oct 2016 — Aug 2019",
+          "description": "A comprehensive messaging-service platform integrating multiple SMS operators. Owned design and end-to-end deployment, helping onboard 1500+ B2B/B2C customers.",
+          "highlights": [
+            "Designed and deployed the platform end to end, integrating multiple SMS operators into a single solution",
+            "Helped onboard 1500+ B2B/B2C customers",
+            "Deployed campaign management solutions onsite for leading stock-exchange and banking clients"
+          ],
+          "stack": ["Python", "Shell", "SQL", "Load Balancing", "Redundancy"]
+        },
+        {
+          "name": "Unified Messaging Gateway",
+          "client": "AIS Thailand",
+          "location": "Thailand",
+          "domain": "Telecom / Messaging",
+          "dates": "n/a",
+          "description": "A messaging solution offering prepaid and postpaid credit to B2B customers for sending SMS/USSD notifications. Responsible for testing, report design, and onsite delivery.",
+          "highlights": [
+            "Designed reporting and dashboards using Pentaho and Highcharts",
+            "Developed SQL procedures; followed a CI/CD pipeline for deployment"
+          ],
+          "stack": ["SQL", "Pentaho", "Highcharts", "CI/CD"]
+        }
+      ]
+    }
+  ],
+  "clients": [
+    { "name": "Otto GmbH", "domain": "E-commerce", "location": "Hamburg", "description": "Assortment Analytics Platform — Data Vault modelling, quarterly web scraping pipelines into BigQuery, BQ-to-Snowflake transfer framework." },
+    { "name": "JCPenney", "domain": "Retail", "location": "New York", "description": "Enterprise Data Platform modernisation — data quality framework (Great Expectations + DataHub), Spark on AWS EMR, dbt ingestion, Kafka streams." },
+    { "name": "Ayla Networks", "domain": "IoT", "location": "Bengaluru", "description": "Helped build an industry-leading IoT platform — accelerating development, support, and enhancement of connected products at scale." },
+    { "name": "Bayer Crop Science", "domain": "Biotech R&D", "location": "Bengaluru", "description": "Part of the R&D data team — used big-data and cloud tech to centralise management and extract insight from breeding and field data." },
+    { "name": "Ooredoo Qatar", "domain": "Telecom/BSS", "location": "Doha", "description": "Developed an MDM platform collecting data from legacy systems, feeding a clean pipeline into the data warehouse for downstream analytics." },
+    { "name": "Bharti Airtel", "domain": "Telecom", "location": "New Delhi", "description": "Product development team for Airtel Digimate — a centralised campaign management platform. Owned data management and reporting." },
+    { "name": "Etisalat", "domain": "IoT / Smart Living", "location": "Dubai", "description": "Built an IoT Smart Living application for Etisalat Dubai — collecting data streams from multiple device sources for real-time analytics." },
+    { "name": "AIS Thailand", "domain": "Telecom", "location": "Bangkok", "description": "Built a charging system and designed interactive Pentaho dashboards tailored to AIS's customer and operational requirements." }
+  ],
+  "education": "B.Tech, Electronics & Communication · CUSAT, 2012–2016",
+  "languages": ["English", "Malayalam", "Hindi", "Tamil"],
+  "contact": {
+    "email": "harisankar.sivankutty@gmail.com",
+    "linkedin": "https://www.linkedin.com/in/harisankarsivankutty/",
+    "medium": "https://medium.com/@brainbytebyhari",
+    "topmate": "https://topmate.io/harisankar_sivankutty",
+    "site": "https://harisankarsivankutty.in/"
+  }
+}
