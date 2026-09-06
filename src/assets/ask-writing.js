@@ -58,6 +58,30 @@
     return row;
   }
 
+  function formatLatency(ms) {
+    if (typeof ms !== "number") return "";
+    return ms < 1000 ? Math.round(ms) + "ms" : (ms / 1000).toFixed(1) + "s";
+  }
+
+  function appendMeta(container, data) {
+    if (!data || typeof data.model !== "string") return;
+
+    var metaRow = el("div", { class: "askwriting-meta-row" });
+    var badgeText = data.model + (typeof data.latencyMs === "number" ? " · " + formatLatency(data.latencyMs) : "");
+    metaRow.appendChild(el("span", { class: "askwriting-modelbadge", text: badgeText }));
+
+    if (Array.isArray(data.sources) && data.sources.length) {
+      var sourcesWrap = el("div", { class: "askwriting-sources" });
+      data.sources.forEach(function (s) {
+        sourcesWrap.appendChild(el("a", { class: "askwriting-source-chip", href: s.url, text: s.title }));
+      });
+      metaRow.appendChild(sourcesWrap);
+    }
+
+    container.appendChild(metaRow);
+    container.scrollTop = container.scrollHeight;
+  }
+
   function sendMessage(ui, text) {
     if (pending || !text) return;
 
@@ -88,6 +112,7 @@
       .then(function (data) {
         pendingNode.remove();
         addMessage(ui.messages, "assistant", renderReplyHtml(data.reply), true);
+        appendMeta(ui.messages, data);
         history.push({ role: "user", content: text });
         history.push({ role: "assistant", content: data.reply });
       })

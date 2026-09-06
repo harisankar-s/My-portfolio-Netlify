@@ -201,18 +201,21 @@ async function callOpenRouterModel(model, systemPrompt, messages) {
   return reply.trim();
 }
 
-// A missing key or a malformed request (4xx other than 429) won't be fixed
-// by trying another model, so only fall through on rate limits/server
-// errors — anything else fails fast.
+// A missing key or a malformed request won't be fixed by trying another
+// model, so those fail fast. But 404 here means OpenRouter doesn't
+// recognize *that specific* model slug (e.g. a free tier was retired) —
+// that's a per-model problem, not a per-request one, so it's retryable
+// against the next model in the list same as 429/5xx.
 function isRetryableOpenRouterError(err) {
-  return !err.status || err.status === 429 || err.status >= 500;
+  return !err.status || err.status === 404 || err.status === 429 || err.status >= 500;
 }
 
 async function callOpenRouter(systemPrompt, messages) {
   let lastError;
   for (const model of OPENROUTER_MODELS) {
     try {
-      return await callOpenRouterModel(model, systemPrompt, messages);
+      const reply = await callOpenRouterModel(model, systemPrompt, messages);
+      return { reply, model };
     } catch (err) {
       lastError = err;
       console.error(`Ask My Writing: model ${model} failed`, err);
@@ -253,8 +256,11 @@ exports.handler = async (event) => {
   const systemPrompt = buildSystemPrompt(posts, selected);
 
   try {
-    const reply = await callOpenRouter(systemPrompt, messages);
-    return { statusCode: 200, body: JSON.stringify({ reply, provider: "openrouter" }) };
+    const start = Date.now();
+    const { reply, model } = await callOpenRouter(systemPrompt, messages);
+    const latencyMs = Date.now() - start;
+    const sources = selected.map((p) => ({ title: p.title, slug: p.slug, url: `/blog/${p.slug}/` }));
+    return { statusCode: 200, body: JSON.stringify({ reply, provider: "openrouter", model, latencyMs, sources }) };
   } catch (openRouterError) {
     console.error("Ask My Writing: OpenRouter failed", openRouterError);
     return {

@@ -159,6 +159,37 @@
 .askwriting-msg.pending {
   color: var(--fg-dim);
 }
+
+.askwriting-meta-row {
+  margin: -6px 0 4px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.askwriting-modelbadge {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--fg-dim);
+}
+.askwriting-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.askwriting-source-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--fg-muted);
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+.askwriting-source-chip:hover {
+  border-color: var(--pop);
+  color: var(--pop);
+}
 .askwriting-dots {
   display: inline-flex; gap: 3px; margin-left: 4px; vertical-align: middle;
 }

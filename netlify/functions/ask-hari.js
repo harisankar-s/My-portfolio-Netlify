@@ -123,12 +123,19 @@ exports.handler = async (event) => {
   const systemPrompt = buildSystemPrompt(payload.articleContext);
 
   try {
+    const start = Date.now();
     const reply = await callAnthropic(systemPrompt, messages);
-    return { statusCode: 200, body: JSON.stringify({ reply, provider: "anthropic" }) };
+    const latencyMs = Date.now() - start;
+    return { statusCode: 200, body: JSON.stringify({ reply, provider: "anthropic", model: ANTHROPIC_MODEL, latencyMs }) };
   } catch (anthropicError) {
     try {
+      const start = Date.now();
       const reply = await callOpenRouter(systemPrompt, messages);
-      return { statusCode: 200, body: JSON.stringify({ reply, provider: "openrouter" }) };
+      const latencyMs = Date.now() - start;
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ reply, provider: "openrouter", model: OPENROUTER_MODEL, latencyMs, fallback: true }),
+      };
     } catch (openRouterError) {
       console.error("AskHari.ai: both providers failed", anthropicError, openRouterError);
       return {

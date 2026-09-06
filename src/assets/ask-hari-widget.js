@@ -76,6 +76,19 @@
     return node;
   }
 
+  function formatLatency(ms) {
+    if (typeof ms !== "number") return "";
+    return ms < 1000 ? Math.round(ms) + "ms" : (ms / 1000).toFixed(1) + "s";
+  }
+
+  function appendMeta(container, data) {
+    if (!data || typeof data.model !== "string") return;
+    var label = (data.fallback ? "Fallback via " : "") + data.model;
+    var text = label + (typeof data.latencyMs === "number" ? " · " + formatLatency(data.latencyMs) : "");
+    container.appendChild(el("div", { class: "askhari-meta", text: text }));
+    container.scrollTop = container.scrollHeight;
+  }
+
   function init() {
     var ui = buildUI();
     var greeted = false;
@@ -146,6 +159,7 @@
         .then(function (data) {
           pendingNode.remove();
           addMessage(ui.messages, "assistant", data.reply);
+          appendMeta(ui.messages, data);
           history.push({ role: "user", content: text });
           history.push({ role: "assistant", content: data.reply });
         })
