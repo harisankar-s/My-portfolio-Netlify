@@ -5,6 +5,14 @@
 [build.environment]
   NODE_VERSION = "18"
 
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from   = "/api/ask-hari"
+  to     = "/.netlify/functions/ask-hari"
+  status = 200
+
 [[redirects]]
   from   = "/blog/"
   to     = "/"

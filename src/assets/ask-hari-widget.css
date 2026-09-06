@@ -1,0 +1,175 @@
+/* AskHari.ai — self-contained styles (own color tokens; must not depend on
+   host-page CSS variables, since this include is shared across base.njk,
+   article.njk, and src/index.html, which each define different tokens). */
+#askhari-root {
+  --ah-bg: #14161a;
+  --ah-panel: #1c1f24;
+  --ah-border: rgba(255, 255, 255, 0.1);
+  --ah-text: #e8e9eb;
+  --ah-text-dim: #9a9da3;
+  --ah-accent: #c6ff3d;
+  --ah-accent-text: #0e0f11;
+  --ah-user-bubble: #2a2e35;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+#askhari-toggle {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: none;
+  background: var(--ah-accent);
+  color: var(--ah-accent-text);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  transition: transform 0.15s ease;
+}
+#askhari-toggle:hover {
+  transform: translateY(-2px);
+}
+
+#askhari-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 84px;
+  z-index: 9999;
+  width: min(360px, calc(100vw - 40px));
+  height: min(520px, calc(100vh - 140px));
+  background: var(--ah-panel);
+  border: 1px solid var(--ah-border);
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#askhari-panel[hidden] {
+  display: none;
+}
+
+#askhari-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--ah-border);
+  color: var(--ah-text);
+}
+#askhari-header strong {
+  font-size: 14px;
+}
+#askhari-header span {
+  display: block;
+  font-size: 11px;
+  color: var(--ah-text-dim);
+  margin-top: 2px;
+}
+#askhari-close {
+  background: none;
+  border: none;
+  color: var(--ah-text-dim);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px;
+}
+#askhari-close:hover {
+  color: var(--ah-text);
+}
+
+#askhari-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.askhari-msg {
+  max-width: 85%;
+  padding: 9px 12px;
+  border-radius: 12px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.askhari-msg.user {
+  align-self: flex-end;
+  background: var(--ah-user-bubble);
+  color: var(--ah-text);
+  border-bottom-right-radius: 4px;
+}
+.askhari-msg.assistant {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid var(--ah-border);
+  color: var(--ah-text);
+  border-bottom-left-radius: 4px;
+}
+.askhari-msg.error {
+  align-self: flex-start;
+  color: #ff8080;
+  border: 1px solid rgba(255, 128, 128, 0.3);
+  background: rgba(255, 128, 128, 0.08);
+}
+.askhari-msg.pending {
+  color: var(--ah-text-dim);
+  font-style: italic;
+}
+
+#askhari-form {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid var(--ah-border);
+}
+#askhari-input {
+  flex: 1;
+  resize: none;
+  background: var(--ah-bg);
+  border: 1px solid var(--ah-border);
+  border-radius: 10px;
+  color: var(--ah-text);
+  padding: 9px 11px;
+  font-size: 13.5px;
+  font-family: inherit;
+  max-height: 90px;
+}
+#askhari-input:focus {
+  outline: none;
+  border-color: var(--ah-accent);
+}
+#askhari-send {
+  border: none;
+  background: var(--ah-accent);
+  color: var(--ah-accent-text);
+  border-radius: 10px;
+  padding: 0 16px;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+}
+#askhari-send:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (max-width: 420px) {
+  #askhari-panel {
+    right: 12px;
+    left: 12px;
+    width: auto;
+  }
+  #askhari-toggle {
+    right: 12px;
+  }
+}
