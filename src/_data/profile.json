@@ -7,9 +7,10 @@
     "yearsExperience": "10+",
     "enterpriseClients": "8+",
     "cloudPlatforms": 3,
-    "certifications": 3
+    "certifications": 4
   },
   "certifications": [
+    { "name": "Claude Certified Architect — Foundations", "issuer": "Anthropic", "issued": "2026" },
     { "name": "Professional Data Engineer", "issuer": "Google Cloud", "issued": "2025" },
     { "name": "Solutions Architect (Associate)", "issuer": "Amazon Web Services", "issued": "2022" },
     { "name": "Certified Engineer (RHCE)", "issuer": "Red Hat", "issued": "2016" }
@@ -17,7 +18,7 @@
   "skills": {
     "Data & Big Data": ["Apache Spark", "Kafka", "Airflow", "dbt", "Databricks", "Snowflake", "BigQuery", "AWS EMR", "DataHub", "Delta Lake"],
     "Cloud & Infra": ["AWS", "Azure", "GCP", "Kubernetes", "Terraform", "Docker", "CI/CD pipelines", "On-prem & hybrid"],
-    "GenAI & ML": ["LLM integration", "RAG architectures", "LangChain", "Vector databases", "Prompt engineering", "Deep Learning", "ML algorithms", "Snowflake Cortex AI"],
+    "GenAI & ML": ["LLM integration", "RAG architectures", "Claude / Anthropic API", "Vertex AI", "LangChain", "Vector databases", "Prompt engineering", "Deep Learning", "ML algorithms", "Snowflake Cortex AI"],
     "LLM Training & MLOps": ["Fine-tuning · LoRA / QLoRA", "Axolotl", "DeepSpeed", "FSDP", "MLflow", "Model deployment"],
     "Data Platform & Quality": ["Enterprise data platforms", "Metadata management", "Great Expectations", "Hackolade (data modelling)", "Data Vault methodology", "API-driven integration", "Streaming & batch"],
     "Languages & DBs": ["Python", "SQL (Advanced)", "Scala", "Java", "PostgreSQL", "MongoDB", "Redis"],
