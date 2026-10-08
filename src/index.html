@@ -626,6 +626,9 @@ permalink: /about/index.html
       margin-left: 34px;
     }
 
+    .ticker-icon { width: 14px; height: 14px; opacity: 0.6; }
+    .ticker-item:hover .ticker-icon { opacity: 1; }
+
     .ticker-item:hover {
       color: var(--fg);
     }
@@ -737,7 +740,7 @@ permalink: /about/index.html
             <div class="stat-label">Cloud platforms</div>
           </div>
           <div class="stat">
-            <div class="stat-num">3</div>
+            <div class="stat-num">4</div>
             <div class="stat-label">Certifications</div>
           </div>
         </div>
@@ -759,9 +762,10 @@ permalink: /about/index.html
           <span class="ticker-item">Databricks</span>
           <span class="ticker-item">Snowflake</span>
           <span class="ticker-item">Airflow</span>
-          <span class="ticker-item">dbt</span>
+          <span class="ticker-item"><img src="/images/logos/dbt.svg" alt="" class="ticker-icon" />dbt</span>
           <span class="ticker-item">Kubernetes</span>
           <span class="ticker-item">Terraform</span>
+          <span class="ticker-item"><img src="/images/logos/claude.svg" alt="" class="ticker-icon" />Claude</span>
           <span class="ticker-item">LangChain</span>
           <span class="ticker-item">Vector DBs</span>
           <span class="ticker-item">LLMs</span>
@@ -776,9 +780,10 @@ permalink: /about/index.html
           <span class="ticker-item">Databricks</span>
           <span class="ticker-item">Snowflake</span>
           <span class="ticker-item">Airflow</span>
-          <span class="ticker-item">dbt</span>
+          <span class="ticker-item"><img src="/images/logos/dbt.svg" alt="" class="ticker-icon" />dbt</span>
           <span class="ticker-item">Kubernetes</span>
           <span class="ticker-item">Terraform</span>
+          <span class="ticker-item"><img src="/images/logos/claude.svg" alt="" class="ticker-icon" />Claude</span>
           <span class="ticker-item">LangChain</span>
           <span class="ticker-item">Vector DBs</span>
           <span class="ticker-item">LLMs</span>
@@ -822,7 +827,7 @@ permalink: /about/index.html
             <div class="about-meta">
               <div class="meta-row">
                 <span class="meta-key">Focus</span>
-                <span class="meta-val">Data Platforms · GenAI &amp; RAG · Cloud Architecture · Delivery Leadership</span>
+                <span class="meta-val">Data Platforms · GenAI &amp; RAG · Agentic AI · Cloud Architecture · Delivery Leadership</span>
               </div>
               <div class="meta-row">
                 <span class="meta-key">Experience</span>
@@ -851,11 +856,19 @@ permalink: /about/index.html
     <section class="credentials reveal" aria-label="Certifications">
       <span class="creds-eyebrow">Certifications</span>
       <div class="creds-grid">
-        <article class="cred-card">
+        <article class="cred-card cred-card--accent">
+          <span class="cred-dot" title="Active"></span>
+          <div class="cred-icon"><img class="cred-logo" src="/images/logos/claude.svg" alt="Anthropic" /></div>
+          <span class="cred-issuer">Anthropic</span>
+          <h4 class="cred-title">Claude Certified Architect — Foundations</h4>
+          <span class="cred-meta">Issued 2026 · <a href="https://www.credly.com/badges/3cdf9836-415e-4516-89d7-301c92506980" target="_blank" rel="noopener" class="cred-badge-link">Credly Badge</a></span>
+        </article>
+        <article class="cred-card cred-card--accent">
+          <span class="cred-dot" title="Active"></span>
           <div class="cred-icon"><img class="cred-logo" src="/images/logos/gcp.svg" alt="Google Cloud" /></div>
           <span class="cred-issuer">Google Cloud</span>
           <h4 class="cred-title">Professional Data Engineer</h4>
-          <span class="cred-meta">Issued 2025</span>
+          <span class="cred-meta">Issued 2025 · <a href="https://www.credly.com/badges/2a915f5a-6189-4fc8-acee-9972d71ee658" target="_blank" rel="noopener" class="cred-badge-link">Credly Badge</a></span>
         </article>
         <article class="cred-card">
           <div class="cred-icon"><img class="cred-logo" src="/images/logos/aws.svg" alt="Amazon Web Services" /></div>
@@ -1239,6 +1252,8 @@ permalink: /about/index.html
           <ul class="stack-list">
             <li>LLM integration</li>
             <li>RAG architectures</li>
+            <li>Claude / Anthropic API</li>
+            <li>Vertex AI</li>
             <li>LangChain</li>
             <li>Vector databases</li>
             <li>Prompt engineering</li>
@@ -1304,6 +1319,7 @@ permalink: /about/index.html
         <div class="stack-group">
           <h5 class="stack-title">Certifications</h5>
           <ul class="stack-list">
+            <li>Claude Certified Architect — Foundations (Anthropic)</li>
             <li>Google Cloud Professional Data Engineer</li>
             <li>AWS Solutions Architect – Associate</li>
             <li>Red Hat Certified Engineer (RHCE)</li>
@@ -1597,7 +1613,7 @@ permalink: /about/index.html
 
     .creds-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 16px;
     }
 
@@ -1681,7 +1697,10 @@ permalink: /about/index.html
       animation: pulse 2s ease-in-out infinite;
     }
 
-    @media (max-width: 900px) {
+    @media (max-width: 960px) {
+      .creds-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
       .creds-grid { grid-template-columns: 1fr; }
     }
 
@@ -2690,7 +2709,7 @@ permalink: /about/index.html
     .credentials { padding-top: clamp(36px,5vh,56px); padding-bottom: clamp(48px,7vh,80px); }
     .creds-eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-dim); display: inline-flex; align-items: center; gap: 12px; margin-bottom: 26px; }
     .creds-eyebrow::before { content: ''; width: 28px; height: 2px; background: var(--pop); }
-    .creds-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .creds-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
     .cred-card { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; padding: 24px 24px 22px; border: 1px solid var(--border); border-radius: 12px; background: var(--bg); transition: border-color .3s var(--ease), transform .3s var(--ease), box-shadow .3s var(--ease); }
     .cred-card:hover { border-color: var(--border-strong); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.07); }
     .cred-icon { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 10px; background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.30); color: var(--pop); margin-bottom: 8px; }
@@ -2698,6 +2717,9 @@ permalink: /about/index.html
     .cred-issuer { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-dim); }
     .cred-title { font-family: var(--font-sans); font-weight: 700; font-size: 17px; line-height: 1.25; color: var(--fg); }
     .cred-meta { font-family: var(--font-mono); font-size: 12px; color: var(--fg-muted); margin-top: 2px; }
+    .cred-badge-link { color: var(--pop); text-decoration: none; }
+    .cred-badge-link:hover { text-decoration: underline; }
+    @media (max-width: 960px) { .creds-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 760px) { .creds-grid { grid-template-columns: 1fr; } }
 
     /* experience -> collapsible projects */
