@@ -7,9 +7,10 @@
     "yearsExperience": "10+",
     "enterpriseClients": "8+",
     "cloudPlatforms": 3,
-    "certifications": 4
+    "certifications": 5
   },
   "certifications": [
+    { "name": "Claude Certified Architect — Professional", "issuer": "Anthropic", "issued": "2026" },
     { "name": "Claude Certified Architect — Foundations", "issuer": "Anthropic", "issued": "2026" },
     { "name": "Professional Data Engineer", "issuer": "Google Cloud", "issued": "2025" },
     { "name": "Solutions Architect (Associate)", "issuer": "Amazon Web Services", "issued": "2022" },
