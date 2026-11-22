@@ -173,3 +173,19 @@ html body .t-title { font-weight: 900; }
 .back-link:hover { color: var(--brand); }
 .bb-cta { background: var(--brand-soft); border-color: color-mix(in srgb, var(--brand) 25%, transparent); }
 .bb-cta-eyebrow { color: var(--brand); }
+
+/* YouTube embeds ({% youtube %} shortcode) — 16:9, full column width */
+.video-embed { margin: 32px 0; }
+.video-frame { position: relative; aspect-ratio: 16 / 9; border-radius: 8px; overflow: hidden; background: #111827; }
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* Promo band used inside a post body: undo article prose styles */
+.article-body .promo-band { margin: 32px 0; }
+.article-body .promo-band .promo-text { font-family: var(--font-sans); font-size: 15px; line-height: 1.5; margin: 0; }
+.article-body .promo-band a.promo-btn { text-decoration: none; border-bottom: 0; }
+
+/* Gentler reading rhythm in posts: lighter bold, more air around list items and subheadings */
+.article-body strong { font-weight: 600; }
+.article-body li { margin-bottom: 14px; }
+.article-body h3 { font-size: 21px; margin-top: 44px; margin-bottom: 12px; }
+.article-body h2 + h3 { margin-top: 20px; }

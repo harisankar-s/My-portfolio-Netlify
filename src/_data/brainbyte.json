@@ -180,6 +180,15 @@
 
   "kits": [
     {
+      "title": "Personal website starter kit",
+      "blurb": "A one-page portfolio site for students and freshers. Fill in one JSON file, add your résumé, and deploy free on Netlify in about 15 minutes. No HTML needed.",
+      "stack": ["Eleventy", "Nunjucks", "Netlify", "Light & dark mode"],
+      "post": "",
+      "status": "live",
+      "free": true,
+      "url": "https://github.com/harisankar-s/portfolio-starter-freshers"
+    },
+    {
       "title": "Production data pipeline kit",
       "blurb": "The Terraform behind Seven Principles: IAM, separate environments, deployment and 3am alerting for a cloud data pipeline.",
       "stack": ["Terraform", "GCP", "BigQuery", "Snowflake"],

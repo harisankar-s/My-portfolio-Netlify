@@ -82,7 +82,9 @@ Don't hand-write the `<figure>`/`<img>`/`<iframe>` markup in post content — us
 {% diagram "diagram.html", "Diagram title", "Caption", 600 %}
 ```
 
-Both default to resolving the file against `src/images/posts/{fileSlug}/`. A handful of older posts (e.g. `building-enterprise-data-platform-lessons-learned.md`) have an asset folder name that doesn't match the post's fileSlug — pass an explicit folder as the last argument (`{% figure "...", "...", "...", "other-folder" %}` / `{% diagram "...", "...", "...", 440, "other-folder" %}`) in that case.
+For video, `{% youtube "VIDEO_ID", "Title", "Optional caption" %}` embeds a responsive 16:9 player from `youtube-nocookie.com` (allowed in the CSP `frame-src`). Set `site.youtubeUrl` in `site.json` to show a YouTube link in the blog sidebar.
+
+The `figure` and `diagram` shortcodes default to resolving the file against `src/images/posts/{fileSlug}/`. A handful of older posts (e.g. `building-enterprise-data-platform-lessons-learned.md`) have an asset folder name that doesn't match the post's fileSlug — pass an explicit folder as the last argument (`{% figure "...", "...", "...", "other-folder" %}` / `{% diagram "...", "...", "...", 440, "other-folder" %}`) in that case.
 
 ### Caching (matters when post diagrams look stale)
 

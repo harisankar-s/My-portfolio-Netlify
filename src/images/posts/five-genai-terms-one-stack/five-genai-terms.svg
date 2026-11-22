@@ -1,0 +1,219 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 1345" width="1100" height="1345" font-family="Lato, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#78350F"/>
+    </marker>
+    <style>
+      .row{fill:#FFF8EC;stroke:#F5C77E;stroke-width:1.5}
+      .sep{stroke:#F5C77E;stroke-width:1.5}
+      .title{font-size:24px;font-weight:800;fill:#111827;text-anchor:middle}
+      .box{fill:#FFFFFF;stroke:#F59E0B;stroke-width:1.5}
+      .solid{fill:#F59E0B;stroke:#D97706;stroke-width:1.5}
+      .soft{fill:#FDE7B8;stroke:#F59E0B;stroke-width:1.2}
+      .dash{fill:none;stroke:#F59E0B;stroke-width:1.5;stroke-dasharray:6 4}
+      .t{font-size:14px;fill:#111827;text-anchor:middle}
+      .tb{font-size:15px;font-weight:700;fill:#111827;text-anchor:middle}
+      .ts{font-size:12px;fill:#374151;text-anchor:middle}
+      .tl{font-size:13px;fill:#111827}
+      .red{font-size:12px;fill:#B45309;font-weight:700}
+      .ln{fill:none;stroke:#78350F;stroke-width:1.6;marker-end:url(#ar)}
+      .lnd{fill:none;stroke:#78350F;stroke-width:1.6;stroke-dasharray:6 4;marker-end:url(#ar)}
+      .pill{fill:#FCD9A0;stroke:none}
+      .ph{font-size:15px;font-weight:800;fill:#7C2D12;text-anchor:middle}
+      .pt{font-size:16px;font-weight:600;fill:#111827;text-anchor:middle}
+      .num{fill:#FDE7B8;stroke:#D97706;stroke-width:1.5}
+      .mono{font-size:12px;fill:#111827;text-anchor:middle;font-family:Menlo,Consolas,monospace}
+    </style>
+  </defs>
+  <rect width="1100" height="1345" fill="#FFFDF8"/>
+
+  <!-- ============ ROW 1: AGENTIC AI ============ -->
+  <g transform="translate(0,10)">
+    <rect class="row" x="10" y="0" width="1080" height="250" rx="16"/>
+    <line class="sep" x1="200" y1="20" x2="200" y2="230"/><line class="sep" x1="865" y1="20" x2="865" y2="230"/>
+    <text class="title" x="105" y="130">Agentic AI</text>
+
+    <rect class="box" x="225" y="25" width="120" height="40" rx="8"/><text class="tb" x="285" y="50">Memory</text>
+    <rect class="box" x="225" y="105" width="120" height="40" rx="8"/><text class="tb" x="285" y="130">Tools</text>
+    <rect class="box" x="225" y="185" width="120" height="40" rx="8"/><text class="tb" x="285" y="210">Goals</text>
+    <path class="lnd" d="M345,45 H385 V125 H418"/>
+    <path class="lnd" d="M345,125 H418"/>
+    <path class="lnd" d="M345,205 H385 V125"/>
+
+    <rect class="solid" x="420" y="95" width="130" height="60" rx="10"/><text class="tb" x="485" y="131">Agent</text>
+    <path class="ln" d="M550,125 H598"/>
+    <rect class="box" x="600" y="105" width="110" height="40" rx="8"/><text class="tb" x="655" y="130">Actions</text>
+    <path class="ln" d="M710,125 H743"/>
+    <rect class="box" x="745" y="105" width="110" height="40" rx="8"/><text class="tb" x="800" y="130">Environment</text>
+
+    <rect class="soft" x="590" y="20" width="130" height="40" rx="8"/><text class="tb" x="655" y="45">Observations</text>
+    <path class="lnd" d="M800,105 V40 H722"/>
+    <path class="lnd" d="M590,40 H485 V93"/>
+    <text class="ts" x="655" y="185">plan → act → observe → adjust</text>
+    <text class="ts" x="655" y="203">repeat until the goal is met</text>
+
+    <rect class="pill" x="885" y="25" width="190" height="34" rx="8"/><text class="ph" x="980" y="47">Definition</text>
+    <text class="pt" x="980" y="85">Goal-driven AI agent</text>
+    <rect class="pill" x="885" y="130" width="190" height="34" rx="8"/><text class="ph" x="980" y="152">Real-world Example</text>
+    <text class="pt" x="980" y="192">AutoGPT, Devin</text>
+  </g>
+
+  <!-- ============ ROW 2: LARGE REASONING MODEL ============ -->
+  <g transform="translate(0,275)">
+    <rect class="row" x="10" y="0" width="1080" height="270" rx="16"/>
+    <line class="sep" x1="200" y1="20" x2="200" y2="250"/><line class="sep" x1="865" y1="20" x2="865" y2="250"/>
+    <text class="title" x="105" y="110">Large</text><text class="title" x="105" y="140">Reasoning</text><text class="title" x="105" y="170">Model</text>
+
+    <rect class="solid" x="245" y="15" width="130" height="30" rx="15"/><text class="tb" x="310" y="36">Question</text>
+    <path class="ln" d="M310,45 V58"/>
+    <rect class="soft" x="225" y="60" width="170" height="44" rx="6"/><text class="t" x="310" y="78">"Reasoning"</text><text class="tb" x="310" y="96">Large Language Model</text>
+    <path class="ln" d="M310,104 V116"/>
+    <rect class="box" x="235" y="118" width="150" height="26" rx="13"/><text class="t" x="310" y="136">Internal reasoning 1</text>
+    <rect class="box" x="235" y="150" width="150" height="26" rx="13"/><text class="t" x="310" y="168">Internal reasoning 2</text>
+    <text class="tb" x="310" y="190">⋮</text>
+    <rect class="box" x="235" y="196" width="150" height="26" rx="13"/><text class="t" x="310" y="214">Internal reasoning n</text>
+    <path class="ln" d="M310,222 V232"/>
+    <rect class="solid" x="245" y="234" width="130" height="28" rx="14"/><text class="tb" x="310" y="254">Answer</text>
+    <path class="lnd" d="M385,209 C420,190 420,150 387,137"/>
+    <text class="red" x="392" y="240">"reason" before</text><text class="red" x="392" y="254">answering</text>
+
+    <path d="M440,135 h40 v-14 l28,24 l-28,24 v-14 h-40 z" fill="#F59E0B" stroke="#D97706"/>
+    <text class="tb" x="470" y="178">Example</text>
+
+    <rect class="soft" x="530" y="12" width="320" height="42" rx="8"/>
+    <text class="ts" x="690" y="29">I have 10 apples. I gave 2 apples away</text>
+    <text class="ts" x="690" y="45">and ate 1. How many do I have?</text>
+    <path class="ln" d="M690,54 V64"/>
+    <rect class="soft" x="600" y="66" width="180" height="30" rx="6"/><text class="tb" x="690" y="86">"Reasoning" LLM</text>
+    <path class="ln" d="M690,96 V106"/>
+    <rect class="box" x="560" y="108" width="260" height="26" rx="13"/><text class="t" x="690" y="126">You have 10 apples</text>
+    <rect class="box" x="560" y="140" width="260" height="26" rx="13"/><text class="t" x="690" y="158">You gave 2 away, so 8 are left</text>
+    <rect class="box" x="560" y="172" width="260" height="26" rx="13"/><text class="t" x="690" y="190">You ate 1, so 7 are left</text>
+    <path class="ln" d="M690,198 V210"/>
+    <rect class="solid" x="600" y="212" width="180" height="30" rx="15"/><text class="tb" x="690" y="232">You have 7 apples</text>
+    <text class="red" x="545" y="262">reasoning steps (chain of thought)</text>
+    <text class="ts" x="822" y="232">final</text><text class="ts" x="822" y="246">answer</text>
+
+    <rect class="pill" x="885" y="35" width="190" height="34" rx="8"/><text class="ph" x="980" y="57">Definition</text>
+    <text class="pt" x="980" y="95">Multi-step</text><text class="pt" x="980" y="115">reasoning LLM</text>
+    <rect class="pill" x="885" y="145" width="190" height="34" rx="8"/><text class="ph" x="980" y="167">Real-world Example</text>
+    <text class="pt" x="980" y="205">OpenAI o3/o4-mini,</text><text class="pt" x="980" y="225">DeepSeek-R1</text>
+  </g>
+
+  <!-- ============ ROW 3: VECTOR DATABASE ============ -->
+  <g transform="translate(0,560)">
+    <rect class="row" x="10" y="0" width="1080" height="250" rx="16"/>
+    <line class="sep" x1="200" y1="20" x2="200" y2="230"/><line class="sep" x1="865" y1="20" x2="865" y2="230"/>
+    <text class="title" x="105" y="120">Vector</text><text class="title" x="105" y="150">Database</text>
+
+    <rect class="dash" x="220" y="25" width="180" height="170" rx="10"/>
+    <rect class="box" x="235" y="40" width="70" height="60" rx="6"/><text class="tb" x="270" y="76">Text</text>
+    <rect class="box" x="315" y="40" width="70" height="60" rx="6"/><text class="tb" x="350" y="76">Image</text>
+    <rect class="box" x="235" y="115" width="70" height="60" rx="6"/><text class="tb" x="270" y="151">Audio</text>
+    <rect class="box" x="315" y="115" width="70" height="60" rx="6"/><text class="tb" x="350" y="151">Video</text>
+    <text class="tb" x="310" y="220">Source Data</text>
+    <path class="ln" d="M400,110 H433"/>
+
+    <polygon class="solid" points="475,70 510,90 510,130 475,150 440,130 440,90"/>
+    <text class="tb" x="475" y="180">Embedding</text><text class="tb" x="475" y="198">Model</text>
+    <path class="ln" d="M512,110 H543"/>
+
+    <g transform="translate(545,30)">
+      <rect class="box" x="0" y="0" width="180" height="156" rx="4"/>
+      <g class="mono">
+        <text x="25" y="20">0.2</text><text x="65" y="20">0.5</text><text x="110" y="20">…</text><text x="155" y="20">2.3</text>
+        <text x="25" y="45">4.1</text><text x="65" y="45">-1.9</text><text x="110" y="45">…</text><text x="155" y="45">-1.7</text>
+        <text x="25" y="70">5.4</text><text x="65" y="70">0.7</text><text x="110" y="70">…</text><text x="155" y="70">-1.5</text>
+        <text x="25" y="95">-1.7</text><text x="65" y="95">2.3</text><text x="110" y="95">…</text><text x="155" y="95">5.6</text>
+        <text x="25" y="120">0.5</text><text x="65" y="120">-2.4</text><text x="110" y="120">…</text><text x="155" y="120">0.6</text>
+        <text x="25" y="145">-2.4</text><text x="65" y="145">4.1</text><text x="110" y="145">…</text><text x="155" y="145">0.9</text>
+      </g>
+      <path d="M45,0 V156 M85,0 V156 M135,0 V156" stroke="#F5C77E"/>
+    </g>
+    <text class="tb" x="635" y="210">Embeddings</text>
+    <path class="ln" d="M725,110 H753"/>
+
+    <g transform="translate(755,55)">
+      <rect class="dash" x="0" y="0" width="100" height="115" rx="10"/>
+      <path class="soft" d="M20,25 v55 a30,10 0 0 0 60,0 v-55"/>
+      <ellipse class="solid" cx="50" cy="25" rx="30" ry="10"/>
+      <path d="M20,45 a30,10 0 0 0 60,0 M20,63 a30,10 0 0 0 60,0" fill="none" stroke="#D97706"/>
+    </g>
+    <text class="tb" x="805" y="193">Vector</text><text class="tb" x="805" y="211">Database</text>
+
+    <rect class="pill" x="885" y="25" width="190" height="34" rx="8"/><text class="ph" x="980" y="47">Definition</text>
+    <text class="pt" x="980" y="85">Similarity search</text><text class="pt" x="980" y="105">database</text>
+    <rect class="pill" x="885" y="135" width="190" height="34" rx="8"/><text class="ph" x="980" y="157">Real-world Example</text>
+    <text class="pt" x="980" y="195">Pinecone, Weaviate,</text><text class="pt" x="980" y="215">Milvus</text>
+  </g>
+
+  <!-- ============ ROW 4: RAG ============ -->
+  <g transform="translate(0,825)">
+    <rect class="row" x="10" y="0" width="1080" height="250" rx="16"/>
+    <line class="sep" x1="200" y1="20" x2="200" y2="230"/><line class="sep" x1="865" y1="20" x2="865" y2="230"/>
+    <text class="title" x="105" y="90">Retrieval</text><text class="title" x="105" y="120">Augmented</text><text class="title" x="105" y="150">Generation</text><text class="title" x="105" y="180">(RAG)</text>
+
+    <circle class="solid" cx="265" cy="75" r="30"/>
+    <circle cx="265" cy="66" r="9" fill="#FFF8EC"/><path d="M249,94 a16,13 0 0 1 32,0" fill="#FFF8EC"/>
+    <text class="tb" x="265" y="125">User</text>
+
+    <rect class="box" x="420" y="55" width="120" height="40" rx="8"/><text class="tb" x="480" y="80">Retriever</text>
+    <path class="lnd" d="M297,75 H418"/>
+    <circle class="num" cx="345" cy="45" r="13"/><text class="tb" x="345" y="50">1</text><text class="ts" x="385" y="50">Query</text>
+
+    <rect class="dash" x="640" y="40" width="210" height="140" rx="10"/>
+    <rect class="solid" x="675" y="50" width="140" height="26" rx="6"/><text class="tb" x="745" y="68">Knowledge Base</text>
+    <rect class="box" x="655" y="95" width="55" height="55" rx="6"/><text class="tb" x="682" y="127">PDF</text>
+    <rect class="box" x="718" y="95" width="55" height="55" rx="6"/><text class="ts" x="745" y="120">Vector</text><text class="ts" x="745" y="135">DB</text>
+    <rect class="box" x="781" y="95" width="55" height="55" rx="6"/><text class="tb" x="808" y="127">Code</text>
+
+    <path class="lnd" d="M540,65 H638"/>
+    <circle class="num" cx="575" cy="40" r="13"/><text class="tb" x="575" y="45">2</text><text class="ts" x="612" y="45">Search</text>
+    <path class="lnd" d="M638,140 H600 V85 H542"/>
+    <circle class="num" cx="575" cy="118" r="13"/><text class="tb" x="575" y="123">3</text><text class="ts" x="575" y="160">Relevant</text><text class="ts" x="575" y="175">chunks</text>
+
+    <rect class="solid" x="420" y="170" width="120" height="40" rx="8"/><text class="tb" x="480" y="195">LLM</text>
+    <path class="lnd" d="M480,95 V168"/>
+    <circle class="num" cx="455" cy="130" r="13"/><text class="tb" x="455" y="135">4</text><text class="ts" x="525" y="128">Query +</text><text class="ts" x="525" y="143">chunks</text>
+    <path class="lnd" d="M420,190 H265 V137"/>
+    <circle class="num" cx="320" cy="210" r="13"/><text class="tb" x="320" y="215">5</text><text class="ts" x="390" y="215">Generate response</text>
+
+    <rect class="pill" x="885" y="25" width="190" height="34" rx="8"/><text class="ph" x="980" y="47">Definition</text>
+    <text class="pt" x="980" y="85">LLM + external</text><text class="pt" x="980" y="105">knowledge</text>
+    <rect class="pill" x="885" y="135" width="190" height="34" rx="8"/><text class="ph" x="980" y="157">Real-world Example</text>
+    <text class="pt" x="980" y="195">ChatGPT with files,</text><text class="pt" x="980" y="215">Perplexity AI</text>
+  </g>
+
+  <!-- ============ ROW 5: MCP ============ -->
+  <g transform="translate(0,1090)">
+    <rect class="row" x="10" y="0" width="1080" height="250" rx="16"/>
+    <line class="sep" x1="200" y1="20" x2="200" y2="230"/><line class="sep" x1="865" y1="20" x2="865" y2="230"/>
+    <text class="title" x="105" y="105">Model Context</text><text class="title" x="105" y="135">Protocol</text><text class="title" x="105" y="165">(MCP)</text>
+
+    <rect class="dash" x="220" y="15" width="135" height="220" rx="10"/>
+    <rect class="solid" x="237" y="25" width="100" height="28" rx="6"/><text class="tb" x="287" y="44">MCP Host</text>
+    <rect class="box" x="232" y="70" width="110" height="40" rx="6"/><text class="t" x="287" y="95">Claude Desktop</text>
+    <rect class="box" x="232" y="125" width="110" height="40" rx="6"/><text class="t" x="287" y="150">IDE</text>
+    <rect class="box" x="232" y="180" width="110" height="40" rx="6"/><text class="t" x="287" y="205">AI Tools</text>
+
+    <g>
+      <rect class="soft" x="375" y="25" width="80" height="40" rx="6"/><text class="t" x="415" y="50">MCP Client</text>
+      <rect class="soft" x="375" y="105" width="80" height="40" rx="6"/><text class="t" x="415" y="130">MCP Client</text>
+      <rect class="soft" x="375" y="185" width="80" height="40" rx="6"/><text class="t" x="415" y="210">MCP Client</text>
+      <text class="red" x="490" y="38">MCP Protocol</text><text class="red" x="490" y="118">MCP Protocol</text><text class="red" x="490" y="198">MCP Protocol</text>
+      <path class="ln" d="M455,45 H583"/><path class="ln" d="M455,125 H583"/><path class="ln" d="M455,205 H583"/>
+      <rect class="box" x="585" y="25" width="115" height="40" rx="6"/><text class="tb" x="642" y="50">MCP Server A</text>
+      <rect class="box" x="585" y="105" width="115" height="40" rx="6"/><text class="tb" x="642" y="130">MCP Server B</text>
+      <rect class="box" x="585" y="185" width="115" height="40" rx="6"/><text class="tb" x="642" y="210">MCP Server C</text>
+      <path class="lnd" d="M700,45 H738"/><path class="lnd" d="M700,125 H738"/><path class="lnd" d="M700,205 H738"/>
+      <rect class="dash" x="740" y="20" width="115" height="50" rx="8"/><text class="tb" x="797" y="40">GitHub, Slack</text><text class="ts" x="797" y="58">Web APIs</text>
+      <rect class="dash" x="740" y="105" width="115" height="40" rx="8"/><text class="tb" x="797" y="130">Database</text>
+      <rect class="dash" x="740" y="185" width="115" height="40" rx="8"/><text class="tb" x="797" y="210">Filesystem</text>
+    </g>
+
+    <rect class="pill" x="885" y="25" width="190" height="34" rx="8"/><text class="ph" x="980" y="47">Definition</text>
+    <text class="pt" x="980" y="85">AI tool interface</text><text class="pt" x="980" y="105">standard</text>
+    <rect class="pill" x="885" y="135" width="190" height="34" rx="8"/><text class="ph" x="980" y="157">Real-world Example</text>
+    <text class="pt" x="980" y="195">Claude Desktop MCP,</text><text class="pt" x="980" y="215">Cursor MCP tools</text>
+  </g>
+</svg>
