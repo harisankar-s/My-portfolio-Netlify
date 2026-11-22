@@ -1,0 +1,227 @@
+{
+  "_readme": "Source of truth for brainbyte.harisankarsivankutty.in. practice = paid Claude practice packs (Topmate). kits = production starter kits / GitHub code. coaching = Topmate 1:1s. Tracks get a page at /tracks/{slug}/ only when status is live (see _data/bbLiveTracks.js). Bytes are ORIGINAL practice questions (never real exam items). status: live | coming-soon; set url when live. Kit 'post' and module 'posts' are blog fileSlugs.",
+
+  "tracks": [
+    {
+      "slug": "claude-architect",
+      "status": "coming-soon",
+      "logo": "/images/logos/claude.svg",
+      "short": "Claude Architect",
+      "title": "Claude Certified Architect",
+      "cert": "Anthropic · Foundations → Professional",
+      "level": "Intermediate → Advanced",
+      "weeks": 6,
+      "color": "#D97757",
+      "icon": "◆",
+      "pitch": "Design production Claude systems: prompting, tool use, MCP, agents and evals. Taught from real RAG and agentic builds, not slideware.",
+      "audience": ["genai", "architect"],
+      "note": "Study modules are grouped by topic. Map them to the official Anthropic exam guide before you book. Claude certifications are open to employees of Anthropic Partner organisations.",
+      "modules": [
+        { "title": "Prompting & structured output", "topics": ["System prompts and roles", "XML-tagged context", "JSON via tool schemas", "Prefill and stop sequences"], "posts": [] },
+        { "title": "Tool use & MCP", "topics": ["Tool definitions and schemas", "Tool-call loops", "MCP servers, resources and prompts", "Error handling in tool results"], "posts": ["anatomy-of-a-langchain-application-core-components-explained"] },
+        { "title": "Agents & orchestration", "topics": ["Agent SDK basics", "Subagents and parallel work", "When not to build an agent", "Human-in-the-loop checkpoints"], "posts": ["traditional-ai-vs-agentic-ai-vs-agentic-rag", "how-ai-agents-work-simple-explanation-non-technical-readers"] },
+        { "title": "Context, memory & RAG", "topics": ["Context-window budgeting", "Compaction and context editing", "Retrieval design and chunking", "Prompt caching"], "posts": ["beyond-the-api-data-engineer-guide-to-llm-memory-ladder", "why-langchain-deep-dive-essential-framework-for-genai"] },
+        { "title": "Evals, safety & production", "topics": ["Building eval sets", "LLM-as-judge pitfalls", "Guardrails and refusals", "Cost and latency trade-offs"], "posts": [] }
+      ]
+    },
+    {
+      "slug": "gcp-pde",
+      "status": "coming-soon",
+      "logo": "/images/logos/gcp.svg",
+      "short": "GCP Data Engineer",
+      "title": "Google Cloud Professional Data Engineer",
+      "cert": "Google Cloud · Professional",
+      "level": "Intermediate",
+      "weeks": 8,
+      "color": "#4285F4",
+      "icon": "▲",
+      "pitch": "BigQuery, Dataflow, Pub/Sub and the design trade-offs the exam keeps testing, explained by someone who has run them in production.",
+      "audience": ["data", "architect"],
+      "note": "Modules follow the five sections of the official exam guide.",
+      "modules": [
+        { "title": "Designing data processing systems", "topics": ["Batch vs streaming choices", "Security and compliance by design", "Migration planning"], "posts": ["building-enterprise-data-platform-lessons-learned"] },
+        { "title": "Ingesting & processing data", "topics": ["Pub/Sub delivery semantics", "Dataflow windows and triggers", "Dataproc vs Dataflow"], "posts": ["seven-principles-data-pipelines"] },
+        { "title": "Storing data", "topics": ["BigQuery partitioning and clustering", "Bigtable vs Spanner vs Cloud SQL", "Lifecycle and storage classes"], "posts": ["from-bigquery-to-snowflake-real-world-analytics-migration"] },
+        { "title": "Preparing & using data for analysis", "topics": ["Authorized views and row-level security", "Materialized views and BI Engine", "Sharing with Analytics Hub"], "posts": ["medallion-is-a-vocabulary"] },
+        { "title": "Maintaining & automating workloads", "topics": ["Composer / Airflow orchestration", "Monitoring and alerting", "Data quality gates"], "posts": ["building-trust-in-data-productionizing-great-expectations-at-scale"] }
+      ]
+    },
+    {
+      "slug": "aws-saa",
+      "status": "coming-soon",
+      "logo": "/images/logos/aws.svg",
+      "short": "AWS Solutions Architect",
+      "title": "AWS Solutions Architect — Associate",
+      "cert": "Amazon Web Services · Associate",
+      "level": "Beginner → Intermediate",
+      "weeks": 6,
+      "color": "#FF9900",
+      "icon": "■",
+      "pitch": "The four design pillars the SAA exam is built around, with data-platform examples instead of toy web apps.",
+      "audience": ["cloud", "data"],
+      "note": "Modules follow the four domains of the official exam guide.",
+      "modules": [
+        { "title": "Design secure architectures", "topics": ["IAM policies and roles", "VPC, subnets and endpoints", "Encryption with KMS"], "posts": [] },
+        { "title": "Design resilient architectures", "topics": ["Multi-AZ vs multi-region", "Decoupling with SQS and SNS", "Backups and DR strategies"], "posts": ["building-enterprise-data-platform-lessons-learned"] },
+        { "title": "Design high-performing architectures", "topics": ["Choosing storage: S3, EBS, EFS", "Caching with CloudFront and ElastiCache", "Data analytics services: EMR, Athena, Glue"], "posts": [] },
+        { "title": "Design cost-optimized architectures", "topics": ["Pricing models and Savings Plans", "S3 storage classes and lifecycle", "Right-sizing compute"], "posts": [] }
+      ]
+    },
+    {
+      "slug": "data-engineering",
+      "status": "coming-soon",
+      "logo": "/images/logos/spark.svg",
+      "short": "Production Data Engineering",
+      "title": "Production Data Engineering",
+      "cert": "No exam · career track",
+      "level": "All levels",
+      "weeks": 5,
+      "color": "#10B981",
+      "icon": "●",
+      "pitch": "What certs don't teach: the idempotency, data quality, modelling and ops habits that keep a platform alive at 3am.",
+      "audience": ["data", "career"],
+      "note": "Built from ten years of enterprise delivery across telecom, IoT, biotech, retail and e-commerce.",
+      "modules": [
+        { "title": "Pipeline principles", "topics": ["Idempotency and reruns", "Environments and promotion", "Failure handling"], "posts": ["seven-principles-data-pipelines"] },
+        { "title": "Modelling", "topics": ["Data Vault in practice", "Medallion layers as vocabulary", "Ownership of business rules"], "posts": ["medallion-is-a-vocabulary"] },
+        { "title": "Data quality & trust", "topics": ["Great Expectations in production", "Quality gates between layers", "Metadata with DataHub"], "posts": ["building-trust-in-data-productionizing-great-expectations-at-scale"] },
+        { "title": "Platforms & migrations", "topics": ["Platform build lessons", "Warehouse migrations", "Stakeholder alignment"], "posts": ["building-enterprise-data-platform-lessons-learned", "from-bigquery-to-snowflake-real-world-analytics-migration"] },
+        { "title": "Data meets GenAI", "topics": ["RAG over enterprise data", "LLM memory for data engineers", "Fine-tuning reality check"], "posts": ["beyond-the-api-data-engineer-guide-to-llm-memory-ladder", "traditional-ai-vs-agentic-ai-vs-agentic-rag"] }
+      ]
+    }
+  ],
+
+  "bytes": [
+    {
+      "track": "claude-architect",
+      "q": "Your app parses Claude's reply as JSON, and a stray sentence before the JSON breaks it about 1 in 50 times. What's the most robust fix?",
+      "options": ["Add \"ONLY return JSON\" in capitals to the prompt", "Define a tool with a JSON schema and have Claude return the data as that tool's input", "Raise the temperature so the model explores more formats", "Strip everything before the first '{' with a regex"],
+      "answer": 1,
+      "why": "A tool's input_schema makes the structure a contract instead of a request. Prompt wording and regex cleanup only lower the failure rate; they don't remove it."
+    },
+    {
+      "track": "claude-architect",
+      "q": "A long-running agent slows down and starts forgetting instructions. Most of its context is old tool results it no longer needs. What helps most?",
+      "options": ["Increase max_tokens", "Clear or summarise stale tool results (compaction / context editing)", "Repeat the system prompt in every user turn", "Switch to a smaller model"],
+      "answer": 1,
+      "why": "max_tokens limits the output, not the input context. Removing or compacting stale tool output frees budget and keeps the important instructions prominent."
+    },
+    {
+      "track": "claude-architect",
+      "q": "When does handing work to subagents pay off most?",
+      "options": ["Every task, because more agents are always better", "Independent research branches whose raw output the main agent doesn't need to keep", "Tightly coupled edits to the same file", "Single-step lookups"],
+      "answer": 1,
+      "why": "Subagents shine at parallel, separable work. They return a condensed result and keep the orchestrator's context clean. Coupled edits create coordination conflicts."
+    },
+    {
+      "track": "gcp-pde",
+      "q": "Clickstream events arrive continuously. You need windowed aggregates in BigQuery within a minute, with minimal ops. Which pipeline fits?",
+      "options": ["Pub/Sub → Dataflow streaming → BigQuery", "Cloud Storage → hourly Dataproc Spark job", "A Cloud Function per event running a BigQuery INSERT", "BigQuery scheduled query every 15 minutes"],
+      "answer": 0,
+      "why": "Dataflow is serverless and supports event-time windows and triggers on unbounded data. Per-event functions don't scale well for this, and the batch options miss the latency target."
+    },
+    {
+      "track": "gcp-pde",
+      "q": "Analysts always filter a 40 TB events table by event_date and often by customer_id. How do you cut query cost?",
+      "options": ["Partition by event_date and cluster by customer_id", "Create one table per customer", "Export to Cloud Storage and query as external tables", "Add LIMIT 1000 to every query"],
+      "answer": 0,
+      "why": "Partition pruning skips whole dates and clustering reduces blocks scanned within a partition. LIMIT does not reduce the bytes billed."
+    },
+    {
+      "track": "aws-saa",
+      "q": "A spike of orders overwhelms a slow downstream billing service and requests get dropped. What's the cleanest fix?",
+      "options": ["Put an SQS queue between the order service and billing", "Scale the order service vertically", "Retry failed calls in a tight loop", "Move billing to a bigger EC2 instance in another region"],
+      "answer": 0,
+      "why": "A queue decouples producer and consumer and absorbs bursts, and billing drains it at its own pace. Tight retries make overload worse."
+    },
+    {
+      "track": "aws-saa",
+      "q": "Serve a static marketing site worldwide with low latency and basic DDoS protection, at minimum cost.",
+      "options": ["S3 bucket behind CloudFront", "EC2 Auto Scaling group in every region", "EKS cluster with an ingress controller", "Elastic Beanstalk with a load balancer"],
+      "answer": 0,
+      "why": "CloudFront caches at edge locations and includes AWS Shield Standard. S3 is cheap and durable as the origin, with no servers to run."
+    },
+    {
+      "track": "data-engineering",
+      "q": "A failed daily job is rerun and the target table now has duplicate rows. Which principle was missing?",
+      "options": ["Idempotency: MERGE on a natural key or overwrite the date partition", "More retries", "A bigger cluster", "Switching from batch to streaming"],
+      "answer": 0,
+      "why": "An idempotent load gives the same result however many times it runs. Retries without idempotency multiply the damage."
+    },
+    {
+      "track": "data-engineering",
+      "q": "Where do data-quality checks give the best return?",
+      "options": ["At layer boundaries, before data is published downstream", "Only in the BI dashboard", "Once a quarter in a manual audit", "Only on raw source files"],
+      "answer": 0,
+      "why": "Gating at boundaries stops bad data before consumers see it and pinpoints which step broke. Dashboard-level checks catch issues after the damage is done."
+    }
+  ],
+
+  "practice": [
+    {
+      "title": "Claude Certified Architect — Foundations (CCAR-F)",
+      "exam": "Anthropic · Foundations",
+      "count": 160,
+      "status": "live",
+      "url": "https://topmate.io/harisankar_sivankutty/2413541?utm_source=brainbyte&utm_campaign=harisankar_sivankutty",
+      "price": "FREE",
+      "points": ["160 scenario-based questions in the exam's style", "Grouped by the 5 official exam domains, with each domain's weight", "A short explanation for every answer", "Clickable PDF with links to the relevant Claude docs"]
+    },
+    {
+      "title": "Claude Certified Architect — Professional (CCAR-P)",
+      "exam": "Anthropic · Professional",
+      "count": 125,
+      "status": "live",
+      "url": "https://topmate.io/harisankar_sivankutty/2413543?utm_source=brainbyte&utm_campaign=harisankar_sivankutty",
+      "price": "FREE",
+      "points": ["125 scenario-based questions on architecture trade-offs", "Grouped by exam domain", "Answer key included", "PDF, Edition 1.1"]
+    }
+  ],
+
+  "kits": [
+    {
+      "title": "Production data pipeline kit",
+      "blurb": "The Terraform behind Seven Principles: IAM, separate environments, deployment and 3am alerting for a cloud data pipeline.",
+      "stack": ["Terraform", "GCP", "BigQuery", "Snowflake"],
+      "post": "seven-principles-data-pipelines",
+      "status": "coming-soon",
+      "url": ""
+    },
+    {
+      "title": "Data quality starter",
+      "blurb": "Great Expectations checks wired into DataHub, with quality gates between layers so bad data never reaches consumers.",
+      "stack": ["Python", "Great Expectations", "DataHub", "Airflow"],
+      "post": "building-trust-in-data-productionizing-great-expectations-at-scale",
+      "status": "coming-soon",
+      "url": ""
+    },
+    {
+      "title": "Claude RAG assistant starter",
+      "blurb": "The serverless RAG assistant pattern behind AskHari.ai: Claude API first, an open-model fallback, and sources shown with every answer.",
+      "stack": ["Claude API", "Node.js", "Netlify Functions", "RAG"],
+      "post": "",
+      "status": "coming-soon",
+      "url": ""
+    },
+    {
+      "title": "dbt Data Vault template",
+      "blurb": "Hubs, links and satellites as a dbt project, with tests and docs, ready to point at your warehouse.",
+      "stack": ["dbt", "SQL", "Data Vault", "BigQuery / Snowflake"],
+      "post": "medallion-is-a-vocabulary",
+      "status": "coming-soon",
+      "url": ""
+    }
+  ],
+
+  "kitPromise": [
+    { "title": "Tested", "text": "Unit and integration tests you can run on day one." },
+    { "title": "CI included", "text": "A working pipeline that lints, tests and deploys." },
+    { "title": "Infrastructure as code", "text": "Terraform or config for every environment, not click-ops." },
+    { "title": "Documented", "text": "A README, an architecture diagram and a runbook for failures." }
+  ],
+
+  "coaching": [
+    { "title": "1:1 certification strategy call", "url": "https://topmate.io/harisankar_sivankutty", "blurb": "A study plan for your background, the weak spots to fix, and how to approach exam day." },
+    { "title": "Architecture review", "url": "https://topmate.io/harisankar_sivankutty", "blurb": "Bring a data platform or GenAI design and get a senior second opinion on it." }
+  ]
+}

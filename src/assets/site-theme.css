@@ -1,0 +1,175 @@
+/* Unified site theme for the blog surfaces (blog listing, base.njk pages,
+   article.njk). Loaded AFTER each layout's own inline <style>, so it only
+   swaps tokens, fonts and the nav to match the portfolio and BrainByte
+   (portfolio.css / brainbyte.css): Lato for interface text, amber accent,
+   light/dark palette. Layouts are untouched — post bodies keep their
+   Medium-style serif reading column (--font-article). */
+
+:root {
+  --bg: #FFFFFF;
+  --bg-elevated: #F6F7F9;
+  --surface: #F3F4F6;
+  --border: #E5E7EB;
+  --border-mid: #D1D5DB;
+  --border-strong: #D1D5DB;
+  --fg: #1F2937;
+  --fg-muted: #4B5563;
+  --fg-dim: #6B7280;
+  --accent: #1F2937;
+  --accent-dim: #FEF3C7;
+  --accent-glow: rgba(245, 158, 11, 0.35);
+  --brand: #B45309;
+  --brand-soft: #FEF3C7;
+  --pop: #F59E0B;
+  --pop-ink: #B45309;
+  --pop-glow: rgba(245, 158, 11, 0.45);
+  --link: #B45309;
+  --reading: #242424;
+  --font-sans: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-serif: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+:root[data-theme="dark"] {
+  --bg: #0F1217;
+  --bg-elevated: #161A21;
+  --surface: #1B2028;
+  --border: #2A303A;
+  --border-mid: #3A414D;
+  --border-strong: #3A414D;
+  --fg: #F3F4F6;
+  --fg-muted: #C3C8D0;
+  --fg-dim: #9AA1AC;
+  --accent: #F3F4F6;
+  --pop-ink: #FBBF24;
+  --brand: #FBBF24;
+  --brand-soft: rgba(245, 158, 11, 0.16);
+  --accent-dim: rgba(245, 158, 11, 0.16);
+  --link: #FBBF24;
+  --reading: #E8E8E8;
+}
+
+body::before { display: none; }
+::selection { background: var(--brand-soft); color: var(--fg); }
+:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; border-radius: 6px; }
+
+/* ---------- NAV (blog listing/article use .nav-brand/.nav-link; base.njk uses .nav-logo/.nav-links) ---------- */
+.nav {
+  --accent: var(--fg);
+  background: var(--bg) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+.nav-brand, .nav-logo {
+  font-family: var(--font-sans); font-size: 18px; font-weight: 900; letter-spacing: -0.01em; color: var(--fg);
+}
+.nav-brand .dot, .nav-logo .dot { width: 9px; height: 9px; background: var(--pop); box-shadow: none; animation: none; }
+.nav-logo span[style] { color: var(--fg-dim) !important; }
+.nav-link, .nav-links a { font-family: var(--font-sans); font-size: 15px; font-weight: 700; color: var(--fg-muted); }
+.nav-links { color: var(--fg-muted); font-size: 15px; }
+.nav-link:hover, .nav-links a:hover, .nav-links a.active, .nav-link.active { color: var(--fg); background: transparent; }
+.nav-links a::before { background: var(--brand); }
+.nav-cta {
+  font-family: var(--font-sans); font-size: 15px; font-weight: 700;
+  background: var(--pop); color: #111827; border-color: var(--pop); border-radius: 10px; padding: 8px 16px;
+}
+.nav-cta:hover { background: #FBBF24; border-color: #FBBF24; color: #111827; }
+.theme-toggle { color: var(--fg); border-color: var(--border-strong); width: 36px; height: 36px; }
+.theme-toggle:hover { background: var(--bg-elevated); border-color: var(--fg-dim); }
+
+/* ---------- Footer ---------- */
+.footer { background: var(--bg-elevated); }
+.footer-inner { font-family: var(--font-sans); font-size: 15px; }
+.footer-brand .dot { background: var(--brand); box-shadow: none; }
+
+/* ---------- Display headings: Lato needs bold weights where the old serif used 400 ---------- */
+html body .site-title,
+html body .now-title,
+html body .tag-title,
+html body .askwriting-title { font-weight: 900; letter-spacing: -0.02em; line-height: 1.08; }
+html body .site-title em { font-style: normal; color: var(--brand); }
+html body .now-item-title,
+html body .t-title { font-weight: 900; }
+
+/* Small uppercase labels were tuned for a monospace font: give them room */
+.sidebar-label, .feed-label, .breadcrumb, .related-label, .related-date,
+.entry-date, .entry-read-time, .featured-date, .featured-read-time, .topic-count {
+  font-family: var(--font-sans); letter-spacing: 0.06em;
+}
+.sidebar-label, .feed-label, .related-label { font-size: 13px; font-weight: 700; }
+.entry-date, .featured-date { font-size: 14px; }
+.entry-read-time, .featured-read-time { font-size: 13.5px; }
+.breadcrumb { font-size: 13px; font-weight: 700; }
+
+/* ---------- Blog listing: larger, easier-to-scan text ---------- */
+.site-desc { font-size: 18px; line-height: 1.6; }
+.site-topic-item { font-size: 15px; }
+.author-name { font-size: 16px; font-weight: 900; }
+.author-role { font-size: 14.5px; }
+.author-profile-link { color: var(--link); font-size: 14.5px; font-weight: 700; }
+.topic-list a { font-size: 16px; }
+.topic-list a:hover, .topic-list a.active { background: var(--accent-dim); color: var(--fg); font-weight: 700; }
+.sidebar-ext-link { font-size: 16px; }
+.entry-title { font-weight: 900; }
+.entry-excerpt { font-size: 17px; line-height: 1.6; }
+.entry-more { font-size: 15px; font-weight: 700; color: var(--link); }
+.entry-tag { font-size: 13px; font-weight: 700; }
+.entry.featured .entry-excerpt { font-size: 18px; }
+.featured-badge { font-family: var(--font-sans); font-size: 12px; font-weight: 900; }
+
+/* ---------- Article page: interface text in Lato, body stays serif ---------- */
+.article-title { font-weight: 900; letter-spacing: -0.02em; }
+.article-tag { font-size: 13px; font-weight: 700; }
+.byline-name { font-weight: 900; }
+.related-title { font-size: 17px; font-weight: 900; }
+.related-excerpt { font-size: 15px; }
+.back-link { font-family: var(--font-sans); font-size: 15px; font-weight: 700; color: var(--link); }
+.article-body a:hover { text-decoration-color: var(--brand); }
+
+/* ---------- Product promos on blog surfaces (BrainByte, newsletter, 1:1) ---------- */
+.promo-card {
+  display: block; padding: 18px; border-radius: 14px;
+  background: var(--brand-soft); border: 1px solid color-mix(in srgb, var(--brand) 25%, transparent);
+}
+.promo-eyebrow { font-family: var(--font-sans); font-size: 12px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; color: var(--brand); }
+.promo-title { font-family: var(--font-sans); font-size: 18px; font-weight: 900; line-height: 1.3; color: var(--fg); margin: 6px 0; }
+.promo-text { font-family: var(--font-sans); font-size: 15px; line-height: 1.5; color: var(--fg-muted); }
+.promo-btn {
+  display: inline-flex; align-items: center; margin-top: 12px; padding: 9px 16px; border-radius: 10px;
+  font-family: var(--font-sans); font-size: 15px; font-weight: 700; background: var(--pop); color: #111827;
+}
+.promo-btn:hover { background: #FBBF24; }
+.promo-link { display: inline-block; margin-top: 10px; font-family: var(--font-sans); font-size: 15px; font-weight: 700; color: var(--link); }
+.promo-stack { display: grid; gap: 14px; }
+
+.promo-band {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  margin: 8px 0 24px; padding: 24px 26px; border-radius: 14px;
+  background: var(--brand-soft); border: 1px solid color-mix(in srgb, var(--brand) 25%, transparent);
+}
+.promo-band .promo-title { font-size: 21px; margin: 4px 0; }
+.promo-band .promo-btn { margin-top: 0; }
+.promo-band-copy { flex: 1 1 320px; }
+
+/* Full name in the nav: keep it on one line on phones */
+.nav-brand, .nav-logo { white-space: nowrap; }
+.nav-cta { white-space: nowrap; }
+@media (max-width: 480px) {
+  .nav-brand, .nav-logo { font-size: 15px; gap: 8px; margin-right: 10px; }
+  .nav-right { gap: 8px; }
+  .nav-cta { font-size: 14px; padding: 7px 12px; }
+  .theme-toggle { width: 32px; height: 32px; }
+}
+
+/* ---------- Amber brand: --pop for fills/buttons, --brand (amber ink) for text ----------
+   Overrides the amber accents still inside the layouts' own inline styles. */
+.featured-badge { background: var(--pop) !important; color: #111827 !important; }
+.entry-tag:hover { background: var(--pop); color: #111827; }
+.entry-title a { background-image: linear-gradient(var(--pop), var(--pop)); }
+.entry.featured { box-shadow: inset 0 3px 0 var(--pop); }
+.entry.featured:hover { box-shadow: inset 0 3px 0 var(--pop), 0 10px 32px rgba(0,0,0,0.08); }
+.article-body ul li::marker { color: var(--brand); }
+.article-body blockquote { border-left-color: var(--pop); }
+.callout-title { color: var(--brand); }
+.callout { border-left-color: var(--pop); }
+.back-link:hover { color: var(--brand); }
+.bb-cta { background: var(--brand-soft); border-color: color-mix(in srgb, var(--brand) 25%, transparent); }
+.bb-cta-eyebrow { color: var(--brand); }

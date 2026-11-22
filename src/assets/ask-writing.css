@@ -18,12 +18,12 @@
 .askwriting-eyebrow {
   font-family: var(--font-mono); font-size: 10.5px; font-weight: 500;
   text-transform: uppercase; letter-spacing: 0.14em;
-  color: var(--pop); margin-bottom: 18px;
+  color: var(--brand, var(--pop)); margin-bottom: 18px;
   display: flex; align-items: center; gap: 8px;
 }
 .askwriting-eyebrow::before {
   content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--pop); box-shadow: 0 0 8px var(--pop-glow);
+  background: var(--brand, var(--pop)); box-shadow: 0 0 8px var(--accent-glow);
   animation: pulse 2.4s ease-in-out infinite;
 }
 .askwriting-title {
@@ -62,13 +62,13 @@
   transition: border-color 0.2s, color 0.2s, background 0.2s, transform 0.2s;
 }
 .askwriting-chip-arrow {
-  color: var(--pop);
+  color: var(--brand, var(--pop));
   opacity: 0;
   transform: translateX(-3px);
   transition: opacity 0.2s, transform 0.2s;
 }
 .askwriting-chip:hover {
-  border-color: var(--pop);
+  border-color: var(--brand, var(--pop));
   color: var(--fg);
   background: rgba(245, 158, 11, 0.08);
   transform: translateY(-1px);
@@ -88,7 +88,7 @@
   transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
 }
 #askwriting-panel:focus-within {
-  border-color: var(--pop);
+  border-color: var(--brand, var(--pop));
   box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
 }
 
@@ -160,7 +160,7 @@
   border-bottom-left-radius: 4px;
 }
 .askwriting-msg.assistant .askwriting-link {
-  color: var(--pop);
+  color: var(--brand, var(--pop));
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -206,8 +206,8 @@
   transition: border-color 0.2s, color 0.2s;
 }
 .askwriting-source-chip:hover {
-  border-color: var(--pop);
-  color: var(--pop);
+  border-color: var(--brand, var(--pop));
+  color: var(--brand, var(--pop));
 }
 .askwriting-dots {
   display: inline-flex; gap: 3px; margin-left: 4px; vertical-align: middle;
@@ -245,7 +245,7 @@
 }
 #askwriting-input:focus {
   outline: none;
-  border-color: var(--pop);
+  border-color: var(--brand, var(--pop));
 }
 #askwriting-send {
   border: none;
@@ -273,7 +273,7 @@
   margin-top: 32px;
   transition: color 0.2s;
 }
-.askwriting-back:hover { color: var(--pop); }
+.askwriting-back:hover { color: var(--brand, var(--pop)); }
 
 @media (max-width: 480px) {
   .askwriting-msg { max-width: 94%; }

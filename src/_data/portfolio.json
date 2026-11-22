@@ -1,0 +1,73 @@
+{
+  "_readme": "Presentation-only data for the portfolio page (src/index.html): logos, badge links, featured tools. Facts about Hari (roles, projects, skills, clients) live in profile.json, which the page also reads, so AskHari.ai and the page stay in sync.",
+
+  "logos": {
+    "Thoughtworks": "/images/logos/thoughtworks.png",
+    "Ayla Networks": "/images/logos/ayla.png",
+    "Bayer": "/images/logos/bayer.svg",
+    "Bayer Crop Science": "/images/logos/bayer.svg",
+    "6D Technologies": "/images/logos/6dtech.png",
+    "Otto GmbH": "/images/logos/otto.svg",
+    "JCPenney": "/images/logos/jcpenney.svg",
+    "Ooredoo Qatar": "/images/logos/ooredoo.svg",
+    "Bharti Airtel": "/images/logos/airtel.svg",
+    "Etisalat": "/images/logos/etisalat.svg",
+    "AIS Thailand": "/images/logos/ais.svg",
+    "Anthropic": "/images/logos/claude.svg",
+    "Google Cloud": "/images/logos/gcp.svg",
+    "Amazon Web Services": "/images/logos/aws.svg",
+    "Red Hat": "/images/logos/redhat.svg"
+  },
+
+  "credly": {
+    "Claude Certified Architect — Professional": "https://www.credly.com/badges/938db492-55d1-410c-9161-ec3d1ebde933",
+    "Claude Certified Architect — Foundations": "https://www.credly.com/badges/3cdf9836-415e-4516-89d7-301c92506980",
+    "Professional Data Engineer": "https://www.credly.com/badges/2a915f5a-6189-4fc8-acee-9972d71ee658"
+  },
+
+  "tools": [
+    { "name": "Python", "logo": "/images/logos/python.svg" },
+    { "name": "Spark", "logo": "/images/logos/spark.svg" },
+    { "name": "Kafka", "logo": "/images/logos/kafka.svg" },
+    { "name": "Airflow", "logo": "/images/logos/airflow.svg" },
+    { "name": "dbt", "logo": "/images/logos/dbt.svg" },
+    { "name": "Databricks", "logo": "/images/logos/databricks.svg" },
+    { "name": "Snowflake", "logo": "/images/logos/snowflake.svg" },
+    { "name": "BigQuery", "logo": "/images/logos/bigquery.svg" },
+    { "name": "AWS", "logo": "/images/logos/aws.svg" },
+    { "name": "Google Cloud", "logo": "/images/logos/gcp.svg" },
+    { "name": "Azure", "logo": "/images/logos/azure.svg" },
+    { "name": "Kubernetes", "logo": "/images/logos/kubernetes.svg" },
+    { "name": "Terraform", "logo": "/images/logos/terraform.svg" },
+    { "name": "Claude", "logo": "/images/logos/claude.svg" },
+    { "name": "LangChain", "logo": "/images/logos/langchain.svg" },
+    { "name": "PostgreSQL", "logo": "/images/logos/postgresql.svg" }
+  ],
+
+  "heroTools": ["Spark", "Kafka", "dbt", "Databricks", "Snowflake", "BigQuery", "AWS", "Azure", "Google Cloud", "Claude"],
+
+  "strengths": [
+    {
+      "title": "Data platforms",
+      "proof": "Enterprise platforms on Spark, Kafka, dbt, Databricks and Data Vault for e-commerce, retail, telecom and biotech clients.",
+      "tools": ["Spark", "Kafka", "dbt", "Databricks"]
+    },
+    {
+      "title": "GenAI & RAG",
+      "proof": "Production RAG and agentic AI on enterprise data, from Snowflake Cortex AI agents to Claude-powered assistants.",
+      "tools": ["Claude", "LangChain", "Snowflake"]
+    },
+    {
+      "title": "Multi-cloud architecture",
+      "proof": "Data platforms across AWS, Azure and Google Cloud, plus Snowflake and Databricks, built with Terraform, Kubernetes and CI/CD.",
+      "tools": ["AWS", "Azure", "Google Cloud", "Terraform"]
+    },
+    {
+      "title": "Delivery leadership",
+      "proof": "10+ years owning delivery end to end: architecture reviews, quality audits, mentoring and stakeholder alignment.",
+      "tools": []
+    }
+  ],
+
+  "focus": ["Data platforms", "GenAI & RAG", "Agentic AI", "Multi-cloud architecture", "Delivery leadership"]
+}
