@@ -13,6 +13,16 @@ eleventyExcludeFromCollections: true
     <changefreq>monthly</changefreq>
   </url>
   <url>
+    <loc>{{ site.brainbyteUrl }}/</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% for t in bbLiveTracks %}
+  <url>
+    <loc>{{ site.brainbyteUrl }}/tracks/{{ t.slug }}/</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  {% endfor %}
+  <url>
     <loc>{{ site.url }}/now/</loc>
     <changefreq>monthly</changefreq>
   </url>

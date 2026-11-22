@@ -9,8 +9,7 @@ permalink: /
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="author" content="Harisankar Sivankutty" />
-  <meta name="theme-color" content="#FFFFFF" />
-  <script>
+    <script>
     (function () {
       try {
         var saved = localStorage.getItem('theme');
@@ -30,7 +29,7 @@ permalink: /
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -449,23 +448,27 @@ permalink: /
     }
 
   </style>
+  <!-- Shared site theme: loaded last so it overrides this layout's inline tokens -->
+  <link rel="stylesheet" href="/assets/site-theme.css" />
 </head>
 <body>
 
   <nav class="nav" id="nav">
     <a href="/" class="nav-brand">
       <span class="dot"></span>
-      harisankarsivankutty.in
+      Harisankar Sivankutty
     </a>
     <div class="nav-right">
-      <a href="/ask/" class="nav-link">trench ai</a>
-      <a href="{{ site.portfolioUrl }}/" class="nav-link">about</a>
+      <a href="/" class="nav-link">Blog</a>
+      <a href="/ask/" class="nav-link">Trench AI</a>
+      <a href="{{ site.brainbyteUrl }}/" class="nav-link">BrainByte ↗</a>
+      <a href="{{ site.portfolioUrl }}/" class="nav-link">About</a>
       <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line></svg>
         <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       </button>
       <a href="https://topmate.io/harisankar_sivankutty" target="_blank" rel="noopener" class="nav-cta">
-        Book a 1:1 ↗
+        Book a 1:1
       </a>
     </div>
   </nav>
@@ -535,6 +538,25 @@ permalink: /
         </div>
 
         <div class="sidebar-section">
+          <div class="sidebar-label">Learn with me</div>
+          <div class="promo-stack">
+            <a class="promo-card" href="{{ site.brainbyteUrl }}/#claude">
+              <span class="promo-eyebrow">Free · Available now</span>
+              <span class="promo-title" style="display:block">Claude certification practice packs</span>
+              <span class="promo-text">285 scenario questions for CCAR-F and CCAR-P.</span>
+              <span class="promo-link">Get them free →</span>
+            </a>
+            <a class="promo-card" href="{{ site.brainbyteUrl }}/#kits">
+              <span class="promo-eyebrow">Coming soon</span>
+              <span class="promo-title" style="display:block">Production starter kits</span>
+              <span class="promo-text">Tested, documented code from real projects.</span>
+              <span class="promo-link">Get early access →</span>
+            </a>
+            <a class="promo-link" href="{{ site.topmateUrl }}" target="_blank" rel="noopener">Or book a 1:1 on Topmate ↗</a>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
           <div class="sidebar-label">Links</div>
           <div class="sidebar-links">
             <a href="https://www.linkedin.com/in/harisankarsivankutty/" target="_blank" rel="noopener" class="sidebar-ext-link">
@@ -597,6 +619,17 @@ permalink: /
             </div>
             {% if thumb %}<a href="{{ post.url }}" class="entry-thumb"><img src="{{ thumb }}" alt="" loading="lazy" /></a>{% endif %}
           </article>
+          {% endif %}
+
+          {% if loop.index == 2 %}
+          <aside class="promo-band">
+            <div class="promo-band-copy">
+              <span class="promo-eyebrow">BrainByte · Free</span>
+              <div class="promo-title">Preparing for the Claude Certified Architect exam?</div>
+              <p class="promo-text">285 free practice questions for Foundations and Professional, written by someone who passed both.</p>
+            </div>
+            <a class="promo-btn" href="{{ site.brainbyteUrl }}/#claude">Get the free packs</a>
+          </aside>
           {% endif %}
 
         {% else %}

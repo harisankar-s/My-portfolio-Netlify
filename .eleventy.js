@@ -84,6 +84,46 @@ module.exports = function (eleventyConfig) {
     return m ? m[1] : "";
   });
 
+  // ---- BrainByte (brainbyte.* subdomain) -------------------------------
+  // BrainByte pages are built under /brainbyte/ and the domain-router edge
+  // function rewrites the brainbyte host's "/x" to "/brainbyte/x". So the
+  // public path drops the prefix. Under `eleventy --serve` there is no edge
+  // function, so internal links keep the prefix there to stay clickable
+  // locally. Set BRAINBYTE_BASE to force either one.
+  const BB_PREFIX = "/brainbyte";
+  const bbBase =
+    process.env.BRAINBYTE_BASE !== undefined
+      ? process.env.BRAINBYTE_BASE
+      : process.env.ELEVENTY_RUN_MODE === "build"
+        ? ""
+        : BB_PREFIX;
+
+  // Filter: internal BrainByte link, e.g. {{ "/tracks/gcp-pde/" | bb }}
+  eleventyConfig.addFilter("bb", (path) => `${bbBase}${path || "/"}`);
+
+  // Filter: a built BrainByte page.url → its public path on the subdomain
+  eleventyConfig.addFilter("bbPublicPath", (url) =>
+    url && url.startsWith(BB_PREFIX) ? url.slice(BB_PREFIX.length) || "/" : url
+  );
+
+  // Filter: pick posts by fileSlug, keeping the order of the slug list
+  eleventyConfig.addFilter("postsBySlugs", (posts, slugs) =>
+    (slugs || [])
+      .map((slug) => (posts || []).find((p) => p.fileSlug === slug))
+      .filter(Boolean)
+  );
+
+  // Filter: first item whose `key` equals `value` (Nunjucks `set` inside a
+  // for-loop doesn't escape the loop, so lookups need a filter)
+  eleventyConfig.addFilter("findBy", (arr, key, value) =>
+    (arr || []).find((item) => item && item[key] === value)
+  );
+
+  // Filter: total length of an array field across items, e.g. module count
+  eleventyConfig.addFilter("sumLength", (arr, key) =>
+    (arr || []).reduce((n, item) => n + ((item && item[key]) || []).length, 0)
+  );
+
   // Shortcode: static figure image, resolved against this post's asset folder
   // (src/images/posts/{slug}/ by default). Use in post markdown as:
   //   {% figure "diagram.png", "alt text", "caption text" %}

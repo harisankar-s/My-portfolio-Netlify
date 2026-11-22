@@ -1,0 +1,87 @@
+---
+layout: brainbyte.njk
+pagination:
+  data: bbLiveTracks
+  size: 1
+  alias: track
+permalink: "/brainbyte/tracks/{{ track.slug }}/index.html"
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  title: "{{ track.title }}"
+  description: "{{ track.title }} on BrainByte: {{ track.modules.length }} modules with practice questions and free reading. {{ track.pitch }}"
+---
+{%- set allTracks = bbLiveTracks -%}
+{%- set idx = pagination.pageNumber -%}
+{%- set nextTrack = allTracks[idx + 1] if idx + 1 < allTracks.length else allTracks[0] -%}
+
+<div class="bb-track-page" style="--track: {{ track.color }}" data-bb-track-page="{{ track.slug }}" data-bb-modules="{{ track.modules.length }}">
+
+  <!-- 1. HEADER -->
+  <header class="bb-th">
+    <div class="bb-wrap bb-wrap-narrow">
+      <a class="bb-back" href="{{ '/' | bb }}#tracks">← All tracks</a>
+      <span class="bb-track-logo bb-track-logo-lg"><img src="{{ track.logo }}" alt="" width="44" height="44" /></span>
+      <h1 class="bb-h1 bb-th-title">{{ track.title }}</h1>
+      <p class="bb-lede">{{ track.pitch }}</p>
+      <p class="bb-track-meta">{{ track.modules.length }} modules · about {{ track.weeks }} weeks · {{ track.level }}</p>
+      <div class="bb-th-progress">
+        <div class="bb-progress bb-progress-lg" aria-hidden="true"><span data-bb-page-bar></span></div>
+        <span class="bb-th-progress-text" data-bb-ring-text aria-live="polite">0 of {{ track.modules.length }} done</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 2. MODULES -->
+  <section class="bb-section bb-section-tight">
+    <div class="bb-wrap bb-wrap-narrow">
+      <h2 class="bb-h2 bb-h2-left">Modules</h2>
+      <ol class="bb-roadmap">
+        {% for m in track.modules %}
+        {%- set mIdx = loop.index0 -%}
+        {%- set reads = collections.posts | postsBySlugs(m.posts) -%}
+        <li class="bb-step" data-bb-step="{{ mIdx }}">
+          <span class="bb-step-num">{{ loop.index }}</span>
+          <div class="bb-step-body">
+            <h3 class="bb-step-title">{{ m.title }}</h3>
+            <p class="bb-step-topics">{{ m.topics | join(" · ") }}</p>
+            {% if reads.length %}
+            <ul class="bb-step-reads">
+              {% for post in reads %}
+              <li><a href="{{ site.url }}{{ post.url }}">Read: {{ post.data.title }} ↗</a></li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          <button type="button" class="bb-done" data-bb-done="{{ mIdx }}" aria-pressed="false" aria-label="Mark module {{ loop.index }} as done">
+            <span class="bb-done-box" aria-hidden="true"></span><span data-bb-done-label>Mark done</span>
+          </button>
+        </li>
+        {% endfor %}
+      </ol>
+      {% if track.note %}<p class="bb-note">{{ track.note }}</p>{% endif %}
+    </div>
+  </section>
+
+  <!-- 3. PRACTICE -->
+  <section class="bb-band">
+    <div class="bb-wrap bb-wrap-narrow">
+      <h2 class="bb-h2">Practice questions</h2>
+      <div class="bb-byte" data-bb-quiz data-bb-track="{{ track.slug }}">
+        <div class="bb-byte-body" data-bb-body aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. NEWSLETTER + NEXT -->
+  <section class="bb-section" id="newsletter">
+    <div class="bb-wrap bb-wrap-narrow">
+      {% set newsId = track.slug %}{% set newsTag = track.slug %}{% include "bb-newsletter.njk" %}
+      <a class="bb-next" href="{{ ('/tracks/' + nextTrack.slug + '/') | bb }}">
+        <span class="bb-next-label">Next track</span>
+        <span class="bb-next-title">{{ nextTrack.title }} →</span>
+      </a>
+    </div>
+  </section>
+</div>
+
+<script type="application/json" id="bb-data">{{ { "bytes": brainbyte.bytes, "tracks": brainbyte.tracks, "base": ("/" | bb) } | dump | safe }}</script>

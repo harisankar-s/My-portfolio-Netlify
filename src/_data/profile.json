@@ -1,6 +1,6 @@
 {
   "name": "Harisankar Sivankutty",
-  "headline": "Data Engineering Architect · GenAI",
+  "headline": "Data Engineering Architect · GenAI · Agentic AI",
   "location": "Hyderabad / Bengaluru, India",
   "summary": "Data and AI engineering leader with over ten years of experience designing, building, and delivering enterprise-scale platforms for clients across telecom, IoT, Biotech, retail, e-commerce, and GenAI. Work sits where architecture meets delivery — turning ambiguous, high-stakes problems into systems that hold up in production. Experience spans distributed processing with Spark and Kafka, the modern data stack (dbt, Great Expectations, DataHub), and multi-cloud architecture across AWS, GCP, Snowflake, and on-premises infrastructure, alongside production GenAI systems built on Retrieval-Augmented Generation, LangChain, and LLM integration. Owns delivery end to end: shaping architecture, mentoring engineers, running quality audits, and keeping stakeholders aligned. Currently a Senior Consultant at Thoughtworks, advising global enterprises on data platforms, GenAI, and cloud-native architecture.",
   "stats": {
@@ -141,6 +141,16 @@
   ],
   "education": "B.Tech, Electronics & Communication · CUSAT, 2012–2016",
   "languages": ["English", "Malayalam", "Hindi", "Tamil"],
+  "offerings": {
+    "brainbyte": {
+      "url": "https://brainbyte.harisankarsivankutty.in/",
+      "description": "BrainByte is Hari's learning and products hub. Available now and FREE on Topmate: two Claude Certified Architect practice question banks, CCAR-F Foundations (160 questions, grouped by the 5 exam domains, with an explanation for every answer) and CCAR-P Professional (125 questions with an answer key). Independent study material, not affiliated with Anthropic, containing no real exam questions. Coming soon: production starter kits (tested, documented code with CI and infrastructure as code) and step-by-step learning tracks.",
+      "availableNow": ["CCAR-F: 160 Practice Questions (free) — https://topmate.io/harisankar_sivankutty/2413541", "CCAR-P Practice Question Bank: 125 Questions (free) — https://topmate.io/harisankar_sivankutty/2413543"],
+      "comingSoon": ["Production data pipeline kit (Terraform)", "Data quality starter (Great Expectations + DataHub)", "Claude RAG assistant starter", "dbt Data Vault template", "Learning tracks for Claude, Google Cloud, AWS and production data engineering"]
+    },
+    "coaching": "1:1 certification strategy calls and architecture reviews, booked via Topmate: https://topmate.io/harisankar_sivankutty",
+    "consulting": "Available for consulting on data platforms, GenAI/RAG systems and cloud architecture."
+  },
   "contact": {
     "email": "harisankar.sivankutty@gmail.com",
     "linkedin": "https://www.linkedin.com/in/harisankarsivankutty/",
