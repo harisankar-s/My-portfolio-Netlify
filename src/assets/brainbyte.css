@@ -97,6 +97,7 @@ img { max-width: 100%; display: block; }
 .bb-ic-topmate svg { width: 22px; height: 22px; }
 .bb-ic-medium { background: #111111; }
 :root[data-theme="dark"] .bb-ic-medium { background: #3A414D; }
+.bb-ic-youtube { background: #FF0000; }
 
 /* ---------- PRACTICE QUESTION ---------- */
 .bb-byte {

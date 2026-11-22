@@ -547,10 +547,10 @@ permalink: /
               <span class="promo-link">Get them free →</span>
             </a>
             <a class="promo-card" href="{{ site.brainbyteUrl }}/#kits">
-              <span class="promo-eyebrow">Coming soon</span>
-              <span class="promo-title" style="display:block">Production starter kits</span>
-              <span class="promo-text">Tested, documented code from real projects.</span>
-              <span class="promo-link">Get early access →</span>
+              <span class="promo-eyebrow">Free · Available now</span>
+              <span class="promo-title" style="display:block">Personal website starter kit</span>
+              <span class="promo-text">A portfolio site for freshers, live in 15 minutes. More kits coming.</span>
+              <span class="promo-link">Get it free →</span>
             </a>
             <a class="promo-link" href="{{ site.topmateUrl }}" target="_blank" rel="noopener">Or book a 1:1 on Topmate ↗</a>
           </div>
@@ -567,6 +567,12 @@ permalink: /
               <img src="/images/logos/medium.svg" alt="" class="sidebar-logo" />
               Medium
             </a>
+            {% if site.youtubeUrl %}
+            <a href="{{ site.youtubeUrl }}" target="_blank" rel="noopener" class="sidebar-ext-link">
+              <img src="/images/logos/youtube.svg" alt="" class="sidebar-logo" />
+              YouTube
+            </a>
+            {% endif %}
           </div>
         </div>
 

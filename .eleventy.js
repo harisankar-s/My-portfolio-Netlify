@@ -155,6 +155,19 @@ module.exports = function (eleventyConfig) {
 </figure>`;
   });
 
+  // Shortcode: responsive YouTube embed via youtube-nocookie.com (no
+  // tracking cookies until the reader presses play). Use in post markdown as:
+  //   {% youtube "VIDEO_ID", "Video title" %}
+  //   {% youtube "VIDEO_ID", "Video title", "Optional caption" %}
+  // Pass the 11-character ID, not the full URL. The CSP in netlify.toml
+  // allows frames from www.youtube-nocookie.com for this.
+  eleventyConfig.addShortcode("youtube", function (id, title, caption) {
+    const cap = caption ? `\n  <figcaption>${caption}</figcaption>` : "";
+    return `<figure class="video-embed">
+  <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/${id}?rel=0" title="${title}" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>${cap}
+</figure>`;
+  });
+
   return {
     dir: {
       input: "src",

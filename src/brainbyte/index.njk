@@ -69,7 +69,7 @@ eleventyExcludeFromCollections: true
 <!-- 4. STARTER KITS / GITHUB CODE (coming soon) -->
 <section class="bb-band" id="kits">
   <div class="bb-wrap">
-    <span class="bb-kicker">Coming soon</span>
+    <span class="bb-kicker">First kit free · more coming</span>
     <h2 class="bb-h2">Production starter kits</h2>
     <p class="bb-sub">Code from real enterprise projects, cleaned up and packaged so you can start from something that already works in production.</p>
 
@@ -85,14 +85,14 @@ eleventyExcludeFromCollections: true
       <article class="bb-kit">
         <div class="bb-kit-head">
           <svg class="bb-kit-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1.1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.2-3.1-.1-.4-.5-1.6.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.7 1.6.3 2.8.1 3.2.8.8 1.2 1.9 1.2 3.1 0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .5z"/></svg>
-          <span class="bb-badge{{ ' bb-badge-live' if k.status == 'live' else '' }}">{{ 'Available now' if k.status == 'live' else 'Coming soon' }}</span>
+          <span class="bb-badge{{ ' bb-badge-live' if k.status == 'live' else '' }}">{{ ('Free · ' if k.free else '') + 'Available now' if k.status == 'live' else 'Coming soon' }}</span>
         </div>
         <h3 class="bb-kit-title">{{ k.title }}</h3>
         <p class="bb-kit-blurb">{{ k.blurb }}</p>
         <ul class="bb-kit-stack">{% for st in k.stack %}<li>{{ st }}</li>{% endfor %}</ul>
         <div class="bb-kit-foot">
           {% if k.status == 'live' and k.url %}
-          <a class="bb-btn bb-btn-primary bb-btn-sm" href="{{ k.url }}" target="_blank" rel="noopener">Get the code ↗</a>
+          <a class="bb-btn bb-btn-primary bb-btn-sm" href="{{ k.url }}" target="_blank" rel="noopener">{{ 'Get it free' if k.free else 'Get the code' }} ↗</a>
           {% else %}
           <a class="bb-text-link" href="#newsletter">Tell me when it's ready →</a>
           {% endif %}
