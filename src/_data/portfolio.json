@@ -69,5 +69,16 @@
     }
   ],
 
-  "focus": ["Data platforms", "GenAI & RAG", "Agentic AI", "Multi-cloud architecture", "Delivery leadership"]
+  "focus": ["Data platforms", "GenAI & RAG", "Agentic AI", "Multi-cloud architecture", "Delivery leadership"],
+
+  "_pipeline": "Drives the live pipeline panel in the hub hero (src/home.njk): one row per stage, with the first name in `where` shown on the right, each fact paraphrased from a project in profile.json. `tool` picks a logo from `tools`; `icon` picks a built-in glyph (ingest, check, insight).",
+  "pipeline": [
+    { "stage": "Ingest",  "name": "APIs · Streams · RDBMS", "icon": "ingest",  "fact": "Ingestion frameworks for API, streaming and RDBMS sources", "where": "JCPenney · Thoughtworks" },
+    { "stage": "Stream",  "name": "Kafka",                  "tool": "Kafka",   "fact": "Kafka pub-sub streams feeding a data lake on an 18-node Cloudera cluster", "where": "Ooredoo Qatar · 6D Technologies" },
+    { "stage": "Process", "name": "Spark",                  "tool": "Spark",   "fact": "Distributed Spark jobs on AWS EMR for large-scale transformations", "where": "JCPenney · Thoughtworks" },
+    { "stage": "Quality", "name": "Great Expectations",     "icon": "check",   "fact": "A data-quality framework with Great Expectations, integrated with DataHub", "where": "JCPenney · Thoughtworks" },
+    { "stage": "Model",   "name": "BigQuery → Snowflake",   "tool": "Snowflake", "fact": "Data Vault models and an end-to-end BigQuery → Snowflake transfer framework", "where": "Otto · Thoughtworks" },
+    { "stage": "AI",      "name": "RAG · Claude",           "tool": "Claude",  "fact": "Production RAG and agentic AI on enterprise data, from Snowflake Cortex AI agents to Claude-powered assistants", "where": "GenAI & agentic AI" },
+    { "stage": "Decide",  "name": "Insights",               "icon": "insight", "fact": "Category-gap and white-space analysis behind data-driven assortment decisions", "where": "Otto · Thoughtworks" }
+  ]
 }

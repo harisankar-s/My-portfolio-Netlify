@@ -1,13 +1,13 @@
 // Routes requests by hostname so one Eleventy build serves three domains:
-//   harisankarsivankutty.in            -> profile (portfolio, built at /about/)
+//   harisankarsivankutty.in            -> hub at / (built at /home/), CV at /about/
 //   blog.harisankarsivankutty.in       -> blog (built at /)
 //   brainbyte.harisankarsivankutty.in  -> BrainByte learning hub (built at /brainbyte/)
 //
-// The apex domain only ever shows the portfolio: its root is internally
-// rewritten to the /about/ build output, and anything else (blog posts,
-// tags, feed, /ask/, /now/, ...) 301s to the blog subdomain so that content
-// is never indexable at two hosts. The blog subdomain folds /about/ back to
-// the apex root for the same reason. BrainByte's public "/x" is internally
+// The apex domain serves two pages: its root is internally rewritten to the
+// hub (/home/ build output) and /about/ serves the CV as built. Anything else
+// (blog posts, tags, feed, /ask/, /now/, ...) 301s to the blog subdomain so
+// that content is never indexable at two hosts. The blog subdomain folds
+// /about/ and /home/ back to the apex for the same reason. BrainByte's public "/x" is internally
 // rewritten to "/brainbyte/x"; "/brainbyte/*" on any host 301s to the
 // BrainByte host so those pages also live at exactly one URL.
 
@@ -31,7 +31,7 @@ const SHARED_PATHS = [
 
 // Paths the apex (profile) domain serves directly; everything else redirects
 // to the blog subdomain.
-const APEX_ALLOWED_PATHS = [/^\/$/, ...SHARED_PATHS];
+const APEX_ALLOWED_PATHS = [/^\/$/, /^\/about\/$/, ...SHARED_PATHS];
 
 const isBrainbytePath = (path) =>
   path === BRAINBYTE_PREFIX || path.startsWith(BRAINBYTE_PREFIX + "/");
@@ -64,11 +64,14 @@ export default async (request, context) => {
   }
 
   if (APEX_HOSTS.has(host)) {
-    if (url.pathname === "/about" || url.pathname === "/about/") {
+    if (url.pathname === "/about") {
+      return Response.redirect(`${url.protocol}//${host}/about/`, 301);
+    }
+    if (url.pathname === "/home" || url.pathname === "/home/") {
       return Response.redirect(`${url.protocol}//${host}/`, 301);
     }
     if (url.pathname === "/") {
-      return context.rewrite("/about/");
+      return context.rewrite("/home/");
     }
     const allowed = APEX_ALLOWED_PATHS.some((re) => re.test(url.pathname));
     if (!allowed) {
@@ -79,6 +82,9 @@ export default async (request, context) => {
   }
 
   if (host === BLOG_HOST && (url.pathname === "/about" || url.pathname === "/about/")) {
+    return Response.redirect("https://harisankarsivankutty.in/about/", 301);
+  }
+  if (host === BLOG_HOST && (url.pathname === "/home" || url.pathname === "/home/")) {
     return Response.redirect("https://harisankarsivankutty.in/", 301);
   }
 

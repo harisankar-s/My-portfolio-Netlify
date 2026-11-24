@@ -2,7 +2,7 @@
 permalink: /about/index.html
 ---
 {#-
-  Portfolio (served at harisankarsivankutty.in/ via the domain router).
+  Portfolio / CV (served at harisankarsivankutty.in/about/; the apex root is the hub, src/home.njk).
   Content comes from data, not hand-written HTML:
     - profile.json   → facts (summary, stats, certifications, experience, projects, clients, skills)
     - portfolio.json → presentation (logos, Credly links, featured tools, focus areas)
@@ -32,25 +32,28 @@ permalink: /about/index.html
   <meta property="og:title" content="{{ p.name }} — Data Engineering Architect" />
   <meta property="og:description" content="10+ years engineering enterprise data platforms, GenAI systems and cloud-native analytics." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="{{ site.portfolioUrl }}/" />
+  <meta property="og:url" content="{{ site.portfolioUrl }}/about/" />
   <title>{{ p.name }} — Data Engineering Architect</title>
-  <link rel="canonical" href="{{ site.portfolioUrl }}/" />
+  <link rel="canonical" href="{{ site.portfolioUrl }}/about/" />
   <link rel="icon" href="/images/favicon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/portfolio.css" />
 </head>
 <body>
 
+  <div class="pf-progress" id="progress" aria-hidden="true"></div>
+
   <!-- NAV -->
-  <nav class="pf-nav" id="nav">
-    <a href="#top" class="pf-logo">
+  <nav class="pf-nav on-hero" id="nav">
+    <a href="{{ homePath }}" class="pf-logo">
       <img src="/images/profile/hari_new.png" alt="" width="32" height="32" />
       <span>Harisankar Sivankutty</span>
     </a>
     <div class="pf-nav-right">
       <ul class="pf-nav-links">
+        <li><a href="{{ homePath }}">Home</a></li>
         <li><a href="#experience">Experience</a></li>
         <li><a href="#strengths">Skills</a></li>
         <li><a href="#certifications">Certifications</a></li>
@@ -67,9 +70,16 @@ permalink: /about/index.html
   <main id="top">
 
     <!-- 1. HERO -->
-    <section class="pf-hero">
+    <section class="pf-space-hero" id="hero">
+    <div class="pf-space" aria-hidden="true" data-sparkles="4">
+      <canvas class="sky-canvas" data-galaxy="edge"></canvas>
+      <canvas class="sky-canvas" data-sky></canvas>
+      <div class="sky-shade"></div>
+    </div>
+    <div class="pf-hero">
       <img class="pf-hero-photo" src="/images/profile/hari_new.png" alt="{{ p.name }}" width="148" height="148" />
-      <h1 class="pf-h1">Hi, I'm Hari.</h1>
+      <p class="pf-eyebrow" data-decode>{{ p.name }} · Data &amp; AI Architect</p>
+      <h1 class="pf-h1">Hi, I'm <span class="pf-glow">Hari</span>.</h1>
       <p class="pf-role">{% for part in p.headline.split(" · ") %}{% if not loop.first %} {% endif %}<span>{% if not loop.first %}· {% endif %}{{ part }}</span>{% endfor %}</p>
       <p class="pf-lede">I design and deliver enterprise data platforms, GenAI and agentic AI systems that hold up in production, for clients across retail, e-commerce, telecom, IoT and biotech. Today I'm a Senior Consultant at Thoughtworks.</p>
       <div class="pf-ctas">
@@ -82,6 +92,7 @@ permalink: /about/index.html
         {% endfor %}
       </ul>
       {% include "bb-connect.njk" %}
+    </div>
     </section>
 
     <!-- 2. AT A GLANCE -->
@@ -259,14 +270,8 @@ permalink: /about/index.html
     <p>© 2026 {{ p.name }} · <a href="{{ site.url }}/">Blog</a> · <a href="{{ site.url }}/ask/">Trench AI</a> · <a href="{{ site.brainbyteUrl }}/">BrainByte</a></p>
   </footer>
 
-  <script>
-    (function () {
-      var nav = document.getElementById('nav');
-      window.addEventListener('scroll', function () {
-        nav.classList.toggle('scrolled', window.scrollY > 12);
-      }, { passive: true });
-    })();
-  </script>
+  <script src="/assets/galaxy.js" defer></script>
+  <script src="/assets/space.js" defer></script>
   <link rel="stylesheet" href="/assets/ask-hari-widget.css">
   <script src="/assets/ask-hari-widget.js" defer></script>
   <script src="/assets/theme-toggle.js" defer></script>

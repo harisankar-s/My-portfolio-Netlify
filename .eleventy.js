@@ -106,6 +106,14 @@ module.exports = function (eleventyConfig) {
     url && url.startsWith(BB_PREFIX) ? url.slice(BB_PREFIX.length) || "/" : url
   );
 
+  // The apex hub (src/home.njk) is built at /home/ and the domain router
+  // serves it at the apex root. Under `eleventy --serve` there is no router,
+  // so "Home" links point at /home/ locally.
+  eleventyConfig.addGlobalData(
+    "homePath",
+    process.env.ELEVENTY_RUN_MODE === "build" ? "/" : "/home/"
+  );
+
   // Filter: pick posts by fileSlug, keeping the order of the slug list
   eleventyConfig.addFilter("postsBySlugs", (posts, slugs) =>
     (slugs || [])

@@ -1,19 +1,6 @@
-{#- Newsletter signup on BrainByte pages. Set site.newsletter.username
-    (Buttondown) to turn the form on; until then it falls back to an
-    email link so the button never dead-ends. -#}
+{#- BrainByte Weekly signup on BrainByte pages (form: newsletter-form.njk). -#}
 <div class="bb-news">
-  <h2 class="bb-h2">Be first to get new packs and kits</h2>
-  <p class="bb-sub">One practice question a week, plus early access and launch pricing when each starter kit or practice pack goes live.</p>
-  {% if site.newsletter and site.newsletter.username %}
-  <form class="bb-news-form" action="https://buttondown.com/api/emails/embed-subscribe/{{ site.newsletter.username }}" method="post" target="_blank">
-    <label class="bb-sr" for="bb-news-email-{{ newsId or 'main' }}">Email address</label>
-    <input id="bb-news-email-{{ newsId or 'main' }}" type="email" name="email" placeholder="Your email" required autocomplete="email" />
-    <input type="hidden" name="tag" value="{{ newsTag or 'brainbyte' }}" />
-    <button type="submit" class="bb-btn bb-btn-primary">Subscribe</button>
-  </form>
-  {% else %}
-  <div class="bb-news-form">
-    <a class="bb-btn bb-btn-primary" href="mailto:harisankar.sivankutty@gmail.com?subject=Add%20me%20to%20BrainByte">Join the list</a>
-  </div>
-  {% endif %}
+  <h2 class="bb-h2">Get {{ site.newsletter.name }}</h2>
+  <p class="bb-sub">One practical data &amp; AI lesson a week: a production pattern, an exam-style practice question, and new packs and starter kits before anyone else. Free.</p>
+  {% set nfId = newsId or 'main' %}{% set nfClass = 'bb-news-form' %}{% set nfBtnClass = 'bb-btn bb-btn-primary' %}{% include "newsletter-form.njk" %}
 </div>

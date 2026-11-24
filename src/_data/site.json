@@ -8,7 +8,8 @@
   "topmateUrl": "https://topmate.io/harisankar_sivankutty",
   "youtubeUrl": "",
   "newsletter": {
-    "provider": "buttondown",
+    "name": "BrainByte Weekly",
+    "provider": "substack",
     "username": ""
   }
 }

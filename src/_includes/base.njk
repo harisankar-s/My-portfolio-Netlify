@@ -41,7 +41,7 @@
       --fg-dim: #9CA3AF;
       --accent: #1F2937;
       --accent-dim: rgba(17, 24, 39, 0.12);
-      --accent-glow: rgba(17, 24, 39, 0.22); --pop: #F59E0B; --pop-glow: rgba(245,158,11,0.45);
+      --accent-glow: rgba(17, 24, 39, 0.22); --pop: #0071E3; --pop-glow: rgba(0,113,227,0.45);
       --warm: #1F2937;
 
       --font-serif: 'Instrument Serif', 'Times New Roman', serif;
@@ -176,10 +176,10 @@
     .footer-year { color: var(--fg-dim); }
     .footer-right { color: var(--fg-dim); font-size: 11px; }
   
-    /* amber pop accents */
+    /* blue pop accents */
     .nav-logo .dot, .nav-brand .dot { background: var(--pop); box-shadow: 0 0 12px var(--pop-glow); }
     .footer-brand .dot { background: var(--pop); box-shadow: 0 0 8px var(--pop-glow); }
-    ::selection { background: var(--pop); color: #111827; }
+    ::selection { background: var(--pop); color: #FFFFFF; }
 
   </style>
   <!-- Shared site theme: loaded last so it overrides this layout's inline tokens -->
@@ -197,7 +197,7 @@
         <li><a href="/" class="{{ 'active' if page.url == '/' or '/tags' in page.url else '' }}">Blog</a></li>
         <li><a href="/ask/" class="{{ 'active' if '/ask' in page.url else '' }}">Trench AI</a></li>
         <li><a href="{{ site.brainbyteUrl }}/">BrainByte ↗</a></li>
-        <li><a href="{{ site.portfolioUrl }}/">About</a></li>
+        <li><a href="{{ site.portfolioUrl }}/about/">About</a></li>
       </ul>
       <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line></svg>

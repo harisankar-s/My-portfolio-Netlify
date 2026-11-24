@@ -1,0 +1,356 @@
+---
+permalink: /home/index.html
+eleventyExcludeFromCollections: true
+---
+{#-
+  Apex hub ("front door"), served at harisankarsivankutty.in/ by the domain
+  router (built at /home/). Its job is to grow BrainByte Weekly (the
+  newsletter, on Substack) and BrainByte (practice packs, starter kits);
+  Hari's own profile stays short here and lives in full at /about/.
+  Calm, editorial dark look (Space Grotesk headings, Inter body, JetBrains
+  Mono labels, soft blue accent used sparingly) over the 3D galaxy sky.
+  All copy comes from data: site.json (newsletter), brainbyte.json,
+  portfolio.json, profile.json and collections.posts. Styles: .hub-* in
+  /assets/portfolio.css. Signup form: _includes/newsletter-form.njk.
+-#}
+{%- set p = profile -%}
+{%- macro stageIcon(s) -%}
+{%- if s.tool %}<img src="{{ (portfolio.tools | findBy("name", s.tool)).logo }}" alt="" width="26" height="26" />
+                  {% elif s.icon == "ingest" %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>{% elif s.icon == "check" %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>{% elif s.icon == "insight" %}<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>{% endif -%}
+{%- endmacro %}
+
+{%- set latest = collections.posts[0] -%}
+{%- set livePacks = [] -%}
+{%- set questions = 0 -%}
+{%- for pack in brainbyte.practice -%}{%- if pack.status == "live" -%}{%- set livePacks = (livePacks.push(pack), livePacks) -%}{%- set questions = questions + pack.count -%}{%- endif -%}{%- endfor -%}
+{%- set liveKits = 0 -%}{%- for k in brainbyte.kits -%}{%- if k.status == "live" -%}{%- set liveKits = liveKits + 1 -%}{%- endif -%}{%- endfor -%}
+{%- set nl = site.newsletter -%}
+{%- set byte = brainbyte.bytes[0] -%}
+{#- glossy "3D" icon tiles (.ico3d): one glyph per name -#}
+{%- macro ico(name) -%}
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+{%- if name == "mail" %}<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/>
+{%- elif name == "course" %}<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/>
+{%- elif name == "check" %}<path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>
+{%- elif name == "db" %}<ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v6.2c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8V5.5"/><path d="M4.5 11.7v6.2c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8v-6.2"/>
+{%- elif name == "code" %}<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>
+{%- elif name == "spark" %}<path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/>
+{%- endif %}</svg>
+{%- endmacro %}
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="{{ nl.name }}: one practical AI and data engineering lesson a week from {{ p.name }}. Claude and AI courses, free certification practice, and real data engineering from enterprise projects." />
+  <meta name="author" content="{{ p.name }}" />
+  <meta property="og:title" content="{{ nl.name }}: AI &amp; data engineering, from real production" />
+  <meta property="og:description" content="Claude and AI courses, free certification practice, and real data engineering stories. One practical lesson a week." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ site.portfolioUrl }}/" />
+  <title>{{ nl.name }}: AI &amp; Data Engineering From Real Production | {{ p.name }}</title>
+  <link rel="canonical" href="{{ site.portfolioUrl }}/" />
+  <link rel="icon" href="/images/favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/portfolio.css" />
+</head>
+<body class="hub">
+
+  <div class="pf-progress" id="progress" aria-hidden="true"></div>
+
+  <!-- Fixed sky behind the whole page: a 3D galaxy + nebula in WebGL
+       (galaxy.js) with golden comets on top (space.js, which also draws a
+       plain starfield if WebGL isn't available). -->
+  <div class="hub-sky" aria-hidden="true">
+    <canvas class="sky-canvas" data-galaxy></canvas>
+    <canvas class="sky-canvas" data-sky></canvas>
+    <div class="sky-shade"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="pf-nav on-hero" id="nav">
+    <a href="{{ homePath }}" class="pf-logo">
+      <img src="/images/profile/hari_new.png" alt="" width="32" height="32" />
+      <span>{{ p.name }}</span>
+    </a>
+    <div class="pf-nav-right">
+      <ul class="pf-nav-links">
+        <li><a href="#courses">Courses</a></li>
+        <li><a href="#practice">Practice</a></li>
+        <li><a href="#field">Articles</a></li>
+        <li><a href="#kits">Starter kits</a></li>
+        <li><a href="{{ site.url }}/">Blog</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+      <a href="#join" class="pf-btn pf-btn-primary pf-btn-sm pf-nav-cta">Subscribe <span aria-hidden="true">→</span></a>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- 1. HERO: the newsletter pitch + signup; the 3D galaxy fills the right. -->
+    <section class="hub-hero" id="hero">
+      <div class="hub-hero-inner">
+        <div class="hub-hero-text">
+          <p class="hub-label">{{ nl.name }} · AI × Data Engineering</p>
+          <h1 class="hub-hero-title">AI &amp; data engineering, <span class="hub-accent">from real production.</span></h1>
+          <p class="hub-hero-lede">One practical lesson a week: Claude and AI courses, certification practice, and real data engineering stories from {{ p.stats.yearsExperience }} years of enterprise projects. Free, and tested on real systems first.</p>
+          <div class="hub-signup" id="subscribe">
+            {% set nfId = 'hero' %}{% set nfClass = 'hub-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% set nfAvatar = '/images/profile/hari_new.png' %}{% include "newsletter-form.njk" %}
+            <p class="hub-form-note">Free every week · unsubscribe anytime</p>
+          </div>
+          <ul class="hub-pills">
+            <li><strong>{{ questions }}</strong> practice questions</li>
+            <li><strong>{{ brainbyte.tracks.length }}</strong> courses in the works</li>
+            <li><strong>{{ collections.posts.length }}</strong> field articles</li>
+          </ul>
+        </div>
+      </div>
+      {#- tools the lessons cover, scrolling; the list is doubled so the loop is seamless #}
+      <div class="hub-marquee" aria-label="Tools covered">
+        <ul>
+          {%- for round in [1, 2] %}{% for t in portfolio.tools %}
+          <li{% if round == 2 %} aria-hidden="true"{% endif %}><img src="{{ t.logo }}" alt="" width="20" height="20" loading="lazy" />{{ t.name }}</li>
+          {%- endfor %}{% endfor %}
+        </ul>
+      </div>
+    </section>
+
+    <!-- 2. WHAT YOU GET -->
+    <section class="hub-section" id="inside">
+      <div class="pf-wrap">
+        <header class="hub-head hub-reveal">
+          <div><p class="hub-label">What you get</p><h2 class="hub-h2">A working <span class="hub-accent">system</span>, not theory</h2></div>
+        </header>
+        <div class="hub-tiles">
+          <a class="hub-glass hub-tile hub-reveal" href="#join">
+            <span class="ico3d ico3d-blue">{{ ico("mail") }}</span>
+            <span class="hub-label">01 · Every week</span>
+            <span class="hub-tile-title">One lesson per issue</span>
+            <span class="hub-tile-text">An AI or data engineering lesson you can use the same day, with the prompt, the code or the design behind it.</span>
+          </a>
+          <a class="hub-glass hub-tile hub-reveal" href="#courses">
+            <span class="ico3d ico3d-violet">{{ ico("course") }}</span>
+            <span class="hub-label">02 · Courses</span>
+            <span class="hub-tile-title">Claude &amp; AI courses</span>
+            <span class="hub-tile-text">Step-by-step tracks for Claude, cloud data platforms and production data engineering.</span>
+          </a>
+          <a class="hub-glass hub-tile hub-reveal" href="#practice">
+            <span class="ico3d ico3d-green">{{ ico("check") }}</span>
+            <span class="hub-label">03 · Practice</span>
+            <span class="hub-tile-title">Exam-style questions</span>
+            <span class="hub-tile-text">{{ questions }} free questions for the Claude certifications, with every answer explained.</span>
+          </a>
+          <a class="hub-glass hub-tile hub-reveal" href="#field">
+            <span class="ico3d ico3d-amber">{{ ico("db") }}</span>
+            <span class="hub-label">04 · From the field</span>
+            <span class="hub-tile-title">Real data engineering</span>
+            <span class="hub-tile-text">What actually happens on enterprise data platforms: the outages, the fixes and the trade-offs.</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. COURSES (brainbyte.json `tracks`): light cards in a glass shelf -->
+    <section class="hub-section" id="courses">
+      <div class="pf-wrap">
+        <div class="hub-shelf hub-reveal">
+          <div class="hub-shelf-head">
+            <p class="hub-label">Courses on BrainByte</p>
+            <h2 class="hub-h2">Learn it <span class="hub-accent">step by step</span></h2>
+            <p class="hub-sub">Structured tracks built from real projects, for the Claude, Google Cloud and AWS certifications and for production data engineering. Subscribers get first access.</p>
+          </div>
+          <div class="hub-courses">
+            {% for t in brainbyte.tracks %}
+            {%- set live = t.status == "live" %}
+            <a class="hub-course" href="{{ (site.brainbyteUrl + '/tracks/' + t.slug + '/') if live else '#join' }}" style="--c: {{ t.color }}">
+              <span class="hub-course-top">
+                <span class="hub-course-logo"><img src="{{ t.logo }}" alt="" width="26" height="26" loading="lazy" /></span>
+                <span class="hub-course-tag">{{ "Open now" if live else "Coming soon" }}</span>
+              </span>
+              <span class="hub-course-title">{{ t.title }}</span>
+              <span class="hub-course-meta">{{ t.level }} · {{ t.weeks }} weeks</span>
+              <span class="hub-course-text">{{ t.pitch }}</span>
+              <span class="hub-course-go">{{ "Start the course" if live else "Join the waitlist" }} <span aria-hidden="true">→</span></span>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% if livePacks.length %}
+    <!-- 4. PRACTICE: live packs + a real sample question -->
+    <section class="hub-section" id="practice">
+      <div class="pf-wrap">
+        <header class="hub-head hub-reveal">
+          <div><p class="hub-label">Free practice packs</p><h2 class="hub-h2">Pass the <span class="hub-accent">Claude</span> certifications</h2>
+          <p class="hub-sub">Scenario-based questions in the style of the real exam, grouped by domain, with every answer explained.</p></div>
+          <a href="{{ site.brainbyteUrl }}/" class="hub-textlink">Everything on BrainByte <span aria-hidden="true">→</span></a>
+        </header>
+        <div class="hub-practice">
+          <div class="hub-practice-packs">
+            {% for pack in livePacks %}
+            <a class="hub-glass hub-pack hub-reveal" href="{{ pack.url }}" target="_blank" rel="noopener">
+              <span class="hub-pack-top"><span class="ico3d ico3d-sm ico3d-claude"><img src="/images/logos/claude.svg" alt="" width="20" height="20" /></span>{% if pack.price %}<span class="hub-tag">{{ pack.price }}</span>{% endif %}</span>
+              <span class="hub-meta">{{ pack.exam }}</span>
+              <span class="hub-pack-title">{{ pack.title }}</span>
+              <span class="hub-pack-count"><strong>{{ pack.count }}</strong> practice questions</span>
+              <span class="hub-textlink">Get the pack <span aria-hidden="true">→</span></span>
+            </a>
+            {% endfor %}
+          </div>
+          {% if byte %}
+          <div class="hub-glass hub-byte hub-reveal">
+            <div class="hub-byte-top"><span class="hub-label">Try one now</span><span class="hub-tag">Sample</span></div>
+            <p class="hub-byte-q">{{ byte.q }}</p>
+            <ol class="hub-byte-opts">
+              {% for o in byte.options %}<li{% if loop.index0 == byte.answer %} data-answer{% endif %}>{{ o }}</li>{% endfor %}
+            </ol>
+            <details class="hub-byte-a">
+              <summary>Reveal the answer</summary>
+              <p><b>{{ "ABCD"[byte.answer] }}.</b> {{ byte.why }}</p>
+            </details>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    {% if latest %}
+    <!-- 5. FROM THE FIELD: articles, with each post's first image -->
+    <section class="hub-section" id="field">
+      <div class="pf-wrap">
+        <header class="hub-head hub-reveal">
+          <div><p class="hub-label">From the field</p><h2 class="hub-h2">Real <span class="hub-accent">data engineering</span>, written down</h2>
+          <p class="hub-sub">Long-form articles from enterprise projects: the architecture, the mistakes and what I'd do again.</p></div>
+          <a href="{{ site.url }}/" class="hub-textlink">All {{ collections.posts.length }} articles <span aria-hidden="true">→</span></a>
+        </header>
+        {%- set lthumb = latest.templateContent | firstImage %}
+        <a class="hub-glass hub-edition hub-reveal" href="{{ site.url }}{{ latest.url }}">
+          <span class="hub-edition-art{% if not lthumb %} is-empty{% endif %}">{% if lthumb %}<img src="{{ lthumb }}" alt="" loading="lazy" />{% else %}<span class="ico3d ico3d-lg ico3d-blue">{{ ico("db") }}</span>{% endif %}</span>
+          <span class="hub-edition-text">
+            <span class="hub-label">Latest · {{ latest.date | postDate }} · {{ latest.templateContent | readTime }} min read</span>
+            <span class="hub-edition-title">{{ latest.data.title }}</span>
+            {% if latest.data.subtitle or latest.data.excerpt %}<span class="hub-lead-text">{{ latest.data.subtitle or latest.data.excerpt }}</span>{% endif %}
+            <span class="pf-btn pf-btn-primary">Read the article <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+        <div class="hub-editions">
+          {% for post in collections.posts %}{% if loop.index > 1 and loop.index <= 4 %}
+          {%- set th = post.templateContent | firstImage %}
+          <a class="hub-glass hub-card3 hub-reveal" href="{{ site.url }}{{ post.url }}">
+            <span class="hub-card3-art{% if not th %} is-empty{% endif %}">{% if th %}<img src="{{ th }}" alt="" loading="lazy" />{% else %}<span class="ico3d ico3d-violet">{{ ico("spark") }}</span>{% endif %}</span>
+            <span class="hub-card3-body">
+              <span class="hub-meta">{{ post.date | postDate }} · {{ post.templateContent | readTime }} min</span>
+              <span class="hub-card3-title">{{ post.data.title }}</span>
+            </span>
+          </a>
+          {% endif %}{% endfor %}
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- 6. STARTER KITS (brainbyte.json `kits`) -->
+    <section class="hub-section" id="kits">
+      <div class="pf-wrap">
+        <header class="hub-head hub-reveal">
+          <div><p class="hub-label">Starter kits</p><h2 class="hub-h2">Production code <span class="hub-accent">you can start from</span></h2>
+          <p class="hub-sub">Tested, documented templates for the systems in the lessons. Subscribers hear first when each one ships.</p></div>
+          <a href="{{ site.brainbyteUrl }}/#kits" class="hub-textlink">See all kits <span aria-hidden="true">→</span></a>
+        </header>
+        <div class="hub-kits">
+          {% for k in brainbyte.kits %}
+          {%- set live = k.status == "live" %}
+          <{{ "a" if live else "div" }} class="hub-glass hub-kit hub-reveal{% if not live %} is-soon{% endif %}"{% if live %} href="{{ k.url }}" target="_blank" rel="noopener"{% endif %}>
+            <span class="hub-pack-top"><span class="ico3d ico3d-sm {{ 'ico3d-green' if live else 'ico3d-slate' }}">{{ ico("code") }}</span><span class="hub-tag{% if not live %} hub-tag-dim{% endif %}">{{ ("Free" if k.free else "Live") if live else "Coming soon" }}</span></span>
+            <span class="hub-kit-title">{{ k.title }}</span>
+            <span class="hub-kit-text">{{ k.blurb }}</span>
+            {% if k.stack %}<span class="hub-chips">{% for t in k.stack %}{% if loop.index <= 4 %}<span>{{ t }}</span>{% endif %}{% endfor %}</span>{% endif %}
+            {% if live %}<span class="hub-textlink">Get the kit <span aria-hidden="true">↗</span></span>{% endif %}
+          </{{ "a" if live else "div" }}>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. THE STACK: stages in portfolio.json `pipeline`; a pulse runs down
+         the line and lights each stage in turn (pure CSS). -->
+    <section class="hub-section" id="learn">
+      <div class="pf-wrap hub-how">
+        <div class="hub-how-text hub-reveal">
+          <p class="hub-label">The stack, end to end</p>
+          <h2 class="hub-h2">From raw data to <span class="hub-accent">AI decisions</span></h2>
+          <p class="hub-sub">The lessons follow the path data takes in production: ingest, stream, process, check, model, then the AI on top. Each issue takes one stage and shows how it's built to last.</p>
+        </div>
+        <div class="hub-reveal">
+          <figure class="hub-system" aria-label="Stages the lessons cover">
+            <figcaption class="hub-system-bar"><span>brainbyte.curriculum</span><span class="hub-live"><i></i>weekly</span></figcaption>
+            <ol class="hub-steps" style="--n:{{ portfolio.pipeline.length }}">
+              {%- for s in portfolio.pipeline %}
+              <li class="hub-step" style="--i:{{ loop.index0 }}">
+                <span class="hub-step-node">{{ stageIcon(s) }}</span>
+                <span class="hub-step-text"><b>{{ s.stage }}</b><span>{{ s.name }}</span></span>
+                <span class="hub-step-where">{{ "0" if loop.index < 10 }}{{ loop.index }}</span>
+              </li>
+              {%- endfor %}
+            </ol>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. WHO WRITES IT (short; the full profile is /about/) -->
+    <section class="hub-section" id="about">
+      <div class="pf-wrap">
+        <div class="hub-glass hub-about hub-reveal">
+          <div class="hub-about-body">
+            <p class="hub-label">Who writes this</p>
+            <h2 class="hub-h2">Hi, I'm <span class="hub-accent">Hari.</span></h2>
+            <p class="hub-about-text">I'm a data and AI architect. For {{ p.stats.yearsExperience }} years I've designed and shipped data platforms and GenAI systems for enterprise teams in retail, e-commerce, telecom and biotech. {{ nl.name }} is what I wish someone had told me on the way: what works in production, what breaks, and how to tell the difference early.</p>
+            {%- set issuers = [] %}{% for c in p.certifications %}{% if issuers.indexOf(c.issuer) == -1 %}{% set issuers = (issuers.push(c.issuer), issuers) %}{% endif %}{% endfor %}
+            <ul class="hub-pills hub-pills-left">
+              <li><strong>{{ p.stats.yearsExperience }}</strong> years in data &amp; AI</li>
+              <li><strong>{{ p.stats.certifications }}</strong> certifications</li>
+              <li>{{ issuers | join(" · ") }}</li>
+            </ul>
+            <div class="hub-hero-ctas">
+              <a href="/about/" class="pf-btn pf-btn-ghost">Full profile &amp; CV <span aria-hidden="true">→</span></a>
+              {% if brainbyte.coaching.length %}<a href="{{ brainbyte.coaching[0].url }}" class="hub-textlink" target="_blank" rel="noopener">Book a 1:1 call <span aria-hidden="true">↗</span></a>{% endif %}
+            </div>
+          </div>
+          <img class="hub-about-photo" src="/images/profile/hari_new.png" alt="{{ p.name }}" width="320" height="320" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. SUBSCRIBE -->
+    <section class="hub-section hub-join" id="join">
+      <div class="pf-wrap">
+        <div class="hub-join-panel hub-reveal">
+          <p class="hub-label">{{ nl.name }}</p>
+          <h2 class="hub-join-title">Get the next <span class="hub-accent">lesson</span> first.</h2>
+          <p class="hub-sub">AI and data engineering for people who ship to production. Free, and you can unsubscribe in one click.</p>
+          {% set nfId = 'join' %}{% set nfClass = 'hub-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% set nfAvatar = '/images/profile/hari_new.png' %}{% include "newsletter-form.njk" %}
+          <p class="hub-join-contact">Prefer to talk? <a href="mailto:{{ p.contact.email }}">Email</a> · <a href="{{ p.contact.linkedin }}" target="_blank" rel="noopener">LinkedIn</a>{% if p.contact.topmate %} · <a href="{{ p.contact.topmate }}" target="_blank" rel="noopener">Book a call</a>{% endif %}</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="hub-footer">
+    <span>© 2026 {{ p.name }} · {{ nl.name }}</span>
+    <nav aria-label="Footer"><a href="#join">Subscribe</a><a href="{{ site.brainbyteUrl }}/">BrainByte</a><a href="{{ site.url }}/">Blog</a><a href="/about/">About</a><a href="{{ site.url }}/ask/">Ask Hari.ai</a></nav>
+  </footer>
+
+  <script src="/assets/galaxy.js" defer></script>
+  <script src="/assets/space.js" defer></script>
+  <link rel="stylesheet" href="/assets/ask-hari-widget.css">
+  <script src="/assets/ask-hari-widget.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{#- BrainByte Weekly signup form, shared by the hub and BrainByte pages.
+    Posts to Substack once site.newsletter.username is set (the part before
+    .substack.com); until then it opens an email to Hari so no signup is lost.
+    Callers set: nfId (unique per page), nfClass (form class), nfBtnClass, and
+    optionally nfAvatar (a small photo shown inside the field). -#}
+{%- set nl = site.newsletter -%}
+<form class="{{ nfClass or 'nl-form' }}"
+  {%- if nl.username %} action="https://{{ nl.username }}.substack.com/api/v1/free?nojs=true" method="post" target="_blank"
+  {%- else %} action="mailto:{{ profile.contact.email }}?subject={{ ('Subscribe me to ' + nl.name) | urlencode }}" method="post" enctype="text/plain"{% endif %}>
+  {%- if nfAvatar %}<img class="nl-avatar" src="{{ nfAvatar }}" alt="" width="36" height="36" />{% endif %}
+  <label class="nl-sr" for="nl-email-{{ nfId or 'main' }}">Email address</label>
+  <input id="nl-email-{{ nfId or 'main' }}" type="email" name="email" placeholder="you@company.com" required autocomplete="email" />
+  <button type="submit" class="{{ nfBtnClass or 'nl-btn' }}">Subscribe</button>
+</form>

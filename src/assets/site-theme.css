@@ -1,7 +1,7 @@
 /* Unified site theme for the blog surfaces (blog listing, base.njk pages,
    article.njk). Loaded AFTER each layout's own inline <style>, so it only
    swaps tokens, fonts and the nav to match the portfolio and BrainByte
-   (portfolio.css / brainbyte.css): Lato for interface text, amber accent,
+   (portfolio.css / brainbyte.css): Lato for interface text, blue accent,
    light/dark palette. Layouts are untouched — post bodies keep their
    Medium-style serif reading column (--font-article). */
 
@@ -16,14 +16,14 @@
   --fg-muted: #4B5563;
   --fg-dim: #6B7280;
   --accent: #1F2937;
-  --accent-dim: #FEF3C7;
-  --accent-glow: rgba(245, 158, 11, 0.35);
-  --brand: #B45309;
-  --brand-soft: #FEF3C7;
-  --pop: #F59E0B;
-  --pop-ink: #B45309;
-  --pop-glow: rgba(245, 158, 11, 0.45);
-  --link: #B45309;
+  --accent-dim: #E8F1FD;
+  --accent-glow: rgba(0, 113, 227, 0.35);
+  --brand: #0066CC;
+  --brand-soft: #E8F1FD;
+  --pop: #0071E3;
+  --pop-ink: #0066CC;
+  --pop-glow: rgba(0, 113, 227, 0.45);
+  --link: #0066CC;
   --reading: #242424;
   --font-sans: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-serif: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -40,11 +40,11 @@
   --fg-muted: #C3C8D0;
   --fg-dim: #9AA1AC;
   --accent: #F3F4F6;
-  --pop-ink: #FBBF24;
-  --brand: #FBBF24;
-  --brand-soft: rgba(245, 158, 11, 0.16);
-  --accent-dim: rgba(245, 158, 11, 0.16);
-  --link: #FBBF24;
+  --pop-ink: #2997FF;
+  --brand: #2997FF;
+  --brand-soft: rgba(0, 113, 227, 0.16);
+  --accent-dim: rgba(0, 113, 227, 0.16);
+  --link: #2997FF;
   --reading: #E8E8E8;
 }
 
@@ -69,9 +69,9 @@ body::before { display: none; }
 .nav-links a::before { background: var(--brand); }
 .nav-cta {
   font-family: var(--font-sans); font-size: 15px; font-weight: 700;
-  background: var(--pop); color: #111827; border-color: var(--pop); border-radius: 10px; padding: 8px 16px;
+  background: var(--pop); color: #FFFFFF; border-color: var(--pop); border-radius: 10px; padding: 8px 16px;
 }
-.nav-cta:hover { background: #FBBF24; border-color: #FBBF24; color: #111827; }
+.nav-cta:hover { background: #0077ED; border-color: #0077ED; color: #FFFFFF; }
 .theme-toggle { color: var(--fg); border-color: var(--border-strong); width: 36px; height: 36px; }
 .theme-toggle:hover { background: var(--bg-elevated); border-color: var(--fg-dim); }
 
@@ -134,9 +134,9 @@ html body .t-title { font-weight: 900; }
 .promo-text { font-family: var(--font-sans); font-size: 15px; line-height: 1.5; color: var(--fg-muted); }
 .promo-btn {
   display: inline-flex; align-items: center; margin-top: 12px; padding: 9px 16px; border-radius: 10px;
-  font-family: var(--font-sans); font-size: 15px; font-weight: 700; background: var(--pop); color: #111827;
+  font-family: var(--font-sans); font-size: 15px; font-weight: 700; background: var(--pop); color: #FFFFFF;
 }
-.promo-btn:hover { background: #FBBF24; }
+.promo-btn:hover { background: #0077ED; }
 .promo-link { display: inline-block; margin-top: 10px; font-family: var(--font-sans); font-size: 15px; font-weight: 700; color: var(--link); }
 .promo-stack { display: grid; gap: 14px; }
 
@@ -159,10 +159,10 @@ html body .t-title { font-weight: 900; }
   .theme-toggle { width: 32px; height: 32px; }
 }
 
-/* ---------- Amber brand: --pop for fills/buttons, --brand (amber ink) for text ----------
-   Overrides the amber accents still inside the layouts' own inline styles. */
-.featured-badge { background: var(--pop) !important; color: #111827 !important; }
-.entry-tag:hover { background: var(--pop); color: #111827; }
+/* ---------- Blue brand: --pop for fills/buttons, --brand (blue ink) for text ----------
+   Overrides the blue accents still inside the layouts' own inline styles. */
+.featured-badge { background: var(--pop) !important; color: #FFFFFF !important; }
+.entry-tag:hover { background: var(--pop); color: #FFFFFF; }
 .entry-title a { background-image: linear-gradient(var(--pop), var(--pop)); }
 .entry.featured { box-shadow: inset 0 3px 0 var(--pop); }
 .entry.featured:hover { box-shadow: inset 0 3px 0 var(--pop), 0 10px 32px rgba(0,0,0,0.08); }
