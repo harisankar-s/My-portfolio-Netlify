@@ -79,8 +79,10 @@ async function sendCodeEmail(email, code) {
 }
 
 // Subscribes the address to the BrainByte Substack from the server. Substack
-// has no official API, so this uses the endpoint its own embed form posts to;
-// if it refuses, the page offers a one-click "Finish on Substack" instead.
+// has no official API, so this uses the endpoint its own embed form posts to.
+// Substack's bot protection usually refuses this from Netlify's servers (403);
+// then guides.js sends the same form from the reader's browser in a hidden
+// frame, which Substack accepts.
 async function subscribeOnSubstack(email, pageUrl) {
   // Under netlify dev, test addresses stay off the real list unless asked for.
   if (isDev() && process.env.GUIDE_OTP_SUBSTACK !== "1") return "skipped";
