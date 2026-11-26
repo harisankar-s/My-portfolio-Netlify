@@ -54,9 +54,43 @@ const brainbyteToApex = (path, search) => {
   return `${APEX_ORIGIN}/guides/`;
 };
 
+// Guide PDFs need the free newsletter sign-up. After a reader confirms their
+// email with a code, netlify/functions/guide-otp.mjs sets an HttpOnly cookie
+// bb_unlocked=v1.{expiry}.{HMAC-SHA256(OTP_SECRET, "bb_unlocked|v1|{expiry}")}.
+// Without a valid one, a PDF link goes to that guide's sign-up box instead
+// ({slug}-study-guide-edition-N.pdf belongs to /guides/{slug}/). Free
+// resources stay open. Until OTP_SECRET is set, PDFs are served as before.
+const GUIDE_PDF = /^\/files\/(.+?)-study-guide-edition-\d+\.pdf$/;
+const enc = new TextEncoder();
+async function hasValidUnlock(request, secret) {
+  const m = (request.headers.get("cookie") || "").match(/(?:^|;\s*)bb_unlocked=v1\.(\d+)\.([0-9a-f]{64})(?:;|$)/);
+  if (!m || Number(m[1]) * 1000 < Date.now()) return false;
+  const key = await crypto.subtle.importKey("raw", enc.encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const sig = new Uint8Array(await crypto.subtle.sign("HMAC", key, enc.encode(`bb_unlocked|v1|${m[1]}`)));
+  const hex = Array.from(sig, (b) => b.toString(16).padStart(2, "0")).join("");
+  let diff = 0;
+  for (let i = 0; i < 64; i++) diff |= hex.charCodeAt(i) ^ m[2].charCodeAt(i);
+  return diff === 0;
+}
+const otpSecret = () =>
+  (typeof Netlify !== "undefined" && Netlify.env.get("OTP_SECRET")) ||
+  (typeof Netlify !== "undefined" && Netlify.env.get("NETLIFY_DEV") === "true" ? "dev-only-otp-secret" : "");
+
 export default async (request, context) => {
   const url = new URL(request.url);
   const host = url.hostname;
+
+  // Runs before the domain split so it also applies under netlify dev.
+  if (host !== BLOG_HOST && host !== OLD_BRAINBYTE_HOST) {
+    const pdf = url.pathname.match(GUIDE_PDF);
+    const secret = pdf ? otpSecret() : "";
+    if (pdf && secret && !(await hasValidUnlock(request, secret))) {
+      return new Response(null, {
+        status: 302,
+        headers: { location: `/guides/${pdf[1]}/#unlock`, "cache-control": "no-store" },
+      });
+    }
+  }
 
   // Old BrainByte subdomain: everything moves to the apex.
   if (host === OLD_BRAINBYTE_HOST) {

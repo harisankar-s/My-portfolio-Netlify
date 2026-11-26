@@ -82,6 +82,7 @@ async function buildCatalogue() {
 
   const comingTracks = brainbyte.tracks.filter((t) => t.status !== "live" && !liveGuides.some((g) => g.track === t.slug));
   if (comingTracks.length) lines.push(`More guides coming soon: ${comingTracks.map((t) => t.title || t.short).join("; ")}.`);
+  comingTracks.filter((t) => t.practiceTests).forEach((t) => lines.push(`  ${t.title}: ${t.practiceTests.label} (available now) — ${t.practiceTests.url}`));
 
   lines.push("\nSTARTER KITS:");
   brainbyte.kits.forEach((k) => {

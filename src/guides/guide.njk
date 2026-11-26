@@ -150,9 +150,16 @@ eleventyComputed:
         <div class="bg-gate-card">
           <p class="bg-small">Free · one sign-up opens every guide</p>
           <h2 class="bg-gate-title">Get the full {{ guide.title }}, free</h2>
-          <p class="bg-p">The guide comes with my free newsletter, {{ site.newsletter.name }}. {{ site.newsletter.tagline }}, a new issue {{ site.newsletter.cadence }}. Enter your email and the guide opens right here, with the PDF to keep.</p>
+          <p class="bg-p">The guide comes with my free newsletter, {{ site.newsletter.name }}. {{ site.newsletter.tagline }}, a new issue {{ site.newsletter.cadence }}. Enter your email, type the 6-digit code we send you, and the guide opens right here, with the PDF to keep.</p>
           {% set nfId = 'gate-' + guide.slug %}{% set nfClass = 'bg-gate-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% set nfGate = true %}{% set nfBtnText = 'Open the guide' %}{% include "newsletter-form.njk" %}{% set nfGate = false %}{% set nfBtnText = '' %}
-          <p class="bg-fine">Unsubscribe any time. Substack opens in a new tab to confirm. <button type="button" class="bg-linkbtn" data-bb-unlock>Already subscribed? Open the guide</button></p>
+          <form class="bg-gate-form bg-otp" data-bb-otp hidden>
+            <label class="nl-sr" for="otp-{{ guide.slug }}">6-digit code</label>
+            <input id="otp-{{ guide.slug }}" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="6-digit code" required />
+            <button type="submit" class="pf-btn pf-btn-primary">Verify and open</button>
+          </form>
+          <p class="bg-otp-msg" data-bb-otp-msg role="status" aria-live="polite" hidden></p>
+          <p class="bg-fine" data-bb-otp-links hidden><button type="button" class="bg-linkbtn" data-bb-otp-resend>Send a new code</button> · <button type="button" class="bg-linkbtn" data-bb-otp-change>Use a different email</button></p>
+          <p class="bg-fine" data-bb-gate-fine>We email you a code to check it's really you. Already subscribed? Same steps, and you won't be signed up twice. Unsubscribe any time.</p>
         </div>
       </div>
     </div>

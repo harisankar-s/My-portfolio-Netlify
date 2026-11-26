@@ -73,7 +73,7 @@ description: "Free certification prep: study guides and practice questions for t
       <h2 class="gl-name"><a class="gl-link" href="#join">{{ t.title }}</a></h2>
       <p class="gl-facts">{{ t.level }}{% if t.weeks %} · about {{ t.weeks }} weeks{% endif %}</p>
       <p class="gl-blurb">{{ t.pitch }}</p>
-      <div class="gl-actions"><span class="gl-go">Join the waitlist <span aria-hidden="true">→</span></span></div>
+      <div class="gl-actions"><span class="gl-go">Join the waitlist <span aria-hidden="true">→</span></span>{% if t.practiceTests %}<a class="gl-pack" href="{{ t.practiceTests.url }}" target="_blank" rel="noopener sponsored">Practice tests ↗</a>{% endif %}</div>
       </div>
     </article>
     {%- endfor %}

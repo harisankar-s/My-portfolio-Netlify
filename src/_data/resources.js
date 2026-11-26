@@ -12,6 +12,9 @@
 // Add a resource by adding an object to `list`; set `status: "draft"` to
 // keep it off the site while you write it.
 
+const fs = require("fs");
+const path = require("path");
+
 const p = (text) => ({ t: "p", text });
 const note = (text, label) => ({ t: "note", text, label });
 const check = (text, label = "The check") => ({ t: "check", text, label });
@@ -1326,6 +1329,8 @@ const live = list
     ...r,
     sections: numberSections(r.sections),
     cat: categories.find((c) => c.slug === r.category),
+    // card image drawn by scripts/build-guide-covers.js (add the slug to RS there)
+    cover: r.cover || (fs.existsSync(path.join(__dirname, "..", "images", "cards", `rs-${r.slug}-v2.svg`)) ? `/images/cards/rs-${r.slug}-v2.svg` : ""),
     promptCount: r.sections.reduce(
       (n, s) => n + s.blocks.filter((b) => b.t === "prompt" || b.t === "code").length, 0),
   }))

@@ -1,5 +1,5 @@
 {
-  "_readme": "Product data shown on the main domain (hub #exams/#kits, /guides/). BrainByte is the brand for the newsletter and products; there is no separate BrainByte site any more. practice = paid Claude practice packs (Topmate). kits = production starter kits / GitHub code. coaching = Topmate 1:1s. Tracks are the guides still being written (Google Cloud, data engineering, Databricks), shown as \"More guides on the way\"; published guides live in guides.json. Bytes are ORIGINAL practice questions (never real exam items). status: live | coming-soon; set url when live. Kit 'post' and module 'posts' are blog fileSlugs.",
+  "_readme": "Product data shown on the main domain (hub #exams/#kits, /guides/). BrainByte is the brand for the newsletter and products; there is no separate BrainByte site any more. practice = paid Claude practice packs (Topmate). kits = production starter kits / GitHub code (cover = card image, drawn by scripts/build-guide-covers.js). A track's practiceTests {label, url} links outside practice tests (e.g. Udemy) while its guide is being written. coaching = Topmate 1:1s. Tracks are the guides still being written (Google Cloud, data engineering, Databricks), shown as \"More guides on the way\"; published guides live in guides.json. Bytes are ORIGINAL practice questions (never real exam items). status: live | coming-soon; set url when live. Kit 'post' and module 'posts' are blog fileSlugs.",
 
   "tracks": [
     {
@@ -29,6 +29,7 @@
       "slug": "gcp-pde",
       "cover": "/images/guides/gcp-pde-v1.svg",
       "status": "coming-soon",
+      "practiceTests": { "label": "Practice tests on Udemy", "url": "https://www.udemy.com/course/google-cloud-professional-data-engineer-practice-tests-latest/?referralCode=9F1C8AD8358ACF27DC15" },
       "logo": "/images/logos/gcp.svg",
       "short": "GCP Data Engineer",
       "title": "Google Cloud Professional Data Engineer",
@@ -172,6 +173,7 @@
   "kits": [
     {
       "title": "Personal website starter kit",
+      "cover": "/images/cards/kit-website-v1.svg",
       "blurb": "A one-page portfolio site for students and freshers. Fill in one JSON file, add your résumé, and deploy free on Netlify in about 15 minutes. No HTML needed.",
       "stack": ["Eleventy", "Nunjucks", "Netlify", "Light & dark mode"],
       "post": "",
@@ -181,6 +183,7 @@
     },
     {
       "title": "Production data pipeline kit",
+      "cover": "/images/cards/kit-pipeline-v1.svg",
       "blurb": "The Terraform behind Seven Principles: IAM, separate environments, deployment and 3am alerting for a cloud data pipeline.",
       "stack": ["Terraform", "GCP", "BigQuery", "Snowflake"],
       "post": "seven-principles-data-pipelines",
@@ -189,6 +192,7 @@
     },
     {
       "title": "Data quality starter",
+      "cover": "/images/cards/kit-quality-v1.svg",
       "blurb": "Great Expectations checks wired into DataHub, with quality gates between layers so bad data never reaches consumers.",
       "stack": ["Python", "Great Expectations", "DataHub", "Airflow"],
       "post": "building-trust-in-data-productionizing-great-expectations-at-scale",
@@ -197,6 +201,7 @@
     },
     {
       "title": "Claude RAG assistant starter",
+      "cover": "/images/cards/kit-rag-v1.svg",
       "blurb": "The serverless RAG assistant pattern behind AskHari.ai: Claude API first, an open-model fallback, and sources shown with every answer.",
       "stack": ["Claude API", "Node.js", "Netlify Functions", "RAG"],
       "post": "",
@@ -205,6 +210,7 @@
     },
     {
       "title": "dbt Data Vault template",
+      "cover": "/images/cards/kit-data-vault-v1.svg",
       "blurb": "Hubs, links and satellites as a dbt project, with tests and docs, ready to point at your warehouse.",
       "stack": ["dbt", "SQL", "Data Vault", "BigQuery / Snowflake"],
       "post": "medallion-is-a-vocabulary",

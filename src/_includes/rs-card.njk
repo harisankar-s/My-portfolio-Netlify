@@ -3,7 +3,7 @@
     the hub's #resources row and the "More free resources" row on each guide. -#}
 {%- from "ico.njk" import ico -%}
 <a class="hub-glass hub-light hub-kit rs-card" href="/resources/{{ r.slug }}/">
-  <span class="hub-pack-top"><span class="ico3d ico3d-sm ico3d-{{ r.cat.color }}">{{ ico(r.cat.icon) }}</span><span class="hub-tag">{{ r.cat.name }}</span></span>
+  {% if r.cover %}<span class="hub-thumb-wrap"><img class="hub-thumb" src="{{ r.cover }}" alt="" width="800" height="500" loading="lazy" /><span class="hub-tag hub-thumb-tag">{{ r.cat.name }}</span></span>{% else %}<span class="hub-pack-top"><span class="ico3d ico3d-sm ico3d-{{ r.cat.color }}">{{ ico(r.cat.icon) }}</span><span class="hub-tag">{{ r.cat.name }}</span></span>{% endif %}
   <span class="hub-kit-title">{{ r.title }}</span>
   <span class="hub-kit-text">{{ r.description }}</span>
   <span class="hub-chips"><span>{{ r.minutes }} min</span><span>{{ r.promptCount }} prompt{{ "s" if r.promptCount != 1 }}</span></span>

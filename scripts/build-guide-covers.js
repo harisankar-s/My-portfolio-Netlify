@@ -2,7 +2,8 @@
 // Draws the cover thumbnails for the exam-prep cards on /guides/ as SVG
 // (src/images/guides/{name}.svg). Each cover is a small diagram of what the
 // exam is about, glowing on the site's night sky: an agent loop for CCAR-F,
-// a cloud architecture for PCA, and so on. No dependencies.
+// a cloud architecture for PCA, and so on. It also draws the hub's card
+// covers (src/images/cards/). No dependencies.
 //
 //   npm run guide-covers
 //
@@ -49,6 +50,22 @@ const G = {
   check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
   bell: '<path d="M6 16V11a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/>',
   lock: '<rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',
+  mail: '<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="M3.5 7l8.5 6 8.5-6"/>',
+  book: '<path d="M4 5.5c2.5-1 5.5-1 8 .8v13c-2.5-1.8-5.5-1.8-8-.8z"/><path d="M20 5.5c-2.5-1-5.5-1-8 .8v13c2.5-1.8 5.5-1.8 8-.8z"/>',
+  play: '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9l5 3-5 3z"/>',
+  film: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 3v18M16 3v18M4 7.5h4M4 12h4M4 16.5h4M16 7.5h4M16 12h4M16 16.5h4"/>',
+  camera: '<rect x="3" y="7" width="13" height="10" rx="2"/><path d="M16 10.5l5-3v9l-5-3z"/>',
+  cap: '<path d="M2.5 9.5L12 5l9.5 4.5L12 14z"/><path d="M6.5 11.5V16c1.5 1.6 3.4 2.4 5.5 2.4s4-.8 5.5-2.4v-4.5M21.5 9.5v5"/>',
+  layers: '<path d="M12 3l9 4.5-9 4.5-9-4.5z"/><path d="M3 12l9 4.5 9-4.5M3 16.5L12 21l9-4.5"/>',
+  wand: '<path d="M4 20L15 9"/><path d="M13 7l4 4"/><path d="M18 3v3M16.5 4.5h3M20 9v2M19 10h2M10 3.5v2M9 4.5h2"/>',
+  rocket: '<path d="M12 3c3.5 2 5 5.5 5 9.5l-2.5 3h-5L7 12.5C7 8.5 8.5 5 12 3z"/><circle cx="12" cy="10" r="1.8"/><path d="M9.5 15.5L7 19l3-1M14.5 15.5L17 19l-3-1"/>',
+  graph: '<circle cx="6" cy="6" r="2.2"/><circle cx="18" cy="7" r="2.2"/><circle cx="12" cy="17" r="2.2"/><circle cx="5" cy="17" r="1.6"/><path d="M7.9 7.2l2.9 7.9M16.6 8.8l-3.4 6.4M8 6.3l7.8.5M6.6 17h3.2"/>',
+  repo: '<path d="M6 3.5h11a1 1 0 0 1 1 1V18H7.5A1.5 1.5 0 0 0 6 19.5zM6 19.5A1.5 1.5 0 0 0 7.5 21H18"/><path d="M9.5 7.5h5"/>',
+  user: '<circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-4 3.6-6 7-6s6.2 2 7 6"/>',
+  rules: '<path d="M10 6h10M10 12h10M10 18h10"/><path d="M4 6l1.2 1.2L7.5 5M4 12l1.2 1.2 2.3-2.2M4 18l1.2 1.2 2.3-2.2"/>',
+  web: '<rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M3 9h18M7 13h6M7 16h9"/>',
+  pen: '<path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5z"/><path d="M13.5 7l3 3"/>',
+  star: '<path d="M12 3c.6 4.6 3.4 7.9 8 9-4.6 1.1-7.4 4.4-8 9-.6-4.6-3.4-7.9-8-9 4.6-1.1 7.4-4.4 8-9z"/>',
 };
 
 class Scene {
@@ -216,6 +233,195 @@ covers["databricks"] = (() => {
   s.add(`<path d="M0 440 C160 425 260 455 400 440 S650 425 800 445 V500 H0z" fill="${RED}" opacity=".08"/>`);
   return s.svg();
 })();
+
+
+// ---- card covers (src/images/cards/): free resources (rs-{slug}) and
+// starter kits (kit-{name}). Same night sky; one small picture per card.
+const cards = {};
+const PAL = {
+  blue: { top: "#050D22", mid: "#0B1E48", bot: "#0E2655", nebula: [[400, 250, 300, 170, "#1F4FE0", .5], [660, 100, 150, 90, "#6A3BE0", .25]] },
+  violet: { top: "#0A0820", mid: "#1A1240", bot: "#24123E", nebula: [[400, 240, 300, 160, "#6A3BE0", .5], [160, 420, 180, 90, "#C2368F", .2]] },
+  green: { top: "#04140F", mid: "#08261C", bot: "#0B2F24", nebula: [[400, 250, 320, 170, "#0E9F6E", .42], [670, 100, 140, 90, "#1F4FE0", .25]] },
+  amber: { top: "#120A06", mid: "#24140C", bot: "#1C1220", nebula: [[400, 250, 300, 160, "#E0820E", .35], [150, 110, 160, 90, "#6A3BE0", .25]] },
+  teal: { top: "#04121A", mid: "#07263A", bot: "#0A2F46", nebula: [[420, 260, 330, 160, "#0B7FA6", .45], [140, 120, 150, 100, "#1F4FE0", .3]] },
+};
+// A hub glyph (or Claude's sparkle) at the centre with its parts in orbit.
+function orbit(name, pal, seed, center, sats, c1, c2) {
+  const s = new Scene(name, PAL[pal], seed).sky();
+  const rx = 255, ry = 165;
+  s.add(`<ellipse cx="400" cy="250" rx="${rx}" ry="${ry}" fill="none" stroke="${c1}" stroke-opacity=".22" stroke-dasharray="3 7"/>`);
+  s.add(`<ellipse cx="400" cy="250" rx="145" ry="96" fill="none" stroke="${c2}" stroke-opacity=".2"/>`);
+  sats.forEach((g, i) => {
+    const a = -150 + (300 / Math.max(1, sats.length - 1)) * i, rad = (a - 90) * Math.PI / 180;
+    const x = 400 + rx * Math.sin((a) * Math.PI / 180) * 1, y = 250 - ry * Math.cos((a) * Math.PI / 180);
+    s.link(400, 250, x, y, c1, { o: .2, w: 1, dots: i % 2 ? 1 : 0 });
+    s.node(f(x), f(y), 18, g, i % 2 ? c2 : c1);
+    void rad;
+  });
+  if (center === "sparkle") s.sparkle(400, 250, 60);
+  else s.node(400, 250, 30, center, c2);
+  return s.svg();
+}
+// A left-to-right flow of steps, with a quality badge on each.
+function flow(name, pal, seed, steps, c1, c2, flag = -1) {
+  const s = new Scene(name, PAL[pal], seed).sky();
+  const n = steps.length, x0 = 110, x1 = 690;
+  const xs = steps.map((_, i) => x0 + ((x1 - x0) / (n - 1)) * i), ys = steps.map((_, i) => 250 + (i % 2 ? -60 : 60) * (i > 0 && i < n - 1 ? 1 : 0));
+  for (let i = 0; i < n - 1; i++) s.link(xs[i], ys[i], xs[i + 1], ys[i + 1], c1, { dots: 2, o: .5 });
+  steps.forEach((g, i) => {
+    s.node(xs[i], ys[i], i === n - 1 ? 22 : 19, g, i === flag ? AMBER : i === n - 1 ? c2 : c1);
+    const bx = xs[i] + 34, by = ys[i] - 36;
+    if (i === flag) s.add(`<g transform="translate(${bx} ${by})"><circle r="12" fill="#2A1E0B" stroke="${AMBER}"/><path d="M0 -5v5M0 4v.5" stroke="${AMBER}" stroke-width="2.2" stroke-linecap="round"/></g>`);
+    else if (i % 2 === 0) s.add(`<g transform="translate(${bx} ${by})"><circle r="12" fill="#0B1A2A" stroke="${GREEN}"/><path d="M-4.5 0l3 3 6-6" fill="none" stroke="${GREEN}" stroke-width="2" stroke-linecap="round"/></g>`);
+  });
+  s.add(`<path d="M0 440 C200 405 300 470 470 430 S700 410 800 435 V500 H0z" fill="${c1}" opacity=".07"/>`);
+  return s.svg();
+}
+
+// Free resources: each cover carries a short headline from its title on the
+// left (the number or key word, then two short lines) and a picture of the
+// thing itself on the right. The card's category tag sits over the top-left.
+const FONT = "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif";
+const MONO = "ui-monospace, Menlo, Consolas, monospace";
+const esc = (t) => String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;");
+const txt = (x, y, size, str, { fill = "#fff", w = 700, o = 1, font = FONT, ls = 0, anchor = "start" } = {}) =>
+  `<text x="${x}" y="${y}" fill="${fill}" fill-opacity="${o}" font-family="${font}" font-size="${size}" font-weight="${w}" letter-spacing="${ls}" text-anchor="${anchor}">${esc(str)}</text>`;
+function resource(name, pal, seed, hero, lines, c1, art) {
+  const s = new Scene(name, PAL[pal], seed).sky();
+  s.defs.push(`<linearGradient id="hero" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="${c1}"/></linearGradient>`);
+  s.defs.push(`<linearGradient id="shadeL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#000" stop-opacity=".3"/><stop offset=".45" stop-color="#000" stop-opacity=".15"/><stop offset=".6" stop-color="#000" stop-opacity="0"/></linearGradient>`);
+  s.add(`<rect width="800" height="500" fill="url(#shadeL)"/>`);
+  const hs = hero.length <= 1 ? 170 : hero.length === 2 ? 150 : hero.length === 3 ? 118 : 96;
+  s.add(`<text x="52" y="285" fill="url(#hero)" font-family="${FONT}" font-size="${hs}" font-weight="800" letter-spacing="-4" filter="url(#glow)">${esc(hero)}</text>`);
+  lines.forEach((l, i) => s.add(txt(56, 345 + i * 44, 36, l, { o: i ? .72 : .95, ls: -.5 })));
+  s.add(`<rect x="56" y="${345 + lines.length * 44 - 8}" width="56" height="5" rx="2.5" fill="${c1}" filter="url(#glow)"/>`);
+  art(s);
+  return s.svg();
+}
+const win = (s, x, y, w, h, c, title) => s.add(`<g transform="translate(${x} ${y})"><rect width="${w}" height="${h}" rx="16" fill="#0A1222" fill-opacity=".92" stroke="${c}" stroke-opacity=".55" stroke-width="1.6"/><rect width="${w}" height="34" rx="16" fill="#fff" opacity=".05"/><circle cx="20" cy="17" r="4.5" fill="#FF6A4D"/><circle cx="36" cy="17" r="4.5" fill="${AMBER}"/><circle cx="52" cy="17" r="4.5" fill="${GREEN}"/>${title ? txt(w > 220 ? w / 2 : 66, 22, 14, title, { fill: "#C9D3E6", w: 500, font: MONO, anchor: w > 220 ? "middle" : "start", o: .8 }) : ""}</g>`);
+
+const RES = {
+  "four-rules-that-stop-claude-overbuilding": () => resource("rs-four-rules", "amber", 301, "4", ["rules that stop", "overbuilding"], ORANGE, (s) => {
+    win(s, 440, 70, 320, 360, ORANGE, "CLAUDE.md");
+    ["Ask before guessing", "Keep the code small", "Touch only what's asked", "Prove it works"].forEach((t, i) => {
+      const y = 145 + i * 72;
+      s.add(`<circle cx="478" cy="${y}" r="17" fill="${ORANGE}" fill-opacity=".18" stroke="${ORANGE}" stroke-width="1.6"/>`);
+      s.add(txt(478, y + 6, 17, String(i + 1), { fill: ORANGE, w: 800, anchor: "middle" }));
+      s.add(txt(506, y + 6, 17, t, { fill: "#E6ECF7", w: 600 }));
+      s.add(`<path d="M728 ${y}l6 6 12-12" fill="none" stroke="${GREEN}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`);
+    });
+  }),
+  "free-ai-courses-on-github": () => resource("rs-courses", "green", 302, "7", ["free AI courses", "on GitHub"], GREEN, (s) => {
+    [[-10, 470, 120, BLUE], [-3, 500, 105, VIOLET], [4, 530, 90, GREEN]].forEach(([r, x, y, c], i) => {
+      s.add(`<g transform="translate(${x} ${y}) rotate(${r})"><rect width="220" height="280" rx="18" fill="#0B1A16" fill-opacity=".95" stroke="${c}" stroke-opacity=".6" stroke-width="1.6"/>${i === 2 ? "" : ""}</g>`);
+    });
+    s.node(640, 190, 22, "cap", GREEN, { bare: true });
+    s.add(txt(640, 262, 15, "LESSON 1 OF 12", { fill: GREEN, w: 700, font: MONO, anchor: "middle", ls: 1.5 }));
+    [0, 1, 2].forEach((i) => s.add(`<rect x="560" y="${288 + i * 26}" width="160" height="9" rx="4.5" fill="#fff" opacity=".12"/><rect x="560" y="${288 + i * 26}" width="${[150, 96, 40][i]}" height="9" rx="4.5" fill="${GREEN}" opacity=".85"/>`));
+    s.node(735, 95, 13, "repo", CYAN);
+  }),
+  "add-3d-animations-to-your-videos-with-claude": () => resource("rs-3d", "violet", 303, "3D", ["animations for", "your videos"], VIOLET, (s) => {
+    const c = (x, y, z) => [600 + (x - z) * 0.87 * 95, 200 + (x + z) * 0.5 * 95 - y * 95];
+    const P = [[-1, -1, -1], [1, -1, -1], [1, -1, 1], [-1, -1, 1], [-1, 1, -1], [1, 1, -1], [1, 1, 1], [-1, 1, 1]].map(([x, y, z]) => c(x * .8, y * .8, z * .8));
+    const E = [[0, 1], [1, 2], [2, 3], [3, 0], [4, 5], [5, 6], [6, 7], [7, 4], [0, 4], [1, 5], [2, 6], [3, 7]];
+    s.add(`<path d="M${f(P[4][0])} ${f(P[4][1])} L${f(P[5][0])} ${f(P[5][1])} L${f(P[6][0])} ${f(P[6][1])} L${f(P[7][0])} ${f(P[7][1])}Z" fill="${VIOLET}" opacity=".18"/>`);
+    s.add(`<g stroke="${VIOLET}" stroke-width="2.4" stroke-linecap="round" filter="url(#glow)">${E.map(([a, b]) => `<path d="M${f(P[a][0])} ${f(P[a][1])} L${f(P[b][0])} ${f(P[b][1])}"/>`).join("")}</g>`);
+    P.forEach(([x, y]) => s.add(`<circle cx="${f(x)}" cy="${f(y)}" r="5" fill="${CYAN}" filter="url(#glow)"/>`));
+    s.add(`<ellipse cx="600" cy="200" rx="190" ry="60" fill="none" stroke="${CYAN}" stroke-opacity=".35" stroke-dasharray="3 7" transform="rotate(-14 600 200)"/>`);
+    s.add(`<rect x="440" y="395" width="320" height="40" rx="10" fill="#140F2E" stroke="${VIOLET}" stroke-opacity=".5"/>`);
+    [470, 540, 625, 700].forEach((x, i) => s.add(`<path d="M${x} 405l10 10-10 10-10-10z" fill="${i === 2 ? CYAN : VIOLET}" opacity=".9"/>`));
+    s.add(`<path d="M625 385v60" stroke="#fff" stroke-width="2" filter="url(#glow)"/>`);
+  }),
+  "claude-connectors-worth-adding": () => resource("rs-connectors", "amber", 304, "8", ["Claude connectors", "worth adding"], ORANGE, (s) => {
+    const G8 = ["mail", "db", "doc", "chat", "search", "bell", "table", "globe"];
+    G8.forEach((g, i) => {
+      const a = (i / 8) * Math.PI * 2 - Math.PI / 2, x = 600 + 155 * Math.cos(a), y = 245 + 150 * Math.sin(a);
+      s.link(600, 245, x, y, ORANGE, { o: .3, w: 1, dots: 1 });
+      s.node(f(x), f(y), 14, g, i % 2 ? AMBER : CYAN);
+    });
+    s.add(`<circle cx="600" cy="245" r="56" fill="#1A120C" stroke="${ORANGE}" stroke-opacity=".6" stroke-width="1.6"/>`);
+    s.sparkle(600, 245, 34);
+  }),
+  "github-repos-for-claude-code": () => resource("rs-repos", "amber", 305, "15", ["repos that make", "Claude Code better"], AMBER, (s) => {
+    win(s, 435, 70, 330, 360, AMBER, "~/claude-code");
+    s.add(txt(458, 136, 16, "$ git clone …", { fill: GREEN, w: 600, font: MONO }));
+    ["skills", "agents", "hooks", "mcp-servers", "commands"].forEach((r, i) => {
+      const y = 180 + i * 48;
+      s.add(`<rect x="456" y="${y - 24}" width="288" height="38" rx="9" fill="#fff" fill-opacity=".04" stroke="#fff" stroke-opacity=".08"/>`);
+      s.node(478, y - 5, 9, "repo", AMBER, { bare: true });
+      s.add(txt(502, y + 1, 16, r, { fill: "#E6ECF7", w: 600, font: MONO }));
+      s.add(`<path d="M716 ${y - 14}l3.2 6.5 7.2 1-5.2 5 1.2 7.1-6.4-3.4-6.4 3.4 1.2-7.1-5.2-5 7.2-1z" fill="${AMBER}" opacity=".9"/>`);
+    });
+  }),
+  "free-repos-for-better-claude-videos": () => resource("rs-video-repos", "violet", 306, "6", ["repos for videos", "that don't look AI"], VIOLET, (s) => {
+    s.add(`<rect x="430" y="125" width="345" height="230" rx="12" fill="#0B0918" stroke="${VIOLET}" stroke-opacity=".5"/>`);
+    for (let i = 0; i < 12; i++) s.add(`<rect x="${442 + i * 28}" y="134" width="14" height="10" rx="2" fill="#fff" opacity=".25"/><rect x="${442 + i * 28}" y="336" width="14" height="10" rx="2" fill="#fff" opacity=".25"/>`);
+    [[442, "#3B2A7A", "#F2A27F"], [557, "#1E3A6B", "#7FB2FF"], [672, "#4A2048", "#FFC46B"]].forEach(([x, sky, sun], i) => {
+      s.add(`<g><rect x="${x}" y="156" width="100" height="168" rx="6" fill="${sky}"/><circle cx="${x + 62}" cy="${218 + i * 6}" r="18" fill="${sun}" opacity=".9" filter="url(#glow)"/><path d="M${x} 324 L${x + 30} ${270 - i * 8} L${x + 55} 292 L${x + 80} ${258 + i * 6} L${x + 100} 286 V324z" fill="#0B0918" opacity=".85"/></g>`);
+    });
+    s.add(`<circle cx="602" cy="240" r="30" fill="#fff" fill-opacity=".92"/><path d="M594 226l22 14-22 14z" fill="#1A1240"/>`);
+    s.node(740, 410, 13, "repo", VIOLET).node(470, 410, 13, "wand", CYAN);
+  }),
+  "run-gemini-inside-claude-code": () => resource("rs-gemini", "blue", 307, "2", ["builders in one", "Claude Code"], BLUE, (s) => {
+    win(s, 430, 150, 160, 220, ORANGE, "claude");
+    win(s, 615, 150, 160, 220, BLUE, "gemini");
+    [[450, ORANGE], [635, BLUE]].forEach(([x, c]) => [0, 1, 2, 3, 4].forEach((i) => s.add(`<rect x="${x}" y="${200 + i * 30}" width="${[110, 80, 120, 60, 95][(i + (x > 600 ? 2 : 0)) % 5]}" height="8" rx="4" fill="${c}" opacity=".7"/>`)));
+    s.sparkle(510, 98, 28);
+    s.add(`<g transform="translate(695 98)" filter="url(#glow)"><path d="M0 -38c3 20 15 35 38 38-23 3-35 18-38 38-3-20-15-35-38-38 23-3 35-18 38-38z" fill="${BLUE}"/></g>`);
+    s.add(`<path d="M592 410 C620 430 640 430 668 410" fill="none" stroke="${CYAN}" stroke-width="2.4" stroke-linecap="round" filter="url(#glow)"/><path d="M660 404l8 6-9 4" fill="none" stroke="${CYAN}" stroke-width="2.4" stroke-linecap="round"/>`);
+  }),
+  "give-claude-a-map-of-your-codebase": () => resource("rs-map", "teal", 308, "Map", ["your codebase", "with graphify"], CYAN, (s) => {
+    const r = rng(42), pts = [];
+    [[530, 160, CYAN], [690, 170, ORANGE], [560, 340, GREEN], [710, 340, VIOLET]].forEach(([cx, cy, c]) => {
+      const hub = [cx, cy, c]; pts.push(hub);
+      for (let i = 0; i < 6; i++) { const a = r() * 6.28, d = 35 + r() * 40, p = [cx + d * Math.cos(a), cy + d * Math.sin(a), c]; s.link(cx, cy, p[0], p[1], c, { o: .45, w: .8 }); pts.push(p); s.add(`<circle cx="${f(p[0])}" cy="${f(p[1])}" r="5" fill="${c}" opacity=".85"/>`); }
+    });
+    [[0, 7], [7, 14], [0, 14], [14, 21], [7, 21]].forEach(([a, b]) => s.link(pts[a][0], pts[a][1], pts[b][0], pts[b][1], "#DCE8FF", { o: .3, w: .9, dash: true }));
+    [0, 7, 14, 21].forEach((i) => s.add(`<circle cx="${pts[i][0]}" cy="${pts[i][1]}" r="13" fill="${pts[i][2]}" filter="url(#glow)"/>`));
+    s.add(`<g transform="translate(735 410)"><circle r="26" fill="none" stroke="#fff" stroke-width="4"/><path d="M19 19l20 20" stroke="#fff" stroke-width="6" stroke-linecap="round"/></g>`);
+  }),
+  "which-ai-model-should-you-use": () => resource("rs-models", "blue", 309, "A/B", ["the 2-model test", "for any task"], CYAN, (s) => {
+    s.add(`<path d="M450 400 H770" stroke="#fff" stroke-opacity=".25" stroke-width="1.5"/>`);
+    [["A", ORANGE, [150, 95, 180]], ["B", BLUE, [120, 210, 140]]].forEach(([l, c, hs], k) => hs.forEach((h, i) => {
+      const x = 470 + i * 100 + k * 38;
+      s.add(`<rect x="${x}" y="${400 - h}" width="32" height="${h}" rx="6" fill="${c}" fill-opacity=".8"${(k === 0 && i === 2) || (k === 1 && i === 1) ? ' filter="url(#glow)"' : ""}/>`);
+    }));
+    ["Speed", "Cost", "Quality"].forEach((t, i) => s.add(txt(505 + i * 100, 428, 14, t, { fill: "#C9D3E6", w: 600, font: MONO, anchor: "middle" })));
+    s.add(`<g transform="translate(470 88)"><rect width="64" height="34" rx="17" fill="${ORANGE}" fill-opacity=".2" stroke="${ORANGE}"/>${txt(32, 23, 17, "A", { fill: ORANGE, w: 800, anchor: "middle" })}</g>`);
+    s.add(txt(570, 112, 18, "vs", { fill: "#fff", o: .6, w: 600, anchor: "middle" }));
+    s.add(`<g transform="translate(606 88)"><rect width="64" height="34" rx="17" fill="${BLUE}" fill-opacity=".2" stroke="${BLUE}"/>${txt(32, 23, 17, "B", { fill: BLUE, w: 800, anchor: "middle" })}</g>`);
+    s.add(`<path d="M700 100l8 8 16-16" fill="none" stroke="${GREEN}" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)"/>`);
+  }),
+  "make-a-cinematic-short-film-starring-you": () => resource("rs-film", "violet", 310, "30s", ["a cinematic film", "starring you"], AMBER, (s) => {
+    s.defs.push(`<linearGradient id="dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1650"/><stop offset=".6" stroke-color="#000" stop-color="#C2568F"/><stop offset="1" stop-color="#FFB46B"/></linearGradient>`);
+    s.add(`<rect x="430" y="130" width="345" height="220" rx="8" fill="url(#dusk)"/>`);
+    s.add(`<circle cx="602" cy="290" r="46" fill="#FFD9A0" opacity=".9" filter="url(#glow)"/>`);
+    s.add(`<path d="M430 350 V310 C500 296 560 316 602 306 S720 300 775 312 V350z" fill="#120A1E"/>`);
+    s.add(`<g fill="#120A1E"><circle cx="560" cy="246" r="15"/><path d="M538 312 C540 278 548 264 560 264 S580 278 582 312z"/></g>`);
+    s.add(`<rect x="430" y="130" width="345" height="26" fill="#000"/><rect x="430" y="324" width="345" height="26" fill="#000"/>`);
+    s.add(`<g transform="translate(470 58) rotate(-8)"><rect width="150" height="58" rx="6" fill="#1A1A22" stroke="#fff" stroke-opacity=".4"/><path d="M0 0 h150 v18 h-150z" fill="#fff" opacity=".9"/>${[0, 1, 2, 3, 4].map((i) => `<path d="M${10 + i * 30} 0 l18 0 l-12 18 l-18 0z" fill="#1A1A22"/>`).join("")}${txt(14, 46, 16, "SCENE 1 · TAKE 1", { fill: "#fff", w: 700, font: MONO, o: .85 })}</g>`);
+    s.add(txt(760, 400, 22, "REC ●", { fill: "#FF6A4D", w: 800, font: MONO, anchor: "end" }));
+  }),
+};
+// v2: the first, orbit-style resource covers were v1; a new name skips any cached copy.
+const RS_VERSION = "2";
+for (const [slug, draw] of Object.entries(RES)) cards[`rs-${slug}`] = [draw(), RS_VERSION];
+
+// Starter kits
+cards["kit-website"] = orbit("kit-website", "green", 401, "web", ["user", "doc", "pen", "globe", "rocket"], GREEN, CYAN);
+cards["kit-pipeline"] = flow("kit-pipeline", "teal", 402, ["sensor", "chat", "funnel", "table", "chart"], CYAN, AMBER);
+cards["kit-quality"] = orbit("kit-quality", "green", 403, "shield", ["table", "check", "bell", "funnel", "chart"], GREEN, AMBER);
+cards["kit-rag"] = orbit("kit-rag", "amber", 404, "sparkle", ["search", "doc", "db", "chat", "plug"], AMBER, ORANGE);
+cards["kit-data-vault"] = orbit("kit-data-vault", "violet", 405, "layers", ["table", "db", "code", "lock", "graph"], VIOLET, CYAN);
+
+const CARDS = path.join(__dirname, "..", "src/images/cards");
+fs.mkdirSync(CARDS, { recursive: true });
+for (const [name, entry] of Object.entries(cards)) {
+  const [svg, v] = Array.isArray(entry) ? entry : [entry, VERSION];
+  const file = path.join(CARDS, `${name}-v${v}.svg`);
+  fs.writeFileSync(file, svg);
+  console.log(`${path.relative(path.join(__dirname, ".."), file)}  ${(svg.length / 1024).toFixed(1)} KB`);
+}
 
 fs.mkdirSync(OUT, { recursive: true });
 for (const [name, svg] of Object.entries(covers)) {
