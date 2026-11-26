@@ -70,6 +70,22 @@
     emailForm.submit(); // posts to Substack in a new tab
     unlock();
   }
+  function subscribeInBackground() {
+    var name = "bb-substack-frame";
+    if (!document.querySelector("iframe[name=" + name + "]")) {
+      var f = document.createElement("iframe");
+      f.name = name;
+      f.title = "Substack sign-up";
+      f.tabIndex = -1;
+      f.setAttribute("aria-hidden", "true");
+      f.style.cssText = "position:absolute;width:1px;height:1px;border:0;left:-9999px;";
+      document.body.appendChild(f);
+    }
+    var before = emailForm.target;
+    emailForm.target = name;
+    emailForm.submit();
+    emailForm.target = before;
+  }
   function showCodeStep(returning, devCode) {
     emailForm.hidden = true;
     codeForm.hidden = false;
@@ -116,18 +132,11 @@
           }
           codeForm.hidden = true;
           links.hidden = true;
-          if (r.substack === "failed") {
-            // Verified, but Substack refused the server-side sign-up: one
-            // click finishes it on Substack (a real click, so no pop-up block).
-            say("Email confirmed. One last step: finish subscribing on Substack, then the guide opens.", "ok");
-            var b = document.createElement("button");
-            b.type = "button";
-            b.className = "pf-btn pf-btn-primary bg-otp-finish";
-            b.textContent = "Finish on Substack ↗";
-            b.addEventListener("click", function () { emailForm.submit(); unlock(); });
-            msg.insertAdjacentElement("afterend", b);
-            return;
-          }
+          // Substack's bot protection refuses sign-ups from Netlify's servers,
+          // so the reader's browser sends the same Substack form quietly in a
+          // hidden frame (no new tab, no extra click). Substack ignores
+          // addresses that are already subscribed.
+          if (r.substack === "failed") subscribeInBackground();
           say(r.returning ? "Welcome back! Every guide is open." : "You're in. Welcome to BrainByte! Every guide is open.", "ok");
           setTimeout(unlock, 1200);
         })

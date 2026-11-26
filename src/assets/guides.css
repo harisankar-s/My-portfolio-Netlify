@@ -389,6 +389,5 @@ body.hub .nl-month-head { color: var(--fg-dim); }
 .bg-otp-msg { max-width: 520px; margin: 0 auto 12px; font-size: 15px; line-height: 1.5; color: #3A4458; }
 .bg-otp-msg.is-error { color: #B42318; }
 .bg-otp-msg.is-ok { color: #067647; font-weight: 600; }
-.bg-otp-finish { margin: 0 auto 14px; }
 button[aria-busy="true"] { opacity: .6; cursor: progress; }
 .bg-gate-form[hidden], .bg-otp-msg[hidden], .bg-fine[hidden] { display: none; }
