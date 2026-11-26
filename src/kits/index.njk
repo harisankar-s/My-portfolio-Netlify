@@ -1,0 +1,50 @@
+---
+layout: hub-page.njk
+permalink: /kits/index.html
+eleventyExcludeFromCollections: true
+title: "Starter kits"
+pageTitle: "Starter Kits: Production Code to Start From | Harisankar Sivankutty"
+eleventyComputed:
+  description: "{{ brainbyte.kits.length }} tested, documented starter kits for the data and AI systems in the BrainByte lessons. Subscribers hear first when each one ships."
+---
+{#- Starter kits (brainbyte.json `kits`), apex only. Moved off the hub into its
+    own page; the nav, blog CTAs and audience pages link here. -#}
+<header class="gl-head" id="hero">
+  <p class="hub-label">Starter kits</p>
+  <h1 class="hub-h2">Production code <span class="hub-accent">you can start from</span></h1>
+  <p class="hub-sub">Tested, documented templates for the systems in the lessons. Subscribers hear first when each one ships.</p>
+</header>
+
+<div class="gl-body">
+  {%- from "ico.njk" import ico %}
+  <div class="hub-kits">
+    {% for k in brainbyte.kits %}
+    {%- set live = k.status == "live" %}
+    <{{ "a" if live else "div" }} class="hub-glass hub-light hub-kit{% if not live %} is-soon{% endif %}"{% if live %} href="{{ k.url }}" target="_blank" rel="noopener"{% endif %}>
+      {% if k.cover %}<span class="hub-thumb-wrap"><img class="hub-thumb" src="{{ k.cover }}" alt="" width="800" height="500" loading="lazy" /><span class="hub-tag hub-thumb-tag">{{ ("Free" if k.free else "Live") if live else "Coming soon" }}</span></span>{% else %}<span class="hub-pack-top"><span class="ico3d ico3d-sm {{ 'ico3d-green' if live else 'ico3d-slate' }}">{{ ico("code") }}</span><span class="hub-tag{% if not live %} hub-tag-dim{% endif %}">{{ ("Free" if k.free else "Live") if live else "Coming soon" }}</span></span>{% endif %}
+      <span class="hub-kit-title">{{ k.title }}</span>
+      <span class="hub-kit-text">{{ k.blurb }}</span>
+      {% if k.stack %}<span class="hub-chips">{% for t in k.stack %}{% if loop.index <= 4 %}<span>{{ t }}</span>{% endif %}{% endfor %}</span>{% endif %}
+      {% if live %}<span class="hub-textlink">Get the kit <span aria-hidden="true">↗</span></span>{% endif %}
+    </{{ "a" if live else "div" }}>
+    {% endfor %}
+  </div>
+
+  {%- if resources.list.length %}
+  <section class="aud-section">
+    <header class="aud-section-head"><h2 class="hub-label">Free resources · no sign-up</h2><a href="/resources/" class="hub-textlink">All {{ resources.list.length }} guides <span aria-hidden="true">→</span></a></header>
+    <div class="hub-kits rs-cards">
+      {%- for r in resources.list %}{% if loop.index <= 3 %}{% include "rs-card.njk" %}{% endif %}{% endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
+  <div class="hub-practice hub-practice-under">
+    <div class="hub-glass hub-light hub-next" id="join">
+      <span class="hub-label">Hear when the next kit ships</span>
+      <p class="hub-tile-text">New kits go to {{ site.newsletter.name }} subscribers first. {{ site.newsletter.tagline }}, a new issue {{ site.newsletter.cadence }}. Free.</p>
+      {% set nfId = 'kits' %}{% set nfClass = 'bg-gate-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% include "newsletter-form.njk" %}
+      <p class="hub-meta">Unsubscribe any time.</p>
+    </div>
+  </div>
+</div>

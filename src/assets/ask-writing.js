@@ -158,7 +158,7 @@
     addMessage(
       ui.messages,
       "assistant",
-      "Hi, I'm Trench AI ⛏️. Ask me anything about what Hari's written — data platforms, GenAI, LangChain, dbt, whatever's on the blog or in the newsletter. I'll only answer from the writing itself."
+      "Hi, I'm AskHari.ai. In this mode I only answer from Hari's articles and newsletter, with a link to each source. Ask me anything about what Hari's written — data platforms, GenAI, LangChain, dbt, whatever's on the blog or in the newsletter. I'll only answer from the writing itself."
     );
 
     ui.input.addEventListener("keydown", function (event) {

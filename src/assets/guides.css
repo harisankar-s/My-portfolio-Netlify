@@ -254,7 +254,7 @@ a.bg-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px -22px rgb
 .gl-blurb { margin: 0; font-size: 14px; line-height: 1.5; color: #3A4458; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .gl-stats { list-style: none; display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 2px 0 0; padding: 10px 0 0; border-top: 1px solid rgba(11,18,32,.08); font-size: 13px; color: #5A6478; }
 .gl-stats b { font-size: 15px; color: #0B1220; }
-.gl-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 10px; font-size: 14px; }
+.gl-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 10px; font-size: 14px; }
 .gl-go { font-weight: 700; color: #0066CC; white-space: nowrap; }
 .gl-card:hover .gl-go span { display: inline-block; transform: translateX(3px); transition: transform .2s; }
 .gl-pack { position: relative; z-index: 2; white-space: nowrap; font-size: 13px; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; color: #0B1220; padding: 5px 11px; border-radius: 999px; border: 1px solid rgba(11,18,32,.14); background: #fff; text-decoration: none; }
@@ -391,3 +391,19 @@ body.hub .nl-month-head { color: var(--fg-dim); }
 .bg-otp-msg.is-ok { color: #067647; font-weight: 600; }
 button[aria-busy="true"] { opacity: .6; cursor: progress; }
 .bg-gate-form[hidden], .bg-otp-msg[hidden], .bg-fine[hidden] { display: none; }
+
+/* ---------- Privacy policy (/privacy/) ---------- */
+.pv-body { display: block; max-width: 760px; padding: clamp(24px, 4vw, 48px); font-size: 16.5px; line-height: 1.7; }
+.pv-body h2 { font-family: var(--font-display); font-size: 21px; font-weight: 600; letter-spacing: -0.01em; margin: 30px 0 8px; }
+.pv-body h2:first-child { margin-top: 0; }
+.pv-body p + p { margin-top: 10px; }
+.pv-body a { color: #0066CC; text-decoration: underline; text-underline-offset: 3px; }
+.pv-body code { font-family: var(--font-mono); font-size: .88em; background: #EEF2F7; padding: 1px 6px; border-radius: 5px; }
+
+/* ---------- Free vs paid on exam prep ---------- */
+.gl-free { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 6px; font-size: 15px; color: rgba(236,238,242,.78); max-width: 680px; }
+.gl-free b { color: #fff; display: inline-flex; align-items: center; gap: 6px; margin-right: 4px; }
+.gl-free a { color: #8AB4FF; text-decoration: underline; text-underline-offset: 3px; }
+.udemy-icon { width: 16px; height: 16px; border-radius: 4px; flex: none; display: inline-block; vertical-align: -3px; }
+.gl-udemy, .hub-next-pt, .udemy-link { display: inline-flex; align-items: center; gap: 6px; }
+.paid-tag { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: #7A2BC2; background: #F3E8FD; border: 1px solid #E2C9FA; border-radius: 5px; padding: 1px 6px; }

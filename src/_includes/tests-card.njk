@@ -1,0 +1,19 @@
+{#- A tests-only exam (brainbyte.tracks with testsOnly, e.g. GCP Professional
+    Data Engineer) in the same card style as exam-prep-card.njk, so it sits in
+    the exam grid. No study guide; the only action is the PAID Udemy tests.
+    Set `t` (the track) before including. -#}
+<article class="ep-card ep-hub">
+  <div class="ep-top">
+    <span class="ep-logo"><img src="{{ t.logo }}" alt="" width="26" height="26" loading="lazy" /></span>
+    <span class="ep-code">Practice tests</span>
+  </div>
+  <h3 class="ep-name">{{ t.title }}</h3>
+  <p class="ep-facts">{{ t.cert }}</p>
+  <p class="ep-blurb">{{ t.pitch }}</p>
+  <ul class="ep-rows">
+    <li>
+      <span class="ep-row-label"><b>Practice tests</b>On Udemy</span>
+      {% set pt = { label: "Udemy", url: t.practiceTests.url } %}{% set ptClass = "hub-next-pt" %}{% include "udemy-link.njk" %}
+    </li>
+  </ul>
+</article>

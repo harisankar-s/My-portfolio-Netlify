@@ -8,12 +8,13 @@ eleventyExcludeFromCollections: true
 eleventyComputed:
   permalink: "/for/{{ aud.slug }}/index.html"
   title: "{{ site.newsletter.name }} for {{ aud.name }}"
-  pageTitle: "AI for {{ aud.name }}: {{ aud.who }} | Harisankar Sivankutty"
+  pageTitle: "{{ aud.pageTitle or ('AI for ' + aud.name + ': ' + aud.who) }} | Harisankar Sivankutty"
   description: "{{ aud.pitch }}"
 ---
 {#- One page per audience in src/_data/audiences.json. Live: hero, the
-    audience's Substack editions (by tag), its exam prep, kits and blog posts,
-    then a signup. Coming soon: hero, topics and a waitlist signup only. -#}
+    audience's Substack editions (by tag), its exam prep (plus tests-only
+    tracks as cards), blog posts, kits and guides on the way. Every page, live or
+    coming soon, then shows its free resources (aud.resources categories). -#}
 {%- from "ico.njk" import ico -%}
 {%- set nl = site.newsletter -%}
 {%- set live = aud.status == "live" -%}
@@ -22,6 +23,8 @@ eleventyComputed:
 {%- set audExams = exams | pickBy("code", aud.exams) -%}
 {%- set audKits = brainbyte.kits | pickBy("title", aud.kits) -%}
 {%- set audTracks = brainbyte.tracks | pickBy("slug", aud.tracks) -%}
+{%- set audTests = [] %}{% set audComing = [] %}{% for t in audTracks %}{% if t.testsOnly %}{% set audTests = (audTests.push(t), audTests) %}{% else %}{% set audComing = (audComing.push(t), audComing) %}{% endif %}{% endfor -%}
+{%- set audRes = [] %}{% for r in resources.list %}{% if r.category in (aud.resources or []) %}{% set audRes = (audRes.push(r), audRes) %}{% endif %}{% endfor -%}
 
 <header class="gl-head aud-head" id="hero">
   <p class="hub-label">{{ nl.name }} for {{ aud.name }} · {{ aud.who }}</p>
@@ -52,22 +55,23 @@ eleventyComputed:
   </section>
   {%- endif %}
 
-  {%- if audExams.length %}
+  {%- if audExams.length or audTests.length %}
   <section class="aud-section">
-    <header class="aud-section-head"><h2 class="hub-label">Free Claude certification prep</h2><a href="/guides/" class="hub-textlink">All exam prep <span aria-hidden="true">→</span></a></header>
+    <header class="aud-section-head"><h2 class="hub-label">Free certification prep</h2><a href="/guides/" class="hub-textlink">All exam prep <span aria-hidden="true">→</span></a></header>
     <div class="hub-shelf"><div class="ep-grid">
       {%- for exam in audExams %}{% include "exam-prep-card.njk" %}{% endfor %}
+      {%- for t in audTests %}{% include "tests-card.njk" %}{% endfor %}
     </div></div>
   </section>
   {%- endif %}
 
   {%- if audPosts.length %}
   <section class="aud-section">
-    <header class="aud-section-head"><h2 class="hub-label">Articles</h2><a href="{{ site.url }}/" class="hub-textlink">The blog <span aria-hidden="true">→</span></a></header>
+    <header class="aud-section-head"><h2 class="hub-label">Articles</h2><a href="/blog/" class="hub-textlink">The blog <span aria-hidden="true">→</span></a></header>
     <div class="hub-editions aud-posts">
       {%- for post in audPosts %}{% if loop.index <= 6 %}
       {%- set th = post.data.cover or (post.templateContent | firstImage) %}
-      <a class="hub-glass hub-light hub-card3" href="{{ site.url }}{{ post.url }}">
+      <a class="hub-glass hub-light hub-card3" href="{{ post.url }}">
         <span class="hub-card3-art{% if not th %} is-empty{% endif %}">{% if th %}<img src="{{ th }}" alt="" loading="lazy" />{% else %}<span class="ico3d ico3d-{{ aud.color }}">{{ ico(aud.icon) }}</span>{% endif %}</span>
         <span class="hub-card3-body">
           <span class="hub-meta">{{ post.date | postDate }} · {{ post.templateContent | readTime }} min</span>
@@ -81,7 +85,7 @@ eleventyComputed:
 
   {%- if audKits.length %}
   <section class="aud-section">
-    <header class="aud-section-head"><h2 class="hub-label">Starter kits</h2><a href="{{ homePath }}#kits" class="hub-textlink">All kits <span aria-hidden="true">→</span></a></header>
+    <header class="aud-section-head"><h2 class="hub-label">Starter kits</h2><a href="/kits/" class="hub-textlink">All kits <span aria-hidden="true">→</span></a></header>
     <div class="hub-kits">
       {%- for k in audKits %}
       {%- set kLive = k.status == "live" %}
@@ -96,15 +100,15 @@ eleventyComputed:
   </section>
   {%- endif %}
 
-  {%- if audTracks.length %}
+  {%- if audComing.length %}
   <section class="aud-section">
     <div class="hub-glass hub-light hub-next">
-      <span class="hub-label">More guides on the way</span>
+      <span class="hub-label">Guides on the way</span>
       <ul class="hub-next-list">
-        {%- for t in audTracks %}
+        {%- for t in audComing %}
         <li>
           <span class="hub-course-logo"><img src="{{ t.logo }}" alt="" width="22" height="22" loading="lazy" /></span>
-          <span><b>{{ t.title }}</b><small>{{ t.level }} · {{ t.modules.length }} modules</small></span>{% if t.practiceTests %}<a class="hub-next-pt" href="{{ t.practiceTests.url }}" target="_blank" rel="noopener sponsored">{{ t.practiceTests.label }} ↗</a>{% endif %}
+          <span><b>{{ t.title }}</b><small>{{ t.cert }} · guide coming soon</small></span>{% if t.examUrl %}<a class="hub-next-pt" href="{{ t.examUrl }}" target="_blank" rel="noopener">Official exam page ↗</a>{% endif %}
         </li>
         {%- endfor %}
       </ul>
@@ -113,6 +117,15 @@ eleventyComputed:
   {%- endif %}
 
 {%- endif %}
+
+  {%- if audRes.length %}
+  <section class="aud-section">
+    <header class="aud-section-head"><h2 class="hub-label">Free resources · no sign-up</h2><a href="/resources/" class="hub-textlink">All {{ resources.list.length }} guides <span aria-hidden="true">→</span></a></header>
+    <div class="hub-kits rs-cards">
+      {%- for r in audRes %}{% if loop.index <= 6 %}{% include "rs-card.njk" %}{% endif %}{% endfor %}
+    </div>
+  </section>
+  {%- endif %}
 
   <section class="aud-section">
     <h2 class="hub-label">Also in {{ nl.name }}</h2>

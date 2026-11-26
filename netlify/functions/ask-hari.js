@@ -94,7 +94,7 @@ async function buildCatalogue() {
 
   const posts = loadPosts();
   if (posts.length) {
-    lines.push(`\nBLOG POSTS (newest first, blog home ${site.url}/):`);
+    lines.push(`\nBLOG POSTS (newest first, blog home ${site.url}/blog/):`);
     posts.forEach((p) => lines.push(`- "${p.title}" (${p.date}) ${p.url}`));
   }
 

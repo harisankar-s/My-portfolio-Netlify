@@ -10,7 +10,7 @@ const MAX_HISTORY_TURNS = 6;
 const TOP_N_POSTS = 5;
 const MAX_POST_CHARS = 3000;
 
-// Trench AI only ever calls free OpenRouter models — it must never
+// AskHari.ai "Ask my articles" mode (/ask/, formerly Trench AI) only ever calls free OpenRouter models — it must never
 // spend Anthropic credits, unlike the AskHari.ai widget which is
 // Anthropic-first. Keep every entry here free (":free" or the
 // "openrouter/free" router). Tried in order; a 404/429/5xx from one falls
@@ -178,7 +178,7 @@ function buildSystemPrompt(posts, selectedPosts) {
     .map((p) => `### "${p.title}" (${p.url})\n${p.body.slice(0, MAX_POST_CHARS)}`)
     .join("\n\n---\n\n");
 
-  return `You are "Trench AI", an assistant scoped only to Harisankar "Hari" Sivankutty's writing on data engineering, GenAI, and cloud architecture: his blog posts and his newsletter, ${site.newsletter.name} (entries tagged "${site.newsletter.name}").
+  return `You are AskHari.ai in "Ask my articles" mode, an assistant scoped only to Harisankar "Hari" Sivankutty's writing on data engineering, GenAI, and cloud architecture: his blog posts and his newsletter, ${site.newsletter.name} (entries tagged "${site.newsletter.name}").
 
 Answer ONLY using the article content and index provided below. If Hari's writing doesn't cover something, say so plainly rather than guessing or using outside knowledge. When you reference a post or edition, name it and link it in markdown with the exact URL from the index, like [Post Title](/blog/slug/) or [Edition Title](https://${site.newsletter.username}.substack.com/p/slug), so the reader can open it. Keep answers concise and conversational, not a bulleted essay.
 
@@ -214,7 +214,7 @@ async function callOpenRouterModel(model, systemPrompt, messages, inlineSystem =
       "content-type": "application/json",
       authorization: `Bearer ${apiKey}`,
       "HTTP-Referer": "https://harisankarsivankutty.in",
-      "X-Title": "Trench AI",
+      "X-Title": "AskHari.ai (articles)",
     },
     body: JSON.stringify({
       model,
@@ -258,7 +258,7 @@ async function callOpenRouter(systemPrompt, messages) {
       return { reply, model };
     } catch (err) {
       lastError = err;
-      console.error(`Trench AI: model ${model} failed`, err);
+      console.error(`AskHari.ai articles: model ${model} failed`, err);
       if (!isRetryableOpenRouterError(err)) throw err;
     }
   }
@@ -302,7 +302,7 @@ exports.handler = async (event) => {
     const sources = selected.map((p) => ({ title: p.title, slug: p.slug, url: p.url }));
     return { statusCode: 200, body: JSON.stringify({ reply, provider: "openrouter", model, latencyMs, sources }) };
   } catch (openRouterError) {
-    console.error("Trench AI: OpenRouter failed", openRouterError);
+    console.error("AskHari.ai articles: OpenRouter failed", openRouterError);
     // `code` is only the upstream HTTP status (no message body, no key), so a
     // failing deploy can be diagnosed from the browser's network tab:
     // 401 = bad OPENROUTER_API_KEY, 402 = account out of credit, 404 on every
@@ -311,7 +311,7 @@ exports.handler = async (event) => {
     return {
       statusCode: 502,
       body: JSON.stringify({
-        error: "Trench AI is temporarily unavailable. Please try again shortly.",
+        error: "AskHari.ai is temporarily unavailable. Please try again shortly.",
         code: openRouterError.status ? `openrouter_${openRouterError.status}` : "openrouter_unreachable",
       }),
     };

@@ -2,7 +2,8 @@
     Posts to Substack once site.newsletter.username is set (the part before
     .substack.com); until then it opens an email to Hari so no signup is lost.
     Callers set: nfId (unique per page), nfClass (form class), nfBtnClass, and
-    optionally nfAvatar (a small photo shown inside the field) and nfGate
+    optionally nfAvatar (a small photo shown inside the field), nfPlaceholder,
+    nfBtnIcon (arrow-only button, labelled for screen readers) and nfGate
     (true on guide pages: /assets/guides.js turns it into the email-code sign-up,
     /api/guide-otp; without JS it still posts straight to Substack). -#}
 {%- set nl = site.newsletter -%}
@@ -11,7 +12,7 @@
   {%- else %} action="mailto:{{ profile.contact.email }}?subject={{ ('Subscribe me to ' + nl.name) | urlencode }}" method="post" enctype="text/plain"{% endif %}>
   {%- if nfAvatar %}<img class="nl-avatar" src="{{ nfAvatar }}" alt="" width="36" height="36" />{% endif %}
   <label class="nl-sr" for="nl-email-{{ nfId or 'main' }}">Email address</label>
-  <input id="nl-email-{{ nfId or 'main' }}" type="email" name="email" placeholder="you@company.com" required autocomplete="email" />
+  <input id="nl-email-{{ nfId or 'main' }}" type="email" name="email" placeholder="{{ nfPlaceholder or 'you@company.com' }}" required autocomplete="email" />
   {%- if nfGate %}<input class="nl-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />{% endif %}
-  <button type="submit" class="{{ nfBtnClass or 'nl-btn' }}">{{ nfBtnText or "Subscribe" }}</button>
+  <button type="submit" class="{{ nfBtnClass or 'nl-btn' }}"{% if nfBtnIcon %} aria-label="Subscribe"{% endif %}>{% if nfBtnIcon %}<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>{% else %}{{ nfBtnText or "Subscribe" }}{% endif %}</button>
 </form>

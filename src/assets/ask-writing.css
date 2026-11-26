@@ -1,7 +1,7 @@
 /* Ask My Writing — full-page chat demo. Scoped under .askwriting-page so it
    composes with base.njk's tokens (--font-serif, --font-mono, --pop, etc.)
    instead of redefining them. */
-.askwriting-page { position: relative; z-index: 2; padding-top: 70px; }
+.askwriting-page { position: relative; z-index: 2; padding-top: 24px; }
 
 .askwriting-header {
   padding: clamp(48px, 7vh, 80px) var(--pad-x) clamp(28px, 4vh, 40px);

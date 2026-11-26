@@ -33,8 +33,10 @@
   function buildUI() {
     var root = el("div", { id: "askhari-root" });
 
-    var toggle = el("button", { id: "askhari-toggle", type: "button" }, [
-      document.createTextNode("💬 AskHari.ai"),
+    // icon + label; on phones the label hides and the button becomes a small round icon
+    var toggle = el("button", { id: "askhari-toggle", type: "button", "aria-label": "Open AskHari.ai" }, [
+      el("span", { class: "askhari-ico", "aria-hidden": "true", text: "💬" }),
+      el("span", { class: "askhari-label", text: "AskHari.ai" }),
     ]);
 
     var messages = el("div", { id: "askhari-messages" });
@@ -60,7 +62,14 @@
       closeBtn,
     ]);
 
-    var panel = el("div", { id: "askhari-panel", hidden: "hidden" }, [header, messages, form]);
+    // AskHari.ai has two modes: this bubble (Hari's background, offers, the
+    // current article) and the full "Ask my articles" page at /ask/ (cited
+    // answers from every post and newsletter edition; formerly Trench AI).
+    var modeLink = el("a", { id: "askhari-mode", href: "/ask/" }, [
+      document.createTextNode("Search all my articles, with sources →"),
+    ]);
+
+    var panel = el("div", { id: "askhari-panel", hidden: "hidden" }, [header, modeLink, messages, form]);
 
     root.appendChild(toggle);
     root.appendChild(panel);
@@ -90,6 +99,8 @@
   }
 
   function init() {
+    // /ask/ is the full-page articles mode; one chat on screen is enough
+    if (document.getElementById("askwriting-root")) return;
     var ui = buildUI();
     var greeted = false;
 

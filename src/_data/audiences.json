@@ -1,62 +1,186 @@
 {
-  "_readme": "One entry per audience page at /for/{slug}/ (src/for/audience.njk), also the hub's \"Who it's for\" row. status: \"live\" builds the full page; \"coming-soon\" builds a waitlist page and shows a Coming soon card on the hub. Editions land on a page when any of their Substack tags is in substackTags (tag them on Substack as usual). Blog posts land when any frontmatter tag is in blogTags, or their slug is in posts. exams (codes from exams.json), kits (titles from brainbyte.kits) and tracks (slugs from brainbyte.tracks) pick the products shown. icon: an ico() glyph; color: an .ico3d colour.",
+  "_readme": "pageTitle (optional) overrides the tab title. One entry per audience page at /for/{slug}/ (src/for/audience.njk), also the hub's \"Who it's for\" row. status: \"live\" builds the full page; \"coming-soon\" builds a waitlist page and shows a Coming soon card on the hub. Editions land on a page when any of their Substack tags is in substackTags (tag them on Substack as usual). Blog posts land when any frontmatter tag is in blogTags, or their slug is in posts. exams (codes from exams.json), kits (titles from brainbyte.kits) and tracks (slugs from brainbyte.tracks) pick the products shown. icon: an ico() glyph; color: an .ico3d colour. resources: resources.js category slugs whose free guides show on the page (shown on coming-soon pages too, e.g. the video guides for marketers). Renamed: everyone + students -> beginners, builders -> professionals (old URLs 301 in netlify.toml).",
   "list": [
     {
-      "slug": "everyone",
+      "slug": "beginners",
       "status": "live",
-      "name": "Everyone",
-      "who": "No tech background needed",
-      "card": "AI explained in plain English, with simple ways to use it at work and at home.",
+      "pageTitle": "AI for Beginners, in Plain English",
+      "name": "Beginners",
+      "who": "New to AI, data or tech",
+      "card": "AI explained in plain English, simple ways to use it today, and your first portfolio site.",
       "headline": "AI, explained",
       "accent": "in plain English.",
-      "pitch": "No jargon and no coding. What AI tools can actually do, how they work under the hood, and simple ways to put them to work today.",
-      "topics": ["How AI works", "Everyday AI tools", "Prompting basics", "AI at work", "Key terms explained"],
+      "pitch": "No jargon and no coding needed. What AI tools can actually do, how they work under the hood, simple ways to put them to work, and the basics that get you started in data and AI.",
+      "topics": [
+        "How AI works",
+        "Everyday AI tools",
+        "Prompting basics",
+        "Key terms explained",
+        "Your first portfolio",
+        "Getting started in data"
+      ],
       "icon": "spark",
       "color": "amber",
-      "substackTags": ["AI for Everyone", "Explainer", "Beginners", "AI Basics"],
-      "blogTags": ["Explainer"],
-      "posts": ["how-ai-agents-work-simple-explanation-non-technical-readers"],
+      "substackTags": [
+        "AI Basics",
+        "AI for Everyone",
+        "Beginners",
+        "Careers",
+        "Explainer",
+        "Students"
+      ],
+      "blogTags": [
+        "Explainer"
+      ],
+      "posts": [
+        "how-ai-agents-work-simple-explanation-non-technical-readers",
+        "docker-vs-kubernetes",
+        "seven-principles-data-pipelines",
+        "medallion-is-a-vocabulary"
+      ],
+      "resources": [
+        "learn",
+        "models"
+      ],
       "exams": [],
-      "kits": ["Personal website starter kit"],
+      "kits": [
+        "Personal website starter kit"
+      ],
       "tracks": []
     },
     {
-      "slug": "builders",
+      "slug": "professionals",
       "status": "live",
-      "name": "Builders",
-      "who": "Engineers, architects and developers",
+      "pageTitle": "AI and Data Engineering for Experienced Professionals",
+      "name": "Professionals",
+      "who": "Experienced engineers, architects and developers",
       "card": "Claude, data engineering and system design from real enterprise projects, plus free certification prep.",
       "headline": "Build AI and data systems",
       "accent": "that hold up.",
       "pitch": "For data engineers, architects and developers: Claude and GenAI engineering, data platforms and pipelines, and the design trade-offs behind them, from 10+ years of enterprise projects. Plus free Claude certification guides and practice questions.",
-      "topics": ["Claude & GenAI engineering", "RAG & agents", "Data platforms", "Pipelines & data quality", "System design", "Certifications"],
+      "topics": [
+        "Claude & GenAI engineering",
+        "RAG & agents",
+        "Data platforms",
+        "Pipelines & data quality",
+        "System design",
+        "Certifications"
+      ],
       "icon": "code",
       "color": "blue",
-      "substackTags": ["Data Engineering", "AI Engineering", "LLM Fine-Tuning", "Build in Public", "Claude", "Architecture", "Certification"],
-      "blogTags": ["Data Engineering", "Architecture", "Claude", "Certification", "RAG", "Agentic AI"],
+      "substackTags": [
+        "Data Engineering",
+        "AI Engineering",
+        "LLM Fine-Tuning",
+        "Build in Public",
+        "Claude",
+        "Architecture",
+        "Certification"
+      ],
+      "blogTags": [
+        "Data Engineering",
+        "Architecture",
+        "Claude",
+        "Certification",
+        "RAG",
+        "Agentic AI"
+      ],
       "posts": [],
-      "exams": ["CCAR-F", "CCAR-P", "CCDV-F", "PCA"],
-      "kits": ["Production data pipeline kit", "Data quality starter", "Claude RAG assistant starter", "dbt Data Vault template"],
-      "tracks": ["gcp-pde", "data-engineering", "databricks"]
+      "exams": [
+        "CCAR-F",
+        "CCAR-P",
+        "CCDV-F",
+        "PCA"
+      ],
+      "kits": [
+        "Production data pipeline kit",
+        "Data quality starter",
+        "Claude RAG assistant starter",
+        "dbt Data Vault template"
+      ],
+      "tracks": [
+        "gcp-pde",
+        "databricks"
+      ],
+      "resources": [
+        "claude",
+        "models"
+      ]
+    },
+    {
+      "slug": "certifications",
+      "status": "live",
+      "pageTitle": "Free Claude, Google Cloud and Databricks Exam Prep",
+      "name": "Exam takers",
+      "who": "Preparing for a Claude, Google Cloud or Databricks exam",
+      "card": "Free study guides and practice questions for Claude and Google Cloud exams, with Databricks on the way.",
+      "headline": "Pass your next certification",
+      "accent": "first time.",
+      "pitch": "Free study guides that show how each exam thinks, free practice question PDFs, and notes from someone who passed them. Claude (CCAR-F, CCAR-P, CCDV-F) and Google Cloud now, the Databricks Data Engineer Professional next.",
+      "topics": [
+        "Claude certifications",
+        "Google Cloud",
+        "Databricks",
+        "Exam strategy",
+        "Practice questions"
+      ],
+      "icon": "award",
+      "color": "green",
+      "substackTags": [
+        "Certification",
+        "Exam Prep"
+      ],
+      "blogTags": [
+        "Certification"
+      ],
+      "posts": [
+        "how-i-passed-claude-certified-architect"
+      ],
+      "exams": [
+        "CCAR-F",
+        "CCAR-P",
+        "CCDV-F",
+        "PCA"
+      ],
+      "kits": [],
+      "tracks": [
+        "gcp-pde",
+        "databricks"
+      ],
+      "resources": [
+        "claude"
+      ]
     },
     {
       "slug": "marketers",
-      "status": "coming-soon",
+      "status": "live",
       "name": "Marketers",
       "who": "Content, video and growth teams",
-      "card": "AI for video editing, motion graphics and content, so small teams can ship like big ones.",
-      "headline": "AI for marketers,",
-      "accent": "coming soon.",
-      "pitch": "AI video editing, motion graphics and content workflows for marketers and creators. Join the list and you'll get the first issues as soon as they're out.",
-      "topics": ["AI video editing", "Motion graphics", "Content workflows", "AI design tools"],
+      "card": "AI for video, motion graphics and content, with free step-by-step video guides you can use today.",
+      "headline": "AI video and content",
+      "accent": "for small teams.",
+      "pitch": "AI video editing, motion graphics and content workflows for marketers and creators, so small teams can ship like big ones. Start with the free video guides below: every prompt ready to paste.",
+      "topics": [
+        "AI video editing",
+        "Motion graphics",
+        "Content workflows",
+        "AI design tools"
+      ],
       "icon": "play",
       "color": "violet",
-      "substackTags": ["Marketing", "Video Editing", "Motion Graphics"],
+      "substackTags": [
+        "Marketing",
+        "Video Editing",
+        "Motion Graphics"
+      ],
       "blogTags": [],
       "posts": [],
       "exams": [],
       "kits": [],
-      "tracks": []
+      "tracks": [],
+      "resources": [
+        "video"
+      ]
     }
   ]
 }

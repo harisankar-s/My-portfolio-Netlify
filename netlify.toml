@@ -13,8 +13,9 @@
 [functions]
   directory = "netlify/functions"
 
-# Splits harisankarsivankutty.in (profile) from blog.harisankarsivankutty.in
-# (blog) on top of the single Eleventy build — see netlify/edge-functions/domain-router.js.
+# One domain (harisankarsivankutty.in). The edge function 301s the retired
+# blog. and brainbyte. subdomains and gates guide PDFs — see
+# netlify/edge-functions/domain-router.js.
 [[edge_functions]]
   path     = "/*"
   function = "domain-router"
@@ -43,8 +44,24 @@
   to     = "/.netlify/functions/comments"
   status = 200
 
+# Audience pages renamed (Nov 2026): everyone + students -> beginners, builders -> professionals.
 [[redirects]]
-  from   = "/blog/"
+  from   = "/for/everyone/*"
+  to     = "/for/beginners/"
+  status = 301
+
+[[redirects]]
+  from   = "/for/students/*"
+  to     = "/for/beginners/"
+  status = 301
+
+[[redirects]]
+  from   = "/for/builders/*"
+  to     = "/for/professionals/"
+  status = 301
+
+[[redirects]]
+  from   = "/home/"
   to     = "/"
   status = 301
 

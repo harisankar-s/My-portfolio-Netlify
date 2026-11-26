@@ -1,7 +1,7 @@
 ---
 layout: base.njk
-title: "Trench AI"
-pageTitle: "Trench AI: Ask My Articles Anything | Harisankar Sivankutty"
+title: "AskHari.ai"
+pageTitle: "AskHari.ai: Ask My Articles Anything | Harisankar Sivankutty"
 description: "Ask a question and get an answer grounded only in Harisankar Sivankutty's articles, with a citation back to each source. A live demo of retrieval over a real blog."
 permalink: /ask/
 ---
@@ -11,7 +11,7 @@ permalink: /ask/
 <div class="askwriting-page">
 
   <div class="askwriting-header">
-    <div class="askwriting-brand"><span class="askwriting-brand-icon">⛏️</span> Trench AI</div>
+    <div class="askwriting-brand"><span class="askwriting-brand-icon">💬</span> AskHari.ai · Ask my articles</div>
     <div class="askwriting-eyebrow">Cited answers only</div>
     <h1 class="askwriting-title">Got <span class="askwriting-title-pop">questions</span> about my writing?</h1>
     <p class="askwriting-blurb">
@@ -31,8 +31,8 @@ permalink: /ask/
     <div id="askwriting-root"{% if site.newsletter.username %} data-newsletter-origin="https://{{ site.newsletter.username }}.substack.com"{% endif %}>
       <div id="askwriting-panel">
         <div class="askwriting-panelhead">
-          <span class="askwriting-panelhead-icon">⛏️</span>
-          <span class="askwriting-panelhead-name">Trench AI</span>
+          <span class="askwriting-panelhead-icon">💬</span>
+          <span class="askwriting-panelhead-name">AskHari.ai</span>
         </div>
         <div id="askwriting-messages"></div>
         <form id="askwriting-form">
@@ -44,7 +44,7 @@ permalink: /ask/
 
     <p class="askwriting-footnote">Implementation note: relevance is scored with keyword matching across each post's title, tags, and body — not embeddings. A vector store isn't justified at this scale, so this stays simple and inspectable.</p>
 
-    <a href="/" class="askwriting-back">← Back to writing</a>
+    <a href="/blog/" class="askwriting-back">← Back to writing</a>
 
   </div>
 </div>
