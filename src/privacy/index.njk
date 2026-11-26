@@ -1,0 +1,47 @@
+---
+layout: hub-page.njk
+permalink: /privacy/index.html
+eleventyExcludeFromCollections: true
+title: "Privacy policy"
+pageTitle: "Privacy Policy | Harisankar Sivankutty"
+description: "What this site collects (very little), why, who processes it, and how to get it removed."
+---
+{#- Privacy policy, apex only (linked from every footer). Keep it in step with
+    what the site really does: newsletter forms (Substack), the guide email code
+    (Resend + Netlify Blobs), AskHari.ai (Anthropic / OpenRouter), blog comments
+    (Netlify Blobs) and Netlify hosting. No analytics or ad trackers. -#}
+{%- set nl = site.newsletter -%}
+<header class="gl-head" id="hero">
+  <p class="hub-label">Last updated November 2026</p>
+  <h1 class="hub-h2">Privacy <span class="hub-accent">policy</span></h1>
+  <p class="hub-sub">This site collects as little as it can. There are no analytics, ad trackers or third-party cookies. Here is everything it does handle, and why.</p>
+</header>
+
+<div class="gl-body">
+  <article class="hub-glass hub-light pv-body">
+    <h2>Who runs this site</h2>
+    <p>{{ profile.name }} runs this site and the {{ nl.name }} newsletter. For any privacy question or a request to delete your data, email <a href="mailto:{{ profile.contact.email }}">{{ profile.contact.email }}</a>.</p>
+
+    <h2>The newsletter</h2>
+    <p>When you subscribe, your email address goes to Substack, which hosts {{ nl.name }}. Substack's own privacy policy covers how it stores and sends email. You can unsubscribe from any issue with one click.</p>
+
+    <h2>Unlocking the exam guides</h2>
+    <p>To open the full study guides you enter your email and a 6-digit code we send you. The code is sent with Resend. Codes are stored for 10 minutes and then deleted. Once you confirm, your address is subscribed to {{ nl.name }} on Substack. We keep only a one-way hash of your address (not the address itself), so a returning reader isn't subscribed twice.</p>
+    <p>Two cookies remember that you've unlocked the guides: <code>bb_verified</code> and <code>bb_unlocked</code> (signed, not readable by scripts). They contain no personal details and are only used on this site.</p>
+
+    <h2>AskHari.ai</h2>
+    <p>Questions you type into AskHari.ai, and on article pages the text of the article you're reading, are sent to an AI model to write the answer: Anthropic (Claude) or, as a fallback, a model served through OpenRouter. Conversations aren't saved on this site. Please don't type personal or sensitive details into the chat.</p>
+
+    <h2>Comments on articles</h2>
+    <p>If you leave a comment, the name you give and your comment are stored and shown publicly under the article. Email {{ profile.contact.email }} to have a comment removed.</p>
+
+    <h2>Your browser</h2>
+    <p>The site saves a few settings in your browser's local storage (for example the light or dark theme, and the study-mode toggle on guides). They never leave your device.</p>
+
+    <h2>Hosting</h2>
+    <p>The site is hosted on Netlify, which keeps standard server logs (such as IP address and pages requested) for security and reliability. Fonts are loaded from Google Fonts, and some pages load scripts or images from public CDNs and Substack.</p>
+
+    <h2>Your rights</h2>
+    <p>You can ask to see, correct or delete any data held about you at any time. Email <a href="mailto:{{ profile.contact.email }}">{{ profile.contact.email }}</a> and it will be handled within 30 days.</p>
+  </article>
+</div>

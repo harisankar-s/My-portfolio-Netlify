@@ -52,7 +52,7 @@ eleventyComputed:
           <a class="pf-btn pf-btn-primary" href="#domain-1" data-bb-unlocked-only hidden>Start reading</a>
           <a class="pf-btn pf-btn-ghost" href="{{ pdfUrl }}" download data-bb-unlocked-only hidden>Download the PDF ({{ guide.pdfPages }} pages)</a>
         </div>
-        {% if pack and pack.status == 'live' %}<p class="bg-pair">Pair it with the <a href="{{ pack.url }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}free {{ pack.count }}-question {{ guide.exam }} practice pack ↗</a></p>{% endif %}
+        {% if pack and pack.status == 'live' %}<p class="bg-pair">Pair it with the <a href="{{ pack.url }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}free {{ pack.count }}-question {{ guide.exam }} practice PDF (free download on Topmate) ↗</a></p>{% endif %}
       </div>
 
       <aside class="bg-inside" aria-label="What's inside">
@@ -199,7 +199,7 @@ eleventyComputed:
         <p class="bg-p">{{ guide.pairWith }}</p>
         <div class="bg-head-ctas">
           <a class="pf-btn pf-btn-primary" href="{{ pdfUrl }}" download>Download the PDF ({{ guide.pdfPages }} pages)</a>
-          {% if pack %}<a class="pf-btn bg-btn-light" href="{{ pack.url }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Get the {{ pack.count }}-question {{ guide.exam }} pack ↗</a>{% endif %}
+          {% if pack %}<a class="pf-btn bg-btn-light" href="{{ pack.url }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Download the free {{ pack.count }}-question {{ guide.exam }} PDF ↗</a>{% endif %}
         </div>
       </div>
     </div>
@@ -213,8 +213,17 @@ eleventyComputed:
       <h2 class="hub-h2">More free <span class="hub-accent">exam guides</span></h2>
       <div class="ep-grid">
         {%- for exam in exams %}{% if exam.guide != guide.slug %}{% include "exam-prep-card.njk" %}{% endif %}{% endfor %}
+        {%- for t in brainbyte.tracks %}{% if t.testsOnly %}{% include "tests-card.njk" %}{% endif %}{% endfor %}
       </div>
-      <p class="hub-sub" style="margin-top:24px">Data engineering and Databricks guides are on the way. <a class="hub-textlink" href="/guides/">All exam prep <span aria-hidden="true">→</span></a></p>
+      <p class="hub-sub" style="margin-top:24px">A Databricks Certified Data Engineer Professional guide is on the way. <a class="hub-textlink" href="/guides/">All exam prep <span aria-hidden="true">→</span></a></p>
+      {%- if resources.list.length %}
+      <p class="hub-label" style="margin-top:48px">Free resources · no sign-up</p>
+      <h2 class="hub-h2">Setups and prompts <span class="hub-accent">you can paste today</span></h2>
+      <div class="hub-kits rs-cards" style="margin-top:24px">
+        {%- for r in resources.list %}{% if loop.index <= 3 %}{% include "rs-card.njk" %}{% endif %}{% endfor %}
+      </div>
+      <p class="hub-sub" style="margin-top:20px"><a class="hub-textlink" href="/resources/">All {{ resources.list.length }} free resources <span aria-hidden="true">→</span></a></p>
+      {%- endif %}
     </div>
   </section>
 </div>

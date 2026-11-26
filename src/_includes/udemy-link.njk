@@ -1,0 +1,5 @@
+{#- Udemy practice tests link (a track's practiceTests {label, url}). These are
+    the only PAID item on the site, so the link carries the Udemy icon and a
+    "Paid" tag; everything else (guides, Topmate PDF downloads, resources) is free.
+    Set `pt` (the practiceTests object) and optionally `ptClass` before including. -#}
+<a class="{{ ptClass or 'udemy-link' }}" href="{{ pt.url }}" target="_blank" rel="noopener sponsored"><img class="udemy-icon" src="/images/logos/udemy.svg" alt="" width="16" height="16" />{{ pt.label or "Practice tests on Udemy" }} <span class="paid-tag">Paid</span> ↗</a>

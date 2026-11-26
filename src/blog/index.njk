@@ -1,7 +1,7 @@
 ---
 title: Notes from the data trenches
 description: "Long-form articles on data engineering and AI from 10+ years of enterprise projects: pipelines, data quality, migrations, Claude and GenAI. Free to read, with the code behind them."
-permalink: /
+permalink: /blog/index.html
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -152,7 +152,7 @@ permalink: /
     /* ── PAGE SHELL ──────────────────────────────────────────────── */
     .page {
       position: relative; z-index: 1;
-      padding-top: 56px;
+      padding-top: 8px; /* the site nav is sticky (in flow) */
       max-width: var(--max-w);
       margin: 0 auto;
     }
@@ -245,7 +245,8 @@ permalink: /
       align-items: start;
       padding: 0 var(--pad-x);
     }
-    @media (max-width: 860px) { .body-wrap { grid-template-columns: 1fr; } }
+    @media (max-width: 860px) { .body-wrap { grid-template-columns: minmax(0, 1fr); } }
+    .body-wrap > * { min-width: 0; } /* long chip rows / titles must not widen the column */
 
     /* ── SIDEBAR ─────────────────────────────────────────────────── */
     .sidebar {
@@ -253,9 +254,11 @@ permalink: /
       padding: 36px 28px 36px 0;
       border-right: 1px solid var(--border);
       min-height: calc(100vh - 72px);
+      /* the "Learn with me" stack can be taller than the screen: scroll it on its own */
+      max-height: calc(100vh - 72px); overflow-y: auto; scrollbar-width: thin;
     }
     @media (max-width: 860px) {
-      .sidebar { position: static; border-right: none; border-bottom: 1px solid var(--border); padding: 28px 0; min-height: auto; }
+      .sidebar { position: static; border-right: none; border-bottom: 1px solid var(--border); padding: 28px 0; min-height: auto; max-height: none; overflow: visible; }
     }
 
     .sidebar-section { margin-bottom: 32px; }
@@ -279,6 +282,18 @@ permalink: /
     }
     .topic-count {
       font-family: var(--font-mono); font-size: 11px; color: var(--fg-dim);
+    }
+    /* Phones: topics become one row of chips, articles come straight after.
+       The promos and links are dropped here: the feed has its own promo bands
+       and the footer has the social links. */
+    @media (max-width: 860px) {
+      .sidebar { padding: 16px 0 12px; }
+      .sidebar-promos, .sidebar-ext { display: none; }
+      .sidebar .sidebar-section { margin-bottom: 0; }
+      .sidebar .sidebar-label { display: none; }
+      .topic-list { flex-direction: row; gap: 8px; overflow-x: auto; scrollbar-width: none; padding-bottom: 4px; }
+      .topic-list::-webkit-scrollbar { display: none; }
+      .topic-list a { white-space: nowrap; gap: 8px; padding: 7px 12px; border: 1px solid var(--border); border-radius: 999px; }
     }
 
     .sidebar-links { display: flex; flex-direction: column; gap: 6px; }
@@ -452,28 +467,11 @@ permalink: /
   </style>
   <!-- Shared site theme: loaded last so it overrides this layout's inline tokens -->
   <link rel="stylesheet" href="/assets/site-theme.css" />
+  <link rel="stylesheet" href="/assets/site-chrome.css" />
 </head>
 <body>
 
-  <nav class="nav" id="nav">
-    <a href="/" class="nav-brand">
-      <span class="dot"></span>
-      Harisankar Sivankutty
-    </a>
-    <div class="nav-right">
-      <a href="/" class="nav-link">Blog</a>
-      <a href="/ask/" class="nav-link">Trench AI</a>
-      <a href="{{ site.portfolioUrl }}/guides/" class="nav-link">Exam prep ↗</a>
-      <a href="{{ site.portfolioUrl }}/about/" class="nav-link">About</a>
-      <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
-        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line></svg>
-        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      </button>
-      <a href="https://topmate.io/harisankar_sivankutty" target="_blank" rel="noopener" class="nav-cta">
-        {% include "topmate-icon.njk" %}Book a 1:1
-      </a>
-    </div>
-  </nav>
+  {% set navActive = "articles" %}{% include "hub-nav.njk" %}
 
   <div class="page">
 
@@ -510,7 +508,7 @@ permalink: /
         <div class="author-info">
           <span class="author-name">Harisankar Sivankutty</span>
           <span class="author-role">Senior Consultant · Thoughtworks<br>Data &amp; AI Engineering</span>
-          <a href="{{ site.portfolioUrl }}/about/" class="author-profile-link">Full profile →</a>
+          <a href="/about/" class="author-profile-link">Full profile →</a>
         </div>
       </div>
     </header>
@@ -539,26 +537,49 @@ permalink: /
           </ul>
         </div>
 
-        <div class="sidebar-section">
+        <div class="sidebar-section sidebar-promos">
           <div class="sidebar-label">Learn with me</div>
+          {#- All free except the Topmate 1:1. Numbers come from the data files
+              (exams.json, brainbyte.json, resources.js, editions) so they stay true. -#}
+          {%- set nl = site.newsletter %}
+          {%- set bbQs = 0 %}{% for pk in brainbyte.practice %}{% if pk.status == "live" %}{% set bbQs = bbQs + pk.count %}{% endif %}{% endfor %}
+          {%- set liveKits = 0 %}{% for k in brainbyte.kits %}{% if k.status == "live" %}{% set liveKits = liveKits + 1 %}{% endif %}{% endfor %}
           <div class="promo-stack">
-            <a class="promo-card" href="{{ site.portfolioUrl }}/guides/">
-              <span class="promo-eyebrow">Free · Available now</span>
-              <span class="promo-title" style="display:block">Claude certification practice packs</span>
-              <span class="promo-text">285 scenario questions for CCAR-F and CCAR-P.</span>
-              <span class="promo-link">Get them free →</span>
+            <a class="promo-card" href="{% if nl.username %}https://{{ nl.username }}.substack.com/{% else %}/#join{% endif %}"{% if nl.username %} target="_blank" rel="noopener"{% endif %}>
+              <span class="promo-eyebrow">Newsletter · Free</span>
+              <span class="promo-title" style="display:block">{{ nl.name }}, the practical AI newsletter</span>
+              <span class="promo-text">A new issue {{ nl.cadence }}.{% if editions.length %} Latest: “{{ editions[0].title }}”{% endif %}</span>
+              <span class="promo-link">Subscribe free →</span>
             </a>
-            <a class="promo-card" href="{{ site.portfolioUrl }}/#kits">
-              <span class="promo-eyebrow">Free · Available now</span>
-              <span class="promo-title" style="display:block">Personal website starter kit</span>
-              <span class="promo-text">A portfolio site for freshers, live in 15 minutes. More kits coming.</span>
-              <span class="promo-link">Get it free →</span>
+            <a class="promo-card" href="/guides/">
+              <span class="promo-eyebrow">Free · Exam prep</span>
+              <span class="promo-title" style="display:block">Claude and Google Cloud exam guides</span>
+              <span class="promo-text">{{ exams.length }} study guides, plus {{ bbQs }} practice questions as a free PDF download.</span>
+              <span class="promo-link">Open the guides →</span>
+            </a>
+            <a class="promo-card" href="/resources/">
+              <span class="promo-eyebrow">Free · No sign-up</span>
+              <span class="promo-title" style="display:block">{{ resources.list.length }} free AI guides</span>
+              <span class="promo-text">Claude Code setups, connectors, prompts and AI video workflows, ready to copy.</span>
+              <span class="promo-link">Browse resources →</span>
+            </a>
+            <a class="promo-card" href="/kits/">
+              <span class="promo-eyebrow">Free · Starter kits</span>
+              <span class="promo-title" style="display:block">Code you can start from</span>
+              <span class="promo-text">{{ liveKits }} kit{{ "s" if liveKits != 1 }} live now, {{ brainbyte.kits.length - liveKits }} more on the way.</span>
+              <span class="promo-link">See the kits →</span>
+            </a>
+            <a class="promo-card" href="/ask/">
+              <span class="promo-eyebrow">AskHari.ai</span>
+              <span class="promo-title" style="display:block">Ask my articles anything</span>
+              <span class="promo-text">Answers drawn only from these posts and the newsletter, with a link to each source.</span>
+              <span class="promo-link">Ask a question →</span>
             </a>
             <a class="promo-link" href="{{ site.topmateUrl }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Or book a 1:1 on Topmate ↗</a>
           </div>
         </div>
 
-        <div class="sidebar-section">
+        <div class="sidebar-section sidebar-ext">
           <div class="sidebar-label">Links</div>
           <div class="sidebar-links">
             <a href="https://www.linkedin.com/in/harisankarsivankutty/" target="_blank" rel="noopener" class="sidebar-ext-link">
@@ -629,14 +650,33 @@ permalink: /
           </article>
           {% endif %}
 
+          {#- In-feed bands, spread through the list: newsletter, exam prep, free resources -#}
           {% if loop.index == 2 %}
           <aside class="promo-band">
             <div class="promo-band-copy">
-              <span class="promo-eyebrow">BrainByte · Free</span>
-              <div class="promo-title">Preparing for the Claude Certified Architect exam?</div>
-              <p class="promo-text">285 free practice questions for Foundations and Professional, written by someone who passed both.</p>
+              <span class="promo-eyebrow">{{ nl.name }} · Free newsletter</span>
+              <div class="promo-title">{{ nl.tagline }}, in your inbox {{ nl.cadence }}.</div>
+              <p class="promo-text">{% if editions.length %}Latest issue: “{{ editions[0].title }}”{% else %}Plain-English AI lessons and real data engineering.{% endif %}</p>
             </div>
-            <a class="promo-btn" href="{{ site.portfolioUrl }}/guides/">Get the free packs</a>
+            <a class="promo-btn" href="{% if nl.username %}https://{{ nl.username }}.substack.com/{% else %}/#join{% endif %}"{% if nl.username %} target="_blank" rel="noopener"{% endif %}>Subscribe free</a>
+          </aside>
+          {% elif loop.index == 5 %}
+          <aside class="promo-band">
+            <div class="promo-band-copy">
+              <span class="promo-eyebrow">Exam prep · Free</span>
+              <div class="promo-title">Studying for a Claude or Google Cloud certification?</div>
+              <p class="promo-text">{{ exams.length }} free study guides and {{ bbQs }} practice questions (free PDF download), written by someone who passed them.</p>
+            </div>
+            <a class="promo-btn" href="/guides/">Open the exam guides</a>
+          </aside>
+          {% elif loop.index == 9 %}
+          <aside class="promo-band">
+            <div class="promo-band-copy">
+              <span class="promo-eyebrow">Free resources · No sign-up</span>
+              <div class="promo-title">{{ resources.list.length }} practical AI guides you can paste today</div>
+              <p class="promo-text">Claude Code setups, connectors, GitHub repos and AI video workflows, each step with a check.</p>
+            </div>
+            <a class="promo-btn" href="/resources/">Browse free resources</a>
           </aside>
           {% endif %}
 
@@ -652,15 +692,7 @@ permalink: /
 
   </div>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <span class="footer-brand">
-        <span class="dot"></span>
-        Harisankar Sivankutty
-      </span>
-      <span>© 2026  Data & AI Engineering </span>
-    </div>
-  </footer>
+  {% include "hub-footer.njk" %}
 
   <script>
     const nav = document.getElementById('nav');

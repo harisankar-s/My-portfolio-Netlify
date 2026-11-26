@@ -349,13 +349,12 @@ body.hub .pf-logo { font-family: var(--font-display); font-size: 16px; font-weig
 body.hub .pf-btn { font-size: 15px; font-weight: 600; padding: 12px 22px; border-width: 1px; gap: 6px; }
 body.hub .pf-btn-sm { padding: 8px 16px; font-size: 14px; }
 body.hub .pf-btn-primary { box-shadow: none; }
-/* Nav Subscribe, after charliehills.ai: a blue pill with a soft blue glow that links
-   straight to Substack; the arrow nudges right on hover. */
-body.hub .pf-nav .hub-nav-sub { border-radius: 999px; padding: 8px 20px; font-weight: 500; box-shadow: 0 6px 20px rgba(0,113,227,.45); transition: opacity .15s, transform .15s; }
-body.hub .pf-nav .hub-nav-sub:hover { background: var(--pop); opacity: .85; }
-.hub-nav-sub .hub-arrow { display: inline-block; transition: transform .15s; }
-.hub-nav-sub:hover .hub-arrow { transform: translateX(3px); }
 body.hub .pf-btn:hover { transform: none; }
+
+/* The site nav and footer are styled in /assets/site-chrome.css; the hero tucks
+   under the nav by --nav-h, which grows when the nav wraps to two rows. */
+:root { --nav-h: 61px; }
+@media (max-width: 900px) { :root { --nav-h: 64px; } }
 
 /* shared pieces */
 .hub-label { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-dim); }
@@ -382,14 +381,14 @@ body.hub .pf-btn:hover { transform: none; }
 .hub-hero-text > :nth-child(4) { animation-delay: .24s; }
 .hub-hero-text > :nth-child(5) { animation-delay: .32s; }
 @keyframes hub-in { from { opacity: 0; translate: 0 14px; } to { opacity: 1; translate: 0 0; } }
-.hub-hero-title { font-family: var(--font-display); font-weight: 600; font-size: clamp(40px, 4.8vw, 68px); line-height: 1.03; letter-spacing: -0.035em; margin: 20px 0 22px; text-wrap: balance; }
+.hub-hero-title { font-family: var(--font-display); font-weight: 600; font-size: clamp(38px, 5.2vw, 70px); line-height: 1.04; /* same size as .hub-h2 */ letter-spacing: -0.035em; margin: 20px 0 22px; text-wrap: balance; }
 .hub-hero-lede { font-size: clamp(17px, 1.35vw, 19px); line-height: 1.65; color: var(--fg-muted); max-width: 560px; }
 .hub-hero-ctas { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; margin-top: 30px; }
 
 /* sections */
 .hub-section { padding: clamp(72px, 12vh, 128px) var(--pad-x) 0; position: relative; }
 .hub-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 36px; }
-.hub-h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(32px, 4vw, 54px); line-height: 1.08; letter-spacing: -0.03em; margin-top: 14px; }
+.hub-h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(38px, 5.2vw, 70px); line-height: 1.04; letter-spacing: -0.03em; margin-top: 14px; }
 .hub-sub { font-size: 17px; color: rgba(236,238,242,.75); max-width: 620px; margin-top: 12px; }
 
 /* newsletter signup (hero + closing panel); markup: _includes/newsletter-form.njk */
@@ -401,6 +400,10 @@ body.hub .pf-btn:hover { transform: none; }
 .hub-form input { flex: 1; min-width: 0; padding: 10px 16px; border: 0; background: transparent; color: var(--fg); font: inherit; font-size: 16px; outline: none; }
 .hub-form input::placeholder { color: var(--fg-dim); }
 .hub-form .pf-btn { padding: 11px 22px; white-space: nowrap; }
+/* arrow-only submit (nfBtnIcon): a round blue button at the end of the field */
+.hub-form-icon .pf-btn { width: 46px; height: 46px; padding: 0; border-radius: 50%; justify-content: center; flex: none; }
+.hub-form-icon .pf-btn svg { width: 20px; height: 20px; min-width: 20px; flex: none; }
+@media (max-width: 420px) { .hub-form.hub-form-icon { flex-direction: row; border-radius: 999px; } .hub-form.hub-form-icon .pf-btn { width: 46px; } }
 .hub-form-note { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .06em; color: var(--fg-dim); margin: 12px 0 0 18px; }
 @media (max-width: 420px) {
   .hub-form { flex-direction: column; border-radius: 16px; }
@@ -730,7 +733,7 @@ body.hub .hub-light .hub-label { color: #5A6478; }
 .hub-byte-hint { font-size: 14px; font-weight: 600; color: #5A6478; margin-top: -6px; }
 
 /* Audience cards: the hub's "Who it's for" row and "Also in" on /for/ pages */
-.aud-others { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.aud-others { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
 .aud-card { gap: 10px; }
 .aud-card .hub-textlink { margin-top: 4px; }
 
@@ -746,3 +749,50 @@ a.hub-glass:hover .hub-thumb { filter: brightness(1.12) saturate(1.1); }
 .hub-next-list li > span:nth-child(2) { flex: 1; }
 .hub-next-pt { flex: none; font-size: 13px; font-weight: 600; color: #0B1220; padding: 5px 11px; border-radius: 999px; border: 1px solid rgba(11,18,32,.14); background: #fff; text-decoration: none; white-space: nowrap; }
 .hub-next-pt:hover { border-color: #0071E3; color: #0066CC; }
+
+/* ---------- Phones: compact, calm cards (after charliehills.ai) ---------- */
+@media (max-width: 640px) {
+  .hub-section { padding-top: 64px; }
+  .hub-head { margin-bottom: 22px; gap: 14px; }
+  .hub-h2, .hub-hero-title { font-size: clamp(32px, 9vw, 38px); line-height: 1.08; }
+  .hub-sub { font-size: 16px; }
+  .hub-glass { padding: 18px; border-radius: 16px; }
+  /* What you get: icon left, text right, no tall empty tiles */
+  .hub-tiles { gap: 12px; }
+  .hub-tile { display: grid; grid-template-columns: 44px 1fr; column-gap: 14px; row-gap: 4px; min-height: 0; align-items: start; }
+  .hub-tile .ico3d { grid-row: 1 / span 3; width: 44px; height: 44px; border-radius: 13px; margin: 0; }
+  .hub-tile .ico3d svg { width: 22px; height: 22px; }
+  .hub-tile-title { font-size: 18px; }
+  .hub-tile-text { font-size: 14.5px; }
+  /* Pick your track: two per row, title + who only */
+  .aud-others { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .aud-card { gap: 6px; padding: 16px; }
+  .aud-card .ico3d { width: 40px; height: 40px; border-radius: 12px; }
+  .aud-card .ico3d svg { width: 20px; height: 20px; }
+  .aud-card .hub-kit-title { font-size: 16.5px; }
+  .aud-card .hub-meta { font-size: 11.5px; line-height: 1.4; }
+  .aud-card .hub-kit-text, .aud-card .hub-textlink { display: none; }
+  .aud-card .hub-tag { font-size: 9.5px; padding: 1px 6px; }
+  /* cards and covers */
+  .hub-kits { grid-template-columns: 1fr; gap: 14px; }
+  .hub-kit-title { font-size: 18px; }
+  .hub-edition-art { min-height: 190px; }
+  .hub-edition-text { padding: 20px; gap: 10px; }
+  .hub-edition-title { font-size: 22px; }
+  .hub-card3-art { height: 150px; }
+  .hub-editions { gap: 12px; }
+  .hub-about { padding: 22px; }
+  .hub-about-text { font-size: 16px; }
+  .hub-pills li { font-size: 13px; }
+  .hub-join-panel { padding: 36px 18px; }
+  .hub-join-title { font-size: clamp(30px, 8.5vw, 36px); }
+  .hub-marquee li { font-size: 13px; }
+  /* Who writes this: small round photo, short pills */
+  .hub-about-photo { width: 88px; }
+  .hub-about .hub-h2 { margin-top: 8px; }
+  .hub-pills-left li:nth-child(3) { display: none; }
+  .hub-about .hub-hero-ctas { gap: 16px; }
+  /* closing panel */
+  .hub-join-contact { line-height: 2; }
+  .hub-join-contact a { white-space: nowrap; }
+}

@@ -19,8 +19,8 @@
       {% if epGuide %}<a class="ep-go" href="{{ epGuideUrl }}">Read free <span aria-hidden="true">→</span></a>{% endif %}
     </li>
     <li>
-      <span class="ep-row-label"><b>Practice questions</b>{% if epPack and epPack.status == 'live' %}{{ epPack.count }} questions · PDF{% else %}Coming soon{% endif %}</span>
-      {% if epPack and epPack.status == 'live' %}<a class="ep-go" href="{{ epPack.url }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Get free <span aria-hidden="true">↗</span></a>{% else %}<span class="ep-soon">Soon</span>{% endif %}
+      <span class="ep-row-label"><b>Practice questions</b>{% if epPack and epPack.status == 'live' %}{{ epPack.count }} questions · free PDF on Topmate{% else %}Coming soon{% endif %}</span>
+      {% if epPack and epPack.status == 'live' %}<a class="ep-go" href="{{ epPack.url }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Download free <span aria-hidden="true">↗</span></a>{% else %}<span class="ep-soon">Soon</span>{% endif %}
     </li>
   </ul>
 </article>

@@ -119,13 +119,9 @@ module.exports = function (eleventyConfig) {
     return m ? m[1] : "";
   });
 
-  // The apex hub (src/home.njk) is built at /home/ and the domain router
-  // serves it at the apex root. Under `eleventy --serve` there is no router,
-  // so "Home" links point at /home/ locally.
-  eleventyConfig.addGlobalData(
-    "homePath",
-    process.env.ELEVENTY_RUN_MODE === "build" ? "/" : "/home/"
-  );
+  // Everything lives on one domain and the hub (src/home.njk) is built at /,
+  // so "Home" is always "/" (kept as a global for older templates).
+  eleventyConfig.addGlobalData("homePath", "/");
 
   // Filter: pick posts by fileSlug, keeping the order of the slug list
   eleventyConfig.addFilter("postsBySlugs", (posts, slugs) =>

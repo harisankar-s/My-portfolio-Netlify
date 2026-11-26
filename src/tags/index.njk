@@ -17,7 +17,7 @@ permalink: /tags/{{ tag | slugify }}/
 
 <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml" />
 <style>
-  .tag-page { position: relative; z-index: 2; padding-top: 70px; }
+  .tag-page { position: relative; z-index: 2; padding-top: 24px; }
 
   .tag-header {
     padding: clamp(48px, 7vh, 80px) var(--pad-x) clamp(32px, 4vh, 48px);
@@ -112,7 +112,7 @@ permalink: /tags/{{ tag | slugify }}/
 
   <div class="tag-header">
     <nav class="tag-breadcrumb" aria-label="breadcrumb">
-      <a href="/">writing</a>
+      <a href="/blog/">writing</a>
       <span class="tag-breadcrumb-sep">/</span>
       <a href="/tags/">tags</a>
       <span class="tag-breadcrumb-sep">/</span>
@@ -149,6 +149,6 @@ permalink: /tags/{{ tag | slugify }}/
     {% endfor %}
   </div>
 
-  <a href="/" class="tag-back">← All writing</a>
+  <a href="/blog/" class="tag-back">← All writing</a>
 
 </div>

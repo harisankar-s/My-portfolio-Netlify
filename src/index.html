@@ -34,7 +34,7 @@ permalink: /about/index.html
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{ site.portfolioUrl }}/about/" />
   <title>About {{ p.name }} | Data &amp; AI Architect and {{ site.newsletter.name }} Writer</title>
-  <link rel="canonical" href="{{ site.portfolioUrl }}/about/" />
+  <link rel="canonical" href="/about/" />
   <link rel="icon" href="/images/favicon-hari-32.png" sizes="32x32" type="image/png" />
   <link rel="icon" href="/images/favicon-hari-192.png" sizes="192x192" type="image/png" />
   <link rel="apple-touch-icon" href="/images/apple-touch-icon-hari.png" />
@@ -42,32 +42,13 @@ permalink: /about/index.html
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/portfolio.css" />
+  <link rel="stylesheet" href="/assets/site-chrome.css" />
 </head>
 <body>
 
   <div class="pf-progress" id="progress" aria-hidden="true"></div>
 
-  <!-- NAV -->
-  <nav class="pf-nav on-hero" id="nav">
-    <a href="{{ homePath }}" class="pf-logo">
-      <img src="/images/profile/hari_new.png" alt="" width="32" height="32" />
-      <span>Harisankar Sivankutty</span>
-    </a>
-    <div class="pf-nav-right">
-      <ul class="pf-nav-links">
-        <li><a href="{{ homePath }}">Home</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#strengths">Skills</a></li>
-        <li><a href="#certifications">Certifications</a></li>
-        <li><a href="{{ site.url }}/">Blog ↗</a></li>
-      </ul>
-      <button type="button" class="pf-theme" data-theme-toggle aria-label="Toggle color theme">
-        <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line></svg>
-        <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-      </button>
-      <a href="mailto:{{ p.contact.email }}" class="pf-btn pf-btn-primary pf-btn-sm pf-nav-cta">Contact</a>
-    </div>
-  </nav>
+  {% set hubNavBase = homePath %}{% include "hub-nav.njk" %}
 
   <main id="top">
 
@@ -239,7 +220,7 @@ permalink: /about/index.html
         <p class="pf-sub">Notes from the trenches of data engineering and GenAI.</p>
         <div class="pf-posts">
           {% for post in collections.posts %}{% if loop.index <= 3 %}
-          <a class="pf-post" href="{{ site.url }}{{ post.url }}">
+          <a class="pf-post" href="{{ post.url }}">
             <span class="pf-post-meta">{{ post.date | postDate }} · {{ post.templateContent | readTime }} min read</span>
             <span class="pf-post-title">{{ post.data.title }}</span>
             {% if post.data.excerpt %}<span class="pf-post-excerpt">{{ post.data.excerpt }}</span>{% endif %}
@@ -248,7 +229,7 @@ permalink: /about/index.html
           {% endif %}{% endfor %}
         </div>
         <div class="pf-center">
-          <a href="{{ site.url }}/" class="pf-btn pf-btn-secondary">All posts</a>
+          <a href="/blog/" class="pf-btn pf-btn-secondary">All posts</a>
         </div>
       </div>
     </section>
@@ -267,10 +248,7 @@ permalink: /about/index.html
     </section>
   </main>
 
-  <footer class="pf-footer">
-    {% include "bb-connect.njk" %}
-    <p>© 2026 {{ p.name }} · <a href="{{ site.url }}/">Blog</a> · <a href="{{ site.url }}/ask/">Trench AI</a> · <a href="/guides/">Exam prep</a></p>
-  </footer>
+  {% include "hub-footer.njk" %}
 
   <script src="/assets/galaxy.js" defer></script>
   <script src="/assets/space.js" defer></script>

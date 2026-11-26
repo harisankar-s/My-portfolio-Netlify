@@ -4,7 +4,7 @@ permalink: /guides/index.html
 eleventyExcludeFromCollections: true
 title: "Exam prep and guides"
 pageTitle: "Free Claude and Google Cloud Exam Guides | Harisankar Sivankutty"
-description: "Free certification prep: study guides and practice questions for the Claude exams (CCAR-F, CCAR-P, CCDV-F) and Google Cloud Professional Cloud Architect, with data engineering and Databricks guides on the way."
+description: "Free certification prep: study guides and practice questions for the Claude exams (CCAR-F, CCAR-P, CCDV-F) and Google Cloud Professional Cloud Architect, with a Databricks Data Engineer Professional guide on the way."
 ---
 {#- Exam prep library, after charliehills.ai's library pages: one compact,
     filterable grid instead of a shelf per vendor, so every guide fits on
@@ -15,19 +15,24 @@ description: "Free certification prep: study guides and practice questions for t
 {%- set liveTrackSlugs = [] -%}
 {%- for g in bbLiveGuides %}{% set liveTrackSlugs = (liveTrackSlugs.push(g.track), liveTrackSlugs) %}{% endfor -%}
 {%- set vendors = [] %}{% for e in exams %}{% if (e.vendor or "Claude") not in vendors %}{% set vendors = (vendors.push(e.vendor or "Claude"), vendors) %}{% endif %}{% endfor -%}
-{%- set coming = [] %}{% for t in brainbyte.tracks %}{% if t.slug not in liveTrackSlugs %}{% set coming = (coming.push(t), coming) %}{% endif %}{% endfor -%}
+{#- tests-only tracks (GCP Data Engineer on Udemy) count under their vendor, e.g. "Google Cloud" -#}
+{%- set coming = [] %}{% set testsOnly = [] %}{% for t in brainbyte.tracks %}{% if t.slug not in liveTrackSlugs %}{% if t.testsOnly %}{% set testsOnly = (testsOnly.push(t), testsOnly) %}{% else %}{% set coming = (coming.push(t), coming) %}{% endif %}{% endif %}{% endfor -%}
 
 <header class="gl-head" id="hero">
   <p class="hub-label">Free · {{ site.newsletter.name }}</p>
   <h1 class="hub-h2">Exam prep and <span class="hub-accent">guides</span></h1>
   <p class="hub-sub">A study guide that shows how each exam thinks, plus practice questions to test yourself. {{ exams.length }} exams covered, {{ coming.length }} more on the way. One free sign-up opens every guide.</p>
+  <ul class="gl-free">
+    <li><b>Free:</b> every study guide, the practice question PDFs (a free download on Topmate) and all the <a href="/resources/">free resources</a>.</li>
+    <li><b><img class="udemy-icon" src="/images/logos/udemy.svg" alt="" width="16" height="16" />Paid:</b> only the Udemy practice tests, marked "Paid" where they appear.</li>
+  </ul>
 </header>
 
 <div class="gl-body" data-gl>
   <div class="gl-bar">
     <div class="gl-filters" role="toolbar" aria-label="Filter guides">
-      <button type="button" class="gl-filter is-on" data-gl-filter="all" aria-pressed="true">All <span>{{ exams.length + coming.length }}</span></button>
-      {%- for v in vendors %}{% set n = 0 %}{% for e in exams %}{% if (e.vendor or "Claude") == v %}{% set n = n + 1 %}{% endif %}{% endfor %}
+      <button type="button" class="gl-filter is-on" data-gl-filter="all" aria-pressed="true">All <span>{{ exams.length + testsOnly.length + coming.length }}</span></button>
+      {%- for v in vendors %}{% set n = 0 %}{% for e in exams %}{% if (e.vendor or "Claude") == v %}{% set n = n + 1 %}{% endif %}{% endfor %}{% for t in testsOnly %}{% if t.cert.split(" · ")[0] == v %}{% set n = n + 1 %}{% endif %}{% endfor %}
       <button type="button" class="gl-filter" data-gl-filter="{{ v | slugify }}" aria-pressed="false">{{ v }} <span>{{ n }}</span></button>
       {%- endfor %}
       <button type="button" class="gl-filter" data-gl-filter="soon" aria-pressed="false">Coming soon <span>{{ coming.length }}</span></button>
@@ -52,13 +57,28 @@ description: "Free certification prep: study guides and practice questions for t
       <ul class="gl-stats">
         <li><b>{{ g.domains | sumLength("lessons") }}</b> lessons</li>
         <li><b>{{ g.stats[2].n }}</b> traps</li>
-        {%- if pack and pack.status == 'live' %}<li><b>{{ pack.count }}</b> practice Qs</li>{% elif g.stats[3] %}<li><b>{{ g.stats[3].n }}</b> {{ g.stats[3].label }}</li>{% endif %}
+        {%- if pack and pack.status == 'live' %}<li><b>{{ pack.count }}</b> free practice Qs</li>{% elif g.stats[3] %}<li><b>{{ g.stats[3].n }}</b> {{ g.stats[3].label }}</li>{% endif %}
       </ul>
       {%- endif %}
       <div class="gl-actions">
         {% if g %}<span class="gl-go">Read guide <span aria-hidden="true">→</span></span>{% endif %}
-        {% if pack and pack.status == 'live' %}<a class="gl-pack" href="{{ pack.url }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Practice ↗</a>{% else %}<span class="gl-soon">Practice soon</span>{% endif %}
+        {% if pack and pack.status == 'live' %}<a class="gl-pack" href="{{ pack.url }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Download free PDF ↗</a>{% else %}<span class="gl-soon">Practice PDF soon</span>{% endif %}
       </div>
+      </div>
+    </article>
+    {%- endfor %}
+    {%- for t in testsOnly %}
+    <article class="gl-card" data-gl-tags="{{ t.cert.split(' · ')[0] | slugify }}">
+      <div class="gl-top">
+        <span class="gl-code">Practice tests</span>
+        <span class="gl-vendor"><img src="{{ t.logo }}" alt="" width="16" height="16" loading="lazy" />{{ t.cert.split(" · ")[0] }}</span>
+      </div>
+      {%- if t.cover %}<img class="gl-thumb" src="{{ t.cover }}" alt="" width="800" height="500" loading="lazy" />{% endif %}
+      <div class="gl-inner">
+      <h2 class="gl-name"><a class="gl-link" href="{{ t.practiceTests.url }}" target="_blank" rel="noopener sponsored">{{ t.title }}</a></h2>
+      <p class="gl-facts">{{ t.cert }} · {{ t.level }}</p>
+      <p class="gl-blurb">{{ t.pitch }}</p>
+      <div class="gl-actions">{% set ptClass = "gl-pack gl-udemy" %}{% set pt = t.practiceTests %}{% include "udemy-link.njk" %}</div>
       </div>
     </article>
     {%- endfor %}
@@ -73,7 +93,7 @@ description: "Free certification prep: study guides and practice questions for t
       <h2 class="gl-name"><a class="gl-link" href="#join">{{ t.title }}</a></h2>
       <p class="gl-facts">{{ t.level }}{% if t.weeks %} · about {{ t.weeks }} weeks{% endif %}</p>
       <p class="gl-blurb">{{ t.pitch }}</p>
-      <div class="gl-actions"><span class="gl-go">Join the waitlist <span aria-hidden="true">→</span></span>{% if t.practiceTests %}<a class="gl-pack" href="{{ t.practiceTests.url }}" target="_blank" rel="noopener sponsored">Practice tests ↗</a>{% endif %}</div>
+      <div class="gl-actions"><span class="gl-go">Join the waitlist <span aria-hidden="true">→</span></span>{% if t.examUrl %}<a class="gl-pack" href="{{ t.examUrl }}" target="_blank" rel="noopener">Official exam page ↗</a>{% endif %}</div>
       </div>
     </article>
     {%- endfor %}

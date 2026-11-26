@@ -1,21 +1,48 @@
-{#- Main-domain nav (hub, guides). Set hubNavBase before including: "" on the
-    hub itself (in-page anchors), homePath elsewhere so anchors jump back to
-    the hub. Exam prep and Free resources always open their own pages. -#}
+{#- The one site nav, used on every page (hub, About, blog, posts, guides,
+    resources, kits, /ask/, /now/, tags, privacy), after charliehills.ai: a dark
+    glass bar, logo left, plain links centred, Book a 1:1 + Subscribe right.
+    Everything is on one domain, so every link is relative. Styles are
+    self-contained in /assets/site-chrome.css so it looks the same on the light
+    blog. navActive = "articles" marks Articles on blog pages; otherwise the
+    current item is matched on page.url. -#}
 {%- set nl = site.newsletter -%}
-<nav class="pf-nav on-hero" id="nav">
-  <a href="{{ homePath }}" class="pf-logo">
+{%- set u = page.url or "" -%}
+{%- set act = navActive or "" -%}
+{%- set navItems = [
+  { label: "Home", href: "/", on: u == "/" },
+  { label: "About", href: "/about/", on: u == "/about/" },
+  { label: "Articles", href: "/blog/", on: act == "articles" or u.startsWith("/blog/") or u.startsWith("/tags/") },
+  { label: "Exam guides", href: "/guides/", on: u.startsWith("/guides/") },
+  { label: "Free resources", href: "/resources/", on: u.startsWith("/resources/") },
+  { label: "Newsletter", href: "/newsletter/", on: u.startsWith("/newsletter/") },
+  { label: "Starter kits", href: "/kits/", on: u.startsWith("/kits/") }
+] -%}
+<nav class="hub-navbar" id="nav" aria-label="Main">
+  <a href="/" class="hn-logo">
     <img src="/images/profile/hari_new.png" alt="" width="32" height="32" />
     <span>{{ profile.name }}</span>
   </a>
-  <div class="pf-nav-right">
-    <ul class="pf-nav-links">
-      <li><a href="{{ hubNavBase }}#for">For you</a></li>
-      <li><a href="/guides/">Exam prep</a></li>
-      <li><a href="/resources/">Free resources</a></li>
-      <li><a href="/newsletter/">Newsletter</a></li>
-      <li><a href="{{ hubNavBase }}#kits">Starter kits</a></li>
-      <li><a href="/about/">About</a></li>
-    </ul>
-    <a href="{% if nl.username %}https://{{ nl.username }}.substack.com/{% else %}{{ hubNavBase }}#join{% endif %}" class="pf-btn pf-btn-primary pf-btn-sm pf-nav-cta hub-nav-sub"{% if nl.username %} target="_blank" rel="noopener"{% endif %}>Subscribe <span class="hub-arrow" aria-hidden="true">→</span></a>
+  <ul class="hn-links">
+    {%- for it in navItems %}
+    <li><a href="{{ it.href }}"{% if it.on %} aria-current="page"{% endif %}>{{ it.label }}</a></li>
+    {%- endfor %}
+  </ul>
+  <div class="hn-right">
+    {%- if site.topmateUrl %}
+    <a href="{{ site.topmateUrl }}" class="hn-call" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Book a 1:1</a>
+    {%- endif %}
+    <a href="{% if nl.username %}https://{{ nl.username }}.substack.com/{% else %}/#join{% endif %}" class="hn-sub"{% if nl.username %} target="_blank" rel="noopener"{% endif %}>Subscribe <span class="hn-arrow" aria-hidden="true">→</span></a>
+    {#- Phones and tablets: the links fold into this menu (plain <details>, no JS) -#}
+    <details class="hn-menu">
+      <summary aria-label="Menu"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path class="hn-bars" d="M4 7h16M4 12h16M4 17h16"/><path class="hn-x" d="M6 6l12 12M18 6L6 18"/></svg></summary>
+      <div class="hn-panel">
+        <ul>
+          {%- for it in navItems %}
+          <li><a href="{{ it.href }}"{% if it.on %} aria-current="page"{% endif %}>{{ it.label }}</a></li>
+          {%- endfor %}
+        </ul>
+        {%- if site.topmateUrl %}<a href="{{ site.topmateUrl }}" class="hn-call hn-call-panel" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Book a 1:1 on Topmate</a>{% endif %}
+      </div>
+    </details>
   </div>
 </nav>

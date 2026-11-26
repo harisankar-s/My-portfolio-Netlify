@@ -54,6 +54,15 @@ eleventyComputed:
   </div>
   {%- endif %}
 
+  {%- if resources.list.length %}
+  <section class="aud-section">
+    <header class="aud-section-head"><h2 class="hub-label">Free resources · no sign-up</h2><a href="/resources/" class="hub-textlink">All {{ resources.list.length }} guides <span aria-hidden="true">→</span></a></header>
+    <div class="hub-kits rs-cards">
+      {%- for r in resources.list %}{% if loop.index <= 3 %}{% include "rs-card.njk" %}{% endif %}{% endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
   <div class="hub-practice hub-practice-under">
     <div class="hub-glass hub-light hub-next" id="join">
       <span class="hub-label">Get the next one</span>
@@ -64,7 +73,7 @@ eleventyComputed:
     <div class="hub-glass hub-light hub-next">
       <span class="hub-label">Before the newsletter</span>
       <p class="hub-tile-text">{{ collections.posts.length }} long-form articles from enterprise projects, on data platforms, data quality, migrations and GenAI, live on the blog.</p>
-      <a href="{{ site.url }}/" class="hub-textlink">Browse the articles <span aria-hidden="true">→</span></a>
+      <a href="/blog/" class="hub-textlink">Browse the articles <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </div>
