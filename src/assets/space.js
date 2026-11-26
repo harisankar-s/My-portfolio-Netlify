@@ -191,3 +191,14 @@
   }, { threshold: 0.6 });
   labels.forEach(function (el) { io.observe(el); });
 })();
+
+// CV: project lists start closed; a link to one (e.g. /about/#projects) opens it.
+(function () {
+  function openTarget() {
+    var id = decodeURIComponent((location.hash || '').slice(1));
+    var el = id && document.getElementById(id);
+    if (el && el.tagName === 'DETAILS') el.open = true;
+  }
+  openTarget();
+  window.addEventListener('hashchange', openTarget);
+})();

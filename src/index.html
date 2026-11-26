@@ -154,7 +154,7 @@ permalink: /about/index.html
               <p class="pf-job-meta"><strong>{{ job.company }}</strong> · {{ job.dates }}</p>
               <p class="pf-job-desc">{{ job.description }}</p>
               {% if job.projects.length %}
-              <details class="pf-projects"{% if loop.first %} id="projects" open{% endif %}>
+              <details class="pf-projects"{% if loop.first %} id="projects"{% endif %}>
                 <summary>See {{ job.projects.length }} key project{{ 's' if job.projects.length > 1 else '' }}</summary>
                 {% for pr in job.projects %}
                 <article class="pf-project">
