@@ -13,7 +13,7 @@ eleventyComputed:
 ---
 {#- A free guide, after charliehills.ai/guides/*: the pitch and "What's inside"
     up top, the intro and first lesson open to everyone, then a BrainByte
-    Weekly signup that unlocks the rest on the page (and the PDF). The gate is
+    BrainByte signup that unlocks the rest on the page (and the PDF). The gate is
     a soft one: everything is in the HTML (readers without JS and search
     engines see it all); /assets/guides.js hides the locked part until the form is
     sent, and remembers it in localStorage for every guide. Content lives in
@@ -118,7 +118,7 @@ eleventyComputed:
         <div class="bg-gate-card">
           <p class="bg-small">Free · one sign-up opens every guide</p>
           <h2 class="bg-gate-title">Get the full {{ guide.title }}, free</h2>
-          <p class="bg-p">The guide comes with my free weekly newsletter, {{ site.newsletter.name }}: one practical AI and data engineering lesson a week. Enter your email and the guide opens right here, with the PDF to keep.</p>
+          <p class="bg-p">The guide comes with my free newsletter, {{ site.newsletter.name }}. {{ site.newsletter.tagline }}, a new issue {{ site.newsletter.cadence }}. Enter your email and the guide opens right here, with the PDF to keep.</p>
           {% set nfId = 'gate-' + guide.slug %}{% set nfClass = 'bg-gate-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% set nfGate = true %}{% set nfBtnText = 'Open the guide' %}{% include "newsletter-form.njk" %}{% set nfGate = false %}{% set nfBtnText = '' %}
           <p class="bg-fine">Unsubscribe any time. Substack opens in a new tab to confirm. <button type="button" class="bg-linkbtn" data-bb-unlock>Already subscribed? Open the guide</button></p>
         </div>

@@ -1,0 +1,130 @@
+---
+layout: hub-page.njk
+pagination:
+  data: audiences.list
+  size: 1
+  alias: aud
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  permalink: "/for/{{ aud.slug }}/index.html"
+  title: "{{ site.newsletter.name }} for {{ aud.name }}"
+  pageTitle: "AI for {{ aud.name }}: {{ aud.who }} | Harisankar Sivankutty"
+  description: "{{ aud.pitch }}"
+---
+{#- One page per audience in src/_data/audiences.json. Live: hero, the
+    audience's Substack editions (by tag), its exam prep, kits and blog posts,
+    then a signup. Coming soon: hero, topics and a waitlist signup only. -#}
+{%- from "ico.njk" import ico -%}
+{%- set nl = site.newsletter -%}
+{%- set live = aud.status == "live" -%}
+{%- set audEditions = editions | editionsFor(aud) -%}
+{%- set audPosts = collections.posts | postsFor(aud) -%}
+{%- set audExams = exams | pickBy("code", aud.exams) -%}
+{%- set audKits = brainbyte.kits | pickBy("title", aud.kits) -%}
+{%- set audTracks = brainbyte.tracks | pickBy("slug", aud.tracks) -%}
+
+<header class="gl-head aud-head" id="hero">
+  <p class="hub-label">{{ nl.name }} for {{ aud.name }} · {{ aud.who }}</p>
+  <h1 class="hub-h2">{{ aud.headline }} <span class="hub-accent">{{ aud.accent }}</span></h1>
+  <p class="hub-sub">{{ aud.pitch }}</p>
+  <ul class="aud-topics">{% for t in aud.topics %}<li>{{ t }}</li>{% endfor %}</ul>
+  <div class="aud-signup">
+    {% set nfId = 'aud-' + aud.slug %}{% set nfClass = 'hub-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% set nfAvatar = '/images/profile/hari_new.png' %}{% set nfBtnText = ('Subscribe' if live else 'Join the list') %}{% include "newsletter-form.njk" %}
+    <p class="hub-form-note">Free · {{ 'a new issue ' + nl.cadence if live else 'first issues go to the list' }} · unsubscribe anytime</p>
+  </div>
+</header>
+
+<div class="gl-body">
+{%- if live %}
+
+  {%- if audEditions.length %}
+  <section class="aud-section">
+    <header class="aud-section-head"><h2 class="hub-label">Latest editions</h2><a href="/newsletter/" class="hub-textlink">All editions <span aria-hidden="true">→</span></a></header>
+    <ol class="hub-glass hub-light nl-list">
+      {%- for e in audEditions %}{% if loop.index <= 6 %}
+      <li><a class="nl-item" href="{{ e.url }}">
+        <span class="hub-meta nl-date">{{ e.date | longDate }}</span>
+        <span class="nl-text"><span class="nl-title">{{ e.title }}</span>{% if e.subtitle %}<span class="nl-sub">{{ e.subtitle }}</span>{% endif %}</span>
+        <span class="nl-arrow" aria-hidden="true">→</span>
+      </a></li>
+      {%- endif %}{% endfor %}
+    </ol>
+  </section>
+  {%- endif %}
+
+  {%- if audExams.length %}
+  <section class="aud-section">
+    <header class="aud-section-head"><h2 class="hub-label">Free Claude certification prep</h2><a href="/guides/" class="hub-textlink">All exam prep <span aria-hidden="true">→</span></a></header>
+    <div class="hub-shelf"><div class="ep-grid">
+      {%- for exam in audExams %}{% include "exam-prep-card.njk" %}{% endfor %}
+    </div></div>
+  </section>
+  {%- endif %}
+
+  {%- if audPosts.length %}
+  <section class="aud-section">
+    <header class="aud-section-head"><h2 class="hub-label">Articles</h2><a href="{{ site.url }}/" class="hub-textlink">The blog <span aria-hidden="true">→</span></a></header>
+    <div class="hub-editions aud-posts">
+      {%- for post in audPosts %}{% if loop.index <= 6 %}
+      {%- set th = post.data.cover or (post.templateContent | firstImage) %}
+      <a class="hub-glass hub-light hub-card3" href="{{ site.url }}{{ post.url }}">
+        <span class="hub-card3-art{% if not th %} is-empty{% endif %}">{% if th %}<img src="{{ th }}" alt="" loading="lazy" />{% else %}<span class="ico3d ico3d-{{ aud.color }}">{{ ico(aud.icon) }}</span>{% endif %}</span>
+        <span class="hub-card3-body">
+          <span class="hub-meta">{{ post.date | postDate }} · {{ post.templateContent | readTime }} min</span>
+          <span class="hub-card3-title">{{ post.data.title }}</span>
+        </span>
+      </a>
+      {%- endif %}{% endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
+  {%- if audKits.length %}
+  <section class="aud-section">
+    <header class="aud-section-head"><h2 class="hub-label">Starter kits</h2><a href="{{ homePath }}#kits" class="hub-textlink">All kits <span aria-hidden="true">→</span></a></header>
+    <div class="hub-kits">
+      {%- for k in audKits %}
+      {%- set kLive = k.status == "live" %}
+      <{{ "a" if kLive else "div" }} class="hub-glass hub-light hub-kit{% if not kLive %} is-soon{% endif %}"{% if kLive %} href="{{ k.url }}" target="_blank" rel="noopener"{% endif %}>
+        <span class="hub-pack-top"><span class="ico3d ico3d-sm {{ 'ico3d-green' if kLive else 'ico3d-slate' }}">{{ ico("code") }}</span><span class="hub-tag{% if not kLive %} hub-tag-dim{% endif %}">{{ ("Free" if k.free else "Live") if kLive else "Coming soon" }}</span></span>
+        <span class="hub-kit-title">{{ k.title }}</span>
+        <span class="hub-kit-text">{{ k.blurb }}</span>
+        {% if kLive %}<span class="hub-textlink">Get the kit <span aria-hidden="true">↗</span></span>{% endif %}
+      </{{ "a" if kLive else "div" }}>
+      {%- endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
+  {%- if audTracks.length %}
+  <section class="aud-section">
+    <div class="hub-glass hub-light hub-next">
+      <span class="hub-label">More guides on the way</span>
+      <ul class="hub-next-list">
+        {%- for t in audTracks %}
+        <li>
+          <span class="hub-course-logo"><img src="{{ t.logo }}" alt="" width="22" height="22" loading="lazy" /></span>
+          <span><b>{{ t.title }}</b><small>{{ t.level }} · {{ t.modules.length }} modules</small></span>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </section>
+  {%- endif %}
+
+{%- endif %}
+
+  <section class="aud-section">
+    <h2 class="hub-label">Also in {{ nl.name }}</h2>
+    <div class="aud-others">
+      {%- for o in audiences.list %}{% if o.slug != aud.slug %}
+      <a class="hub-glass hub-light aud-card" href="/for/{{ o.slug }}/">
+        <span class="hub-pack-top"><span class="ico3d ico3d-sm ico3d-{{ o.color }}">{{ ico(o.icon) }}</span>{% if o.status != "live" %}<span class="hub-tag hub-tag-dim">Coming soon</span>{% endif %}</span>
+        <span class="hub-kit-title">For {{ o.name | lower }}</span>
+        <span class="hub-meta">{{ o.who }}</span>
+        <span class="hub-kit-text">{{ o.card }}</span>
+      </a>
+      {%- endif %}{% endfor %}
+    </div>
+  </section>
+</div>

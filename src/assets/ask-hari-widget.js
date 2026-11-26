@@ -101,7 +101,7 @@
         addMessage(
           ui.messages,
           "assistant",
-          "Hi, I'm AskHari.ai. Ask me about Hari's experience, skills, or certifications" +
+          "Hi, I'm AskHari.ai. Ask me about Hari's experience, the free Claude exam guides or the BrainByte newsletter" +
             (getArticleContext() ? ", or about this article." : ".")
         );
       }

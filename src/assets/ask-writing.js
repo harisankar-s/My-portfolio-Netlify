@@ -11,13 +11,24 @@
     });
   }
 
-  // Only markdown-style links to a same-site path (e.g. /blog/slug/) are
-  // turned into real links — everything else in the reply stays plain,
-  // escaped text, since it comes from model output we don't fully control.
+  // Only markdown-style links to a same-site path (e.g. /blog/slug/) or to an
+  // edition on Hari's own Substack (origin from data-newsletter-origin on
+  // #askwriting-root) are turned into real links. Everything else in the
+  // reply stays plain, escaped text, since it comes from model output we
+  // don't fully control.
+  var newsletterOrigin = "";
+
+  function isAllowedHref(href) {
+    if (href.charAt(0) === "/" && href.charAt(1) !== "/") return true;
+    return !!newsletterOrigin && href.indexOf(newsletterOrigin + "/p/") === 0;
+  }
+
   function renderReplyHtml(text) {
     var escaped = escapeHtml(text);
-    var withLinks = escaped.replace(/\[([^\]]+)\]\((\/[^)\s]+)\)/g, function (match, label, href) {
-      return '<a href="' + href + '" class="askwriting-link">' + label + "</a>";
+    var withLinks = escaped.replace(/\[([^\]]+)\]\(((?:\/|https:\/\/)[^)\s]+)\)/g, function (match, label, href) {
+      if (!isAllowedHref(href)) return label;
+      var external = href.charAt(0) !== "/";
+      return '<a href="' + href + '" class="askwriting-link"' + (external ? ' target="_blank" rel="noopener"' : "") + ">" + label + "</a>";
     });
     return withLinks.replace(/\n/g, "<br>");
   }
@@ -134,6 +145,7 @@
   function init() {
     var root = document.getElementById("askwriting-root");
     if (!root) return;
+    newsletterOrigin = (root.getAttribute("data-newsletter-origin") || "").replace(/\/$/, "");
 
     var ui = {
       messages: document.getElementById("askwriting-messages"),
@@ -146,7 +158,7 @@
     addMessage(
       ui.messages,
       "assistant",
-      "Hi, I'm Trench AI ⛏️. Ask me anything about what Hari's written — data platforms, GenAI, LangChain, dbt, whatever's on the blog. I'll only answer from the posts themselves."
+      "Hi, I'm Trench AI ⛏️. Ask me anything about what Hari's written — data platforms, GenAI, LangChain, dbt, whatever's on the blog or in the newsletter. I'll only answer from the writing itself."
     );
 
     ui.input.addEventListener("keydown", function (event) {

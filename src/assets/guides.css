@@ -168,3 +168,33 @@ a.bg-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px -22px rgb
 .gl-body .hub-shelf { margin-top: 36px; }
 .gl-join { max-width: 640px; margin: 56px auto 0; text-align: center; }
 .gl-join .hub-form { max-width: 480px; margin: 18px auto 0; }
+
+/* /newsletter/ archive (src/newsletter/index.njk), after charliehills.ai/newsletter:
+   the latest edition as a big card, then every edition grouped by month. */
+.nl-latest { margin-top: 36px; }
+.nl-archive { margin-top: 40px; display: grid; gap: 28px; }
+.nl-month-head { margin: 0 0 10px; }
+body.hub .nl-month-head { color: var(--fg-dim); }
+.nl-list { list-style: none; padding: 6px; gap: 0; }
+.nl-list li + li { border-top: 1px solid rgba(11,18,32,.08); }
+.nl-item { display: grid; grid-template-columns: 150px 1fr auto; align-items: center; gap: 20px; padding: 16px 18px; border-radius: 12px; color: #0B1220; transition: background .2s var(--ease); }
+.nl-item:hover { background: rgba(31,79,224,.05); }
+.nl-date { color: #5A6478; }
+.nl-text { display: grid; gap: 4px; }
+.nl-title { font-family: var(--font-display); font-size: 18px; font-weight: 600; line-height: 1.25; letter-spacing: -0.01em; }
+.nl-sub { font-size: 15px; color: #3A4458; line-height: 1.45; }
+.nl-arrow { color: #1F4FE0; transition: transform .25s var(--ease); }
+.nl-item:hover .nl-arrow { transform: translateX(4px); }
+@media (max-width: 640px) { .nl-item { grid-template-columns: 1fr auto; gap: 6px 14px; } .nl-date { grid-column: 1 / -1; } }
+
+/* Audience pages /for/{slug}/ (src/for/audience.njk, data in audiences.json) */
+.aud-topics { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 0; padding: 0; }
+.aud-topics li { font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .04em; text-transform: uppercase; color: var(--fg-muted); padding: 7px 12px; border-radius: 999px; border: 1px solid var(--border); background: rgba(255,255,255,.04); }
+.aud-signup { max-width: 520px; margin-top: 26px; }
+.aud-signup .hub-form-note { margin-top: 10px; }
+.aud-section { margin-top: 44px; }
+.aud-section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 12px; }
+.aud-section-head .hub-label, .aud-section > .hub-label { margin: 0 0 12px; }
+.aud-section-head .hub-label { margin: 0; }
+.aud-section .hub-shelf { margin-top: 0; }
+.aud-posts { margin-top: 0; }

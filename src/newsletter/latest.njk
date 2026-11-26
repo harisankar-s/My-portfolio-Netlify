@@ -1,0 +1,9 @@
+---
+permalink: /newsletter/latest.json
+eleventyExcludeFromCollections: true
+---
+{#- Which edition this deploy was built with. netlify/functions/
+    newsletter-rebuild.mjs compares it with the Substack feed and triggers a
+    rebuild when a newer edition is out. -#}
+{%- set e = editions[0] -%}
+{{ { "url": e.url if e else "", "date": e.date if e else "", "count": editions.length } | dump | safe }}

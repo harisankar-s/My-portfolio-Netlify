@@ -20,6 +20,16 @@ eleventyExcludeFromCollections: true
     <loc>{{ site.portfolioUrl }}/guides/</loc>
     <changefreq>weekly</changefreq>
   </url>
+  <url>
+    <loc>{{ site.portfolioUrl }}/newsletter/</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {%- for a in audiences.list %}{% if a.status == "live" %}
+  <url>
+    <loc>{{ site.portfolioUrl }}/for/{{ a.slug }}/</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {%- endif %}{% endfor %}
   {% for g in bbLiveGuides %}
   <url>
     <loc>{{ site.portfolioUrl }}/guides/{{ g.slug }}/</loc>

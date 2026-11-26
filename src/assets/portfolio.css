@@ -728,3 +728,8 @@ body.hub .hub-light .hub-label { color: #5A6478; }
 [data-hub-quiz] .hub-byte-opts li.is-wrong { border-color: #DC2626; background: #FEECEC; color: #7F1D1D; }
 [data-hub-quiz].is-answered .hub-byte-opts li:not(.is-right):not(.is-wrong) { opacity: .6; }
 .hub-byte-hint { font-size: 14px; font-weight: 600; color: #5A6478; margin-top: -6px; }
+
+/* Audience cards: the hub's "Who it's for" row and "Also in" on /for/ pages */
+.aud-others { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+.aud-card { gap: 10px; }
+.aud-card .hub-textlink { margin-top: 4px; }

@@ -1,0 +1,70 @@
+---
+layout: hub-page.njk
+permalink: /newsletter/index.html
+eleventyExcludeFromCollections: true
+title: "Every BrainByte edition"
+eleventyComputed:
+  pageTitle: "Every {{ site.newsletter.name }} Edition | The Practical AI Newsletter Archive"
+  description: "{% if editions.length %}All {{ editions.length }} editions of {{ site.newsletter.name }}{% else %}The {{ site.newsletter.name }} archive{% endif %}, the free newsletter from Harisankar Sivankutty on {{ site.newsletter.topics }}. Free, a new issue {{ site.newsletter.cadence }}."
+---
+{#- Newsletter archive, after charliehills.ai/newsletter: every edition from
+    the Substack RSS feed (src/_data/editions.js, fetched at build time),
+    newest first and grouped by month. Each entry links out to Substack,
+    where the edition lives. Older long-form articles stay on the blog. -#}
+{%- set nl = site.newsletter -%}
+{%- set substack = "https://" + nl.username + ".substack.com" -%}
+{%- set latestEdition = editions[0] -%}
+
+<header class="gl-head" id="hero">
+  <p class="hub-label">Archive · {{ nl.name }}</p>
+  <h1 class="hub-h2">Every <span class="hub-accent">edition</span>, in one place</h1>
+  <p class="hub-sub">{{ nl.tagline }}: lessons on {{ nl.topics }}, a new issue {{ nl.cadence }}. {% if editions.length %}{{ editions.length }} edition{{ "s" if editions.length != 1 }} so far, free to read.{% else %}The first edition is on its way.{% endif %}</p>
+</header>
+
+<div class="gl-body">
+  {%- if latestEdition %}
+  <a class="hub-glass hub-light hub-edition nl-latest" href="{{ latestEdition.url }}">
+    <span class="hub-edition-art{% if not latestEdition.image %} is-empty{% endif %}">{% if latestEdition.image %}<img src="{{ latestEdition.image }}" alt="" loading="lazy" />{% endif %}</span>
+    <span class="hub-edition-text">
+      <span class="hub-label">Latest edition · {{ latestEdition.date | longDate }}</span>
+      <span class="hub-edition-title">{{ latestEdition.title }}</span>
+      {% if latestEdition.subtitle %}<span class="hub-lead-text">{{ latestEdition.subtitle }}</span>{% endif %}
+      <span class="pf-btn pf-btn-primary">Read the edition <span aria-hidden="true">→</span></span>
+    </span>
+  </a>
+
+  <div class="nl-archive">
+    {%- set month = "" %}
+    {%- for e in editions %}
+    {%- set m = e.date | monthYear %}
+    {%- if m != month %}
+    {%- if month %}</ol></section>{% endif %}
+    {%- set month = m %}
+    <section class="nl-month">
+      <h2 class="hub-label nl-month-head">{{ m }}</h2>
+      <ol class="hub-glass hub-light nl-list">
+    {%- endif %}
+        <li><a class="nl-item" href="{{ e.url }}">
+          <span class="hub-meta nl-date">{{ e.date | longDate }}</span>
+          <span class="nl-text"><span class="nl-title">{{ e.title }}</span>{% if e.subtitle %}<span class="nl-sub">{{ e.subtitle }}</span>{% endif %}</span>
+          <span class="nl-arrow" aria-hidden="true">→</span>
+        </a></li>
+    {%- if loop.last %}</ol></section>{% endif %}
+    {%- endfor %}
+  </div>
+  {%- endif %}
+
+  <div class="hub-practice hub-practice-under">
+    <div class="hub-glass hub-light hub-next" id="join">
+      <span class="hub-label">Get the next one</span>
+      <p class="hub-tile-text">New editions land in your inbox {{ nl.cadence }}. Subscribers also hear first about new exam guides, practice packs and starter kits.</p>
+      {% set nfId = 'archive' %}{% set nfClass = 'bg-gate-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% include "newsletter-form.njk" %}
+      <p class="hub-meta">Free. Unsubscribe any time.</p>
+    </div>
+    <div class="hub-glass hub-light hub-next">
+      <span class="hub-label">Before the newsletter</span>
+      <p class="hub-tile-text">{{ collections.posts.length }} long-form articles from enterprise projects, on data platforms, data quality, migrations and GenAI, live on the blog.</p>
+      <a href="{{ site.url }}/" class="hub-textlink">Browse the articles <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</div>
