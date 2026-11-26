@@ -69,7 +69,7 @@ async function buildCatalogue() {
     lines.push(`- For ${a.name.toLowerCase()} (${a.who})${a.status === "live" ? "" : " — coming soon, waitlist"}: ${a.card} ${site.portfolioUrl}/for/${a.slug}/`)
   );
 
-  lines.push(`\nCLAUDE CERTIFICATION EXAM PREP (all free, library at ${site.portfolioUrl}/guides/):`);
+  lines.push(`\nCERTIFICATION EXAM PREP, CLAUDE AND GOOGLE CLOUD (all free, library at ${site.portfolioUrl}/guides/):`);
   exams.forEach((e) => {
     const g = guideBySlug[e.guide];
     const pack = livePacks.find((p) => p.exam === e.packExam);
@@ -78,7 +78,7 @@ async function buildCatalogue() {
     if (pack) lines.push(`  Free practice pack: ${pack.title}, ${pack.count} questions — ${pack.url}`);
     else lines.push("  Practice pack: not available yet.");
   });
-  lines.push("These are independent study materials, not affiliated with Anthropic, and contain no real exam questions.");
+  lines.push("These are independent study materials, not affiliated with Anthropic or Google, and contain no real exam questions.");
 
   const comingTracks = brainbyte.tracks.filter((t) => t.status !== "live" && !liveGuides.some((g) => g.track === t.slug));
   if (comingTracks.length) lines.push(`More guides coming soon: ${comingTracks.map((t) => t.title || t.short).join("; ")}.`);

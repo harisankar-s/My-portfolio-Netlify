@@ -4,6 +4,9 @@
     code terms are in backticks; the `ticks` filter turns them into <code>. -#}
 <article class="bg-lesson" id="lesson-{{ lesson.id | replace('.', '-') }}">
   <h3 class="bg-lesson-title"><span class="bg-lesson-num">{{ lesson.id }}</span> {{ lesson.title }}</h3>
+  {%- if lesson.what %}
+  <p class="bg-what">{{ lesson.what | ticks | safe }}</p>
+  {%- endif %}
   <div class="bg-tests">
     <span class="bg-small">What the exam tests</span>
     <p>{{ lesson.tests | ticks | safe }}</p>
@@ -14,6 +17,17 @@
     <li>{{ r | ticks | safe }}</li>
     {%- endfor %}
   </ul>
+  {%- if lesson.traps[0][2] %}
+  <span class="bg-small">Exam traps <em>the answer that looks right, the one that is, and why</em></span>
+  <div class="bg-traps bg-traps-why">
+    {%- for t in lesson.traps %}
+    <div class="bg-trap bg-trap-why">
+      <div class="bg-wrong"><span class="bg-tag bg-tag-wrong"><span aria-hidden="true">✕</span> Tempting answer</span><p>{{ t[0] | ticks | safe }}</p></div>
+      <div class="bg-right" tabindex="0"><span class="bg-tag bg-tag-right"><span aria-hidden="true">✓</span> Best answer</span><p>{{ t[1] | ticks | safe }}</p><p class="bg-why"><b>Why:</b> {{ t[2] | ticks | safe }}</p></div>
+    </div>
+    {%- endfor %}
+  </div>
+  {%- else %}
   <span class="bg-small">Traps <em>cover the right column and answer first</em></span>
   <div class="bg-traps" role="table" aria-label="Traps for lesson {{ lesson.id }}">
     {%- for t in lesson.traps %}
@@ -23,4 +37,5 @@
     </div>
     {%- endfor %}
   </div>
+  {%- endif %}
 </article>

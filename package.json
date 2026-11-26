@@ -7,6 +7,8 @@
     "start": "eleventy --serve --watch",
     "new-post": "node scripts/new-post.js",
     "list-posts": "node scripts/list-posts.js",
+    "guide-covers": "node scripts/build-guide-covers.js",
+    "guide-pdf": "node scripts/build-guide-pdf.js",
     "delete-post": "node scripts/delete-post.js"
   },
   "devDependencies": {

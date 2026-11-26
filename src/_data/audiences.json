@@ -35,7 +35,7 @@
       "substackTags": ["Data Engineering", "AI Engineering", "LLM Fine-Tuning", "Build in Public", "Claude", "Architecture", "Certification"],
       "blogTags": ["Data Engineering", "Architecture", "Claude", "Certification", "RAG", "Agentic AI"],
       "posts": [],
-      "exams": ["CCAR-F", "CCAR-P", "CCDV-F"],
+      "exams": ["CCAR-F", "CCAR-P", "CCDV-F", "PCA"],
       "kits": ["Production data pipeline kit", "Data quality starter", "Claude RAG assistant starter", "dbt Data Vault template"],
       "tracks": ["gcp-pde", "data-engineering", "databricks"]
     },

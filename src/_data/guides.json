@@ -3067,5 +3067,2515 @@
     ],
     "endNote": "Good luck on exam day. Read each scenario for the signal it gives, reject the invented names, and fix the cause rather than the symptom.",
     "pairWith": "A CCDV-F practice question bank is on the way. BrainByte subscribers hear first when it's out."
+  },
+  {
+    "slug": "gcp-pca-exam-tips",
+    "status": "live",
+    "track": "gcp-pca",
+    "exam": "PCA",
+    "vendor": "Google Cloud",
+    "domainWord": "Section",
+    "kicker": "Free guide · Google Cloud Professional Cloud Architect",
+    "title": "Google Cloud Professional Cloud Architect Study Guide",
+    "seoTitle": "Google Cloud Architect Exam Guide: 69 Lessons, Free | Harisankar Sivankutty",
+    "pitch": "How the Professional Cloud Architect exam thinks. The six exam sections, all four case studies and a service-by-service guide to 42 Google Cloud services: 69 lessons, 207 key rules and 260 exam traps, in plain English.",
+    "description": "Free Google Cloud Professional Cloud Architect study guide: the six exam sections, the four case studies and 42 service guides (Compute Engine, App Engine, Cloud Run, GKE, BigQuery and more). 69 lessons and 260 exam traps. Read it section by section or download the PDF.",
+    "added": "2026-11-26",
+    "edition": "Edition 1",
+    "logo": "/images/logos/gcp.svg",
+    "pdf": "gcp-pca-exam-tips-study-guide-edition-1.pdf",
+    "pdfPages": 77,
+    "packExam": "",
+    "stats": [
+      {
+        "n": "69",
+        "label": "lessons"
+      },
+      {
+        "n": "207",
+        "label": "key rules"
+      },
+      {
+        "n": "260",
+        "label": "exam traps"
+      },
+      {
+        "n": "42",
+        "label": "service guides"
+      }
+    ],
+    "insideIntro": "Exam facts, the five meta-rules and how the guide is laid out",
+    "intro": {
+      "lead": "This guide has three parts: the six exam sections, the four case studies, and a service guide with one lesson per Google Cloud service (42 services, from Compute Engine and App Engine to BigQuery and the AI platform). 69 lessons in all, with 207 key rules and 260 traps. Every lesson has three parts; service lessons also start with what the service is.",
+      "parts": [
+        [
+          "What the exam tests:",
+          "the decision the questions on that lesson keep asking you to make."
+        ],
+        [
+          "Key rules:",
+          "short rules you can apply to a scenario in seconds to find the right option."
+        ],
+        [
+          "Exam traps:",
+          "an answer that looks right, the best answer, and one line on why. Cover the best answer and decide first."
+        ]
+      ],
+      "passes": [
+        [
+          "Read the key rules.",
+          "Go section by section and read only the rules. Aim to say each one aloud without looking."
+        ],
+        [
+          "Cover the best answer.",
+          "Turn on \"Cover the right answers\". For each trap, decide what wins and why, then tap the card to check your reasoning against the \"Why\" line."
+        ],
+        [
+          "Practise and name the trap.",
+          "Do practice questions, including Google's official sample questions. For every option you reject, name the trap from this guide that it matches."
+        ]
+      ],
+      "versionNote": "Google renames products often (Vertex AI is now Gemini Enterprise Agent Platform, Cloud Functions is now Cloud Run functions, Container Registry is replaced by Artifact Registry). Learn what each service does, and expect either name on the exam. When this guide and Google's current exam guide disagree, follow the exam guide.",
+      "factsLead": "50 to 60 questions in two hours. Google does not publish a pass mark, and a large share of the questions are about the four case studies.",
+      "facts": [
+        {
+          "n": "50-60",
+          "label": "questions",
+          "sub": "multiple choice (one answer) and multiple select (each item says how many)"
+        },
+        {
+          "n": "2 hours",
+          "label": "time allowed",
+          "sub": "about 2 minutes per question"
+        },
+        {
+          "n": "Pass / fail",
+          "label": "result",
+          "sub": "shown when you finish; confirmed by email a few days later"
+        },
+        {
+          "n": "$200",
+          "label": "price",
+          "sub": "USD per attempt, plus tax"
+        },
+        {
+          "n": "2 years",
+          "label": "validity",
+          "sub": "renew within the last 60 days"
+        },
+        {
+          "n": "4",
+          "label": "case studies",
+          "sub": "Altostrat Media, Cymbal Retail, EHR Healthcare, KnightMotives"
+        }
+      ],
+      "metaTitle": "Five meta-rules",
+      "metaLead": "These five patterns decide most questions in every section. Learn them before the lessons.",
+      "metaRules": [
+        [
+          "The constraint picks the answer.",
+          "Underline the deciding words: most cost-effective, least operational effort, no code changes, global, compliant. Two options usually work; only one meets that phrase."
+        ],
+        [
+          "Managed beats self-built.",
+          "Prefer the serverless or managed service (Cloud Run, BigQuery, Cloud SQL, Pub/Sub) unless a requirement needs control it cannot give."
+        ],
+        [
+          "Smallest scope that meets the need.",
+          "Zonal, regional or global; one role or many; one project or a folder. Pick the narrowest that satisfies the scenario, and no more."
+        ],
+        [
+          "Google's recommended practice wins.",
+          "Groups over users, attached service accounts over keys, custom VPCs over the default, infrastructure as code over console clicks."
+        ],
+        [
+          "Answer from the case study's requirements.",
+          "Read the business and technical requirements, not the buzzwords. Keep what they say stays (legacy systems, Active Directory) and fix what they say is broken."
+        ]
+      ],
+      "disclaimer": "Independent study material by Harisankar Sivankutty, written in my own words. Not affiliated with or endorsed by Google. Contains no actual exam questions. Google Cloud is a trademark of Google LLC."
+    },
+    "domains": [
+      {
+        "n": 1,
+        "weight": 25,
+        "title": "Designing and Planning a Cloud Solution",
+        "sub": "Turn business and technical requirements into a design: the right compute, storage, network, AI service and recovery plan for the scenario.",
+        "lessons": [
+          {
+            "id": "1.1",
+            "title": "Requirements, Trade-offs and Cost",
+            "tests": "whether you can find the one requirement in a long scenario that decides the answer, and weigh cost against availability and effort.",
+            "rules": [
+              "Business requirements say why (cut cost, move faster, meet a regulation); technical requirements say how (containers, private network, 99.9% uptime).",
+              "The deciding phrase is usually small: \"most cost-effective\", \"least operational effort\", \"without changing code\" or \"globally\".",
+              "Total cost of ownership includes people, licences, egress and missed-SLA penalties, not only the VM bill."
+            ],
+            "traps": [
+              [
+                "The most available design is always the best answer",
+                "The cheapest design that still meets every stated requirement",
+                "Extra availability costs money. The exam rewards meeting the stated needs at the lowest cost, not going beyond them."
+              ],
+              [
+                "Multi-regional by default, just in case",
+                "Regional when the scenario only needs one region",
+                "Multi-region adds cost and complexity. If users and requirements sit in one region, a regional design spread across zones is enough."
+              ],
+              [
+                "Compare options on compute price alone",
+                "Compare total cost: operations staff, licences, network and downtime",
+                "Licences, staff time, network egress and outage penalties often outweigh the VM bill, so the cheaper VM can be the dearer solution."
+              ],
+              [
+                "Build a custom tool for a gap",
+                "A managed service that already does it, unless a requirement rules it out",
+                "A self-built tool is more code to run and maintain. Google's answer almost always prefers an existing managed service."
+              ]
+            ]
+          },
+          {
+            "id": "1.2",
+            "title": "Choosing Compute",
+            "tests": "which compute service fits the workload: Compute Engine, GKE Standard, GKE Autopilot, Cloud Run or App Engine.",
+            "rules": [
+              "More control means more work: Compute Engine, then GKE Standard, GKE Autopilot, Cloud Run, Cloud Run functions.",
+              "Containers with spiky or unpredictable traffic and no cluster to run: Cloud Run, which scales to zero.",
+              "Kubernetes but no node management: GKE Autopilot, billed on Pod requests. Need GPUs, special nodes or node access: GKE Standard."
+            ],
+            "traps": [
+              [
+                "GKE for a single stateless container API",
+                "Cloud Run: no cluster, scales to zero",
+                "A cluster brings node, upgrade and networking work you don't need for one stateless service. Cloud Run runs the same container with none of it."
+              ],
+              [
+                "Compute Engine for a lift-and-shift of containerised apps with minimal effort",
+                "Cloud Run (or GKE if they already run Kubernetes)",
+                "Containers on plain VMs mean managing the OS, scaling and patching yourself. Cloud Run takes the existing image as it is."
+              ],
+              [
+                "A Cloud Run function for an hour-long batch job",
+                "Cloud Run jobs (run to completion) or a batch service",
+                "Event-driven functions have short time limits. Cloud Run jobs are built to run a task to completion."
+              ],
+              [
+                "App Engine as the first choice for new container workloads",
+                "Cloud Run, the newer and more flexible serverless option",
+                "App Engine still works, but Cloud Run accepts any container, has more features and is where Google points new workloads."
+              ],
+              [
+                "GKE Autopilot when you need to SSH into nodes or install node agents",
+                "GKE Standard",
+                "Autopilot locks down nodes: no SSH and no custom node agents. Standard mode gives node-level access."
+              ]
+            ]
+          },
+          {
+            "id": "1.3",
+            "title": "Choosing Storage and Databases",
+            "tests": "matching data shape, scale and consistency to Cloud SQL, Spanner, AlloyDB, Firestore, Bigtable, BigQuery, Memorystore or Cloud Storage.",
+            "rules": [
+              "Relational and regional, up to a few TB: Cloud SQL. Relational, global, horizontal writes, 99.999%: Spanner. PostgreSQL with heavy analytics on the same data: AlloyDB.",
+              "Flexible-schema documents for web and mobile apps: Firestore. Huge time series or IoT writes with millisecond reads by key: Bigtable.",
+              "Analytics over TB to PB with SQL: BigQuery. Sub-millisecond cache or sessions: Memorystore. Files, media, backups and data lakes: Cloud Storage."
+            ],
+            "traps": [
+              [
+                "Cloud SQL read replicas to scale writes",
+                "Spanner: Cloud SQL scales writes only vertically",
+                "Replicas only serve reads. Every write still goes to one primary, which can only grow vertically."
+              ],
+              [
+                "BigQuery as the backend for a transactional app",
+                "Cloud SQL, Spanner or Firestore; BigQuery is for analytics",
+                "BigQuery is built for big analytical scans, not many small, fast row updates."
+              ],
+              [
+                "Bigtable for a small (10 GB) app needing multi-row transactions",
+                "Firestore or Cloud SQL; Bigtable is for 1 TB and up, single-row transactions",
+                "Bigtable only pays off at scale and supports single-row transactions only. A small transactional app fits Firestore or Cloud SQL."
+              ],
+              [
+                "Local SSD for data that must survive a stop",
+                "Persistent Disk or Hyperdisk; Local SSD is scratch space",
+                "Local SSD data disappears when the VM stops or is deleted. Persistent disks outlive the VM."
+              ],
+              [
+                "Filestore for objects served over HTTP",
+                "Cloud Storage; Filestore is an NFS file share for VMs and GKE",
+                "Filestore is a file share that servers mount. Serving files to users over HTTP is what Cloud Storage (with CDN) is for."
+              ]
+            ]
+          },
+          {
+            "id": "1.4",
+            "title": "Network Design and Hybrid Connectivity",
+            "tests": "VPC layout, connecting projects and on-premises networks, and picking the load balancer.",
+            "rules": [
+              "A VPC is global and its subnets are regional; use custom-mode VPCs in production, never the default network.",
+              "Projects in one organisation sharing a network: Shared VPC (one host project). Separate networks or organisations talking privately: VPC Network Peering.",
+              "On-premises link: HA VPN (99.99%, encrypted, over the internet) for low cost; Dedicated Interconnect (10 or 100 Gbps) or Partner Interconnect (lower bandwidth) for high, private throughput."
+            ],
+            "traps": [
+              [
+                "VPC Peering to let a central team control the network of many projects",
+                "Shared VPC with a host project run by the network team",
+                "Peering joins networks that each team still controls. Shared VPC gives one team central control of one network used by many projects."
+              ],
+              [
+                "Classic VPN when the scenario asks for a 99.99% SLA",
+                "HA VPN with two tunnels and Cloud Router (BGP)",
+                "Classic VPN's SLA is 99.9%. Only HA VPN, with two tunnels and BGP, reaches 99.99%."
+              ],
+              [
+                "Overlapping IP ranges between on-premises and the VPC",
+                "Plan non-overlapping CIDR ranges before connecting",
+                "Routers can't tell overlapping ranges apart, so networks with the same ranges can't reach each other reliably once connected."
+              ],
+              [
+                "A network load balancer for path-based routing (/api, /login)",
+                "An Application Load Balancer (Layer 7)",
+                "Path and host rules work on HTTP (Layer 7). Network load balancers work on TCP and UDP and can't see URLs."
+              ],
+              [
+                "Interconnect with no fallback",
+                "Interconnect as primary with HA VPN (or a second Interconnect) as backup",
+                "A single link is a single point of failure. The exam expects a backup path for critical hybrid connectivity."
+              ]
+            ]
+          },
+          {
+            "id": "1.5",
+            "title": "Availability, Disaster Recovery and Migration",
+            "tests": "designing to an RTO and RPO, removing single points of failure, and planning a migration.",
+            "rules": [
+              "RPO is how much data you can lose; RTO is how long you can be down. Both near zero means a hot standby with automatic failover, and costs the most.",
+              "Spread across zones for availability and across regions for disasters: regional MIGs, regional GKE clusters, Cloud SQL HA, multi-region storage.",
+              "Migrate in four phases: assess, plan the foundation (hierarchy, IAM, network), deploy, optimise. Move low-risk, low-dependency apps first."
+            ],
+            "traps": [
+              [
+                "Cloud SQL read replicas to raise availability",
+                "Cloud SQL HA configuration (regional standby with automatic failover)",
+                "Cloud SQL read replicas are not promoted automatically. The HA standby is what fails over on its own."
+              ],
+              [
+                "Daily snapshots for an RPO of minutes",
+                "Continuous replication or a hot or warm standby",
+                "A daily snapshot can lose up to a day of data. An RPO of minutes needs continuous replication."
+              ],
+              [
+                "Refactor everything during the migration",
+                "Rehost or replatform first, then modernise; refactoring is the slowest and dearest",
+                "Refactoring during the move adds time and risk. Move first, then modernise once the workload runs in the cloud."
+              ],
+              [
+                "A DR plan written once and filed",
+                "Test the DR plan regularly with game days",
+                "An untested plan often fails when it's needed. Regular drills prove you can meet the RTO and RPO."
+              ],
+              [
+                "Transfer 50 TB over a slow link that would take weeks",
+                "Transfer Appliance (over about 20 TB or more than a week online)",
+                "Over a slow link the copy would take weeks and saturate the line. A shipped appliance is faster for large data."
+              ]
+            ]
+          },
+          {
+            "id": "1.6",
+            "title": "Choosing AI and ML Services",
+            "tests": "picking the lightest AI option that meets the need: pre-trained APIs, foundation models, tuning, AutoML or custom training.",
+            "rules": [
+              "Standard task (vision, speech, translation, sentiment) with no customisation: a pre-trained API.",
+              "Chat, summarisation or generation: a foundation model such as Gemini from Model Garden in Gemini Enterprise Agent Platform (formerly Vertex AI). Your own tone or domain terms: tune it.",
+              "Custom labels but no ML engineers: AutoML. Data scientists with TensorFlow or PyTorch code: custom training. Answers grounded in your documents: Agent Search or the RAG Engine."
+            ],
+            "traps": [
+              [
+                "Train a custom model to detect sentiment in reviews",
+                "The Natural Language API",
+                "Sentiment is a standard task the Natural Language API already does, with no data or training needed."
+              ],
+              [
+                "Fine-tune a model so it can answer from today's product manuals",
+                "Ground it with RAG or Agent Search; tuning teaches style, not fresh facts",
+                "Tuning changes how a model writes, and facts learned that way go stale. Grounding fetches the current documents at answer time."
+              ],
+              [
+                "Custom training for a team with no ML expertise",
+                "AutoML",
+                "Custom training needs ML engineers writing code. AutoML trains from labelled data without code."
+              ],
+              [
+                "Google AI Studio for a governed enterprise deployment",
+                "Agent Studio in Gemini Enterprise Agent Platform",
+                "AI Studio is for quick experiments with a personal account. Agent Studio adds enterprise access control, security and deployment."
+              ],
+              [
+                "Build an ML model outside the warehouse when the data is in BigQuery and the team knows SQL",
+                "BigQuery ML",
+                "Moving data out adds pipelines and risk. BigQuery ML trains where the data lives, in SQL the team already knows."
+              ]
+            ]
+          }
+        ],
+        "group": "Exam sections",
+        "part": "exam",
+        "short": "Design"
+      },
+      {
+        "n": 2,
+        "weight": 17.5,
+        "title": "Managing and Provisioning Infrastructure",
+        "sub": "Configure and run what you designed: VMs and instance groups, GKE clusters, storage, data, and the resource hierarchy.",
+        "lessons": [
+          {
+            "id": "2.1",
+            "title": "Compute Engine in Practice",
+            "tests": "instance templates, managed instance groups, machine choice and the VM features that keep costs and boot times down.",
+            "rules": [
+              "Managed instance groups (MIGs) give autoscaling, autohealing with health checks and rolling updates; regional MIGs spread VMs across zones.",
+              "Instance templates cannot be edited: copy one and change the copy. Bake software into a custom image rather than installing it in a startup script.",
+              "Fault-tolerant batch work: Spot VMs (60 to 91% off, 30 seconds' notice). Steady load: committed use discounts. Licensing or compliance needing dedicated hosts: sole-tenant nodes."
+            ],
+            "traps": [
+              [
+                "Unmanaged instance group for an autoscaling web tier",
+                "A managed instance group built from an instance template",
+                "Unmanaged groups can't autoscale, autoheal or roll out updates. Only managed instance groups do."
+              ],
+              [
+                "Edit the live instance template",
+                "Create a new template and roll it out to the MIG",
+                "Instance templates can't be changed after creation. You make a new one and roll it out."
+              ],
+              [
+                "Long startup scripts to install software on every boot",
+                "A hardened custom image with the software pre-installed",
+                "Installing software at every boot slows scaling and can fail. A pre-built image starts ready to serve."
+              ],
+              [
+                "Spot VMs for a critical, always-on database",
+                "Standard VMs, with committed use discounts for the steady load",
+                "Spot VMs can be stopped at any time with 30 seconds' notice, which a critical database can't survive."
+              ],
+              [
+                "Keep a static IP reserved but unused to save money",
+                "Release it: you are billed for reserved static IPs that are not in use",
+                "A reserved static IP that isn't attached to anything is still billed. Releasing it stops the charge."
+              ]
+            ]
+          },
+          {
+            "id": "2.2",
+            "title": "Running GKE",
+            "tests": "node pools, cluster types, the three autoscalers, probes and disruption budgets.",
+            "rules": [
+              "Regional clusters replicate the control plane across zones; Autopilot clusters are always regional. Use node pools to give each workload the right machine (GPU, high-memory, Spot).",
+              "Horizontal Pod Autoscaler adds Pods, Vertical Pod Autoscaler resizes their requests, cluster autoscaler adds and removes nodes. Spiky traffic needs HPA plus cluster autoscaler.",
+              "Startup probe for slow starters, readiness probe before sending traffic, liveness probe to restart a stuck container. PodDisruptionBudget keeps Pods up during maintenance."
+            ],
+            "traps": [
+              [
+                "Zonal cluster for a production app that must survive a zone outage",
+                "Regional cluster",
+                "A zonal cluster's control plane lives in one zone. A regional cluster keeps running when a zone fails."
+              ],
+              [
+                "One big node pool for GPU and web workloads",
+                "A separate GPU node pool, with nodeSelector or taints",
+                "Mixing workloads wastes expensive GPU nodes on ordinary Pods. A separate pool lets only GPU work land there."
+              ],
+              [
+                "Liveness probe to stop traffic until the database is ready",
+                "Readiness probe",
+                "A failing liveness probe restarts the container. A readiness probe just holds traffic back until the app is ready."
+              ],
+              [
+                "Pods stuck in Pending: restart them",
+                "Not enough capacity: let cluster autoscaler add nodes or lower the requests",
+                "Pending means the scheduler can't find room. Restarting adds no capacity; more nodes or smaller requests do."
+              ],
+              [
+                "ImagePullBackOff fixed by adding more nodes",
+                "Check the image name and tag, and that the node service account can read Artifact Registry",
+                "The node can't fetch the image, so more nodes would fail the same way. Fix the name, the tag or the registry permission."
+              ]
+            ]
+          },
+          {
+            "id": "2.3",
+            "title": "Storage and Data Operations",
+            "tests": "snapshots and images, Cloud Storage lifecycle and retention, data transfer and BigQuery table design.",
+            "rules": [
+              "Snapshots are incremental and can be scheduled with automatic deletion. A machine image copies a whole VM (config plus all disks); a custom image copies one boot disk.",
+              "Lifecycle rules move objects to Nearline (30 days minimum), Coldline (90) or Archive (365) and delete them later. A locked retention policy makes objects undeletable until they age out.",
+              "Under 1 TB: `gcloud storage cp`. Over 1 TB, or from another cloud, on a schedule: Storage Transfer Service. Very large or slow link: Transfer Appliance."
+            ],
+            "traps": [
+              [
+                "Back up a VM's config and every attached disk with disk snapshots",
+                "A machine image",
+                "Snapshots copy disks only. A machine image also captures the VM's configuration and all its disks together."
+              ],
+              [
+                "Keep logs for 4 years in Standard storage",
+                "Lifecycle rule to Archive after 30 days, delete after 4 years",
+                "Standard is the most expensive class for data nobody reads. Lifecycle rules move it to cheaper classes automatically."
+              ],
+              [
+                "Object versioning to meet a write-once compliance rule",
+                "A locked retention policy (Bucket Lock)",
+                "Versioning keeps old copies, but anyone with rights can still delete them. A locked retention policy can't be bypassed, even by admins."
+              ],
+              [
+                "`gsutil` for 3 TB from Azure Blob Storage",
+                "Storage Transfer Service",
+                "Command-line copies don't schedule, resume or verify well for large cross-cloud moves. Storage Transfer Service does."
+              ],
+              [
+                "Scan a full BigQuery table to filter by date",
+                "Partition by the date column, cluster by the common filter, and check with a dry run",
+                "BigQuery bills the data a query scans. Partitioning lets a date filter read only the matching partitions."
+              ]
+            ]
+          },
+          {
+            "id": "2.4",
+            "title": "Resource Hierarchy, Billing and Network Operations",
+            "tests": "organising projects, controlling spend and configuring firewall rules and private access.",
+            "rules": [
+              "Organization, then folders (per department), then projects (one per app per environment), then resources. Policies inherit downward.",
+              "Billing budgets alert at thresholds (50, 90, 100% by default); they do not stop spending. Export billing to BigQuery to analyse it.",
+              "Firewall rules are stateful; the lowest number has the highest priority. Default rules allow all egress and deny all ingress. Load balancer health checks come from 130.211.0.0/22 and 35.191.0.0/16."
+            ],
+            "traps": [
+              [
+                "Dev and prod in one project, separated by labels",
+                "Separate projects per environment",
+                "Projects are the main boundary for IAM, quotas and billing. Labels don't stop a dev mistake from hitting production."
+              ],
+              [
+                "A budget alert to cap spending",
+                "Budgets only notify; automate a response through Pub/Sub if you must act",
+                "Budgets send alerts only. Spending carries on unless you build an automated action."
+              ],
+              [
+                "Health checks fail: make the VMs public",
+                "Allow ingress from the health check ranges in the firewall",
+                "Health checks come from Google's fixed ranges. Allowing just those keeps the VMs private."
+              ],
+              [
+                "Give private VMs external IPs so they can reach Google APIs",
+                "Enable Private Google Access on the subnet",
+                "Private Google Access lets internal-only VMs reach Google APIs without exposing them to the internet."
+              ],
+              [
+                "External IPs on private VMs so they can download updates",
+                "Cloud NAT with Cloud Router",
+                "Cloud NAT gives outbound internet access while nothing can connect in."
+              ]
+            ]
+          }
+        ],
+        "group": "Exam sections",
+        "part": "exam",
+        "short": "Provision"
+      },
+      {
+        "n": 3,
+        "weight": 17.5,
+        "title": "Designing for Security and Compliance",
+        "sub": "Identity and access, service accounts, data protection, network and workload security, and meeting regulations.",
+        "lessons": [
+          {
+            "id": "3.1",
+            "title": "IAM, Identity and Organisation Policy",
+            "tests": "who gets which role at which level, and the difference between IAM and organisation policies.",
+            "rules": [
+              "Grant predefined roles to groups, at the lowest level that works. Basic roles (Owner, Editor, Viewer) are too broad for production.",
+              "The effective policy is the union of a resource's policy and every parent's; a grant higher up cannot be taken away lower down (use deny policies if you must).",
+              "IAM decides who can do what. Organisation policies decide what can exist (allowed regions, no external IPs, no service account keys) whoever asks."
+            ],
+            "traps": [
+              [
+                "Grant roles to each person one by one",
+                "Grant roles to a Google group",
+                "Group grants are easier to audit and to update as people join and leave."
+              ],
+              [
+                "Remove access in a project that was granted at the folder",
+                "Remove it at the folder, or use an IAM deny policy",
+                "Allow policies are inherited and add up. A lower level can't remove a higher grant, except with a deny policy."
+              ],
+              [
+                "IAM to stop anyone creating resources outside the EU",
+                "An organisation policy restricting resource locations",
+                "IAM controls who can act. An organisation policy limits what can be created, whoever tries."
+              ],
+              [
+                "Editor role for a developer who only deploys",
+                "The narrow predefined role (or a custom role) for that job",
+                "Editor can change almost everything in the project. Least privilege means the narrowest role that does the job."
+              ],
+              [
+                "Cloud IAM for your app's customer sign-in",
+                "Identity Platform; IAM is for employees and workloads",
+                "IAM is for people and workloads that manage Google Cloud. Your app's end users sign in through Identity Platform."
+              ]
+            ]
+          },
+          {
+            "id": "3.2",
+            "title": "Service Accounts and Workload Identity",
+            "tests": "how code authenticates without long-lived keys, on Google Cloud, in GKE and from outside.",
+            "rules": [
+              "Code on Google Cloud uses an attached service account; Google rotates its credentials, so there are no keys to store.",
+              "GKE Pods needing different permissions: Workload Identity Federation for GKE, one Kubernetes service account per microservice. Common permissions for all Pods (logging, monitoring): the node service account.",
+              "Workloads outside Google Cloud (AWS, Azure, on-premises with an IdP): Workload Identity Federation with short-lived tokens. Downloaded keys are the last resort."
+            ],
+            "traps": [
+              [
+                "Download a service account key for an app on a VM",
+                "Attach a service account to the VM",
+                "Key files can leak and must be rotated by hand. An attached service account gets short-lived credentials automatically."
+              ],
+              [
+                "Use the default Compute Engine service account with Editor",
+                "A user-managed service account per app with only the roles it needs",
+                "The default account often has broad Editor rights. A dedicated account limits the damage if the app is compromised."
+              ],
+              [
+                "Give every Pod the node's broad service account",
+                "Workload Identity Federation for GKE per microservice",
+                "Every Pod on the node would share the same permissions. Workload Identity gives each workload only its own."
+              ],
+              [
+                "Store a key file in the repo for a GitHub Actions deploy",
+                "Workload Identity Federation from GitHub's OIDC tokens",
+                "A stored key is a long-lived secret. Federation swaps the CI system's own token for short-lived Google credentials."
+              ],
+              [
+                "Grant the role in Project A so its VM can read a bucket in Project B",
+                "Grant the VM's service account the role on the bucket in Project B",
+                "Access is granted on the resource being used. The bucket lives in Project B, so the grant goes there."
+              ]
+            ]
+          },
+          {
+            "id": "3.3",
+            "title": "Protecting Data",
+            "tests": "encryption key options, secrets, sensitive data and preventing data from leaving a perimeter.",
+            "rules": [
+              "Everything is encrypted at rest by default. Need to control or rotate the key: customer-managed keys (CMEK) in Cloud KMS. Must hold the key yourself: customer-supplied keys (CSEK), sent with each request.",
+              "Passwords and API keys go in Secret Manager (versioned, audited), never in code or environment files in the image.",
+              "Find and mask PII: Sensitive Data Protection (Cloud DLP). Stop data being copied out of a set of projects even by a valid identity: VPC Service Controls."
+            ],
+            "traps": [
+              [
+                "CSEK when the scenario only asks to manage and rotate keys",
+                "CMEK in Cloud KMS",
+                "With CSEK you supply and guard the key on every request. CMEK gives control and rotation with far less work."
+              ],
+              [
+                "Hard-code the database password in the container",
+                "Secret Manager, read at runtime by the service account",
+                "Passwords baked into images leak through registries and logs and are hard to rotate. Secret Manager keeps them separate and audited."
+              ],
+              [
+                "IAM alone to stop an insider copying BigQuery data to a personal project",
+                "A VPC Service Controls perimeter",
+                "A user who is allowed to read can still copy data out. A service perimeter blocks data leaving the boundary."
+              ],
+              [
+                "Make a bucket public so a partner can download one file",
+                "A signed URL with a short expiry",
+                "A public bucket exposes everything in it. A signed URL shares one object for a limited time."
+              ],
+              [
+                "Store raw PII in BigQuery and restrict the table",
+                "De-identify with Sensitive Data Protection before loading",
+                "A restricted table still holds raw PII that can leak. De-identifying first lowers the risk and keeps the data useful."
+              ]
+            ]
+          },
+          {
+            "id": "3.4",
+            "title": "Network, Workload Security and Compliance",
+            "tests": "Cloud Armor, IAP, private clusters, supply-chain controls, audit logs and regulated workloads.",
+            "rules": [
+              "Cloud Armor on an external Application Load Balancer blocks DDoS, OWASP Top 10 attacks and IP or geo ranges. Identity-Aware Proxy gives users access to internal apps without a VPN.",
+              "GKE hardening: private nodes plus Cloud NAT, authorised networks for the control plane, default-deny NetworkPolicies, Binary Authorization for signed images, GKE Sandbox for untrusted code.",
+              "Compliance is shared: sign a BAA for HIPAA, isolate the PCI environment in its own project, keep audit logs in a locked bucket, and use only covered services."
+            ],
+            "traps": [
+              [
+                "A VPN for staff to reach an internal web app",
+                "Identity-Aware Proxy",
+                "A VPN opens up the network. IAP grants access to just that app, based on identity and context."
+              ],
+              [
+                "Firewall rules to stop SQL injection",
+                "Cloud Armor WAF rules on the load balancer",
+                "Firewall rules filter IPs and ports, not request content. A web application firewall inspects HTTP requests for attacks."
+              ],
+              [
+                "Trust any image from the registry in production",
+                "Binary Authorization: only signed, attested images deploy",
+                "Without attestation, anyone who can push an image can run it. Binary Authorization only allows signed, approved images."
+              ],
+              [
+                "Run untrusted third-party code in a normal node pool",
+                "A node pool with GKE Sandbox",
+                "An escape from a container could reach the node and other workloads. GKE Sandbox adds an extra isolation layer."
+              ],
+              [
+                "Assume Google is responsible for HIPAA compliance",
+                "Sign the BAA and configure your own controls; it is shared",
+                "Google secures the platform, but you must sign a BAA and configure your own workloads to comply."
+              ]
+            ]
+          }
+        ],
+        "group": "Exam sections",
+        "part": "exam",
+        "short": "Security"
+      },
+      {
+        "n": 4,
+        "weight": 15,
+        "title": "Analysing and Optimising Technical and Business Processes",
+        "sub": "Cost control, data pipelines, and the people side: stakeholders, change, continuity and SRE.",
+        "lessons": [
+          {
+            "id": "4.1",
+            "title": "Optimising Cost",
+            "tests": "which lever cuts cost for a workload without breaking a requirement.",
+            "rules": [
+              "Steady, predictable load: committed use discounts (1 or 3 years). Interruptible work: Spot VMs. Variable load: autoscaling, or serverless that scales to zero.",
+              "GKE Autopilot bills Pod requests, not whole nodes; set requests carefully. Cloud Run request-based billing suits spiky traffic, instance-based suits steady traffic.",
+              "BigQuery bills data scanned: partition and cluster tables, avoid `SELECT *`, dry-run queries, batch-load instead of streaming, and let unused tables expire."
+            ],
+            "traps": [
+              [
+                "Committed use discounts for a two-week experiment",
+                "On-demand or Spot VMs",
+                "Commitments last 1 or 3 years. You'd pay for a year to use two weeks."
+              ],
+              [
+                "Bigger VMs to fix a slow, rarely used internal tool",
+                "Right-size from recommendations, or move it to serverless",
+                "Over-sizing raises cost without fixing the real need. Right-sizing or serverless matches spend to actual use."
+              ],
+              [
+                "Streaming inserts for a nightly file load into BigQuery",
+                "Batch load jobs, which are free",
+                "Streaming inserts cost money and suit real-time needs. Nightly files load free as batch jobs."
+              ],
+              [
+                "Keep all data in Standard storage for simplicity",
+                "Lifecycle rules to colder classes as access drops",
+                "Paying Standard rates for data nobody reads wastes money. Lifecycle rules move it to cheaper classes."
+              ],
+              [
+                "Guess where money goes",
+                "Export billing to BigQuery and analyse it in Looker Studio",
+                "The billing export gives line-level cost by project, service and label, so you can see where money really goes."
+              ]
+            ]
+          },
+          {
+            "id": "4.2",
+            "title": "Data Pipelines and Analytics",
+            "tests": "building ingest, process, store and analyse pipelines with the right managed service at each step.",
+            "rules": [
+              "Streaming ingest: Pub/Sub. Batch ingest: Storage Transfer Service, BigQuery Data Transfer Service or Transfer Appliance.",
+              "New batch or streaming pipelines with no cluster: Dataflow (Apache Beam). Existing Spark or Hadoop jobs: Dataproc. Visual cleaning for analysts: Dataprep. Orchestration: Cloud Composer.",
+              "Ad hoc SQL analytics: BigQuery. Fixed, high-throughput time-series lookups: Bigtable. Dashboards: Looker or Looker Studio."
+            ],
+            "traps": [
+              [
+                "Dataproc for a brand new streaming pipeline",
+                "Dataflow",
+                "Dataproc means running Spark clusters. Dataflow is serverless and built for new batch and streaming pipelines."
+              ],
+              [
+                "Rewrite existing Spark jobs in Beam to move them",
+                "Run them on Dataproc first",
+                "Rewriting delays the migration and adds risk. Dataproc runs existing Spark jobs with few changes."
+              ],
+              [
+                "Call the warehouse directly from every sensor",
+                "Pub/Sub to buffer, Dataflow to process, then BigQuery or Bigtable",
+                "Direct writes overload the store during spikes and lose data during outages. Pub/Sub buffers and Dataflow transforms."
+              ],
+              [
+                "Pub/Sub alone for exactly-once, de-duplicated processing",
+                "Pub/Sub with Dataflow (or Pub/Sub exactly-once delivery on a pull subscription)",
+                "Pub/Sub delivers at least once by default, so duplicates happen. Dataflow or exactly-once delivery removes them."
+              ],
+              [
+                "BigQuery for single-key lookups in milliseconds at millions of writes per second",
+                "Bigtable",
+                "BigQuery is optimised for large scans, not millisecond single-row lookups at huge write rates. Bigtable is."
+              ]
+            ]
+          },
+          {
+            "id": "4.3",
+            "title": "Stakeholders, Change, Continuity and SRE",
+            "tests": "the architect's non-technical work, and the reliability vocabulary the exam expects.",
+            "rules": [
+              "SLI is the measure, SLO is the target, SLA is the contract with penalties. Keep internal SLOs stricter than the SLA. The error budget (100% minus the SLO) decides how fast you can ship.",
+              "Business continuity covers people and processes; disaster recovery is its IT part. Both need named owners, an RTO and RPO, and regular tests.",
+              "Incidents end with a blameless postmortem that asks how to stop a repeat, not who to blame. Manage change by explaining the reason, the risk and who is affected."
+            ],
+            "traps": [
+              [
+                "Promise customers the same SLA as the internal SLO",
+                "Set the SLA looser than the internal SLO",
+                "If the contract equals the internal target, any slip costs money. A stricter internal SLO gives a safety margin."
+              ],
+              [
+                "Freeze all releases forever after one outage",
+                "Use the error budget: slow releases only while it is spent",
+                "Freezing stops all improvement. The error budget says when to slow down and when it's safe to ship."
+              ],
+              [
+                "Postmortem that names who caused the outage",
+                "Blameless postmortem with action items",
+                "Blame makes people hide mistakes. Blameless reviews find system fixes that prevent a repeat."
+              ],
+              [
+                "Tell stakeholders about the migration at go-live",
+                "Identify stakeholders early and plan the communication",
+                "Late surprises create resistance and missed requirements. Early communication brings buy-in and feedback."
+              ],
+              [
+                "Chase 100% availability",
+                "Pick an SLO users need; each extra nine costs far more",
+                "Each extra nine costs much more, and users often can't tell. Aim for the reliability users actually need."
+              ]
+            ]
+          }
+        ],
+        "group": "Exam sections",
+        "part": "exam",
+        "short": "Optimise"
+      },
+      {
+        "n": 5,
+        "weight": 12.5,
+        "title": "Managing Implementation",
+        "sub": "Ship changes safely: release strategies, CI/CD and infrastructure as code, and the tools and APIs used to build on Google Cloud.",
+        "lessons": [
+          {
+            "id": "5.1",
+            "title": "Release Strategies",
+            "tests": "which deployment strategy meets the release goals, and how to do it on MIGs, Cloud Run, App Engine and GKE.",
+            "rules": [
+              "Rolling: gradual, no extra infrastructure. Blue/green: instant switch and rollback, needs double capacity during the release. Canary: a small slice of traffic first. Recreate: cheapest, but downtime.",
+              "Test whether users like a feature: A/B testing. Test with real production traffic and no user impact: shadow (mirrored) traffic.",
+              "Cloud Run and App Engine split traffic between revisions or versions; MIGs run rolling or canary updates with max surge and max unavailable; GKE canaries by percentage need Gateway API or a service mesh."
+            ],
+            "traps": [
+              [
+                "Recreate for an app that must have zero downtime",
+                "Rolling or blue/green",
+                "Recreate stops the old version before starting the new one, so users see downtime."
+              ],
+              [
+                "Rolling update when instant rollback is the key requirement",
+                "Blue/green",
+                "Rolling back a rolling update is another slow rollout. Blue/green switches traffic back at once."
+              ],
+              [
+                "Deploy a new Cloud Run revision straight to 100%",
+                "Deploy with no traffic, then shift a percentage",
+                "Sending all traffic at once exposes every user to any bug. A small split tests the new revision first."
+              ],
+              [
+                "Kubernetes Deployment alone for a 5% traffic canary",
+                "Gateway API traffic splitting or Cloud Service Mesh",
+                "A Deployment can only approximate splits through replica counts. Gateway API or a service mesh routes exact percentages."
+              ],
+              [
+                "Rolling update with max unavailable 1 when capacity must not drop",
+                "Max surge 1, max unavailable 0",
+                "Max unavailable 1 takes an instance down before its replacement is ready. Surge 1, unavailable 0 adds the new one first."
+              ]
+            ]
+          },
+          {
+            "id": "5.2",
+            "title": "CI/CD and Infrastructure as Code",
+            "tests": "building a delivery pipeline and keeping infrastructure in version-controlled code.",
+            "rules": [
+              "Cloud Build builds and tests, Artifact Registry stores and scans images and packages, Cloud Deploy promotes releases through environments.",
+              "Define infrastructure with Terraform (or Infrastructure Manager, which runs Terraform for you) and change it only through that code, so environments do not drift.",
+              "Keep many GKE clusters in line with Git: Config Sync (GitOps). Manage Google Cloud resources with Kubernetes YAML: Config Connector. Enforce cluster rules: Policy Controller."
+            ],
+            "traps": [
+              [
+                "Container Registry for new projects",
+                "Artifact Registry",
+                "Container Registry is retired. Artifact Registry replaces it, with more formats and vulnerability scanning."
+              ],
+              [
+                "Fix a production setting by hand in the console",
+                "Change the Terraform code and apply it",
+                "Manual changes drift from the code and get overwritten on the next apply. Change the code so it stays the source of truth."
+              ],
+              [
+                "Script `kubectl apply` against each cluster in turn",
+                "Config Sync from one Git repository across the fleet",
+                "Per-cluster scripts drift and can fail halfway. Config Sync keeps every cluster matching Git automatically."
+              ],
+              [
+                "Run tests only after deploying to production",
+                "Unit, integration and security checks in the pipeline before release",
+                "Bugs found in production cost the most. Checks in the pipeline catch them before release."
+              ],
+              [
+                "Develop against live Pub/Sub, Spanner and Firestore",
+                "Use the local emulators for development",
+                "Developing against live services costs money and risks real data. Emulators run locally for free."
+              ]
+            ]
+          },
+          {
+            "id": "5.3",
+            "title": "Tools, APIs and Integration",
+            "tests": "the right command-line tool, decoupling services, and managing APIs.",
+            "rules": [
+              "`gcloud` manages most services; `gcloud storage` (faster than `gsutil`) for Cloud Storage, `bq` for BigQuery, `cbt` for Bigtable, `kubectl` for Kubernetes objects.",
+              "Decouple producers and consumers with Pub/Sub; route Google Cloud events (a file upload, an audit log entry) to Cloud Run with Eventarc; schedule jobs with Cloud Scheduler.",
+              "Full API management (developer portal, quotas, monetisation, a facade over legacy systems): Apigee. Simple managed gateway for serverless backends: API Gateway."
+            ],
+            "traps": [
+              [
+                "`gcloud` to read and write Bigtable rows",
+                "`cbt` or the client libraries",
+                "`gcloud` manages Bigtable instances, clusters and tables. Reading and writing rows uses `cbt` or the client libraries."
+              ],
+              [
+                "Synchronous calls from every service to a slow logging service",
+                "Publish to Pub/Sub and let the consumer catch up",
+                "If the logging service slows or fails, every caller slows or fails with it. A queue decouples them."
+              ],
+              [
+                "Polling a bucket for new files",
+                "An Eventarc or Cloud Storage trigger",
+                "Polling wastes calls and adds delay. An event trigger runs as soon as the file lands."
+              ],
+              [
+                "API Gateway when partners need a portal, keys and monetisation",
+                "Apigee",
+                "API Gateway has no developer portal or monetisation. Apigee is built for full API products."
+              ],
+              [
+                "Cron on a VM kept running only to trigger jobs",
+                "Cloud Scheduler",
+                "A VM kept running only for cron costs money and needs patching. Cloud Scheduler is managed and cheap."
+              ]
+            ]
+          }
+        ],
+        "group": "Exam sections",
+        "part": "exam",
+        "short": "Implement"
+      },
+      {
+        "n": 6,
+        "weight": 12.5,
+        "title": "Ensuring Solution and Operations Excellence",
+        "sub": "Observe, run and troubleshoot what is in production, using Google Cloud Observability and SRE practice.",
+        "lessons": [
+          {
+            "id": "6.1",
+            "title": "Monitoring, Logging and Tracing",
+            "tests": "which observability tool answers the question, and where logs go and for how long.",
+            "rules": [
+              "Metrics, dashboards, uptime checks and alerts: Cloud Monitoring. Logs: Cloud Logging. A slow request across services: Cloud Trace. CPU and memory hot spots in code: Cloud Profiler. Grouped exceptions: Error Reporting.",
+              "Install the Ops Agent on VMs for memory, disk and application metrics and logs. Watch the four golden signals: latency, traffic, errors and saturation.",
+              "The _Required bucket keeps admin activity and system event logs for 400 days at no cost; _Default keeps the rest for 30 days. Use the Log Router and sinks to send logs to Cloud Storage, BigQuery or Pub/Sub."
+            ],
+            "traps": [
+              [
+                "Expect memory metrics from a VM with no agent",
+                "Install the Ops Agent",
+                "Without an agent, Compute Engine only sees what the hypervisor sees. Memory and disk usage need the Ops Agent."
+              ],
+              [
+                "Cloud Logging to find which microservice adds latency",
+                "Cloud Trace",
+                "Logs show events one service at a time. Trace follows a single request across services and shows where the time went."
+              ],
+              [
+                "Keep audit logs 7 years in the _Default bucket",
+                "A sink to a Cloud Storage bucket with a locked retention policy",
+                "_Default keeps logs 30 days unless changed and is not a write-once store. A locked bucket keeps them unchanged for years."
+              ],
+              [
+                "Expect data access logs to be on by default",
+                "Turn on Data Access audit logs (except BigQuery, on by default)",
+                "Data Access logs are off by default for most services because of their volume. You turn them on (BigQuery's are always on)."
+              ],
+              [
+                "Let auditors browse Cloud Logging",
+                "Export to a bucket and grant them Storage Object Viewer on it",
+                "Logging access shows auditors far more than they need. An exported bucket with read-only access is scoped and cheap."
+              ]
+            ]
+          },
+          {
+            "id": "6.2",
+            "title": "Reliability Engineering",
+            "tests": "designing systems that degrade gracefully and proving it with testing.",
+            "rules": [
+              "Retry with exponential backoff and jitter on 429 and 5xx errors; use circuit breakers so one failing service does not take down the rest.",
+              "Degrade gracefully: serve cached or static content, drop optional features, shed low-priority load, rather than fail completely.",
+              "Prove resilience with load tests that include spikes, chaos and failover tests, and DR drills. Measure MTTD, MTTR and MTBF to see if it is improving."
+            ],
+            "traps": [
+              [
+                "Retry immediately in a tight loop",
+                "Exponential backoff with jitter",
+                "Instant retries pile load onto a struggling service. Backoff with jitter spreads retries out so it can recover."
+              ],
+              [
+                "Let the whole site fail when the recommendation service is down",
+                "Show a default list and keep checkout working",
+                "A non-essential feature failing shouldn't take down essential paths. Degrade the optional part and keep the core working."
+              ],
+              [
+                "Load test only with steady traffic",
+                "Include sudden spikes like the real launch",
+                "Launches and sales spike suddenly. Testing only steady load misses autoscaling and cold-start problems."
+              ],
+              [
+                "Assume the backup VPN works because it is configured",
+                "Fail over to it in a planned test",
+                "Untested failover often fails in practice. Only a real test proves the backup works."
+              ],
+              [
+                "Page the team on every warning",
+                "Alert on symptoms tied to SLOs so alerts are actionable",
+                "Too many alerts get ignored. Alerts tied to user-facing SLOs mean someone really needs to act."
+              ]
+            ]
+          },
+          {
+            "id": "6.3",
+            "title": "Troubleshooting",
+            "tests": "reading the symptom and going to the most likely cause first.",
+            "rules": [
+              "VM will not boot or start: check quotas, a full boot disk and the serial port output; attach the disk to another VM to inspect it.",
+              "`kubectl` times out: check authorised networks for the control plane, the endpoint and your credentials (`gcloud container clusters get-credentials`).",
+              "Backends marked unhealthy behind a load balancer: check the firewall allows the health check ranges and the health check path and port are right."
+            ],
+            "traps": [
+              [
+                "Recreate the VM when it hangs at boot",
+                "Read the serial port output first",
+                "Recreating throws away the clues and may repeat the fault. The serial port output shows why the boot failed."
+              ],
+              [
+                "Raise the machine size when a VM creation fails with a quota error",
+                "Request more quota or pick another region",
+                "A bigger VM needs more quota, not less. Request more quota or use a region with headroom."
+              ],
+              [
+                "Open the GKE control plane to 0.0.0.0/0 to fix `kubectl` timeouts",
+                "Add your client range (such as Cloud Shell) to authorised networks",
+                "Opening the control plane to the internet removes a key protection. Add only your client's range."
+              ],
+              [
+                "CrashLoopBackOff: add more replicas",
+                "Read `kubectl logs` and `kubectl describe pod` for the crash reason",
+                "Every new replica will crash the same way. The logs and pod events show the cause."
+              ],
+              [
+                "Cloud SQL connections from Cloud Run fail: open the database to the internet",
+                "Use the Cloud SQL connector or Auth Proxy with private IP",
+                "Opening a database to the internet invites attacks. Private IP with the connector is secure and recommended."
+              ]
+            ]
+          }
+        ],
+        "group": "Exam sections",
+        "part": "exam",
+        "short": "Operate"
+      },
+      {
+        "n": 7,
+        "weight": 0,
+        "tag": "Case studies",
+        "weightLabel": "asked across every section",
+        "title": "The Four Case Studies",
+        "sub": "Questions about four fictional companies make up a big part of the exam. Know each one's environment and goals before exam day, then answer from the requirements.",
+        "lessons": [
+          {
+            "id": "7.1",
+            "title": "Altostrat Media",
+            "tests": "a media company with a large audio and video library that wants AI for content and engagement, while keeping costs and hybrid operations under control.",
+            "rules": [
+              "Today: legacy on-premises ingest and archive, GKE for content delivery, Cloud Storage for media, BigQuery for audience analytics, Cloud Run functions for transcoding and metadata.",
+              "Hybrid GKE across sites: GKE Enterprise (fleets) with Cloud Interconnect. Long transcoding jobs: Cloud Run jobs, not functions with time limits. Storage cost: lifecycle rules to colder classes.",
+              "AI: Speech-to-Text plus Gemini for summaries and metadata, Vision and Video AI for harmful content, Conversational Agents for 24/7 support, with audit logs and explainability for every model."
+            ],
+            "traps": [
+              [
+                "Bigger function timeouts for long transcodes",
+                "Cloud Run jobs",
+                "Functions have hard time limits. Long transcodes belong in Cloud Run jobs, which run to completion."
+              ],
+              [
+                "Keep the whole media library in Standard storage",
+                "Lifecycle rules to Nearline, Coldline and Archive by age",
+                "Most of a media archive is rarely played. Colder classes cut storage cost sharply, which the case asks for."
+              ],
+              [
+                "Train a custom model to summarise podcasts",
+                "Speech-to-Text, then a Gemini model to summarise",
+                "Speech-to-Text and Gemini already transcribe and summarise. Custom training is slower and costlier."
+              ],
+              [
+                "Manage on-premises and cloud clusters separately",
+                "One fleet with GKE Enterprise and Config Sync",
+                "The case asks for consistent hybrid operations. One fleet applies the same configuration and policy everywhere."
+              ],
+              [
+                "Email alerts from separate tools",
+                "Google Cloud Observability with alerting policies",
+                "The case wants unified reliability. One observability suite gives one view and consistent alerting."
+              ]
+            ]
+          },
+          {
+            "id": "7.2",
+            "title": "Cymbal Retail",
+            "tests": "a fast-growing online retailer with manual catalogue work, data silos and a costly call centre.",
+            "rules": [
+              "Catalogue enrichment: Gemini and Imagen models on Agent Platform generate attributes, descriptions and image variants from supplier data, with a human-in-the-loop review app (for example on Cloud Run).",
+              "Discovery: Agent Search for natural-language product search and Discovery AI for recommendations. Support: Conversational Agents and Agent Assist to cut call-centre cost.",
+              "Modernise: MySQL and SQL Server to Cloud SQL or AlloyDB, Redis to Memorystore, Kubernetes workloads to GKE or Cloud Run, Pub/Sub, Dataflow and BigQuery to break the silos."
+            ],
+            "traps": [
+              [
+                "Publish AI-generated product text straight to the site",
+                "A human review step before publishing",
+                "The case requires human-in-the-loop review, because AI-generated content can be wrong or off-brand."
+              ],
+              [
+                "Build a search engine on a VM with open-source tools",
+                "A managed Google search and recommendations service",
+                "A managed search and recommendations service is faster to deliver and keeps improving. A self-built one adds operations work."
+              ],
+              [
+                "Hire more agents for growing call volume",
+                "Conversational Agents for routine calls, Agent Assist for the rest",
+                "The case wants lower call-centre costs. Virtual agents take routine calls and Agent Assist speeds up the rest."
+              ],
+              [
+                "Keep each tool's monitoring (Grafana, Nagios, Elastic)",
+                "Consolidate on Google Cloud Observability",
+                "Separate tools fragment monitoring. The case asks for proactive, unified monitoring."
+              ],
+              [
+                "Move the catalogue databases to BigQuery",
+                "Cloud SQL, AlloyDB or Spanner for transactions; BigQuery for analytics",
+                "Catalogue and orders are transactional data. BigQuery is the analytics layer, not the operational store."
+              ]
+            ]
+          },
+          {
+            "id": "7.3",
+            "title": "EHR Healthcare",
+            "tests": "an electronic health records SaaS provider leaving colocation facilities, needing 99.9% uptime, compliance and faster releases.",
+            "rules": [
+              "Containerised apps on Kubernetes: GKE, managed as one fleet with GKE Enterprise and Config Sync for consistent environments and CI/CD from Git.",
+              "Databases: MySQL and SQL Server to Cloud SQL (or AlloyDB or Spanner), Redis to Memorystore, MongoDB to MongoDB Atlas. Legacy insurer integrations stay on-premises over Dedicated Interconnect.",
+              "Identity: keep Active Directory, sync with Google Cloud Directory Sync and sign in with SSO. Health data: a BAA, audit logs retained in Cloud Storage and analysed in BigQuery, and alerts that people act on."
+            ],
+            "traps": [
+              [
+                "Move the legacy insurer interfaces to Google Cloud now",
+                "Leave them on-premises and connect over Interconnect; they are being replaced",
+                "The case says these interfaces are being replaced and are not moving. Keep them on-premises and connect privately."
+              ],
+              [
+                "Create new Google accounts for every employee",
+                "Federate with Active Directory (GCDS plus SSO)",
+                "They already run Active Directory. Sync plus SSO keeps one identity source and one password per person."
+              ],
+              [
+                "Classic VPN for a secure high-speed link",
+                "Dedicated Interconnect",
+                "The case asks for a secure, high-speed link. Interconnect gives dedicated bandwidth and a higher SLA."
+              ],
+              [
+                "Run each environment's clusters by hand",
+                "GKE Enterprise fleet with Config Sync",
+                "Their outages came from misconfiguration. Git-driven configuration across a fleet removes manual drift."
+              ],
+              [
+                "More open-source monitoring tools",
+                "Cloud Monitoring alerting policies and Cloud Logging with retention",
+                "Their problem is ignored alerts, not missing tools. Actionable alerting policies and retained logs fix it."
+              ]
+            ]
+          },
+          {
+            "id": "7.4",
+            "title": "KnightMotives Automotive",
+            "tests": "a car maker modernising mainframes and dealer systems, adding AI to vehicles and building a data platform under EU data law.",
+            "rules": [
+              "In the car: Android Automotive OS, Dialogflow voice assistants and Edge TPUs for real-time models on the vehicle. Simulation and autonomy training: GPUs and TPUs (AI Hypercomputer).",
+              "Data: Pub/Sub and Dataflow for vehicle telemetry, BigQuery as the single platform to end silos and monetise data, Sensitive Data Protection to anonymise personal data before analysis.",
+              "Legacy: Mainframe Connector and the mainframe assessment tool, Gemini Code Assist to help rewrite code, then GKE or Cloud Run; expose dealer and partner data through Apigee."
+            ],
+            "traps": [
+              [
+                "Send every sensor reading to the cloud before the car decides",
+                "Run the model on the vehicle with Edge TPUs",
+                "A car can't wait for a round trip or rely on rural coverage. Decisions must run on the vehicle."
+              ],
+              [
+                "Rewrite the mainframe in one big project",
+                "Assess, connect, then move and rewrite in stages",
+                "Big-bang rewrites are high risk. Assess, connect and move in stages so the business keeps running."
+              ],
+              [
+                "Load identifiable driver data straight into BigQuery",
+                "Anonymise it with Sensitive Data Protection first",
+                "EU data law and data monetisation both require personal data to be protected. Anonymise it before analysts see it."
+              ],
+              [
+                "One region outside the EU for all data",
+                "Keep EU data in EU regions with location policies",
+                "EU rules may require EU residency. Location policies keep data in approved regions."
+              ],
+              [
+                "Give dealers database access for orders",
+                "Secure APIs through Apigee or API Gateway",
+                "Direct database access is insecure and tightly coupled. APIs give controlled, monitored access."
+              ]
+            ]
+          }
+        ],
+        "group": "Case studies",
+        "part": "exam",
+        "short": "Case studies"
+      },
+      {
+        "n": 8,
+        "weight": 0,
+        "group": "Service guide",
+        "tag": "Service guide",
+        "unit": "services",
+        "title": "Compute Services",
+        "sub": "Where code runs, from full virtual machines to serverless containers and functions, and how to choose.",
+        "lessons": [
+          {
+            "id": "8.1",
+            "title": "Compute Engine",
+            "what": "Virtual machines on Google's infrastructure (IaaS). You choose the machine, the OS and the software, and you run it.",
+            "tests": "when a workload needs full control of the OS, specific licences or hardware, or a lift-and-shift with no changes.",
+            "rules": [
+              "Machine families: general purpose (E2, N2, N4) for most work, compute-optimised (C-series) for CPU-heavy work, memory-optimised (M-series) for big in-memory databases, accelerator-optimised (A and G series) for GPUs.",
+              "Billed per second after the first minute. A stopped VM costs nothing for compute, but its disks and any reserved static IPs are still billed.",
+              "Save with sustained use discounts (automatic), committed use discounts (1 or 3 years) and Spot VMs (up to 91% off, can be stopped at any time). Live migration keeps VMs running through host maintenance."
+            ],
+            "traps": [
+              [
+                "A VM for a stateless container web API",
+                "Cloud Run",
+                "A VM means OS, scaling and patching work. Cloud Run runs the same container with none of it."
+              ],
+              [
+                "A stopped VM costs nothing",
+                "Disks and reserved static IPs are still billed",
+                "Only compute stops billing when a VM stops. Disks and reserved IPs keep charging."
+              ],
+              [
+                "SSH keys pasted into metadata for a large team",
+                "OS Login, with access granted to IAM groups",
+                "Keys in metadata don't follow people joining or leaving. OS Login ties SSH to IAM, so removing access is instant."
+              ]
+            ]
+          },
+          {
+            "id": "8.2",
+            "title": "App Engine",
+            "what": "Google's original platform as a service: deploy code, and Google runs, scales and patches it. One App Engine app per project.",
+            "tests": "when the scenario already uses App Engine, or asks for traffic splitting between versions of a simple web app.",
+            "rules": [
+              "Standard environment: language sandboxes, starts in seconds, scales to zero. Flexible environment: Docker containers on VMs, at least one instance, SSH allowed.",
+              "An app has services (microservices), each with versions; split traffic between versions for canary or A/B tests, and deploy with `--no-promote` to release without traffic.",
+              "Scaling types: automatic (by CPU, throughput or concurrent requests), basic (instances start on request and stop when idle) and manual (a fixed count)."
+            ],
+            "traps": [
+              [
+                "Move an App Engine app to another region",
+                "Not possible; the region is fixed, so create a new project",
+                "An App Engine app's region is set once, at creation, and can't change."
+              ],
+              [
+                "App Engine Flexible to scale to zero",
+                "Standard environment, or Cloud Run",
+                "Flexible runs on VMs and keeps at least one instance. Standard scales to zero."
+              ],
+              [
+                "App Engine as the default for new container workloads",
+                "Cloud Run",
+                "Cloud Run is the newer, more flexible option for containers and is where Google points new workloads."
+              ]
+            ]
+          },
+          {
+            "id": "8.3",
+            "title": "Cloud Run",
+            "what": "Serverless containers built on Knative. Hand over a container image or source code; Google runs, scales and secures it, down to zero.",
+            "tests": "when the scenario has containers, unpredictable traffic, minimal operations or pay-per-use, and no need for Kubernetes features.",
+            "rules": [
+              "Four shapes: services (web apps and APIs), jobs (run to completion, scheduled with Cloud Scheduler), worker pools (pull from queues, no endpoint) and functions (event handlers).",
+              "Each deploy creates a revision; split traffic between revisions and roll back instantly. Concurrency defaults to 80 requests per instance; minimum instances avoid cold starts.",
+              "Request-based billing suits spiky traffic; instance-based billing suits steady traffic, GPUs and background threads. For global users, deploy to several regions behind a global Application Load Balancer with serverless NEGs."
+            ],
+            "traps": [
+              [
+                "Set concurrency to 1 for a thread-safe app",
+                "Keep it high: fewer instances, lower cost",
+                "With concurrency 1 every request needs its own instance, which multiplies cost. Thread-safe code can share instances."
+              ],
+              [
+                "Cold starts are unavoidable on Cloud Run",
+                "Set minimum instances",
+                "Minimum instances keep warm instances ready, at some extra cost."
+              ],
+              [
+                "A GKE cluster to run one containerised API cheaply",
+                "Cloud Run, with no cluster to manage",
+                "A cluster is overhead for one service. Cloud Run gives the same container with no cluster."
+              ]
+            ]
+          },
+          {
+            "id": "8.4",
+            "title": "Cloud Run functions",
+            "what": "Event-driven functions (formerly Cloud Functions). Write one function; it runs when an event or HTTP request arrives. The current generation runs on Cloud Run and Eventarc.",
+            "tests": "when small, single-purpose code should react to an event: a file upload, a Pub/Sub message or a database change.",
+            "rules": [
+              "Triggers: HTTP, Pub/Sub, Cloud Storage and 90+ event types through Eventarc, including Cloud Audit Logs entries.",
+              "An instance can serve many requests at once (up to 1,000 concurrent); HTTP functions can run up to 60 minutes, event-driven ones up to 9.",
+              "Give each function its own service account with only the roles it needs, read secrets from Secret Manager, and set minimum instances if cold starts matter."
+            ],
+            "traps": [
+              [
+                "A function for an hour-long video transcode",
+                "Cloud Run jobs",
+                "Event-driven functions stop after 9 minutes. Cloud Run jobs run to completion."
+              ],
+              [
+                "Poll a bucket every minute for new files",
+                "A Cloud Storage trigger",
+                "Triggers react at once and cost nothing while idle; polling wastes calls and adds delay."
+              ],
+              [
+                "Use the default service account for every function",
+                "A dedicated, least-privilege service account per function",
+                "Separate accounts limit what a compromised function can reach."
+              ]
+            ]
+          },
+          {
+            "id": "8.5",
+            "title": "Google Kubernetes Engine (GKE)",
+            "what": "Managed Kubernetes. Google runs the control plane; you run workloads. Autopilot mode also manages the nodes.",
+            "tests": "when the scenario needs Kubernetes: many microservices, portability, existing Kubernetes skills, custom networking or hybrid clusters.",
+            "rules": [
+              "Autopilot: Google manages nodes, billing is per Pod request, always regional. Standard: you manage node pools, pay per node, and can use GPUs, Spot VMs and node access.",
+              "Production clusters: regional, private nodes with Cloud NAT, Workload Identity, a release channel (Stable for production), Shielded Nodes and Binary Authorization.",
+              "Expose services with Ingress or the Gateway API (one load balancer for many services) rather than one LoadBalancer Service each. `gcloud` manages clusters; `kubectl` manages objects inside them."
+            ],
+            "traps": [
+              [
+                "`kubectl` to create a cluster",
+                "`gcloud container clusters create`; `kubectl` works inside it",
+                "`kubectl` talks to an existing cluster's API. The cluster itself is a Google Cloud resource created with `gcloud` or Terraform."
+              ],
+              [
+                "A LoadBalancer Service for each of 20 microservices",
+                "One Ingress or Gateway with path or host rules",
+                "Each LoadBalancer Service creates its own load balancer and IP, which multiplies cost. Ingress or Gateway shares one."
+              ],
+              [
+                "Autopilot bills for whole nodes",
+                "Autopilot bills Pod CPU and memory requests",
+                "In Autopilot you pay for what Pods request, so unused node capacity isn't billed."
+              ]
+            ]
+          }
+        ],
+        "part": "services",
+        "short": "Compute"
+      },
+      {
+        "n": 9,
+        "weight": 0,
+        "group": "Service guide",
+        "tag": "Service guide",
+        "unit": "services",
+        "title": "Storage Services",
+        "sub": "Object, block and file storage, and the tools that move data into Google Cloud.",
+        "lessons": [
+          {
+            "id": "9.1",
+            "title": "Cloud Storage",
+            "what": "Object storage for any amount of unstructured data: files, media, backups, logs and data lakes. 99.999999999% (11 nines) annual durability.",
+            "tests": "when data is files or blobs, needs cheap durable storage, a data lake, static website hosting, or a landing zone for transfers.",
+            "rules": [
+              "Storage classes by access: Standard (no minimum), Nearline (30 days, about once a month), Coldline (90 days, once a quarter), Archive (365 days, once a year). Colder is cheaper to store but costs to read. Autoclass moves objects for you.",
+              "Locations: region (lowest cost, data next to compute), dual-region or multi-region (higher availability, geo-redundant). Bucket names are global; objects can be up to 5 TiB.",
+              "Control access with uniform bucket-level access and IAM; give temporary access with signed URLs; protect data with versioning, lifecycle rules and locked retention policies."
+            ],
+            "traps": [
+              [
+                "Archive for data read every month",
+                "Nearline; Archive's retrieval fees and 365-day minimum would cost more",
+                "Archive charges more per read and bills a 365-day minimum, so monthly reads cost more than Nearline."
+              ],
+              [
+                "Object ACLs to manage access to a whole bucket",
+                "Uniform bucket-level access with IAM",
+                "ACLs are per object and hard to audit. Uniform access applies IAM to the whole bucket."
+              ],
+              [
+                "Multi-region for a batch job that runs in one region",
+                "A regional bucket in the same region",
+                "Multi-region costs more and adds nothing when compute is in one region. Regional is cheaper and closer."
+              ]
+            ]
+          },
+          {
+            "id": "9.2",
+            "title": "Persistent Disk, Hyperdisk and Local SSD",
+            "what": "Block storage for VMs. Persistent Disk and Hyperdisk are network disks that outlive the VM; Local SSD is physically attached and temporary.",
+            "tests": "which disk fits a VM's performance, durability and cost needs.",
+            "rules": [
+              "Persistent Disk types: standard (HDD, cheap, sequential), balanced (general SSD) and SSD (high IOPS). Hyperdisk lets you set IOPS and throughput separately from size.",
+              "Regional Persistent Disk replicates synchronously across two zones for fast failover. Disks can grow while attached; snapshots are incremental and can be scheduled.",
+              "Local SSD gives the highest IOPS and lowest latency but data is lost when the VM stops; use it for caches and scratch data only."
+            ],
+            "traps": [
+              [
+                "Local SSD for a database's only copy of data",
+                "Persistent Disk or Hyperdisk",
+                "Local SSD data is lost when the VM stops. A database needs durable disks."
+              ],
+              [
+                "Zonal disk when a VM must recover in another zone with no data loss",
+                "Regional Persistent Disk",
+                "A zonal disk lives in one zone. A regional disk keeps a synchronous copy in a second zone."
+              ],
+              [
+                "A bigger VM to get more disk IOPS",
+                "A larger disk, a faster disk type or Hyperdisk with provisioned IOPS",
+                "Disk performance depends mostly on disk type and size (or provisioned IOPS), not on the VM alone."
+              ]
+            ]
+          },
+          {
+            "id": "9.3",
+            "title": "Filestore",
+            "what": "Managed NFS file shares for VMs and GKE.",
+            "tests": "when an application needs a shared POSIX file system, for example a lift-and-shift app, media rendering or GKE ReadWriteMany volumes.",
+            "rules": [
+              "Tiers range from basic HDD and SSD to zonal and regional (enterprise) for higher availability.",
+              "Mounted over NFS by many VMs or Pods at the same time; capacity is provisioned up front.",
+              "Use Cloud Storage instead when the app can work with objects over an API: it is cheaper and scales without provisioning."
+            ],
+            "traps": [
+              [
+                "Cloud Storage for an app that needs a mounted shared file system",
+                "Filestore",
+                "Cloud Storage is object storage reached by API. Apps that expect a shared file system need NFS."
+              ],
+              [
+                "Filestore to serve images to web users",
+                "Cloud Storage, with Cloud CDN",
+                "Filestore is mounted by servers. Web delivery is cheaper and faster from Cloud Storage with CDN."
+              ],
+              [
+                "A self-managed NFS server on a VM",
+                "Filestore",
+                "A self-run NFS server means patching, backups and high-availability work. Filestore is managed."
+              ]
+            ]
+          },
+          {
+            "id": "9.4",
+            "title": "Data Transfer Services",
+            "what": "Tools for moving data into Google Cloud: `gcloud storage`, Storage Transfer Service, Transfer Appliance and BigQuery Data Transfer Service.",
+            "tests": "which transfer tool fits the size, source, network and schedule.",
+            "rules": [
+              "`gcloud storage` for small or one-off copies (roughly under 1 TB) from on-premises or between buckets.",
+              "Storage Transfer Service for large or recurring transfers from other clouds, HTTP sources or on-premises file systems (with agents), with scheduling and incremental copies.",
+              "Transfer Appliance, a physical device, when the link is slow or the data is tens of terabytes or more. BigQuery Data Transfer Service schedules loads from SaaS apps, Amazon S3 and other warehouses."
+            ],
+            "traps": [
+              [
+                "Write a script to copy 200 TB from Amazon S3",
+                "Storage Transfer Service",
+                "Scripts don't retry, schedule or verify well at this size. Storage Transfer Service is managed and resumable."
+              ],
+              [
+                "Ship disks yourself for 500 TB",
+                "Transfer Appliance",
+                "Transfer Appliance is Google's secure, encrypted way to ship large data offline."
+              ],
+              [
+                "A custom loader for daily Google Ads data into BigQuery",
+                "BigQuery Data Transfer Service",
+                "BigQuery Data Transfer Service already has scheduled connectors for Google Ads and other sources."
+              ]
+            ]
+          }
+        ],
+        "part": "services",
+        "short": "Storage"
+      },
+      {
+        "n": 10,
+        "weight": 0,
+        "group": "Service guide",
+        "tag": "Service guide",
+        "unit": "services",
+        "title": "Database Services",
+        "sub": "Relational, NoSQL and in-memory databases, and the line between them.",
+        "lessons": [
+          {
+            "id": "10.1",
+            "title": "Cloud SQL",
+            "what": "Managed MySQL, PostgreSQL and SQL Server. Google handles backups, patching, replication and failover.",
+            "tests": "when the scenario needs a standard relational database in one region, or a lift-and-shift of MySQL, PostgreSQL or SQL Server.",
+            "rules": [
+              "High availability: a standby in another zone of the same region with synchronous replication and automatic failover. The standby does not serve reads.",
+              "Read replicas (in-region or cross-region) offload reads and can be promoted manually for disaster recovery. Writes scale only vertically.",
+              "Point-in-time recovery needs automated backups and binary logging (or WAL). Connect with the Cloud SQL Auth Proxy or connectors, preferably over private IP."
+            ],
+            "traps": [
+              [
+                "Read replicas for automatic failover",
+                "The HA configuration (regional standby)",
+                "Read replicas don't fail over automatically. The HA standby does."
+              ],
+              [
+                "Cloud SQL for a global app needing writes in several regions",
+                "Spanner",
+                "Cloud SQL writes go to one regional primary. Spanner accepts writes across regions."
+              ],
+              [
+                "Open the database to 0.0.0.0/0 so Cloud Run can connect",
+                "Private IP with the Cloud SQL connector or Auth Proxy",
+                "A public database endpoint invites attacks. Private IP with the connector keeps traffic internal and encrypted."
+              ]
+            ]
+          },
+          {
+            "id": "10.2",
+            "title": "AlloyDB for PostgreSQL",
+            "what": "A PostgreSQL-compatible managed database built for demanding workloads, with a built-in columnar engine for fast analytics on live data.",
+            "tests": "when a PostgreSQL workload has outgrown Cloud SQL in performance or needs analytics on transactional data (HTAP).",
+            "rules": [
+              "Fully PostgreSQL-compatible, so apps and tools move without changes.",
+              "Primary instance plus read pool instances; regional high availability with a 99.99% SLA.",
+              "The columnar engine speeds up analytical queries without copying data to a warehouse; AlloyDB Omni runs the same engine on-premises or in other clouds."
+            ],
+            "traps": [
+              [
+                "Spanner for a single-region PostgreSQL app that needs more speed",
+                "AlloyDB",
+                "Spanner is for global scale and needs schema changes. AlloyDB is a faster PostgreSQL with no rewrite."
+              ],
+              [
+                "Copy operational data to BigQuery for every quick report",
+                "AlloyDB's columnar engine for analytics on live data",
+                "Copying adds pipelines and delay. The columnar engine answers analytics on live data."
+              ],
+              [
+                "Rewrite the app to move from PostgreSQL to AlloyDB",
+                "No rewrite needed; it is PostgreSQL-compatible",
+                "AlloyDB speaks PostgreSQL, so apps connect as before."
+              ]
+            ]
+          },
+          {
+            "id": "10.3",
+            "title": "Spanner",
+            "what": "A globally distributed relational database with strong consistency, SQL, and horizontal scaling of both reads and writes.",
+            "tests": "when the scenario needs relational data with global scale, very high availability (up to 99.999%) or more write throughput than one machine gives.",
+            "rules": [
+              "Regional configurations give 99.99%; multi-region configurations give 99.999%. Capacity is set in nodes or processing units and can change without downtime.",
+              "Avoid hotspots: do not use monotonically increasing primary keys such as timestamps or sequences; use UUIDs or hashed keys. Interleave child tables with parents for locality.",
+              "Supports GoogleSQL and a PostgreSQL interface; use Dataflow or the console for exports."
+            ],
+            "traps": [
+              [
+                "Auto-increment primary keys in Spanner",
+                "UUIDs or hashed keys to spread writes",
+                "Sequential keys send every new write to the same split, creating a hotspot."
+              ],
+              [
+                "Spanner for a small regional app on a tight budget",
+                "Cloud SQL",
+                "Spanner's cost and design effort aren't justified for a small regional app."
+              ],
+              [
+                "Shard Cloud SQL by hand to scale writes",
+                "Spanner scales writes horizontally",
+                "Manual sharding is complex and fragile. Spanner shards automatically."
+              ]
+            ]
+          },
+          {
+            "id": "10.4",
+            "title": "Firestore",
+            "what": "A serverless NoSQL document database with real-time updates, offline support for mobile and web, and ACID transactions. Datastore mode is the older API.",
+            "tests": "when the scenario needs a flexible schema for user profiles, catalogues, game state or mobile and web apps, with no servers to manage.",
+            "rules": [
+              "Serverless: scales automatically, pay per read, write and storage; regional or multi-region.",
+              "Strongly consistent queries with indexes; no joins, so model data the way the app reads it.",
+              "Client libraries sync data in real time and work offline on mobile and web."
+            ],
+            "traps": [
+              [
+                "Firestore for complex joins and analytics",
+                "BigQuery (export Firestore data to it)",
+                "Firestore has no joins and isn't built for heavy aggregation. Export to BigQuery for analysis."
+              ],
+              [
+                "Firestore for billions of time-series writes a day",
+                "Bigtable",
+                "Bigtable handles very high write rates by key more cheaply."
+              ],
+              [
+                "Cloud SQL for a fast-changing schema in a mobile app",
+                "Firestore",
+                "A rigid schema slows frequent changes. Documents can gain fields without migrations."
+              ]
+            ]
+          },
+          {
+            "id": "10.5",
+            "title": "Bigtable",
+            "what": "A wide-column NoSQL database for very large, high-throughput workloads with low-latency reads and writes by key. HBase API compatible.",
+            "tests": "when the scenario has IoT or time-series data, ad tech, financial ticks, or more than about a terabyte with millions of operations per second.",
+            "rules": [
+              "Only one index, the row key: design it around the main query, avoid keys that start with a timestamp or sequence, and use reverse timestamps to read the latest first.",
+              "Single-row transactions only. Add nodes to scale with no downtime; add clusters in other zones or regions for replication and failover, routed by app profiles.",
+              "Use SSD storage for most cases, HDD only for large, rarely read data. The command-line tool is `cbt`."
+            ],
+            "traps": [
+              [
+                "Row keys that start with a timestamp",
+                "Start with an identifier (device ID), then a (reversed) timestamp",
+                "Keys that start with a timestamp send all new writes to one node. Leading with an ID spreads them."
+              ],
+              [
+                "Bigtable for multi-row transactions",
+                "Spanner or Cloud SQL",
+                "Bigtable only guarantees atomic changes within one row."
+              ],
+              [
+                "Bigtable for ad hoc SQL analysis",
+                "BigQuery, which can also query Bigtable",
+                "Bigtable has no engine for ad hoc SQL. BigQuery can query Bigtable data."
+              ]
+            ]
+          },
+          {
+            "id": "10.6",
+            "title": "Memorystore",
+            "what": "Managed in-memory data stores: Redis (and Valkey) and Memcached.",
+            "tests": "when the scenario needs sub-millisecond reads: caching query results, sessions, leaderboards or rate limits.",
+            "rules": [
+              "Redis supports persistence, replication and high availability (Standard tier with a replica and automatic failover); Memcached is a simple, multi-node cache.",
+              "Put a cache in front of a database to cut read load and latency; move session state out of VMs into Memorystore so the app can scale horizontally.",
+              "Reach it over private IP from Compute Engine, GKE, Cloud Run and App Engine in the same VPC."
+            ],
+            "traps": [
+              [
+                "Memcached when the data must survive a restart",
+                "Redis with persistence",
+                "Memcached keeps data only in memory and loses it on restart."
+              ],
+              [
+                "Memorystore as the only copy of order data",
+                "A database as the source of truth, with Memorystore as a cache",
+                "A cache can evict or lose data. The database must hold the authoritative copy."
+              ],
+              [
+                "Sticky sessions on VMs to keep user sessions",
+                "Store sessions in Memorystore",
+                "Sticky sessions break when a VM goes away. Shared session storage lets any instance serve any user."
+              ]
+            ]
+          }
+        ],
+        "part": "services",
+        "short": "Databases"
+      },
+      {
+        "n": 11,
+        "weight": 0,
+        "group": "Service guide",
+        "tag": "Service guide",
+        "unit": "services",
+        "title": "Networking Services",
+        "sub": "Virtual networks, load balancing, content delivery, DNS and connections to other networks.",
+        "lessons": [
+          {
+            "id": "11.1",
+            "title": "Virtual Private Cloud (VPC)",
+            "what": "Your private, global network in Google Cloud, with regional subnets, routes and firewall rules.",
+            "tests": "how to lay out networks, share them across projects and control traffic between workloads.",
+            "rules": [
+              "Use custom-mode VPCs with planned, non-overlapping ranges; add secondary ranges for GKE Pods and Services.",
+              "Shared VPC lets one host project own the network that many service projects use; VPC Network Peering connects separate networks and is not transitive.",
+              "Firewall rules use tags or service accounts as targets; hierarchical firewall policies apply rules across an organisation or folder. VPC Flow Logs help troubleshooting."
+            ],
+            "traps": [
+              [
+                "Peering A to B and B to C lets A reach C",
+                "Peering is not transitive; peer A and C directly or use Network Connectivity Center",
+                "Peering only connects the two networks named. Traffic doesn't pass through a network in the middle."
+              ],
+              [
+                "Copy the same firewall rule into every project",
+                "A hierarchical firewall policy at the organisation or folder",
+                "Copies drift and are easy to miss. One policy at the top applies everywhere below it."
+              ],
+              [
+                "The default network for production",
+                "A custom-mode VPC",
+                "The default network has auto-created subnets and loose rules. Custom mode gives planned ranges and tighter control."
+              ]
+            ]
+          },
+          {
+            "id": "11.2",
+            "title": "Cloud Load Balancing",
+            "what": "Fully managed, software-defined load balancers, global or regional, external or internal.",
+            "tests": "which load balancer fits the traffic type, scope and features.",
+            "rules": [
+              "Application Load Balancer (Layer 7, HTTP and HTTPS): URL maps for host and path routing, weighted traffic splits, Cloud CDN, Cloud Armor and IAP. External global, regional or internal.",
+              "Proxy Network Load Balancer (Layer 4 TCP, with optional TLS offload) and passthrough Network Load Balancer (TCP and UDP, keeps the client IP, lowest latency).",
+              "A global external load balancer gives one anycast IP that routes users to the nearest healthy region; it needs Premium Tier networking. Backends can be MIGs, NEGs (Pods, serverless, hybrid) or buckets."
+            ],
+            "traps": [
+              [
+                "Network load balancer for path routing",
+                "Application Load Balancer",
+                "Only Layer 7 load balancers can read URLs and hostnames."
+              ],
+              [
+                "Application Load Balancer for a UDP game server",
+                "Passthrough Network Load Balancer",
+                "Application Load Balancers handle HTTP and HTTPS only. UDP needs a network load balancer."
+              ],
+              [
+                "Global single anycast IP on Standard Tier",
+                "Premium Tier networking",
+                "Standard Tier uses regional IPs. Global anycast routing needs Premium Tier."
+              ]
+            ]
+          },
+          {
+            "id": "11.3",
+            "title": "Cloud CDN",
+            "what": "Caches content at Google's edge, close to users, behind an external Application Load Balancer.",
+            "tests": "when the scenario needs faster global delivery of static or cacheable content and less load on the origin.",
+            "rules": [
+              "Origins can be Cloud Storage buckets, instance groups, Cloud Run and other serverless backends, or external origins.",
+              "Control caching with Cache-Control headers and cache keys; use versioned file names instead of frequent invalidations; protect private content with signed URLs or cookies.",
+              "Media CDN is the option for large-scale video streaming."
+            ],
+            "traps": [
+              [
+                "A bigger origin to serve global static assets",
+                "Cloud CDN in front of the origin",
+                "A bigger origin still leaves distant users with high latency. Edge caches serve them from nearby."
+              ],
+              [
+                "Invalidate the cache on every release",
+                "Versioned URLs (app.v2.js)",
+                "Invalidations are slow and limited. New file names make the CDN and browsers fetch the new version at once."
+              ],
+              [
+                "Cache pages containing patient data",
+                "Do not cache sensitive or personal responses",
+                "Cached personal data could reach the wrong user and breaks compliance rules."
+              ]
+            ]
+          },
+          {
+            "id": "11.4",
+            "title": "Cloud DNS",
+            "what": "Managed, authoritative DNS with a 100% availability SLA, for public and private zones.",
+            "tests": "how names resolve on the internet, inside VPCs and across hybrid networks.",
+            "rules": [
+              "Public zones serve the internet; private zones serve only chosen VPC networks.",
+              "Hybrid DNS: forwarding zones send queries to on-premises DNS; inbound server policies let on-premises systems resolve Google Cloud names; DNS peering shares zones between VPCs.",
+              "Routing policies (weighted, geolocation, failover) steer traffic; DNSSEC protects against spoofing."
+            ],
+            "traps": [
+              [
+                "Public DNS records for internal service names",
+                "A private zone",
+                "Public records expose internal names and addresses to the internet."
+              ],
+              [
+                "Copy on-premises records into Cloud DNS by hand",
+                "A forwarding zone to the on-premises DNS servers",
+                "Copied records go stale. Forwarding asks the on-premises DNS directly."
+              ],
+              [
+                "Run BIND on a VM for internal names",
+                "Cloud DNS private zones",
+                "A self-run DNS server adds availability and patching work. Cloud DNS is managed with a 100% SLA."
+              ]
+            ]
+          },
+          {
+            "id": "11.5",
+            "title": "Cloud VPN and Cloud Interconnect",
+            "what": "Ways to connect on-premises or other clouds to a VPC: encrypted tunnels over the internet, or private physical links.",
+            "tests": "which connection meets the bandwidth, SLA, privacy and cost needs.",
+            "rules": [
+              "HA VPN: two interfaces, 99.99% SLA, dynamic routing with Cloud Router (BGP), encrypted, about 3 Gbps per tunnel. Classic VPN is the older 99.9% option.",
+              "Dedicated Interconnect: 10 or 100 Gbps circuits in a colocation facility. Partner Interconnect: 50 Mbps to 50 Gbps through a provider when you cannot reach a facility. Cross-Cloud Interconnect links to other clouds.",
+              "Interconnect traffic is private but not encrypted by default; add MACsec or HA VPN over Interconnect when encryption is required. Keep a backup connection."
+            ],
+            "traps": [
+              [
+                "HA VPN for 20 Gbps of steady replication",
+                "Dedicated Interconnect",
+                "Each VPN tunnel tops out around 3 Gbps over the internet. Interconnect gives dedicated high bandwidth."
+              ],
+              [
+                "Assume Interconnect traffic is encrypted",
+                "Add MACsec or HA VPN over Interconnect",
+                "Interconnect is private but not encrypted by default. Compliance may require MACsec or VPN on top."
+              ],
+              [
+                "Dedicated Interconnect from a site far from any colocation facility",
+                "Partner Interconnect",
+                "Dedicated Interconnect needs presence in a colocation facility. A partner extends the link to you."
+              ]
+            ]
+          },
+          {
+            "id": "11.6",
+            "title": "Cloud NAT, Private Google Access and Private Service Connect",
+            "what": "Ways for private workloads to reach the internet, Google APIs and managed services without public IPs.",
+            "tests": "how a workload with no external IP gets the access it needs.",
+            "rules": [
+              "Cloud NAT gives outbound internet access (updates, external APIs) to VMs and GKE nodes with only internal IPs; nothing can connect inbound through it.",
+              "Private Google Access lets internal-only VMs call Google APIs such as Cloud Storage and BigQuery.",
+              "Private Service Connect reaches Google APIs, managed services and services published by other teams or companies through private endpoints in your VPC. Private services access gives Cloud SQL and Memorystore private IPs."
+            ],
+            "traps": [
+              [
+                "External IPs so private VMs can download patches",
+                "Cloud NAT",
+                "External IPs expose VMs to inbound traffic. Cloud NAT allows outbound only."
+              ],
+              [
+                "Cloud NAT so private VMs can reach Cloud Storage",
+                "Private Google Access",
+                "Google APIs can be reached privately with Private Google Access, without going out to the internet."
+              ],
+              [
+                "VPC peering to consume a partner's service in another organisation",
+                "Private Service Connect",
+                "Peering joins whole networks and needs non-overlapping ranges. Private Service Connect exposes just one service."
+              ]
+            ]
+          }
+        ],
+        "part": "services",
+        "short": "Networking"
+      },
+      {
+        "n": 12,
+        "weight": 0,
+        "group": "Service guide",
+        "tag": "Service guide",
+        "unit": "services",
+        "title": "Security and Identity Services",
+        "sub": "Who can do what, keys and secrets, and the services that protect apps and data.",
+        "lessons": [
+          {
+            "id": "12.1",
+            "title": "IAM and Resource Manager",
+            "what": "Identity and Access Management decides who can do what on which resource; Resource Manager holds the organisation, folders and projects that policies attach to.",
+            "tests": "where to grant access, which kind of role to use, and how to find and remove excess access.",
+            "rules": [
+              "Policies bind principals (users, groups, service accounts) to roles at the organisation, folder, project or resource; children inherit them. IAM conditions limit access by time, resource name or tag.",
+              "Deny policies block a permission even when a role grants it; organisation policies restrict configurations (regions, external IPs, key creation).",
+              "Role recommendations flag unused permissions; Policy Troubleshooter explains why someone has or lacks access; Policy Analyzer answers who can access what."
+            ],
+            "traps": [
+              [
+                "Grant Owner so a contractor can view everything",
+                "Viewer, or a narrow predefined role",
+                "Owner can change and delete everything. Viewing only needs Viewer or a narrower role."
+              ],
+              [
+                "Guess why access is denied",
+                "Policy Troubleshooter",
+                "Policy Troubleshooter checks every policy on the path and names the missing permission."
+              ],
+              [
+                "Temporary access by remembering to remove it",
+                "An IAM condition with an expiry time",
+                "People forget. A time-based condition removes the access automatically."
+              ]
+            ]
+          },
+          {
+            "id": "12.2",
+            "title": "Cloud Identity, Federation and Identity Platform",
+            "what": "Cloud Identity manages the users and groups that sign in to Google Cloud. Federation lets them use an existing identity provider. Identity Platform signs in your app's customers.",
+            "tests": "how employees and partners sign in, and how that differs from customer sign-in.",
+            "rules": [
+              "Keep Active Directory as the source: Google Cloud Directory Sync copies users and groups one way into Cloud Identity, and SSO (SAML or OIDC through AD FS, Entra ID or Okta) handles passwords.",
+              "Workforce Identity Federation lets users from an external identity provider use Google Cloud without syncing accounts.",
+              "Identity Platform adds sign-up, sign-in and multi-factor authentication for your own apps, with email, phone, social and SAML or OIDC providers."
+            ],
+            "traps": [
+              [
+                "Create Google accounts by hand for 5,000 AD users",
+                "Google Cloud Directory Sync plus SSO",
+                "Manual accounts drift from Active Directory. Sync keeps users and groups in step automatically."
+              ],
+              [
+                "Sync passwords to Google",
+                "SSO keeps authentication at the identity provider",
+                "With SSO, passwords stay with your identity provider, so Google never needs a copy."
+              ],
+              [
+                "Cloud IAM users for a shopping app's customers",
+                "Identity Platform",
+                "IAM is for managing Google Cloud. Identity Platform handles your app's own sign-up and sign-in."
+              ]
+            ]
+          },
+          {
+            "id": "12.3",
+            "title": "Cloud KMS, Cloud HSM and Secret Manager",
+            "what": "Cloud KMS creates and controls encryption keys; Cloud HSM keeps them in hardware security modules; Secret Manager stores passwords, API keys and certificates.",
+            "tests": "which key or secret service meets a control or compliance requirement.",
+            "rules": [
+              "Cloud KMS: symmetric keys for CMEK with automatic rotation, asymmetric keys for signing and verification. Key destruction is scheduled, giving time to undo it.",
+              "Cloud HSM for FIPS 140-2 Level 3 hardware-backed keys; Cloud External Key Manager when keys must stay outside Google.",
+              "Secret Manager: versioned secrets, IAM per secret, audit logs, rotation reminders through Pub/Sub; apps read secrets at runtime."
+            ],
+            "traps": [
+              [
+                "Software KMS keys when a regulator demands hardware-protected keys",
+                "Cloud HSM",
+                "Software keys don't meet a hardware requirement. Cloud HSM keeps keys in certified hardware."
+              ],
+              [
+                "Store keys in Cloud KMS when policy says Google must never hold them",
+                "Cloud External Key Manager",
+                "Cloud KMS and Cloud HSM keys live in Google. External Key Manager keeps them in a key manager you control."
+              ],
+              [
+                "Encrypt a database password with KMS and keep it in the repo",
+                "Secret Manager",
+                "The secret still sits in code next to the means to decrypt it. Secret Manager stores and audits it separately."
+              ]
+            ]
+          },
+          {
+            "id": "12.4",
+            "title": "Cloud Armor and Identity-Aware Proxy",
+            "what": "Cloud Armor is a web application firewall and DDoS defence for load balancers. Identity-Aware Proxy (IAP) checks identity and context before letting a user reach an app or VM.",
+            "tests": "how to protect public apps from attacks and give staff access without a VPN or public IPs.",
+            "rules": [
+              "Cloud Armor: preconfigured OWASP Top 10 rules (SQL injection, XSS), IP and geo allow and deny lists, rate limiting and Adaptive Protection, attached to backend services.",
+              "IAP for web apps behind an Application Load Balancer, Cloud Run or App Engine: access by IAM role and device or location context.",
+              "IAP TCP forwarding opens SSH and RDP to VMs with no external IP and no bastion host."
+            ],
+            "traps": [
+              [
+                "A bastion host with a public IP for SSH",
+                "IAP TCP forwarding",
+                "A public bastion is one more server to attack, patch and watch. IAP tunnels SSH through Google with IAM checks."
+              ],
+              [
+                "VPC firewall rules to block SQL injection",
+                "Cloud Armor WAF rules",
+                "Firewalls see IPs and ports, not request content. Cloud Armor inspects HTTP for attack patterns."
+              ],
+              [
+                "A VPN for staff to reach one internal web app",
+                "IAP",
+                "A VPN opens the network. IAP opens just the app, per user."
+              ]
+            ]
+          },
+          {
+            "id": "12.5",
+            "title": "Security Command Center, VPC Service Controls and Sensitive Data Protection",
+            "what": "Security Command Center finds misconfigurations, vulnerabilities and threats. VPC Service Controls draws a perimeter around Google APIs. Sensitive Data Protection (Cloud DLP) finds and masks sensitive data.",
+            "tests": "the service that gives visibility, stops data exfiltration, or handles personal data.",
+            "rules": [
+              "Security Command Center: one view of findings across the organisation, such as public buckets, open firewall rules, vulnerable images and active threats.",
+              "VPC Service Controls: services such as BigQuery and Cloud Storage inside a perimeter cannot send data to projects outside it, even with valid credentials; access levels allow trusted networks or devices.",
+              "Sensitive Data Protection: discover and classify sensitive data, then de-identify it by masking, tokenising or format-preserving encryption before analysis. Assured Workloads helps with regulated data residency."
+            ],
+            "traps": [
+              [
+                "Write scripts to check every project for public buckets",
+                "Security Command Center",
+                "Scripts miss new checks and new projects. Security Command Center scans the whole organisation continuously."
+              ],
+              [
+                "IAM alone to stop copying data to an outside project",
+                "VPC Service Controls",
+                "Credentials that can read data can also copy it out. A perimeter blocks the copy."
+              ],
+              [
+                "Delete all personal fields so analysts can work",
+                "De-identify with Sensitive Data Protection and keep the data useful",
+                "Deleting fields loses their value for analysis. Masking or tokenising keeps the value while protecting people."
+              ]
+            ]
+          }
+        ],
+        "part": "services",
+        "short": "Security & identity"
+      },
+      {
+        "n": 13,
+        "weight": 0,
+        "group": "Service guide",
+        "tag": "Service guide",
+        "unit": "services",
+        "title": "Data and Analytics Services",
+        "sub": "Warehousing, messaging, processing, orchestration and dashboards.",
+        "lessons": [
+          {
+            "id": "13.1",
+            "title": "BigQuery",
+            "what": "A serverless data warehouse for SQL analytics on terabytes to petabytes, with storage and compute billed separately.",
+            "tests": "when the scenario needs analytics, reporting, a data warehouse, or ML with SQL.",
+            "rules": [
+              "Pricing: on-demand (per TB scanned) or capacity (editions with slot reservations). Partition by date or ingestion time and cluster by common filters to scan less; tables unchanged for 90 days get cheaper long-term storage.",
+              "Load in batch for free; stream with the Storage Write API. Query data in Cloud Storage and other sources with external and BigLake tables.",
+              "Secure with dataset IAM, authorised views, row-level security and column-level policy tags. BigQuery ML trains models with SQL; time travel restores data from the last 7 days."
+            ],
+            "traps": [
+              [
+                "BigQuery for a transactional order system",
+                "Cloud SQL, AlloyDB or Spanner",
+                "BigQuery is built for large scans, not many small, fast row updates."
+              ],
+              [
+                "A separate table per analyst to hide salary columns",
+                "Column-level security with policy tags, or authorised views",
+                "Copies drift and multiply storage. Policy tags or authorised views control access on one table."
+              ],
+              [
+                "`SELECT *` to preview a huge table",
+                "Table preview, or select only the columns you need",
+                "BigQuery bills by the columns scanned, so `SELECT *` reads and bills every column. Table preview is free."
+              ]
+            ]
+          },
+          {
+            "id": "13.2",
+            "title": "Pub/Sub",
+            "what": "A global, serverless messaging service. Publishers send to topics; subscribers receive from subscriptions.",
+            "tests": "when services must be decoupled, events must be buffered, or streaming data must be ingested.",
+            "rules": [
+              "Delivery is at least once by default; use ordering keys for ordered delivery and exactly-once delivery on pull subscriptions when duplicates are not allowed.",
+              "Pull, push, BigQuery and Cloud Storage subscriptions; each subscription gets every message, and several clients on one subscription share the load.",
+              "Dead-letter topics catch messages that keep failing; message retention and seek let you replay. Pub/Sub plus Dataflow is the standard streaming pipeline."
+            ],
+            "traps": [
+              [
+                "Expect each message exactly once by default",
+                "Design consumers to be idempotent, or enable exactly-once delivery",
+                "Delivery is at least once, so a consumer may see a message twice."
+              ],
+              [
+                "Keep retrying a poison message forever",
+                "A dead-letter topic",
+                "A message that always fails blocks progress and wastes resources. A dead-letter topic sets it aside."
+              ],
+              [
+                "Direct synchronous calls between services during traffic spikes",
+                "Pub/Sub to buffer the load",
+                "Synchronous chains fail together under load. A queue absorbs spikes."
+              ]
+            ]
+          },
+          {
+            "id": "13.3",
+            "title": "Dataflow",
+            "what": "Serverless, autoscaling processing for batch and streaming pipelines, running Apache Beam.",
+            "tests": "when the scenario needs new ETL, streaming analytics or one codebase for batch and streaming.",
+            "rules": [
+              "Beam handles windows, watermarks and late data for streaming; Dataflow scales workers automatically and processes exactly once.",
+              "Google-provided templates cover common jobs (Pub/Sub to BigQuery, Cloud Storage text to BigQuery) without writing code.",
+              "To change a running streaming job, update it in place or drain it (finish in-flight data); cancelling stops at once and may drop data."
+            ],
+            "traps": [
+              [
+                "Cancel a streaming job to deploy new code",
+                "Update the job or drain it",
+                "Cancel stops at once and may drop in-flight data. Update or drain finishes it cleanly."
+              ],
+              [
+                "Dataproc for a brand-new streaming pipeline",
+                "Dataflow",
+                "Dataproc needs clusters. Dataflow is serverless and built for streaming."
+              ],
+              [
+                "A custom app on VMs to move Pub/Sub messages into BigQuery",
+                "A Dataflow template, or a BigQuery subscription",
+                "Templates and BigQuery subscriptions do this with no code to run."
+              ]
+            ]
+          },
+          {
+            "id": "13.4",
+            "title": "Dataproc",
+            "what": "Managed Apache Spark, Hadoop, Hive and related open-source tools, on clusters or serverless.",
+            "tests": "when the scenario has existing Spark or Hadoop jobs to move, or needs the open-source ecosystem.",
+            "rules": [
+              "Clusters start in about 90 seconds, so create one per job and delete it afterwards (ephemeral clusters) rather than keeping a big cluster running.",
+              "Keep data in Cloud Storage, not HDFS, so storage outlives clusters; add Spot secondary workers to cut cost.",
+              "Dataproc Serverless runs Spark jobs with no cluster at all."
+            ],
+            "traps": [
+              [
+                "Keep one large Dataproc cluster running all day for nightly jobs",
+                "Ephemeral clusters per job, or Dataproc Serverless",
+                "An always-on cluster bills while it sits idle. Ephemeral clusters or serverless cost only while jobs run."
+              ],
+              [
+                "Store data in HDFS on the cluster",
+                "Cloud Storage",
+                "HDFS data vanishes with the cluster. Cloud Storage keeps it and lets many clusters share it."
+              ],
+              [
+                "Rewrite Hadoop jobs in Beam before migrating",
+                "Move them to Dataproc as they are",
+                "Moving jobs as they are is faster and lower risk. Modernise later."
+              ]
+            ]
+          },
+          {
+            "id": "13.5",
+            "title": "Cloud Composer, Workflows, Dataform and Looker",
+            "what": "Orchestration and BI: Composer is managed Apache Airflow, Workflows orchestrates API calls, Dataform manages SQL transformations in BigQuery, and Looker and Looker Studio build dashboards.",
+            "tests": "which tool schedules, chains or presents data work.",
+            "rules": [
+              "Cloud Composer for complex, scheduled data pipelines (DAGs) across many services, including on-premises and other clouds.",
+              "Workflows for lightweight serverless orchestration of services and APIs; Cloud Scheduler for simple timed triggers.",
+              "Dataform for version-controlled SQL pipelines in BigQuery. Looker for governed metrics with a semantic model (LookML); Looker Studio for free, quick dashboards."
+            ],
+            "traps": [
+              [
+                "Cron on a VM to run a 30-step data pipeline",
+                "Cloud Composer",
+                "Cron has no dependencies, retries or monitoring between steps. Composer manages the whole pipeline."
+              ],
+              [
+                "Composer to call three APIs in order once a day",
+                "Workflows with Cloud Scheduler",
+                "Composer keeps an Airflow environment running all the time. Workflows is serverless and suits short API sequences."
+              ],
+              [
+                "Each team defines revenue differently in its own dashboard",
+                "Looker with one shared semantic model",
+                "Dashboards that each define metrics differently give conflicting numbers. A shared model gives one definition."
+              ]
+            ]
+          }
+        ],
+        "part": "services",
+        "short": "Data & analytics"
+      },
+      {
+        "n": 14,
+        "weight": 0,
+        "group": "Service guide",
+        "tag": "Service guide",
+        "unit": "services",
+        "title": "DevOps and Operations Services",
+        "sub": "Building, deploying, provisioning, observing and integrating applications.",
+        "lessons": [
+          {
+            "id": "14.1",
+            "title": "Cloud Build, Artifact Registry and Cloud Deploy",
+            "what": "Cloud Build runs serverless CI builds and tests; Artifact Registry stores container images and packages; Cloud Deploy delivers releases through environments.",
+            "tests": "how to assemble a managed CI/CD pipeline on Google Cloud.",
+            "rules": [
+              "Cloud Build runs steps from a build file, triggered by commits in GitHub, GitLab or other repositories; private pools reach resources in a private network.",
+              "Artifact Registry stores Docker images and language packages, scans for vulnerabilities and replaces Container Registry; remote repositories cache public sources.",
+              "Cloud Deploy promotes releases to GKE and Cloud Run through dev, staging and prod with approvals, canary deployments and rollbacks."
+            ],
+            "traps": [
+              [
+                "Container Registry for a new project",
+                "Artifact Registry",
+                "Container Registry is retired. Artifact Registry replaces it."
+              ],
+              [
+                "A self-managed Jenkins server as the only option",
+                "Cloud Build, unless the scenario requires keeping Jenkins",
+                "Jenkins means running build servers. Cloud Build is serverless, unless the scenario says to keep existing tools."
+              ],
+              [
+                "Hand-run `kubectl` commands to promote to production",
+                "Cloud Deploy with an approval step",
+                "Manual promotion is error-prone and unaudited. Cloud Deploy adds approvals, history and rollback."
+              ]
+            ]
+          },
+          {
+            "id": "14.2",
+            "title": "Terraform, Infrastructure Manager and Config Connector",
+            "what": "Tools for infrastructure as code: Terraform describes resources in files; Infrastructure Manager runs Terraform as a Google Cloud service; Config Connector manages Google Cloud resources as Kubernetes objects.",
+            "tests": "how to create repeatable environments and avoid configuration drift.",
+            "rules": [
+              "Keep Terraform code in version control and its state in a Cloud Storage bucket (remote state with locking); review plans before applying.",
+              "Infrastructure Manager runs Terraform for you with history and IAM; Deployment Manager is the older, deprecated tool.",
+              "Change infrastructure only through the code; console edits cause drift. Config Connector suits teams that already run everything through Kubernetes and GitOps."
+            ],
+            "traps": [
+              [
+                "Terraform state on a laptop",
+                "A Cloud Storage backend with locking",
+                "Local state gets lost and can't be shared. A remote backend with locking stops two people applying at once."
+              ],
+              [
+                "Deployment Manager for new projects",
+                "Terraform or Infrastructure Manager",
+                "Deployment Manager is deprecated. Terraform is Google's recommended infrastructure-as-code tool."
+              ],
+              [
+                "Fix production in the console, then forget it",
+                "Change the code and apply it",
+                "Manual changes drift from the code and get overwritten on the next apply."
+              ]
+            ]
+          },
+          {
+            "id": "14.3",
+            "title": "Google Cloud Observability",
+            "what": "Cloud Monitoring, Cloud Logging, Cloud Trace, Cloud Profiler and Error Reporting: metrics, logs, traces, profiles and errors in one suite.",
+            "tests": "which observability service answers the question in the scenario.",
+            "rules": [
+              "Cloud Monitoring: metrics scopes to view many projects, dashboards, uptime checks, SLO monitoring, alerting policies and Managed Service for Prometheus.",
+              "Cloud Logging: the Log Router sends logs to buckets, BigQuery, Cloud Storage or Pub/Sub; log-based metrics turn log lines into alertable numbers; Log Analytics queries logs with SQL.",
+              "Cloud Trace for latency across services, Cloud Profiler for CPU and memory hot spots in code, Error Reporting for grouped exceptions. Instrument with OpenTelemetry."
+            ],
+            "traps": [
+              [
+                "A separate dashboard per project for one app",
+                "One metrics scope covering all its projects",
+                "Switching between projects hides the full picture. A metrics scope shows one app across all its projects."
+              ],
+              [
+                "Alert by searching logs by hand",
+                "A log-based metric with an alerting policy",
+                "Manual searches catch problems late. A log-based metric alerts automatically."
+              ],
+              [
+                "Run Prometheus servers yourself on GKE",
+                "Managed Service for Prometheus",
+                "Self-run Prometheus needs storage, scaling and high-availability work. The managed service handles it."
+              ]
+            ]
+          },
+          {
+            "id": "14.4",
+            "title": "Apigee, API Gateway, Eventarc, Cloud Scheduler and Cloud Tasks",
+            "what": "Services for APIs and events: Apigee and API Gateway manage APIs; Eventarc routes events; Cloud Scheduler runs jobs on a timetable; Cloud Tasks queues individual tasks.",
+            "tests": "how services expose APIs, react to events and run work later or on a schedule.",
+            "rules": [
+              "Apigee for full API management: developer portals, API keys, quotas, analytics, monetisation and a facade over legacy systems. API Gateway for a simple managed front door to serverless backends.",
+              "Eventarc delivers events from Google services, audit logs and Pub/Sub to Cloud Run, GKE and Workflows in the CloudEvents format.",
+              "Cloud Scheduler triggers jobs with cron syntax; Cloud Tasks dispatches individual tasks with rate limits, retries and scheduling, where Pub/Sub is for broadcast-style messaging."
+            ],
+            "traps": [
+              [
+                "API Gateway for a partner portal with monetisation",
+                "Apigee",
+                "API Gateway has no developer portal or monetisation. Apigee does."
+              ],
+              [
+                "Pub/Sub when each task must call one endpoint at a controlled rate",
+                "Cloud Tasks",
+                "Pub/Sub broadcasts to subscribers. Cloud Tasks controls the rate and target for each task."
+              ],
+              [
+                "A VM running cron to trigger a nightly job",
+                "Cloud Scheduler",
+                "A VM kept just for cron costs money and needs patching. Cloud Scheduler is managed."
+              ]
+            ]
+          }
+        ],
+        "part": "services",
+        "short": "DevOps & ops"
+      },
+      {
+        "n": 15,
+        "weight": 0,
+        "group": "Service guide",
+        "tag": "Service guide",
+        "unit": "services",
+        "title": "Hybrid and Migration Services",
+        "sub": "Running Kubernetes everywhere, and moving VMs and databases to Google Cloud.",
+        "lessons": [
+          {
+            "id": "15.1",
+            "title": "GKE Enterprise and Cloud Service Mesh",
+            "what": "GKE Enterprise (formerly Anthos) manages Kubernetes clusters on Google Cloud, on-premises and in other clouds as one fleet. Cloud Service Mesh, based on Istio, manages traffic and security between services.",
+            "tests": "how to run and govern many clusters consistently, and secure service-to-service traffic.",
+            "rules": [
+              "Fleets group clusters; Config Sync applies configuration from Git to all of them; Policy Controller enforces rules such as allowed registries and no public load balancers.",
+              "Clusters outside Google Cloud join through the Connect agent; multi-cluster Gateway or Ingress spreads traffic across clusters.",
+              "Cloud Service Mesh adds mTLS between services, traffic splitting, retries and per-service telemetry without changing application code."
+            ],
+            "traps": [
+              [
+                "Manage each on-premises and cloud cluster separately",
+                "One fleet with Config Sync",
+                "Managing clusters one by one causes drift. A fleet applies the same configuration and policy everywhere."
+              ],
+              [
+                "Every team writes its own service-to-service authentication",
+                "Cloud Service Mesh with mTLS",
+                "Each team's own authentication is inconsistent and slow to build. The mesh adds mTLS without code changes."
+              ],
+              [
+                "Move every on-premises cluster to the cloud before managing them together",
+                "Attach them to the fleet where they run",
+                "Fleets manage clusters where they run, so you can govern them before, or without, moving them."
+              ]
+            ]
+          },
+          {
+            "id": "15.2",
+            "title": "Migration Center, Migrate to Virtual Machines and VMware Engine",
+            "what": "Migration Center discovers what you run and estimates cost; Migrate to Virtual Machines moves VMs from VMware, AWS or Azure to Compute Engine; Google Cloud VMware Engine runs VMware itself on Google Cloud.",
+            "tests": "the fastest safe path to move existing servers.",
+            "rules": [
+              "Start with Migration Center to inventory servers, map dependencies and estimate total cost of ownership.",
+              "Migrate to Virtual Machines streams VM data, lets you test clones before cutover, and keeps rollback possible.",
+              "VMware Engine moves VMware workloads with no changes to VMs or tools, which suits a data centre exit on a deadline."
+            ],
+            "traps": [
+              [
+                "Rebuild every VM by hand on Compute Engine",
+                "Migrate to Virtual Machines",
+                "Manual rebuilds are slow and error-prone. The migration tool copies VMs and supports testing and rollback."
+              ],
+              [
+                "Refactor VMware apps first because the lease ends next month",
+                "Google Cloud VMware Engine, then modernise later",
+                "Refactoring takes months. VMware Engine moves VMs unchanged to meet the deadline."
+              ],
+              [
+                "Cut over without testing",
+                "Test with clones before cutover",
+                "Test clones catch problems before users are affected."
+              ]
+            ]
+          },
+          {
+            "id": "15.3",
+            "title": "Database Migration Service and Datastream",
+            "what": "Database Migration Service moves databases to Cloud SQL and AlloyDB with continuous replication; Datastream captures changes (CDC) from operational databases into BigQuery and Cloud Storage.",
+            "tests": "how to move or replicate databases with little downtime.",
+            "rules": [
+              "Database Migration Service supports MySQL, PostgreSQL and SQL Server to Cloud SQL, PostgreSQL to AlloyDB, and Oracle to PostgreSQL with conversion help; it replicates continuously, so downtime is only the final cutover.",
+              "Datastream streams inserts, updates and deletes from MySQL, PostgreSQL, Oracle and SQL Server into BigQuery for near real-time analytics.",
+              "Self-managed databases you are not ready to change can run on Compute Engine (or, for MongoDB, MongoDB Atlas from the Marketplace)."
+            ],
+            "traps": [
+              [
+                "Dump and restore a busy production database over a weekend",
+                "Database Migration Service with continuous replication",
+                "A dump stops writes for hours. Continuous replication keeps the target in sync until a short cutover."
+              ],
+              [
+                "Nightly full exports to keep BigQuery up to date",
+                "Datastream change data capture",
+                "Nightly exports are a day old and heavy. Change data capture streams only the changes, in near real time."
+              ],
+              [
+                "Rewrite an app to move MySQL to Cloud SQL",
+                "No rewrite; migrate it as it is",
+                "Cloud SQL runs the same MySQL engine, so the app connects with minimal changes."
+              ]
+            ]
+          }
+        ],
+        "part": "services",
+        "short": "Hybrid & migration"
+      },
+      {
+        "n": 16,
+        "weight": 0,
+        "group": "Service guide",
+        "tag": "Service guide",
+        "unit": "services",
+        "title": "AI and ML Services",
+        "sub": "Google Cloud's AI platform, ready-made APIs, search and agents.",
+        "lessons": [
+          {
+            "id": "16.1",
+            "title": "Gemini Enterprise Agent Platform (formerly Vertex AI)",
+            "what": "Google Cloud's unified platform for machine learning, generative AI and agents: models, training, tuning, deployment and monitoring.",
+            "tests": "which part of the platform fits the AI requirement.",
+            "rules": [
+              "Model Garden gives Gemini, Imagen and Veo, open models such as Gemma and Llama, and partner models such as Claude. Agent Studio prototypes prompts and agents; the Agent Development Kit (ADK) and Agent Runtime build and run production agents.",
+              "AutoML trains models on your labelled data without code; custom training runs your TensorFlow, PyTorch or scikit-learn code on GPUs or TPUs.",
+              "Model Registry versions models, endpoints serve them, model monitoring watches for drift, pipelines automate the lifecycle, and Explainable AI shows why a model predicted what it did."
+            ],
+            "traps": [
+              [
+                "Host an open model on a VM you manage",
+                "Deploy it from Model Garden to a managed endpoint",
+                "Self-hosting means managing GPUs, scaling and patching. A managed endpoint does the serving for you."
+              ],
+              [
+                "No way to explain a model's decisions to auditors",
+                "Explainable AI plus audit logs",
+                "Auditors need reasons for predictions. Explainable AI provides them and audit logs record who did what."
+              ],
+              [
+                "Retrain by hand when accuracy drops",
+                "Model monitoring with automated retraining pipelines",
+                "Manual checks miss drift until users notice. Monitoring can trigger retraining automatically."
+              ]
+            ]
+          },
+          {
+            "id": "16.2",
+            "title": "Pre-trained AI APIs and BigQuery ML",
+            "what": "Ready-made models behind an API (Vision, Video Intelligence, Speech-to-Text, Text-to-Speech, Translation, Natural Language, Document AI) and BigQuery ML for models built in SQL.",
+            "tests": "when a standard AI task needs no custom training, or analysts want ML where the data already is.",
+            "rules": [
+              "Vision and Video Intelligence label images and video and detect unsafe content; Speech-to-Text and Text-to-Speech convert speech; Translation and Natural Language handle text; Document AI extracts fields from forms and invoices.",
+              "Use the API first; move to AutoML or tuning only when its labels do not fit your business.",
+              "BigQuery ML trains and runs models (forecasting, classification, even calls to Gemini) with SQL, with no data movement."
+            ],
+            "traps": [
+              [
+                "Train a model to read invoices from scratch",
+                "Document AI",
+                "Document AI already extracts invoice fields. A custom model needs data and time."
+              ],
+              [
+                "Export BigQuery data to a notebook for a simple forecast",
+                "BigQuery ML",
+                "BigQuery ML forecasts with SQL where the data already is."
+              ],
+              [
+                "Custom training to flag explicit images",
+                "Vision API safe search, or Video Intelligence for video",
+                "Safe search already detects explicit images. No training needed."
+              ]
+            ]
+          },
+          {
+            "id": "16.3",
+            "title": "Agent Search, RAG and Gemini Enterprise",
+            "what": "Agent Search adds Google-quality search and grounded AI answers to sites and apps; the RAG Engine builds custom retrieval pipelines; Gemini Enterprise gives employees AI search and agents across company data.",
+            "tests": "how to ground AI answers in your own data and make internal knowledge searchable.",
+            "rules": [
+              "Agent Search indexes websites, documents and BigQuery data and returns results or generated answers with citations, with little code.",
+              "RAG Engine for custom retrieval-augmented generation pipelines; grounding with Google Search for current public information.",
+              "Gemini Enterprise (formerly Agentspace) searches Drive, Jira, Confluence, SharePoint and more, respecting each user's permissions, with ready-made and custom agents."
+            ],
+            "traps": [
+              [
+                "Fine-tune a model on the product manuals so it answers questions",
+                "Ground it with Agent Search or RAG",
+                "Tuning doesn't reliably add facts, and they go stale. Grounding retrieves the current manual at answer time."
+              ],
+              [
+                "Build a custom search engine for internal documents",
+                "Gemini Enterprise or Agent Search",
+                "A managed search product is faster to deliver and respects each user's permissions."
+              ],
+              [
+                "Let the model answer from memory about current events",
+                "Grounding with Google Search",
+                "A model's knowledge stops at its training date. Grounding with Google Search adds current information."
+              ]
+            ]
+          },
+          {
+            "id": "16.4",
+            "title": "Conversational Agents and Customer Engagement",
+            "what": "Dialogflow CX and Conversational Agents build chat and voice agents; Gemini Enterprise for CX (formerly Customer Engagement Suite) adds Agent Assist, conversation insights and a cloud contact centre.",
+            "tests": "how to automate support and help human agents.",
+            "rules": [
+              "Conversational Agents (Dialogflow CX) handle multi-turn text and voice conversations on web, mobile and phone, and hand off to people when needed.",
+              "Agent Assist suggests replies, knowledge articles and summaries to human agents in real time; Conversational Insights analyses calls for trends and sentiment.",
+              "Contact Center as a Service runs voice and chat routing in the cloud with these AI features built in."
+            ],
+            "traps": [
+              [
+                "Hire more agents for 24/7 routine questions",
+                "Conversational Agents for routine requests",
+                "Virtual agents handle routine questions around the clock at lower cost."
+              ],
+              [
+                "Build a chatbot from scratch on a foundation model API",
+                "Dialogflow CX or Conversational Agents",
+                "Dialogflow CX already handles conversation flows, telephony and handoff to people."
+              ],
+              [
+                "Listen to call recordings by hand to find common issues",
+                "Conversational Insights",
+                "Manual review covers a tiny sample. Conversational Insights analyses every call."
+              ]
+            ]
+          }
+        ],
+        "part": "services",
+        "short": "AI & ML"
+      }
+    ],
+    "endNote": "Good luck on exam day. Find the constraint in each question, prefer the managed option, and answer the case studies from their requirements.",
+    "pairWith": "Google's official sample questions are the best next step. A PCA practice question bank is on the way; BrainByte subscribers hear first.",
+    "parts": [
+      {
+        "id": "exam",
+        "name": "Exam guide",
+        "sub": "6 exam sections + 4 case studies"
+      },
+      {
+        "id": "services",
+        "name": "Service guide",
+        "sub": "42 Google Cloud services, one by one"
+      }
+    ]
   }
 ]

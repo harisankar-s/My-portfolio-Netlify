@@ -685,7 +685,7 @@ body.hub .hub-light .hub-label { color: #5A6478; }
 @media (max-width: 1060px) and (min-width: 561px) { .hub-course:last-child:nth-child(odd) { grid-column: span 2; } }
 
 /* ---- Claude exam prep (hub): one light card per exam, guide + practice ---- */
-.ep-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; text-align: left; }
+.ep-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 16px; margin-top: 36px; text-align: left; }
 @media (max-width: 1000px) { .ep-grid { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; } }
 .ep-hub { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 22px; border-radius: 18px; color: #0B1220; overflow: hidden;
   background:
