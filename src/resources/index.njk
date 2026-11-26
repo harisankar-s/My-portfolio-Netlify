@@ -1,0 +1,52 @@
+---
+layout: hub-page.njk
+permalink: /resources/index.html
+eleventyExcludeFromCollections: true
+title: "Free resources"
+pageTitle: "Free AI Guides, Prompts and Setups | Harisankar Sivankutty"
+eleventyComputed:
+  description: "{{ resources.list.length }} free, practical AI guides: Claude Code setups, connectors, GitHub repos, AI video workflows and model picking. Every prompt ready to paste, with a check after each step."
+---
+{#- Free resources vault, after charliehills.ai/free-resources: every guide in
+    src/_data/resources.js, grouped by category, with a jump row on top and a
+    BrainByte signup at the end. Guide pages: src/resources/resource.njk. -#}
+<header class="gl-head" id="hero">
+  <p class="hub-label">Free · no sign-up needed</p>
+  <h1 class="hub-h2">Free <span class="hub-accent">resources</span></h1>
+  <p class="hub-sub">Practical AI guides you can use today: setups, prompts and workflows for Claude, Claude Code and AI video. Every prompt is ready to paste, every step ends with a check, and every guide closes with fixes for what usually goes wrong.</p>
+  <nav class="rs-jump" aria-label="Categories">
+    {%- for c in resources.categories %}
+    {%- set items = [] %}{% for r in resources.list %}{% if r.category == c.slug %}{% set items = (items.push(r), items) %}{% endif %}{% endfor %}
+    {%- if items.length %}<a href="#{{ c.slug }}">{{ c.name }} <span>{{ items.length }}</span></a>{% endif %}
+    {%- endfor %}
+  </nav>
+</header>
+
+<div class="gl-body">
+  {%- for c in resources.categories %}
+  {%- set items = [] %}{% for r in resources.list %}{% if r.category == c.slug %}{% set items = (items.push(r), items) %}{% endif %}{% endfor %}
+  {%- if items.length %}
+  <section class="rs-group" id="{{ c.slug }}">
+    <p class="hub-label">{{ c.name }} · {{ items.length }} guide{{ "s" if items.length != 1 }}</p>
+    <div class="hub-kits rs-cards">
+      {%- for r in items %}{% include "rs-card.njk" %}{% endfor %}
+    </div>
+  </section>
+  {%- endif %}
+  {%- endfor %}
+
+  <div class="hub-practice hub-practice-under">
+    <div class="hub-glass hub-light hub-next" id="exam-prep">
+      <span class="hub-label">Studying for a Claude certification?</span>
+      <p class="hub-tile-text">Free study guides and practice question banks for CCAR-F, CCAR-P and CCDV-F live in the exam prep library.</p>
+      <a href="/guides/" class="hub-textlink">Open exam prep <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="hub-glass hub-light hub-next" id="join">
+      <span class="hub-label">Get new guides first</span>
+      <p class="hub-tile-text">New free guides go to {{ site.newsletter.name }} subscribers first. {{ site.newsletter.tagline }}, a new issue {{ site.newsletter.cadence }}. Free.</p>
+      {% set nfId = 'resources' %}{% set nfClass = 'bg-gate-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% include "newsletter-form.njk" %}
+      <p class="hub-meta">Unsubscribe any time.</p>
+    </div>
+  </div>
+  <p class="hub-meta" style="margin-top:24px">Independent guides. Tools, repos and models named here belong to their owners; check each one's terms and README before you rely on it.</p>
+</div>

@@ -198,3 +198,73 @@ body.hub .nl-month-head { color: var(--fg-dim); }
 .aud-section-head .hub-label { margin: 0; }
 .aud-section .hub-shelf { margin-top: 0; }
 .aud-posts { margin-top: 0; }
+
+/* Free resources (/resources/ and /resources/{slug}/, src/resources/*.njk,
+   data in src/_data/resources.js). Guide pages reuse the .bg-* reading
+   panel above; these add the "Start here" box, copyable prompt blocks,
+   checks, tables and the print (Save as PDF) layout. */
+.rs-jump { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
+.rs-jump a { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; font-size: 14px; color: var(--fg);
+  border: 1px solid rgba(255,255,255,.16); background: rgba(255,255,255,.06); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.rs-jump a:hover { border-color: var(--hi); }
+.rs-jump span { font-family: var(--font-mono); font-size: 11.5px; color: var(--hi); }
+.rs-group { margin-top: 44px; scroll-margin-top: 90px; }
+.rs-group > .hub-label { margin: 0 0 14px; }
+.rs-card { text-align: left; }
+.bg-more .rs-cards { margin-top: 24px; }
+
+.rs-start { border: 2px solid var(--pop); border-radius: 16px; padding: 18px 22px; background: var(--brand-soft); margin-bottom: 8px; scroll-margin-top: 90px; }
+.rs-start p { font-size: 17.5px; line-height: 1.6; }
+.rs-start-label, .rs-check-label, .rs-note-label { font-family: var(--font-mono); font-size: 11.5px !important; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; color: var(--brand); margin-bottom: 6px; }
+.rs-section { margin-top: 56px; scroll-margin-top: 90px; }
+.rs-section > .bg-h2 { display: flex; align-items: baseline; gap: 12px; }
+.rs-num { flex: none; display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--pop); color: #fff; font-size: 17px; font-weight: 700; transform: translateY(-3px); }
+.rs-h3 { margin-top: 30px; }
+.rs-inside-dot { background: var(--band); color: var(--fg-dim); }
+.rs-h3 small { display: block; font-family: var(--font); font-size: 14px; font-weight: 400; color: var(--fg-dim); margin-top: 4px; }
+.rs-h3 small a, .bg-paper .bg-p a, .rs-check a, .rs-note a, .rs-table a, .rs-sources a, .rs-start a { color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+.rs-steps { margin-top: 10px; }
+.rs-steps li::before { background: var(--pop); color: #fff; }
+.rs-steps b { font-weight: 700; }
+.rs-note { margin: 16px 0; }
+.rs-check { margin: 14px 0 22px; padding: 12px 16px; border-radius: 12px; background: var(--ok-soft); border: 1px solid rgba(5,150,105,.25); }
+.rs-check .rs-check-label { color: var(--ok); }
+.rs-check p { font-size: 16px; line-height: 1.55; }
+
+.rs-paste { margin: 14px 0 16px; border-radius: 14px; overflow: hidden; background: #0B1220; border: 1px solid #0B1220; }
+.rs-paste figcaption { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 10px 8px 16px; background: #182133;
+  font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: #9FB3D9; }
+.rs-copy { font: inherit; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; padding: 5px 12px; border-radius: 8px; cursor: pointer;
+  border: 1px solid rgba(255,255,255,.22); background: rgba(255,255,255,.06); color: #fff; }
+.rs-copy:hover { border-color: #8AB4FF; }
+.rs-copy.is-done { background: #0E9F6E; border-color: #0E9F6E; }
+.rs-paste pre { margin: 0; padding: 16px 18px; overflow-x: auto; white-space: pre-wrap; word-break: break-word; }
+.bg-guide .rs-paste code { all: unset; font-family: var(--font-mono), ui-monospace, Menlo, monospace; font-size: 14.5px; line-height: 1.65; color: #E6ECF7; white-space: inherit; }
+.rs-code pre { white-space: pre; word-break: normal; }
+
+.rs-table-wrap { overflow-x: auto; margin: 14px 0 18px; border: 1px solid var(--border); border-radius: 12px; }
+.rs-table { width: 100%; border-collapse: collapse; font-size: 15.5px; line-height: 1.5; }
+.rs-table th { text-align: left; font-size: 13px; font-weight: 700; color: var(--fg-dim); background: var(--band); padding: 10px 14px; border-bottom: 1px solid var(--border); }
+.rs-table td { padding: 11px 14px; border-top: 1px solid var(--border); vertical-align: top; color: var(--fg); }
+.rs-table tbody tr:first-child td { border-top: 0; }
+.rs-table td:first-child { font-weight: 600; }
+.rs-fixes td:first-child { width: 40%; }
+.rs-sources { margin-top: 18px; }
+.rs-end .bg-gate-form { justify-content: flex-start; margin-left: 0; }
+
+@media print {
+  @page { margin: 16mm 14mm; }
+  .hub-sky, .pf-nav, .pf-progress, .hub-footer, .bg-more, .rs-end, .bg-head-ctas, .rs-copy, .bg-back, [class*="askhari"] { display: none !important; }
+  body.hub { background: #fff !important; color: #0B1220 !important; }
+  .bg-head { padding: 0 0 12px !important; }
+  .bg-head .bg-title, .bg-head .bg-byline b, .bg-head .bg-stats strong { color: #0B1220 !important; }
+  .bg-head .bg-pitch, .bg-head .bg-byline, .bg-head .bg-stats li, .bg-head .bg-kicker { color: #3A4458 !important; }
+  .bg-head-grid { grid-template-columns: 1fr !important; }
+  .bg-inside { box-shadow: none !important; border: 1px solid #E5E7EB !important; }
+  .bg-wrap { padding: 0 !important; }
+  .bg-paper { box-shadow: none !important; padding: 0 !important; border-radius: 0 !important; }
+  .rs-paste, .rs-check, .rs-table-wrap, .rs-h3 { break-inside: avoid; }
+  .rs-paste pre, .rs-code pre { white-space: pre-wrap !important; }
+  .rs-section > .bg-h2 { break-after: avoid; }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

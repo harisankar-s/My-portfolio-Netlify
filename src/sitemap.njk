@@ -21,6 +21,17 @@ eleventyExcludeFromCollections: true
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>{{ site.portfolioUrl }}/resources/</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {%- for r in resources.list %}
+  <url>
+    <loc>{{ site.portfolioUrl }}/resources/{{ r.slug }}/</loc>
+    <lastmod>{{ r.added | dateToRfc3339 }}</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  {%- endfor %}
+  <url>
     <loc>{{ site.portfolioUrl }}/newsletter/</loc>
     <changefreq>weekly</changefreq>
   </url>

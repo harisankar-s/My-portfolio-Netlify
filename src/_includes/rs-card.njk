@@ -1,0 +1,11 @@
+{#- Card for one free resource (src/_data/resources.js). Set `r` before
+    including. Used on /resources/,
+    the hub's #resources row and the "More free resources" row on each guide. -#}
+{%- from "ico.njk" import ico -%}
+<a class="hub-glass hub-light hub-kit rs-card" href="/resources/{{ r.slug }}/">
+  <span class="hub-pack-top"><span class="ico3d ico3d-sm ico3d-{{ r.cat.color }}">{{ ico(r.cat.icon) }}</span><span class="hub-tag">{{ r.cat.name }}</span></span>
+  <span class="hub-kit-title">{{ r.title }}</span>
+  <span class="hub-kit-text">{{ r.description }}</span>
+  <span class="hub-chips"><span>{{ r.minutes }} min</span><span>{{ r.promptCount }} prompt{{ "s" if r.promptCount != 1 }}</span></span>
+  <span class="hub-textlink">Open the guide <span aria-hidden="true">→</span></span>
+</a>

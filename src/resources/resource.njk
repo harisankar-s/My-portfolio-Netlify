@@ -1,0 +1,110 @@
+---
+layout: hub-page.njk
+pagination:
+  data: resources.list
+  size: 1
+  alias: res
+permalink: "/resources/{{ res.slug }}/index.html"
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  title: "{{ res.title }}"
+  pageTitle: "{{ res.seoTitle }} | Harisankar Sivankutty"
+  description: "{{ res.description }}"
+---
+{#- One free resource, after charliehills.ai's Free Resource Vault: header on
+    the sky (pitch + "What's inside"), then a white reading panel with a
+    "Start here" box, the numbered sections (paste-ready prompts with Copy
+    buttons and a check after each step), a fix table, next steps and sources.
+    Fully open (no gate), with a BrainByte signup at the end. "Save as PDF"
+    prints the page; print styles in /assets/guides.css. Content lives in
+    src/_data/resources.js. -#}
+<div class="bg-guide rs-guide">
+
+  <header class="bg-head" id="hero">
+    <div class="bg-head-grid">
+      <div class="bg-head-text">
+        <a class="bg-back" href="/resources/">← All free resources</a>
+        <p class="bg-kicker">{{ res.cat.name }} · Free guide</p>
+        <h1 class="bg-title">{{ res.title }}</h1>
+        <p class="bg-pitch">{{ res.pitch }}</p>
+        <div class="bg-byline">
+          <img src="/images/profile/hari_new.png" alt="" width="40" height="40" />
+          <span><b>{{ site.author }}</b><br />Added {{ res.added | longDate }} · Free</span>
+        </div>
+        <ul class="bg-stats">
+          <li><strong>{{ res.minutes }} min</strong> read</li>
+          <li><strong>{{ res.sections.length }}</strong> sections</li>
+          <li><strong>{{ res.promptCount }}</strong> {{ "prompt" if res.promptCount == 1 else "prompts &amp; commands" }} to copy</li>
+        </ul>
+        <div class="bg-head-ctas">
+          <a class="pf-btn pf-btn-primary" href="#start-here">Start here</a>
+          <button type="button" class="pf-btn pf-btn-ghost" data-rs-print>Save as PDF</button>
+        </div>
+      </div>
+
+      <aside class="bg-inside" aria-label="What's inside">
+        <p class="bg-small">What's inside</p>
+        <ol class="bg-inside-list">
+          {%- for s in res.sections %}
+          <li><a href="#{{ s.id }}"><span class="bg-inside-num{% if not s.n %} rs-inside-dot{% endif %}">{{ s.n or "·" }}</span><span class="bg-inside-name">{{ s.title }}</span></a></li>
+          {%- endfor %}
+          <li><a href="#fixes"><span class="bg-inside-num">?</span><span class="bg-inside-name">When something does not work</span></a></li>
+        </ol>
+      </aside>
+    </div>
+  </header>
+
+  <div class="bg-wrap"><div class="bg-paper">
+    <div class="bg-body">
+      <div class="rs-start" id="start-here">
+        <p class="rs-start-label">Start here</p>
+        <p>{{ res.startHere | rich | safe }}</p>
+      </div>
+
+      {%- for s in res.sections %}
+      <section class="rs-section" id="{{ s.id }}">
+        <h2 class="bg-h2">{% if s.n %}<span class="rs-num">{{ s.n }}</span>{% endif %}{{ s.title }}</h2>
+        {% if s.lead %}<p class="bg-p bg-muted">{{ s.lead | rich | safe }}</p>{% endif %}
+        {%- for b in s.blocks %}{% include "rs-block.njk" %}{% endfor %}
+      </section>
+      {%- endfor %}
+
+      <section class="rs-section" id="fixes">
+        <h2 class="bg-h2">When something does not work</h2>
+        <div class="rs-table-wrap"><table class="rs-table rs-fixes">
+          <thead><tr><th scope="col">What you see</th><th scope="col">What to do</th></tr></thead>
+          <tbody>{% for f in res.fixes %}<tr><td>{{ f[0] | rich | safe }}</td><td>{{ f[1] | rich | safe }}</td></tr>{% endfor %}</tbody>
+        </table></div>
+      </section>
+
+      <section class="rs-section" id="next-steps">
+        <h2 class="bg-h2">Next steps</h2>
+        <ol class="bg-passes rs-steps">{% for n in res.next %}<li><span>{{ n | rich | safe }}</span></li>{% endfor %}</ol>
+        {% if res.sources %}<p class="bg-fine rs-sources">{{ res.sources | rich | safe }}</p>{% endif %}
+      </section>
+
+      <div class="bg-end rs-end">
+        <p class="bg-small">Free · {{ site.newsletter.name }}</p>
+        <h2 class="bg-h2">Get the next guide first</h2>
+        <p class="bg-p">New free guides like this one go to {{ site.newsletter.name }} subscribers first. {{ site.newsletter.tagline }}, a new issue {{ site.newsletter.cadence }}.</p>
+        {% set nfId = 'res-' + res.slug %}{% set nfClass = 'bg-gate-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% include "newsletter-form.njk" %}
+        <p class="bg-fine">Free. Unsubscribe any time.</p>
+      </div>
+    </div>
+  </div></div>
+
+  <section class="bg-more">
+    <div class="bg-more-inner">
+      <p class="hub-label">More free resources</p>
+      <h2 class="hub-h2">Keep <span class="hub-accent">going</span></h2>
+      <div class="hub-kits rs-cards">
+        {#- same category first, then the newest others; three in all -#}
+        {%- set more = [] %}
+        {%- for r in resources.list %}{% if r.slug != res.slug and r.category == res.category %}{% set more = (more.push(r), more) %}{% endif %}{% endfor %}
+        {%- for r in resources.list %}{% if r.slug != res.slug and r.category != res.category %}{% set more = (more.push(r), more) %}{% endif %}{% endfor %}
+        {%- for r in more %}{% if loop.index <= 3 %}{% include "rs-card.njk" %}{% endif %}{% endfor %}
+      </div>
+      <p class="hub-sub" style="margin-top:24px"><a class="hub-textlink" href="/resources/">All free resources <span aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+</div>

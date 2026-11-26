@@ -2,7 +2,8 @@
 //   harisankarsivankutty.in       -> hub at / (built at /home/), CV at /about/,
 //                                    exam prep at /guides/, guide PDFs at /files/,
 //                                    newsletter archive at /newsletter/,
-//                                    audience pages at /for/{slug}/
+//                                    audience pages at /for/{slug}/,
+//                                    free resources at /resources/*
 //   blog.harisankarsivankutty.in  -> blog (built at /)
 //
 // The apex domain serves the hub, the CV and the exam prep pages. Anything
@@ -34,9 +35,9 @@ const SHARED_PATHS = [
   /^\/\.netlify\//,
 ];
 
-// Exam prep pages, their PDFs, the newsletter archive and the audience
-// pages: apex only.
-const APEX_ONLY_PATHS = [/^\/guides(\/|$)/, /^\/files\//, /^\/newsletter(\/|$)/, /^\/for\//];
+// Exam prep pages, their PDFs, the newsletter archive, the audience pages
+// and the free resources vault: apex only.
+const APEX_ONLY_PATHS = [/^\/guides(\/|$)/, /^\/files\//, /^\/newsletter(\/|$)/, /^\/for\//, /^\/resources(\/|$)/];
 
 // Paths the apex (profile) domain serves directly; everything else redirects
 // to the blog subdomain.
@@ -79,7 +80,7 @@ export default async (request, context) => {
     if (url.pathname === "/home" || url.pathname === "/home/") {
       return Response.redirect(`${url.protocol}//${host}/`, 301);
     }
-    if (url.pathname === "/guides" || url.pathname === "/newsletter") {
+    if (url.pathname === "/guides" || url.pathname === "/newsletter" || url.pathname === "/resources") {
       return Response.redirect(`${url.protocol}//${host}${url.pathname}/`, 301);
     }
     if (url.pathname === "/") {
