@@ -19,7 +19,10 @@ eleventyExcludeFromCollections: true
     <link href="{{ site.url }}{{ post.url }}" rel="alternate" type="text/html" />
     <id>{{ site.url }}{{ post.url }}</id>
     <updated>{{ post.date | dateToRfc3339 }}</updated>
+    <published>{{ post.date | dateToRfc3339 }}</published>
+    <author><name>{{ site.author | escape }}</name></author>
     {% if post.data.excerpt %}<summary>{{ post.data.excerpt | escape }}</summary>{% endif %}
+    <content type="html">{{ post.content | feedHtml(site.url) | escape }}</content>
     {% for tag in post.data.tags %}<category term="{{ tag | escape }}" />
     {% endfor %}
   </entry>
