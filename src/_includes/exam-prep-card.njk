@@ -1,11 +1,11 @@
 {#- One Claude exam with everything for it: the free study guide and the
     practice question pack (set `exam` from src/_data/exams.json before
-    including; set `epStyle` to "hub" on the apex hub, otherwise BrainByte
-    styling). Guide comes from bbLiveGuides, pack from brainbyte.practice. -#}
+    including). Main-domain pages only: hub #exams, /guides/ and each guide.
+    Guide comes from bbLiveGuides, pack from brainbyte.practice. -#}
 {%- set epGuide = bbLiveGuides | findBy("slug", exam.guide) -%}
 {%- set epPack = (brainbyte.practice | findBy("exam", exam.packExam)) if exam.packExam else "" -%}
-{%- set epGuideUrl = (site.brainbyteUrl + '/guides/' + exam.guide + '/') if epStyle == "hub" else (('/guides/' + exam.guide + '/') | bb) -%}
-<article class="ep-card{% if epStyle == 'hub' %} ep-hub{% endif %}">
+{%- set epGuideUrl = '/guides/' + exam.guide + '/' -%}
+<article class="ep-card ep-hub">
   <div class="ep-top">
     <span class="ep-logo"><img src="/images/logos/claude.svg" alt="" width="26" height="26" loading="lazy" /></span>
     <span class="ep-code">{{ exam.code }}</span>

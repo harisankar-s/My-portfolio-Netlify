@@ -6,9 +6,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/source");
   eleventyConfig.addPassthroughCopy("src/theme");
   eleventyConfig.addPassthroughCopy("src/assets");
-  // Downloadable files for BrainByte guides (e.g. the CCAR-F PDF); served on
-  // the brainbyte subdomain at /files/{name}
-  eleventyConfig.addPassthroughCopy("src/brainbyte/files");
+  // Downloadable guide PDFs, served on the main domain at /files/{name}
+  eleventyConfig.addPassthroughCopy("src/files");
 
   // Blog posts collection — sorted newest first
   eleventyConfig.addCollection("posts", function (collectionApi) {
@@ -99,28 +98,6 @@ module.exports = function (eleventyConfig) {
     const m = content.match(/<img[^>]+src=["']([^"']+)["']/i);
     return m ? m[1] : "";
   });
-
-  // ---- BrainByte (brainbyte.* subdomain) -------------------------------
-  // BrainByte pages are built under /brainbyte/ and the domain-router edge
-  // function rewrites the brainbyte host's "/x" to "/brainbyte/x". So the
-  // public path drops the prefix. Under `eleventy --serve` there is no edge
-  // function, so internal links keep the prefix there to stay clickable
-  // locally. Set BRAINBYTE_BASE to force either one.
-  const BB_PREFIX = "/brainbyte";
-  const bbBase =
-    process.env.BRAINBYTE_BASE !== undefined
-      ? process.env.BRAINBYTE_BASE
-      : process.env.ELEVENTY_RUN_MODE === "build"
-        ? ""
-        : BB_PREFIX;
-
-  // Filter: internal BrainByte link, e.g. {{ "/tracks/gcp-pde/" | bb }}
-  eleventyConfig.addFilter("bb", (path) => `${bbBase}${path || "/"}`);
-
-  // Filter: a built BrainByte page.url → its public path on the subdomain
-  eleventyConfig.addFilter("bbPublicPath", (url) =>
-    url && url.startsWith(BB_PREFIX) ? url.slice(BB_PREFIX.length) || "/" : url
-  );
 
   // The apex hub (src/home.njk) is built at /home/ and the domain router
   // serves it at the apex root. Under `eleventy --serve` there is no router,

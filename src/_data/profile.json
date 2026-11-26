@@ -143,7 +143,7 @@
   "languages": ["English", "Malayalam", "Hindi", "Tamil"],
   "offerings": {
     "brainbyte": {
-      "url": "https://brainbyte.harisankarsivankutty.in/",
+      "url": "https://harisankarsivankutty.in/guides/",
       "description": "BrainByte is Hari's learning and products hub. Available now and FREE on Topmate: two Claude Certified Architect practice question banks, CCAR-F Foundations (160 questions, grouped by the 5 exam domains, with an explanation for every answer) and CCAR-P Professional (125 questions with an answer key). Independent study material, not affiliated with Anthropic, containing no real exam questions. Coming soon: production starter kits (tested, documented code with CI and infrastructure as code) and step-by-step learning tracks.",
       "availableNow": ["CCAR-F: 160 Practice Questions (free) — https://topmate.io/harisankar_sivankutty/2413541", "CCAR-P Practice Question Bank: 125 Questions (free) — https://topmate.io/harisankar_sivankutty/2413543"],
       "comingSoon": ["Production data pipeline kit (Terraform)", "Data quality starter (Great Expectations + DataHub)", "Claude RAG assistant starter", "dbt Data Vault template", "Guides for Claude, Google Cloud, production data engineering and Databricks"]

@@ -3,7 +3,7 @@
     .substack.com); until then it opens an email to Hari so no signup is lost.
     Callers set: nfId (unique per page), nfClass (form class), nfBtnClass, and
     optionally nfAvatar (a small photo shown inside the field) and nfGate
-    (true on guide pages: brainbyte.js unlocks the guide when it's submitted). -#}
+    (true on guide pages: /assets/guides.js unlocks the guide when it's submitted). -#}
 {%- set nl = site.newsletter -%}
 <form class="{{ nfClass or 'nl-form' }}"{% if nfGate %} data-bb-gate-form{% endif %}
   {%- if nl.username %} action="https://{{ nl.username }}.substack.com/api/v1/free?nojs=true" method="post" target="_blank"

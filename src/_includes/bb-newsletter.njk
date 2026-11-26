@@ -1,6 +1,0 @@
-{#- BrainByte Weekly signup on BrainByte pages (form: newsletter-form.njk). -#}
-<div class="bb-news">
-  <h2 class="bb-h2">Get {{ site.newsletter.name }}</h2>
-  <p class="bb-sub">One practical data &amp; AI lesson a week: a production pattern, an exam-style practice question, and new packs and starter kits before anyone else. Free.</p>
-  {% set nfId = newsId or 'main' %}{% set nfClass = 'bb-news-form' %}{% set nfBtnClass = 'bb-btn bb-btn-primary' %}{% include "newsletter-form.njk" %}
-</div>

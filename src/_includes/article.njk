@@ -222,7 +222,7 @@
     <div class="nav-right">
       <a href="/" class="nav-link">Blog</a>
       <a href="/ask/" class="nav-link">Trench AI</a>
-      <a href="{{ site.brainbyteUrl }}/" class="nav-link">BrainByte ↗</a>
+      <a href="{{ site.portfolioUrl }}/guides/" class="nav-link">Exam prep ↗</a>
       <a href="{{ site.portfolioUrl }}/about/" class="nav-link">About</a>
       <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">
         <svg class="theme-icon theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><line x1="12" y1="2" x2="12" y2="4"></line><line x1="12" y1="20" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="6.34" y2="6.34"></line><line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="4" y2="12"></line><line x1="20" y1="12" x2="22" y2="12"></line><line x1="4.93" y1="19.07" x2="6.34" y2="17.66"></line><line x1="17.66" y1="6.34" x2="19.07" y2="4.93"></line></svg>
@@ -292,33 +292,33 @@
           {% if bbKit.status == 'live' and bbKit.url %}
           <a class="bb-cta-btn" href="{{ bbKit.url }}" target="_blank" rel="noopener">Get the code</a>
           {% else %}
-          <a class="bb-cta-btn" href="{{ site.brainbyteUrl }}/#newsletter">Get early access</a>
+          <a class="bb-cta-btn" href="{{ site.portfolioUrl }}/#join">Get early access</a>
           {% endif %}
-          <a class="bb-cta-link" href="{{ site.brainbyteUrl }}/#kits">See all starter kits →</a>
+          <a class="bb-cta-link" href="{{ site.portfolioUrl }}/#kits">See all starter kits →</a>
         </div>
         {% elif isClaudeCert and ccarGuide %}
         <div class="bb-cta-eyebrow">BrainByte · Free guide</div>
         <div class="bb-cta-title">Sitting a Claude certification? Get the free exam prep.</div>
         <p class="bb-cta-sub">A study guide for each exam ({% for g in bbLiveGuides %}{{ g.exam }}{% if not loop.last %}, {% endif %}{% endfor %}) with the right answer next to every wrong one, plus free practice question banks to test yourself.</p>
         <div class="bb-cta-actions">
-          <a class="bb-cta-btn" href="{{ site.brainbyteUrl }}/guides/">See the exam prep</a>
-          <a class="bb-cta-link" href="{{ site.brainbyteUrl }}/guides/{{ ccarGuide.slug }}/">Start with the CCAR-F guide →</a>
+          <a class="bb-cta-btn" href="{{ site.portfolioUrl }}/guides/">See the exam prep</a>
+          <a class="bb-cta-link" href="{{ site.portfolioUrl }}/guides/{{ ccarGuide.slug }}/">Start with the CCAR-F guide →</a>
         </div>
         {% elif isGenAI %}
         <div class="bb-cta-eyebrow">BrainByte · Free</div>
         <div class="bb-cta-title">Preparing for the Claude Certified Architect exam?</div>
         <p class="bb-cta-sub">285 free, scenario-based practice questions for Foundations (CCAR-F) and Professional (CCAR-P).</p>
         <div class="bb-cta-actions">
-          <a class="bb-cta-btn" href="{{ site.brainbyteUrl }}/#claude">Get the free packs</a>
-          <a class="bb-cta-link" href="{{ site.brainbyteUrl }}/#practice">Try a free question →</a>
+          <a class="bb-cta-btn" href="{{ site.portfolioUrl }}/guides/">Get the free packs</a>
+          <a class="bb-cta-link" href="{{ site.portfolioUrl }}/#practice">Try a free question →</a>
         </div>
         {% else %}
         <div class="bb-cta-eyebrow">BrainByte · Starter kits</div>
         <div class="bb-cta-title">Start from code that already works</div>
         <p class="bb-cta-sub">The free personal website starter kit is out now. Production kits for data and AI engineers are next.</p>
         <div class="bb-cta-actions">
-          <a class="bb-cta-btn" href="{{ site.brainbyteUrl }}/#kits">Get the free kit</a>
-          <a class="bb-cta-link" href="{{ site.brainbyteUrl }}/#newsletter">Get early access →</a>
+          <a class="bb-cta-btn" href="{{ site.portfolioUrl }}/#kits">Get the free kit</a>
+          <a class="bb-cta-link" href="{{ site.portfolioUrl }}/#join">Get early access →</a>
         </div>
         {% endif %}
       </div>

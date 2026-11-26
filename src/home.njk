@@ -65,22 +65,7 @@ eleventyExcludeFromCollections: true
     <div class="sky-shade"></div>
   </div>
 
-  <!-- NAV -->
-  <nav class="pf-nav on-hero" id="nav">
-    <a href="{{ homePath }}" class="pf-logo">
-      <img src="/images/profile/hari_new.png" alt="" width="32" height="32" />
-      <span>{{ p.name }}</span>
-    </a>
-    <div class="pf-nav-right">
-      <ul class="pf-nav-links">
-        <li><a href="#exams">Exam prep</a></li>
-        <li><a href="#field">Articles</a></li>
-        <li><a href="#kits">Starter kits</a></li>
-        <li><a href="/about/">About</a></li>
-      </ul>
-      <a href="{% if nl.username %}https://{{ nl.username }}.substack.com/{% else %}#join{% endif %}" class="pf-btn pf-btn-primary pf-btn-sm pf-nav-cta hub-nav-sub"{% if nl.username %} target="_blank" rel="noopener"{% endif %}>Subscribe <span class="hub-arrow" aria-hidden="true">→</span></a>
-    </div>
-  </nav>
+  {% set hubNavBase = "" %}{% include "hub-nav.njk" %}
 
   <main id="top">
 
@@ -158,7 +143,7 @@ eleventyExcludeFromCollections: true
             <p class="hub-sub">For each exam: a study guide that shows how the exam thinks, and a practice question bank to test yourself. All free.</p>
           </div>
           <div class="ep-grid">
-            {%- for exam in exams %}{% set epStyle = "hub" %}{% include "exam-prep-card.njk" %}{% endfor %}
+            {%- for exam in exams %}{% include "exam-prep-card.njk" %}{% endfor %}
           </div>
         </div>
         <div class="hub-practice hub-practice-under">
@@ -233,7 +218,6 @@ eleventyExcludeFromCollections: true
         <header class="hub-head hub-reveal">
           <div><p class="hub-label">Starter kits</p><h2 class="hub-h2">Production code <span class="hub-accent">you can start from</span></h2>
           <p class="hub-sub">Tested, documented templates for the systems in the lessons. Subscribers hear first when each one ships.</p></div>
-          <a href="{{ site.brainbyteUrl }}/#kits" class="hub-textlink">See all kits <span aria-hidden="true">→</span></a>
         </header>
         <div class="hub-kits">
           {% for k in brainbyte.kits %}
@@ -289,10 +273,7 @@ eleventyExcludeFromCollections: true
 
   </main>
 
-  <footer class="hub-footer">
-    <span>© 2026 {{ p.name }} · {{ nl.name }}</span>
-    <nav aria-label="Footer"><a href="{% if nl.username %}https://{{ nl.username }}.substack.com/{% else %}#join{% endif %}">Subscribe</a><a href="{{ site.brainbyteUrl }}/">BrainByte</a><a href="{{ site.url }}/">Blog</a><a href="/about/">About</a><a href="{{ site.url }}/ask/">Ask Hari.ai</a></nav>
-  </footer>
+  {% include "hub-footer.njk" %}
 
   <script src="/assets/galaxy.js" defer></script>
   <script src="/assets/space.js" defer></script>

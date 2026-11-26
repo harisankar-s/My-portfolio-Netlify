@@ -1,24 +1,27 @@
-// Routes requests by hostname so one Eleventy build serves three domains:
-//   harisankarsivankutty.in            -> hub at / (built at /home/), CV at /about/
-//   blog.harisankarsivankutty.in       -> blog (built at /)
-//   brainbyte.harisankarsivankutty.in  -> BrainByte learning hub (built at /brainbyte/)
+// Routes requests by hostname so one Eleventy build serves two domains:
+//   harisankarsivankutty.in       -> hub at / (built at /home/), CV at /about/,
+//                                    exam prep at /guides/, guide PDFs at /files/
+//   blog.harisankarsivankutty.in  -> blog (built at /)
 //
-// The apex domain serves two pages: its root is internally rewritten to the
-// hub (/home/ build output) and /about/ serves the CV as built. Anything else
-// (blog posts, tags, feed, /ask/, /now/, ...) 301s to the blog subdomain so
-// that content is never indexable at two hosts. The blog subdomain folds
-// /about/ and /home/ back to the apex for the same reason. BrainByte's public "/x" is internally
-// rewritten to "/brainbyte/x"; "/brainbyte/*" on any host 301s to the
-// BrainByte host so those pages also live at exactly one URL.
+// The apex domain serves the hub, the CV and the exam prep pages. Anything
+// else (blog posts, tags, feed, /ask/, /now/, ...) 301s to the blog
+// subdomain so that content is never indexable at two hosts. The blog
+// subdomain folds /about/, /home/, /guides/ and /files/ back to the apex for
+// the same reason.
+//
+// BrainByte used to be its own subdomain (brainbyte.harisankarsivankutty.in,
+// built at /brainbyte/). It now lives on the apex, like charliehills.ai keeps
+// everything on one domain, so every old BrainByte URL 301s to its new home:
+// /guides/* and /files/* keep their path, everything else goes to /guides/.
 
 // Netlify Edge Functions run on a separate Deno deploy pipeline from the
 // Eleventy build, so these can't import src/_data/site.json directly. Keep
-// them in sync with site.json's "url", "portfolioUrl" and "brainbyteUrl"
-// hostnames by hand.
+// them in sync with site.json's "url" and "portfolioUrl" hostnames by hand.
 const APEX_HOSTS = new Set(["harisankarsivankutty.in", "www.harisankarsivankutty.in"]);
+const APEX_ORIGIN = "https://harisankarsivankutty.in";
 const BLOG_HOST = "blog.harisankarsivankutty.in";
-const BRAINBYTE_HOST = "brainbyte.harisankarsivankutty.in";
-const BRAINBYTE_PREFIX = "/brainbyte";
+const OLD_BRAINBYTE_HOST = "brainbyte.harisankarsivankutty.in";
+const OLD_BRAINBYTE_PREFIX = "/brainbyte";
 
 // Shared static/API paths every host serves as-is.
 const SHARED_PATHS = [
@@ -29,38 +32,41 @@ const SHARED_PATHS = [
   /^\/\.netlify\//,
 ];
 
+// Exam prep pages and their PDFs: apex only.
+const APEX_ONLY_PATHS = [/^\/guides(\/|$)/, /^\/files\//];
+
 // Paths the apex (profile) domain serves directly; everything else redirects
 // to the blog subdomain.
-const APEX_ALLOWED_PATHS = [/^\/$/, /^\/about\/$/, ...SHARED_PATHS];
+const APEX_ALLOWED_PATHS = [/^\/$/, /^\/about\/$/, ...APEX_ONLY_PATHS, ...SHARED_PATHS];
 
-const isBrainbytePath = (path) =>
-  path === BRAINBYTE_PREFIX || path.startsWith(BRAINBYTE_PREFIX + "/");
+const isOldBrainbytePath = (path) =>
+  path === OLD_BRAINBYTE_PREFIX || path.startsWith(OLD_BRAINBYTE_PREFIX + "/");
 
-const toBrainbyte = (url) => {
-  const rest = url.pathname.slice(BRAINBYTE_PREFIX.length) || "/";
-  return `https://${BRAINBYTE_HOST}${rest}${url.search}`;
+// Where an old BrainByte path lives now on the apex.
+const brainbyteToApex = (path, search) => {
+  if (/^\/guides(\/|$)/.test(path) || /^\/files\//.test(path)) {
+    return `${APEX_ORIGIN}${path}${search}`;
+  }
+  return `${APEX_ORIGIN}/guides/`;
 };
 
 export default async (request, context) => {
   const url = new URL(request.url);
   const host = url.hostname;
 
-  if (host === BRAINBYTE_HOST) {
-    if (isBrainbytePath(url.pathname)) {
-      return Response.redirect(toBrainbyte(url), 301);
-    }
-    if (SHARED_PATHS.some((re) => re.test(url.pathname))) {
-      return context.next();
-    }
-    // Everything else is BrainByte content. Unknown paths fall through to
-    // the site's normal 404 handling after the rewrite.
-    return context.rewrite(`${BRAINBYTE_PREFIX}${url.pathname}${url.search}`);
+  // Old BrainByte subdomain: everything moves to the apex.
+  if (host === OLD_BRAINBYTE_HOST) {
+    const path = isOldBrainbytePath(url.pathname)
+      ? url.pathname.slice(OLD_BRAINBYTE_PREFIX.length) || "/"
+      : url.pathname;
+    return Response.redirect(brainbyteToApex(path, url.search), 301);
   }
 
-  // Only the production hosts fold /brainbyte/* onto the subdomain, so
-  // localhost (netlify dev) can still browse /brainbyte/ directly.
-  if ((APEX_HOSTS.has(host) || host === BLOG_HOST) && isBrainbytePath(url.pathname)) {
-    return Response.redirect(toBrainbyte(url), 301);
+  // Old /brainbyte/* build paths on the production hosts. Only these hosts,
+  // so localhost (netlify dev) still behaves like the build.
+  if ((APEX_HOSTS.has(host) || host === BLOG_HOST) && isOldBrainbytePath(url.pathname)) {
+    const path = url.pathname.slice(OLD_BRAINBYTE_PREFIX.length) || "/";
+    return Response.redirect(brainbyteToApex(path, url.search), 301);
   }
 
   if (APEX_HOSTS.has(host)) {
@@ -69,6 +75,9 @@ export default async (request, context) => {
     }
     if (url.pathname === "/home" || url.pathname === "/home/") {
       return Response.redirect(`${url.protocol}//${host}/`, 301);
+    }
+    if (url.pathname === "/guides") {
+      return Response.redirect(`${url.protocol}//${host}/guides/`, 301);
     }
     if (url.pathname === "/") {
       return context.rewrite("/home/");
@@ -81,11 +90,16 @@ export default async (request, context) => {
     return context.next();
   }
 
-  if (host === BLOG_HOST && (url.pathname === "/about" || url.pathname === "/about/")) {
-    return Response.redirect("https://harisankarsivankutty.in/about/", 301);
-  }
-  if (host === BLOG_HOST && (url.pathname === "/home" || url.pathname === "/home/")) {
-    return Response.redirect("https://harisankarsivankutty.in/", 301);
+  if (host === BLOG_HOST) {
+    if (url.pathname === "/about" || url.pathname === "/about/") {
+      return Response.redirect(`${APEX_ORIGIN}/about/`, 301);
+    }
+    if (url.pathname === "/home" || url.pathname === "/home/") {
+      return Response.redirect(`${APEX_ORIGIN}/`, 301);
+    }
+    if (APEX_ONLY_PATHS.some((re) => re.test(url.pathname))) {
+      return Response.redirect(`${APEX_ORIGIN}${url.pathname}${url.search}`, 301);
+    }
   }
 
   return context.next();
