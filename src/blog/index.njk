@@ -589,7 +589,7 @@ permalink: /
         {% for post in collections.posts %}
           {% set postTags = post.data.tags or [] %}
           {% set tagStr = postTags | join(",") | lower | replace(" ", "-") %}
-          {% set thumb = post.templateContent | firstImage %}
+          {% set thumb = post.data.cover or (post.templateContent | firstImage) %}
 
           {% if loop.first %}
           <article class="entry featured{{ ' has-thumb' if thumb }}" data-tags="{{ tagStr }}">

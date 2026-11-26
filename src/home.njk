@@ -161,11 +161,12 @@ eleventyExcludeFromCollections: true
             <a href="#join" class="hub-textlink">Join the waitlist <span aria-hidden="true">→</span></a>
           </div>
           {% if byte %}
-          <div class="hub-glass hub-light hub-byte hub-reveal" id="practice">
+          <div class="hub-glass hub-light hub-byte hub-reveal" id="practice" data-hub-quiz>
             <div class="hub-byte-top"><span class="hub-label">Try one now</span><span class="hub-tag">Sample</span></div>
             <p class="hub-byte-q">{{ byte.q }}</p>
+            <p class="hub-byte-hint">Pick an answer.</p>
             <ol class="hub-byte-opts">
-              {% for o in byte.options %}<li{% if loop.index0 == byte.answer %} data-answer{% endif %}>{{ o }}</li>{% endfor %}
+              {% for o in byte.options %}<li role="button" tabindex="0"{% if loop.index0 == byte.answer %} data-answer{% endif %}>{{ o }}</li>{% endfor %}
             </ol>
             <details class="hub-byte-a">
               <summary>Reveal the answer</summary>
@@ -186,7 +187,7 @@ eleventyExcludeFromCollections: true
           <p class="hub-sub">Long-form articles from enterprise projects: the architecture, the mistakes and what I'd do again.</p></div>
           <a href="{{ site.url }}/" class="hub-textlink">All {{ collections.posts.length }} articles <span aria-hidden="true">→</span></a>
         </header>
-        {%- set lthumb = latest.templateContent | firstImage %}
+        {%- set lthumb = latest.data.cover or (latest.templateContent | firstImage) %}
         <a class="hub-glass hub-light hub-edition hub-reveal" href="{{ site.url }}{{ latest.url }}">
           <span class="hub-edition-art{% if not lthumb %} is-empty{% endif %}">{% if lthumb %}<img src="{{ lthumb }}" alt="" loading="lazy" />{% else %}<span class="ico3d ico3d-lg ico3d-blue">{{ ico("db") }}</span>{% endif %}</span>
           <span class="hub-edition-text">
@@ -198,7 +199,7 @@ eleventyExcludeFromCollections: true
         </a>
         <div class="hub-editions">
           {% for post in collections.posts %}{% if loop.index > 1 and loop.index <= 4 %}
-          {%- set th = post.templateContent | firstImage %}
+          {%- set th = post.data.cover or (post.templateContent | firstImage) %}
           <a class="hub-glass hub-light hub-card3 hub-reveal" href="{{ site.url }}{{ post.url }}">
             <span class="hub-card3-art{% if not th %} is-empty{% endif %}">{% if th %}<img src="{{ th }}" alt="" loading="lazy" />{% else %}<span class="ico3d ico3d-violet">{{ ico("spark") }}</span>{% endif %}</span>
             <span class="hub-card3-body">
@@ -277,6 +278,7 @@ eleventyExcludeFromCollections: true
 
   <script src="/assets/galaxy.js" defer></script>
   <script src="/assets/space.js" defer></script>
+  <script src="/assets/hub.js" defer></script>
   <link rel="stylesheet" href="/assets/ask-hari-widget.css">
   <script src="/assets/ask-hari-widget.js" defer></script>
 </body>

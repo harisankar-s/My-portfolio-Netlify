@@ -7,6 +7,7 @@ tags:
   - Claude
   - Certification
 excerpt: "I passed Claude Certified Architect Foundations and Professional in about six weeks of part-time study, and scored lower on the one that looked easier. Here's what each exam covers, the resources I used, my plan, and the mistake to avoid."
+cover: "/images/posts/how-i-passed-claude-certified-architect/cover.svg"
 ---
 
 # How I Passed Both Claude Certified Architect Exams (and Why the Easier One Scored Lower)

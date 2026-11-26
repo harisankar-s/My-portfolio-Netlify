@@ -718,3 +718,13 @@ body.hub .hub-light .hub-label { color: #5A6478; }
 .hub-next-list .hub-course-logo { width: 38px; height: 38px; border-radius: 11px; flex: none; }
 .hub-next-list b { display: block; font-size: 15px; color: #0B1220; font-weight: 600; }
 .hub-next-list small { font-family: var(--font-mono); font-size: 11px; color: #5A6478; letter-spacing: .04em; }
+
+/* "Try one now" sample question: options are clickable (src/assets/hub.js) */
+[data-hub-quiz] .hub-byte-opts li { cursor: pointer; }
+[data-hub-quiz] .hub-byte-opts li:hover:not([aria-disabled]) { border-color: rgba(31,79,224,.45); background: #F2F6FF; }
+[data-hub-quiz] .hub-byte-opts li:focus-visible { outline: 2px solid #1F4FE0; outline-offset: 2px; }
+[data-hub-quiz].is-answered .hub-byte-opts li { cursor: default; }
+[data-hub-quiz] .hub-byte-opts li.is-right { border-color: #0E9F6E; background: #E6F8F0; color: #064E36; }
+[data-hub-quiz] .hub-byte-opts li.is-wrong { border-color: #DC2626; background: #FEECEC; color: #7F1D1D; }
+[data-hub-quiz].is-answered .hub-byte-opts li:not(.is-right):not(.is-wrong) { opacity: .6; }
+.hub-byte-hint { font-size: 14px; font-weight: 600; color: #5A6478; margin-top: -6px; }
