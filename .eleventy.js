@@ -60,6 +60,20 @@ module.exports = function (eleventyConfig) {
           : `<a href="${url}" target="_blank" rel="noopener">${text}</a>`);
   });
 
+  // Filter: post HTML made safe for feed readers and importers (Substack).
+  // Root-relative src/href become absolute, and same-origin diagram iframes
+  // (which importers strip) become a plain link to the interactive diagram.
+  eleventyConfig.addFilter("feedHtml", (content, base) => {
+    if (!content) return "";
+    const root = String(base || "").replace(/\/$/, "");
+    return String(content)
+      .replace(
+        /<iframe[^>]*\ssrc="(\/[^"]+)"[^>]*?(?:\stitle="([^"]*)")?[^>]*><\/iframe>/gi,
+        (m, src, title) =>
+          `<p><a href="${root}${src}">Open the interactive diagram${title ? `: ${title}` : ""}</a></p>`)
+      .replace(/(\s(?:src|href|poster))="\/(?!\/)/gi, `$1="${root}/`);
+  });
+
   // Filter: RFC 3339 date for RSS/Atom feeds and sitemaps
   eleventyConfig.addFilter("dateToRfc3339", (dateObj) => {
     return toDateTime(dateObj).toISO();
