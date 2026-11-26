@@ -4,6 +4,7 @@
   "tracks": [
     {
       "slug": "claude-architect",
+      "cover": "/images/guides/ccar-f-v1.svg",
       "status": "coming-soon",
       "logo": "/images/logos/claude.svg",
       "short": "Claude Architect",
@@ -26,6 +27,7 @@
     },
     {
       "slug": "gcp-pde",
+      "cover": "/images/guides/gcp-pde-v1.svg",
       "status": "coming-soon",
       "logo": "/images/logos/gcp.svg",
       "short": "GCP Data Engineer",
@@ -48,6 +50,7 @@
     },
     {
       "slug": "data-engineering",
+      "cover": "/images/guides/data-engineering-v1.svg",
       "status": "coming-soon",
       "logo": "/images/logos/spark.svg",
       "short": "Production Data Engineering",
@@ -70,6 +73,7 @@
     },
     {
       "slug": "databricks",
+      "cover": "/images/guides/databricks-v1.svg",
       "status": "coming-soon",
       "logo": "/images/logos/databricks.svg",
       "short": "Databricks",

@@ -20,6 +20,13 @@ eleventyComputed:
     src/_data/guides.json. -#}
 {%- set lessonCount = guide.domains | sumLength("lessons") -%}
 {%- set pack = brainbyte.practice | findBy("exam", guide.packExam) -%}
+{%- set dWord = guide.domainWord or "Domain" -%}
+{#- A domain's label and weight line: guides.json can set `tag` (e.g. "Case
+    studies") and `weightLabel` for a part that is not one exam section. -#}
+{#- A domain can also set `group` (a heading in "What's inside" and the
+    section picker) and `unit` ("services" instead of "lessons"). -#}
+{%- macro dWeight(d) %}{% if d.weightLabel %}{{ d.weightLabel }}{% elif d.weight %}{{ d.weight }}% of the exam{% endif %}{% endmacro -%}
+{%- macro dTag(d, dWord) %}{{ d.tag or (dWord + " " + d.n) }}{% if d.weightLabel or d.weight %} · {{ dWeight(d) }}{% endif %}{% endmacro -%}
 {%- set maxWeight = 0 -%}{%- for d in guide.domains %}{% if d.weight > maxWeight %}{% set maxWeight = d.weight %}{% endif %}{% endfor -%}
 {%- set pdfUrl = '/files/' + guide.pdf -%}
 
@@ -53,10 +60,13 @@ eleventyComputed:
         <ol class="bg-inside-list">
           <li><a href="#how-to-use"><span class="bg-inside-num">0</span><span class="bg-inside-name">How to use these tips<small>{{ guide.insideIntro }}</small></span></a></li>
           {%- for d in guide.domains %}
+          {%- if d.group and (loop.first or guide.domains[loop.index0 - 1].group != d.group) %}
+          <li class="bg-inside-group" aria-hidden="true">{{ d.group }}</li>
+          {%- endif %}
           <li><a href="#domain-{{ d.n }}">
             <span class="bg-inside-num">{{ d.n }}</span>
-            <span class="bg-inside-name">{{ d.title }}<small>{{ d.lessons.length }} lessons · {{ d.weight }}% of the exam</small>
-              <span class="bg-bar" aria-hidden="true"><i style="width: {{ (d.weight / maxWeight * 100) | round }}%"></i></span></span>
+            <span class="bg-inside-name">{{ d.title }}<small>{{ d.lessons.length }} {{ d.unit or "lessons" }}{% if d.weightLabel or d.weight %} · {{ dWeight(d) }}{% endif %}</small>
+              {% if d.weight and not d.weightLabel %}<span class="bg-bar" aria-hidden="true"><i style="width: {{ (d.weight / maxWeight * 100) | round }}%"></i></span>{% endif %}</span>
           </a></li>
           {%- endfor %}
         </ol>
@@ -65,6 +75,27 @@ eleventyComputed:
   </header>
 
   <div class="bg-wrap"><div class="bg-paper">
+  {#- Reading bar (guides.js), shown once the guide is unlocked: part tabs when
+      guides.json sets `parts` (e.g. Exam guide / Service guide), then a sticky
+      row of section chips and the "one section at a time" switch. -#}
+  <div class="bg-navbar" data-bb-navbar data-bb-unlocked-only hidden>
+    {%- if guide.parts %}
+    <div class="bg-parts" role="tablist" aria-label="Parts of the guide">
+      {%- for p in guide.parts %}
+      <button type="button" role="tab" class="bg-part" data-bb-part="{{ p.id }}" aria-selected="{{ 'true' if loop.first else 'false' }}"><b>{{ p.name }}</b><small>{{ p.sub }}</small></button>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+    <div class="bg-navrow">
+      <nav class="bg-chips" data-bb-chips aria-label="Sections">
+        <a class="bg-chip" href="#how-to-use" data-sec="0" data-part="{{ guide.parts[0].id if guide.parts else '' }}">Start here</a>
+        {%- for d in guide.domains %}
+        <a class="bg-chip" href="#domain-{{ d.n }}" data-sec="{{ d.n }}" data-part="{{ d.part or '' }}"><span class="bg-chip-n">{{ d.n }}</span> {{ d.short or d.title }}</a>
+        {%- endfor %}
+      </nav>
+      <button type="button" class="bg-mode" data-bb-sections aria-pressed="false">One section at a time</button>
+    </div>
+  </div>
   <!-- 2. FREE PART: how to use + exam facts + lesson 1.1 -->
   <section>
     <div class="bg-body">
@@ -101,12 +132,13 @@ eleventyComputed:
 
       <div class="bg-toolbar">
         <button type="button" class="bg-cover-btn" data-bb-cover aria-pressed="false">Cover the right answers</button>
-        <span class="bg-fine">Hides every "Right" column so you can answer first. Tap an answer to reveal it.</span>
+        <a class="bg-cover-btn bg-pdf-btn" href="{{ pdfUrl }}" download data-bb-unlocked-only hidden>Download PDF</a>
+        <span class="bg-fine">Cover hides every best answer and its reason, so you can decide first. Tap a card to reveal it.</span>
       </div>
 
       {%- set d1 = guide.domains[0] %}
-      <div class="bg-domain" id="domain-{{ d1.n }}">
-        <p class="bg-domain-tag">Domain {{ d1.n }} · {{ d1.weight }}% of the exam</p>
+      <div class="bg-domain" id="domain-{{ d1.n }}" data-part="{{ d1.part or '' }}">
+        <p class="bg-domain-tag">{{ dTag(d1, dWord) }}</p>
         <h2 class="bg-h2">{{ d1.title }}</h2>
         <p class="bg-p bg-muted">{{ d1.sub }}</p>
       </div>
@@ -131,13 +163,28 @@ eleventyComputed:
     <div class="bg-body">
       {%- for lesson in d1.lessons %}{% if not loop.first %}{% include "bb-lesson.njk" %}{% endif %}{% endfor %}
       {%- for d in guide.domains %}{% if not loop.first %}
-      <div class="bg-domain" id="domain-{{ d.n }}">
-        <p class="bg-domain-tag">Domain {{ d.n }} · {{ d.weight }}% of the exam</p>
+      <div class="bg-domain" id="domain-{{ d.n }}" data-part="{{ d.part or '' }}">
+        <p class="bg-domain-tag">{{ dTag(d, dWord) }}</p>
         <h2 class="bg-h2">{{ d.title }}</h2>
         <p class="bg-p bg-muted">{{ d.sub }}</p>
       </div>
       {%- for lesson in d.lessons %}{% include "bb-lesson.njk" %}{% endfor %}
       {%- endif %}{% endfor %}
+
+      <nav class="bg-pager" data-bb-pager hidden aria-label="Guide sections">
+        <button type="button" class="bg-pager-btn" data-bb-prev><span aria-hidden="true">←</span> <span data-bb-prev-label>Previous</span></button>
+        <label class="bg-pager-jump"><span class="bg-small" data-bb-count></span>
+          <select data-bb-jump aria-label="Go to section">
+            <option value="0">How to use these tips</option>
+            {%- for d in guide.domains %}
+            {%- if d.group and (loop.first or guide.domains[loop.index0 - 1].group != d.group) %}{% if not loop.first %}</optgroup>{% endif %}<optgroup label="{{ d.group }}">{% endif %}
+            <option value="{{ d.n }}">{% if d.group == "Service guide" %}{{ d.n }}. {{ d.title }}{% else %}{{ d.tag or (dWord + " " + d.n) }}: {{ d.title }}{% endif %}</option>
+            {%- if d.group and loop.last %}</optgroup>{% endif %}
+            {%- endfor %}
+          </select>
+        </label>
+        <button type="button" class="bg-pager-btn bg-pager-next" data-bb-next><span data-bb-next-label>Next</span> <span aria-hidden="true">→</span></button>
+      </nav>
 
       <div class="bg-end">
         <h2 class="bg-h2">Thank you for studying with this guide.</h2>
@@ -152,15 +199,15 @@ eleventyComputed:
   </section>
   </div></div>
 
-  <!-- 5. MORE CLAUDE EXAM PREP: the other exams, guide + practice -->
+  <!-- 5. MORE EXAM PREP: the other exams (exams.json), guide + practice -->
   <section class="bg-more">
     <div class="bg-more-inner">
       <p class="hub-label">More free exam prep</p>
-      <h2 class="hub-h2">The other <span class="hub-accent">Claude</span> exams</h2>
+      <h2 class="hub-h2">More free <span class="hub-accent">exam guides</span></h2>
       <div class="ep-grid">
         {%- for exam in exams %}{% if exam.guide != guide.slug %}{% include "exam-prep-card.njk" %}{% endif %}{% endfor %}
       </div>
-      <p class="hub-sub" style="margin-top:24px">Google Cloud, data engineering and Databricks guides are on the way. <a class="hub-textlink" href="/guides/">All exam prep <span aria-hidden="true">→</span></a></p>
+      <p class="hub-sub" style="margin-top:24px">Data engineering and Databricks guides are on the way. <a class="hub-textlink" href="/guides/">All exam prep <span aria-hidden="true">→</span></a></p>
     </div>
   </section>
 </div>

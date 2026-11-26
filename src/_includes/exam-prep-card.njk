@@ -1,4 +1,4 @@
-{#- One Claude exam with everything for it: the free study guide and the
+{#- One certification exam (Claude or Google Cloud) with everything for it: the free study guide and the
     practice question pack (set `exam` from src/_data/exams.json before
     including). Main-domain pages only: hub #exams, /guides/ and each guide.
     Guide comes from bbLiveGuides, pack from brainbyte.practice. -#}
@@ -7,7 +7,7 @@
 {%- set epGuideUrl = '/guides/' + exam.guide + '/' -%}
 <article class="ep-card ep-hub">
   <div class="ep-top">
-    <span class="ep-logo"><img src="/images/logos/claude.svg" alt="" width="26" height="26" loading="lazy" /></span>
+    <span class="ep-logo"><img src="{{ exam.logo or '/images/logos/claude.svg' }}" alt="" width="26" height="26" loading="lazy" /></span>
     <span class="ep-code">{{ exam.code }}</span>
   </div>
   <h3 class="ep-name">{{ exam.name }}</h3>

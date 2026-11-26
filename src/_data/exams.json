@@ -5,7 +5,10 @@
     "facts": "60 questions · 120 min · pass 720",
     "guide": "ccar-f-exam-tips",
     "packExam": "Anthropic · Foundations",
-    "blurb": "Agent loops, tool design, Claude Code configuration, prompting and context management."
+    "blurb": "Agent loops, tool design, Claude Code configuration, prompting and context management.",
+    "vendor": "Claude",
+    "logo": "/images/logos/claude.svg",
+    "cover": "/images/guides/ccar-f-v1.svg"
   },
   {
     "code": "CCAR-P",
@@ -13,7 +16,10 @@
     "facts": "63 questions · 120 min · pass 720",
     "guide": "ccar-p-exam-tips",
     "packExam": "Anthropic · Professional",
-    "blurb": "Solution design, integration, evaluation, governance and the architect's stakeholder work."
+    "blurb": "Solution design, integration, evaluation, governance and the architect's stakeholder work.",
+    "vendor": "Claude",
+    "logo": "/images/logos/claude.svg",
+    "cover": "/images/guides/ccar-p-v1.svg"
   },
   {
     "code": "CCDV-F",
@@ -21,6 +27,20 @@
     "facts": "53 questions · 120 min · pass 720",
     "guide": "ccdv-f-exam-tips",
     "packExam": "",
-    "blurb": "API mechanics, the Agent SDK, tools and MCP, security, and the exact names the exam checks."
+    "blurb": "API mechanics, the Agent SDK, tools and MCP, security, and the exact names the exam checks.",
+    "vendor": "Claude",
+    "logo": "/images/logos/claude.svg",
+    "cover": "/images/guides/ccdv-f-v1.svg"
+  },
+  {
+    "code": "PCA",
+    "name": "Google Cloud Professional Cloud Architect",
+    "vendor": "Google Cloud",
+    "logo": "/images/logos/gcp.svg",
+    "facts": "50-60 questions · 2 hours · 4 case studies",
+    "guide": "gcp-pca-exam-tips",
+    "packExam": "",
+    "blurb": "Designing on Google Cloud: compute, data, networks, security, reliability and the four case studies.",
+    "cover": "/images/guides/pca-v1.svg"
   }
 ]

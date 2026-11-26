@@ -3,48 +3,91 @@ layout: hub-page.njk
 permalink: /guides/index.html
 eleventyExcludeFromCollections: true
 title: "Exam prep and guides"
-pageTitle: "Free Claude Exam Guides and Practice Questions | Harisankar Sivankutty"
-description: "Free prep for the Claude certifications: study guides and practice question banks for CCAR-F, CCAR-P and CCDV-F, with Google Cloud, data engineering and Databricks guides on the way."
+pageTitle: "Free Claude and Google Cloud Exam Guides | Harisankar Sivankutty"
+description: "Free certification prep: study guides and practice questions for the Claude exams (CCAR-F, CCAR-P, CCDV-F) and Google Cloud Professional Cloud Architect, with data engineering and Databricks guides on the way."
 ---
-{#- Exam prep library, after charliehills.ai/free-resources, grouped by exam:
-    each Claude exam (exams.json) shows its free study guide next to its
-    practice pack; then the guides still being written (brainbyte.tracks
-    without a live guide) and a signup. -#}
+{#- Exam prep library, after charliehills.ai's library pages: one compact,
+    filterable grid instead of a shelf per vendor, so every guide fits on
+    about one screen. Live exams come from exams.json (guide stats from
+    bbLiveGuides, packs from brainbyte.practice); guides still being written
+    are brainbyte.tracks without a live guide. Filter chips are plain links
+    with data-gl-filter (guides.js); without JS every card shows. -#}
 {%- set liveTrackSlugs = [] -%}
 {%- for g in bbLiveGuides %}{% set liveTrackSlugs = (liveTrackSlugs.push(g.track), liveTrackSlugs) %}{% endfor -%}
+{%- set vendors = [] %}{% for e in exams %}{% if (e.vendor or "Claude") not in vendors %}{% set vendors = (vendors.push(e.vendor or "Claude"), vendors) %}{% endif %}{% endfor -%}
+{%- set coming = [] %}{% for t in brainbyte.tracks %}{% if t.slug not in liveTrackSlugs %}{% set coming = (coming.push(t), coming) %}{% endif %}{% endfor -%}
 
 <header class="gl-head" id="hero">
   <p class="hub-label">Free · {{ site.newsletter.name }}</p>
   <h1 class="hub-h2">Exam prep and <span class="hub-accent">guides</span></h1>
-  <p class="hub-sub">Everything for each Claude certification in one place: a study guide that shows how the exam thinks, and a practice question bank to test yourself. One free sign-up opens every guide.</p>
+  <p class="hub-sub">A study guide that shows how each exam thinks, plus practice questions to test yourself. {{ exams.length }} exams covered, {{ coming.length }} more on the way. One free sign-up opens every guide.</p>
 </header>
 
-<div class="gl-body">
-  <div class="hub-shelf">
-    <div class="hub-shelf-head"><p class="hub-label">Claude certifications</p></div>
-    <div class="ep-grid">
-      {%- for exam in exams %}{% include "exam-prep-card.njk" %}{% endfor %}
+<div class="gl-body" data-gl>
+  <div class="gl-bar">
+    <div class="gl-filters" role="toolbar" aria-label="Filter guides">
+      <button type="button" class="gl-filter is-on" data-gl-filter="all" aria-pressed="true">All <span>{{ exams.length + coming.length }}</span></button>
+      {%- for v in vendors %}{% set n = 0 %}{% for e in exams %}{% if (e.vendor or "Claude") == v %}{% set n = n + 1 %}{% endif %}{% endfor %}
+      <button type="button" class="gl-filter" data-gl-filter="{{ v | slugify }}" aria-pressed="false">{{ v }} <span>{{ n }}</span></button>
+      {%- endfor %}
+      <button type="button" class="gl-filter" data-gl-filter="soon" aria-pressed="false">Coming soon <span>{{ coming.length }}</span></button>
     </div>
+    <p class="gl-count" data-gl-count aria-live="polite"></p>
   </div>
 
-  <div class="hub-practice hub-practice-under">
-    <div class="hub-glass hub-light hub-next" id="next">
-      <span class="hub-label">More guides on the way</span>
-      <ul class="hub-next-list">
-        {%- for t in brainbyte.tracks %}{% if t.slug not in liveTrackSlugs %}
-        <li>
-          <span class="hub-course-logo"><img src="{{ t.logo }}" alt="" width="22" height="22" loading="lazy" /></span>
-          <span><b>{{ t.title }}</b><small>{{ t.level }} · {{ t.modules.length }} modules</small></span>
-        </li>
-        {%- endif %}{% endfor %}
+  <div class="gl-grid">
+    {%- for exam in exams %}
+    {%- set g = bbLiveGuides | findBy("slug", exam.guide) %}
+    {%- set pack = (brainbyte.practice | findBy("exam", exam.packExam)) if exam.packExam else "" %}
+    <article class="gl-card" data-gl-tags="{{ (exam.vendor or 'Claude') | slugify }}">
+      <div class="gl-top">
+        <span class="gl-code">{{ exam.code }}</span>
+        <span class="gl-vendor"><img src="{{ exam.logo or '/images/logos/claude.svg' }}" alt="" width="16" height="16" loading="lazy" />{{ exam.vendor or "Claude" }}</span>
+      </div>
+      {%- if exam.cover %}<img class="gl-thumb" src="{{ exam.cover }}" alt="" width="800" height="500" loading="lazy" />{% endif %}
+      <div class="gl-inner">
+      <h2 class="gl-name">{% if g %}<a class="gl-link" href="/guides/{{ exam.guide }}/">{{ exam.name }}</a>{% else %}{{ exam.name }}{% endif %}</h2>
+      <p class="gl-facts">{{ exam.facts }}</p>
+      {%- if g %}
+      <ul class="gl-stats">
+        <li><b>{{ g.domains | sumLength("lessons") }}</b> lessons</li>
+        <li><b>{{ g.stats[2].n }}</b> traps</li>
+        {%- if pack and pack.status == 'live' %}<li><b>{{ pack.count }}</b> practice Qs</li>{% elif g.stats[3] %}<li><b>{{ g.stats[3].n }}</b> {{ g.stats[3].label }}</li>{% endif %}
       </ul>
-    </div>
-    <div class="hub-glass hub-light hub-next" id="join">
+      {%- endif %}
+      <div class="gl-actions">
+        {% if g %}<span class="gl-go">Read guide <span aria-hidden="true">→</span></span>{% endif %}
+        {% if pack and pack.status == 'live' %}<a class="gl-pack" href="{{ pack.url }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Practice ↗</a>{% else %}<span class="gl-soon">Practice soon</span>{% endif %}
+      </div>
+      </div>
+    </article>
+    {%- endfor %}
+    {%- for t in coming %}
+    <article class="gl-card gl-card-soon" data-gl-tags="soon">
+      <div class="gl-top">
+        <span class="gl-code gl-code-soon">Coming soon</span>
+        <span class="gl-vendor"><img src="{{ t.logo }}" alt="" width="16" height="16" loading="lazy" />{{ t.cert.split(" · ")[0] }}</span>
+      </div>
+      {%- if t.cover %}<img class="gl-thumb" src="{{ t.cover }}" alt="" width="800" height="500" loading="lazy" />{% endif %}
+      <div class="gl-inner">
+      <h2 class="gl-name"><a class="gl-link" href="#join">{{ t.title }}</a></h2>
+      <p class="gl-facts">{{ t.level }}{% if t.weeks %} · about {{ t.weeks }} weeks{% endif %}</p>
+      <p class="gl-blurb">{{ t.pitch }}</p>
+      <div class="gl-actions"><span class="gl-go">Join the waitlist <span aria-hidden="true">→</span></span></div>
+      </div>
+    </article>
+    {%- endfor %}
+  </div>
+
+  <div class="gl-join hub-glass hub-light" id="join">
+    <div>
       <span class="hub-label">Hear first</span>
-      <p class="hub-tile-text">New guides and practice packs go to {{ site.newsletter.name }} subscribers first. {{ site.newsletter.tagline }}, a new issue {{ site.newsletter.cadence }}. Free.</p>
+      <p class="gl-join-text">New guides and practice packs go to {{ site.newsletter.name }} subscribers first. {{ site.newsletter.tagline }}, a new issue {{ site.newsletter.cadence }}. Free.</p>
+    </div>
+    <div>
       {% set nfId = 'guides' %}{% set nfClass = 'bg-gate-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% include "newsletter-form.njk" %}
       <p class="hub-meta">Unsubscribe any time.</p>
     </div>
   </div>
-  <p class="hub-meta" style="margin-top:24px">Independent study material, not affiliated with or endorsed by Anthropic. Contains no actual exam questions.</p>
+  <p class="hub-meta gl-fine">Independent study material, not affiliated with or endorsed by Anthropic or Google. Contains no actual exam questions.</p>
 </div>
