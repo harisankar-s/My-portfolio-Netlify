@@ -36,7 +36,9 @@ eleventyExcludeFromCollections: true
   <meta property="og:url" content="{{ site.portfolioUrl }}/" />
   <title>{{ p.name }} | {{ nl.name }}, the Practical AI Newsletter</title>
   <link rel="canonical" href="{{ site.portfolioUrl }}/" />
-  <link rel="icon" href="/images/favicon.png" type="image/png" />
+  <link rel="icon" href="/images/favicon-hari-32.png" sizes="32x32" type="image/png" />
+  <link rel="icon" href="/images/favicon-hari-192.png" sizes="192x192" type="image/png" />
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon-hari.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -165,7 +167,7 @@ eleventyExcludeFromCollections: true
               {%- for t in brainbyte.tracks %}{% if t.slug not in liveTrackSlugs %}
               <li>
                 <span class="hub-course-logo"><img src="{{ t.logo }}" alt="" width="22" height="22" loading="lazy" /></span>
-                <span><b>{{ t.title }}</b><small>{{ t.level }} · {{ t.modules.length }} modules</small></span>
+                <span><b>{{ t.title }}</b><small>{{ t.level }} · {{ t.modules.length }} modules</small></span>{% if t.practiceTests %}<a class="hub-next-pt" href="{{ t.practiceTests.url }}" target="_blank" rel="noopener sponsored">{{ t.practiceTests.label }} ↗</a>{% endif %}
               </li>
               {%- endif %}{% endfor %}
             </ul>
@@ -268,7 +270,7 @@ eleventyExcludeFromCollections: true
           {% for k in brainbyte.kits %}
           {%- set live = k.status == "live" %}
           <{{ "a" if live else "div" }} class="hub-glass hub-light hub-kit hub-reveal{% if not live %} is-soon{% endif %}"{% if live %} href="{{ k.url }}" target="_blank" rel="noopener"{% endif %}>
-            <span class="hub-pack-top"><span class="ico3d ico3d-sm {{ 'ico3d-green' if live else 'ico3d-slate' }}">{{ ico("code") }}</span><span class="hub-tag{% if not live %} hub-tag-dim{% endif %}">{{ ("Free" if k.free else "Live") if live else "Coming soon" }}</span></span>
+            {% if k.cover %}<span class="hub-thumb-wrap"><img class="hub-thumb" src="{{ k.cover }}" alt="" width="800" height="500" loading="lazy" /><span class="hub-tag hub-thumb-tag">{{ ("Free" if k.free else "Live") if live else "Coming soon" }}</span></span>{% else %}<span class="hub-pack-top"><span class="ico3d ico3d-sm {{ 'ico3d-green' if live else 'ico3d-slate' }}">{{ ico("code") }}</span><span class="hub-tag{% if not live %} hub-tag-dim{% endif %}">{{ ("Free" if k.free else "Live") if live else "Coming soon" }}</span></span>{% endif %}
             <span class="hub-kit-title">{{ k.title }}</span>
             <span class="hub-kit-text">{{ k.blurb }}</span>
             {% if k.stack %}<span class="hub-chips">{% for t in k.stack %}{% if loop.index <= 4 %}<span>{{ t }}</span>{% endif %}{% endfor %}</span>{% endif %}

@@ -3,7 +3,8 @@
     .substack.com); until then it opens an email to Hari so no signup is lost.
     Callers set: nfId (unique per page), nfClass (form class), nfBtnClass, and
     optionally nfAvatar (a small photo shown inside the field) and nfGate
-    (true on guide pages: /assets/guides.js unlocks the guide when it's submitted). -#}
+    (true on guide pages: /assets/guides.js turns it into the email-code sign-up,
+    /api/guide-otp; without JS it still posts straight to Substack). -#}
 {%- set nl = site.newsletter -%}
 <form class="{{ nfClass or 'nl-form' }}"{% if nfGate %} data-bb-gate-form{% endif %}
   {%- if nl.username %} action="https://{{ nl.username }}.substack.com/api/v1/free?nojs=true" method="post" target="_blank"
@@ -11,5 +12,6 @@
   {%- if nfAvatar %}<img class="nl-avatar" src="{{ nfAvatar }}" alt="" width="36" height="36" />{% endif %}
   <label class="nl-sr" for="nl-email-{{ nfId or 'main' }}">Email address</label>
   <input id="nl-email-{{ nfId or 'main' }}" type="email" name="email" placeholder="you@company.com" required autocomplete="email" />
+  {%- if nfGate %}<input class="nl-hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />{% endif %}
   <button type="submit" class="{{ nfBtnClass or 'nl-btn' }}">{{ nfBtnText or "Subscribe" }}</button>
 </form>

@@ -104,7 +104,7 @@ eleventyComputed:
         {%- for t in audTracks %}
         <li>
           <span class="hub-course-logo"><img src="{{ t.logo }}" alt="" width="22" height="22" loading="lazy" /></span>
-          <span><b>{{ t.title }}</b><small>{{ t.level }} · {{ t.modules.length }} modules</small></span>
+          <span><b>{{ t.title }}</b><small>{{ t.level }} · {{ t.modules.length }} modules</small></span>{% if t.practiceTests %}<a class="hub-next-pt" href="{{ t.practiceTests.url }}" target="_blank" rel="noopener sponsored">{{ t.practiceTests.label }} ↗</a>{% endif %}
         </li>
         {%- endfor %}
       </ul>

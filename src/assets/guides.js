@@ -1,18 +1,21 @@
 /* Guide pages (src/guides/guide.njk), after charliehills.ai: the first
    lesson is open, the rest unlocks when the reader signs up to the
-   newsletter. A soft gate: the content is in the HTML for search engines and
-   no-JS readers; this only hides it. Unlocking is remembered on this device
-   for every guide ("one sign-up opens every guide"). Also wires the "Cover
+   newsletter, confirmed with a 6-digit email code (/api/guide-otp). The
+   lessons stay in the HTML for search engines and no-JS readers (this only
+   hides them); the PDFs are checked on the server. One sign-up opens every
+   guide. Also wires the "Cover
    the right answers" study toggle. */
 (function () {
   "use strict";
   var guide = document.querySelector("[data-bb-guide]");
   if (!guide) return;
-  var KEY = "bb:guides-unlocked";
-
-  function isUnlocked() {
-    try { return localStorage.getItem(KEY) === "1"; } catch (e) { return false; }
-  }
+  // Unlocked = the reader confirmed their email with a code. The server
+  // (netlify/functions/guide-otp.mjs) then sets two cookies: an HttpOnly,
+  // signed one that the edge function checks before serving a PDF, and this
+  // readable bb_verified=1 so the page knows to open. One sign-up opens
+  // every guide.
+  var API = "/api/guide-otp";
+  function isUnlocked() { return /(?:^|;\s*)bb_verified=1(?:;|$)/.test(document.cookie); }
   function apply(unlocked) {
     guide.classList.toggle("is-locked", !unlocked);
     guide.querySelectorAll("[data-bb-locked-only]").forEach(function (n) { n.hidden = unlocked; });
@@ -24,7 +27,6 @@
     }
   }
   function unlock() {
-    try { localStorage.setItem(KEY, "1"); } catch (e) {}
     apply(true);
     guide.dispatchEvent(new CustomEvent("bb:unlocked"));
     var next = guide.querySelector("[data-bb-locked] .bg-lesson");
@@ -33,16 +35,115 @@
 
   apply(isUnlocked());
 
-  // The signup form still posts to Substack (in a new tab); unlock here too.
-  guide.querySelectorAll("[data-bb-gate-form]").forEach(function (form) {
-    form.addEventListener("submit", function () {
-      var input = form.querySelector("input[type=email]");
-      if (input && input.checkValidity()) unlock();
+  // The sign-up: email -> 6-digit code -> verified. Without JS the email form
+  // still posts straight to Substack. If the code service can't be reached
+  // (not set up yet, or `eleventy --serve` with no functions), it falls back
+  // to that: Substack in a new tab and the guide opens on this device.
+  var emailForm = guide.querySelector("[data-bb-gate-form]");
+  var codeForm = guide.querySelector("[data-bb-otp]");
+  var msg = guide.querySelector("[data-bb-otp-msg]");
+  var links = guide.querySelector("[data-bb-otp-links]");
+  var fine = guide.querySelector("[data-bb-gate-fine]");
+  var email = "";
+
+  function say(text, kind) {
+    if (!msg) return;
+    msg.hidden = !text;
+    msg.className = "bg-otp-msg" + (kind ? " is-" + kind : "");
+    msg.textContent = text || "";
+  }
+  function busy(form, on) {
+    var b = form && form.querySelector("button[type=submit]");
+    if (b) { b.disabled = on; b.setAttribute("aria-busy", on ? "true" : "false"); }
+  }
+  function post(data) {
+    data.page = location.origin + location.pathname;
+    return fetch(API, { method: "POST", headers: { "Content-Type": "application/json" }, credentials: "same-origin", body: JSON.stringify(data) })
+      .then(function (r) {
+        var ct = r.headers.get("content-type") || "";
+        if (r.status === 404 || ct.indexOf("json") === -1) throw new Error("unavailable");
+        return r.json().then(function (j) { j.status = r.status; return j; });
+      });
+  }
+  function fallback() {
+    document.cookie = "bb_verified=1; path=/; max-age=31536000; SameSite=Lax";
+    emailForm.submit(); // posts to Substack in a new tab
+    unlock();
+  }
+  function showCodeStep(returning, devCode) {
+    emailForm.hidden = true;
+    codeForm.hidden = false;
+    links.hidden = false;
+    if (fine) fine.hidden = true;
+    say((returning ? "Welcome back! " : "") + "We sent a 6-digit code to " + email + ". It works for 10 minutes." +
+      (returning ? "" : " Entering it also subscribes you to BrainByte.") + (devCode ? " (Dev code: " + devCode + ")" : ""), "info");
+    var input = codeForm.querySelector("input");
+    input.value = "";
+    input.focus();
+  }
+  function sendCode() {
+    busy(emailForm, true);
+    var hp = emailForm.querySelector("[name=website]");
+    return post({ action: "send", email: email, website: hp ? hp.value : "" })
+      .then(function (r) {
+        if (r.ok) return showCodeStep(r.returning, r.devCode);
+        if (r.codeSent) { showCodeStep(false); return say(r.error, "info"); }
+        if (r.status >= 500) return fallback();
+        say(r.error || "Something went wrong. Try again.", "error");
+      })
+      .catch(fallback)
+      .then(function () { busy(emailForm, false); });
+  }
+
+  if (emailForm && codeForm) {
+    emailForm.addEventListener("submit", function (e) {
+      var input = emailForm.querySelector("input[type=email]");
+      if (!input || !input.checkValidity()) return;
+      e.preventDefault();
+      email = input.value.trim();
+      sendCode();
     });
-  });
-  guide.querySelectorAll("[data-bb-unlock]").forEach(function (b) {
-    b.addEventListener("click", unlock);
-  });
+    codeForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var code = codeForm.querySelector("input").value.replace(/\D/g, "");
+      if (code.length !== 6) return say("Enter the 6-digit code from the email.", "error");
+      busy(codeForm, true);
+      post({ action: "verify", email: email, code: code })
+        .then(function (r) {
+          if (!r.ok) {
+            say(r.error || "That didn't work. Try again.", "error");
+            return;
+          }
+          codeForm.hidden = true;
+          links.hidden = true;
+          if (r.substack === "failed") {
+            // Verified, but Substack refused the server-side sign-up: one
+            // click finishes it on Substack (a real click, so no pop-up block).
+            say("Email confirmed. One last step: finish subscribing on Substack, then the guide opens.", "ok");
+            var b = document.createElement("button");
+            b.type = "button";
+            b.className = "pf-btn pf-btn-primary bg-otp-finish";
+            b.textContent = "Finish on Substack ↗";
+            b.addEventListener("click", function () { emailForm.submit(); unlock(); });
+            msg.insertAdjacentElement("afterend", b);
+            return;
+          }
+          say(r.returning ? "Welcome back! Every guide is open." : "You're in. Welcome to BrainByte! Every guide is open.", "ok");
+          setTimeout(unlock, 1200);
+        })
+        .catch(function () { say("Couldn't check the code. Try again.", "error"); })
+        .then(function () { busy(codeForm, false); });
+    });
+    guide.querySelector("[data-bb-otp-resend]").addEventListener("click", function () { sendCode(); });
+    guide.querySelector("[data-bb-otp-change]").addEventListener("click", function () {
+      codeForm.hidden = true;
+      links.hidden = true;
+      emailForm.hidden = false;
+      if (fine) fine.hidden = false;
+      say("");
+      emailForm.querySelector("input[type=email]").focus();
+    });
+  }
 
   // Study aid: blur every "Right" cell until it's tapped.
   var cover = guide.querySelector("[data-bb-cover]");

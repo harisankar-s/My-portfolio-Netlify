@@ -382,3 +382,13 @@ body.hub .nl-month-head { color: var(--fg-dim); }
   .bg-pager, .bg-toolbar, .bg-navbar { display: none !important; }
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* email-code sign-up on the guide gate (guides.js, /api/guide-otp) */
+.nl-hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.bg-otp input { letter-spacing: .3em; font-family: var(--font-mono, ui-monospace, monospace); text-align: center; }
+.bg-otp-msg { max-width: 520px; margin: 0 auto 12px; font-size: 15px; line-height: 1.5; color: #3A4458; }
+.bg-otp-msg.is-error { color: #B42318; }
+.bg-otp-msg.is-ok { color: #067647; font-weight: 600; }
+.bg-otp-finish { margin: 0 auto 14px; }
+button[aria-busy="true"] { opacity: .6; cursor: progress; }
+.bg-gate-form[hidden], .bg-otp-msg[hidden], .bg-fine[hidden] { display: none; }

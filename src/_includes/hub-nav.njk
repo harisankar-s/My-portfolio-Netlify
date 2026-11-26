@@ -1,6 +1,6 @@
 {#- Main-domain nav (hub, guides). Set hubNavBase before including: "" on the
     hub itself (in-page anchors), homePath elsewhere so anchors jump back to
-    the hub. Exam prep goes to the /guides/ page from anywhere but the hub. -#}
+    the hub. Exam prep and Free resources always open their own pages. -#}
 {%- set nl = site.newsletter -%}
 <nav class="pf-nav on-hero" id="nav">
   <a href="{{ homePath }}" class="pf-logo">
@@ -10,7 +10,7 @@
   <div class="pf-nav-right">
     <ul class="pf-nav-links">
       <li><a href="{{ hubNavBase }}#for">For you</a></li>
-      <li><a href="{{ '#exams' if not hubNavBase else '/guides/' }}">Exam prep</a></li>
+      <li><a href="/guides/">Exam prep</a></li>
       <li><a href="/resources/">Free resources</a></li>
       <li><a href="/newsletter/">Newsletter</a></li>
       <li><a href="{{ hubNavBase }}#kits">Starter kits</a></li>
