@@ -1,0 +1,3071 @@
+[
+  {
+    "slug": "ccar-f-exam-tips",
+    "status": "live",
+    "track": "claude-architect",
+    "kicker": "Free guide · Claude Certified Architect, Foundations",
+    "title": "CCAR-F Exam Tips Study Guide",
+    "seoTitle": "CCAR-F Exam Tips: 30 Lessons and 117 Exam Traps, Free | Harisankar Sivankutty",
+    "pitch": "How the Claude Certified Architect Foundations exam thinks. 30 lessons, 73 key rules and 117 exam traps across all 5 domains, with the right answer next to every wrong one.",
+    "description": "Free CCAR-F study guide: 30 lessons, 73 key rules and 117 exam traps across the 5 domains of the Claude Certified Architect Foundations exam, with a PDF download.",
+    "added": "2026-11-26",
+    "edition": "Edition 1",
+    "logo": "/images/logos/claude.svg",
+    "pdf": "ccar-f-exam-tips-study-guide-edition-1.pdf",
+    "pdfPages": 20,
+    "stats": [
+      {
+        "n": "30",
+        "label": "lessons"
+      },
+      {
+        "n": "73",
+        "label": "key rules"
+      },
+      {
+        "n": "117",
+        "label": "exam traps"
+      },
+      {
+        "n": "5",
+        "label": "domains"
+      }
+    ],
+    "intro": {
+      "lead": "This guide teaches you how the CCAR-F exam thinks. Most questions give you four plausible fixes, and only one matches the exam's reasoning. Each lesson gives you that reasoning in three parts.",
+      "parts": [
+        [
+          "What the exam tests",
+          "tells you what the lesson's questions are about."
+        ],
+        [
+          "Key rules",
+          "tell you what the exam rewards. Learn them as decision rules: \"when I see X, the answer is Y\"."
+        ],
+        [
+          "Traps",
+          "show the wrong answers the exam likes to offer, next to the right answer. The wrong option is usually the one that sounds most sophisticated."
+        ]
+      ],
+      "passes": [
+        [
+          "Read",
+          "the key rules and say each one in your own words."
+        ],
+        [
+          "Cover",
+          "the right column of every trap and say the correct answer before you look."
+        ],
+        [
+          "Practise",
+          "on mock or drill questions. For each question, name the trap you rejected, not just the answer you picked."
+        ]
+      ],
+      "versionNote": "Where the exam guide (v1.0) and the current product disagree, answer the way the exam guide says. The answers in this guide follow the exam guide.",
+      "facts": [
+        {
+          "n": "60",
+          "label": "questions"
+        },
+        {
+          "n": "120 min",
+          "label": "time allowed"
+        },
+        {
+          "n": "720 / 1000",
+          "label": "pass mark"
+        },
+        {
+          "n": "12 months",
+          "label": "credential validity"
+        }
+      ],
+      "recurring": [
+        "Money, security, compliance or \"100%\" → programmatic enforcement (hooks, gates), never stronger prompts or few-shot.",
+        "Pick the low-effort, root-cause fix first (better tool descriptions before classifiers or consolidation).",
+        "A bigger model or bigger context window is almost never the fix for attention or degradation problems.",
+        "Self-reported confidence and sentiment are unreliable signals.",
+        "Trace failures to their origin (usually the coordinator or context passing), not the downstream agent."
+      ],
+      "disclaimer": "Independent study material. Not affiliated with or endorsed by Anthropic. Contains no actual exam questions."
+    },
+    "freeLesson": "1.1",
+    "domains": [
+      {
+        "n": 1,
+        "weight": 27,
+        "title": "Agentic Architecture & Orchestration",
+        "sub": "Designing agent loops, coordinators and subagents, hooks, and sessions.",
+        "lessons": [
+          {
+            "id": "1.1",
+            "title": "Agentic Loops",
+            "tests": "how a loop decides to continue or stop, and why `stop_reason` beats text parsing or iteration caps.",
+            "rules": [
+              "Continue on `stop_reason: \"tool_use\"`, stop on `\"end_turn\"`. The exam tests only these two values.",
+              "Reject all three anti-patterns: parsing \"I'm done\" text, iteration caps as primary control, checking for text content as completion.",
+              "Model-driven tool selection is favoured, except where deterministic compliance needs code enforcement."
+            ],
+            "traps": [
+              [
+                "Checking `content[0].type == \"text\"` for completion",
+                "text can accompany tool_use; use `stop_reason`."
+              ],
+              [
+                "Iteration cap to fix premature termination",
+                "caps stop runaway loops, not early exits; fix the `stop_reason` check. Caps are only a safety net."
+              ],
+              [
+                "Parsing natural-language \"task complete\"",
+                "ambiguous; use `stop_reason`."
+              ],
+              [
+                "Dropping tool results or swapping history for a summary to save tokens",
+                "API is stateless; append every result, shrink large results at the tool."
+              ]
+            ]
+          },
+          {
+            "id": "1.2",
+            "title": "Multi-Agent Orchestration",
+            "tests": "the hub-and-spoke coordinator pattern, subagent isolation, and tracing coverage gaps back to the coordinator.",
+            "rules": [
+              "Only hub-and-spoke is tested: coordinator at the centre, all four coordinator responsibilities.",
+              "Direct subagent-to-subagent communication is always wrong on the exam, even if framed as \"more efficient\".",
+              "Sample Q7: coordinator splits \"AI in creative industries\" into only visual arts → root cause is the coordinator's decomposition.",
+              "Forks (copy full coordinator context) exist in current product, but the exam tests the isolation rule."
+            ],
+            "traps": [
+              [
+                "Blaming subagents for coverage gaps",
+                "coordinator's decomposition was too narrow."
+              ],
+              [
+                "Assuming subagents share memory/history",
+                "they get only what the coordinator puts in the prompt."
+              ],
+              [
+                "Direct inter-subagent messaging",
+                "bypasses observability and error handling; route via coordinator."
+              ],
+              [
+                "Running every query through all subagents (even with caching)",
+                "coordinator invokes only the subagents needed."
+              ]
+            ]
+          },
+          {
+            "id": "1.3",
+            "title": "Subagent Invocation and Context Passing",
+            "tests": "what context a subagent receives, passing structured metadata, parallel spawning, and resume vs fork.",
+            "rules": [
+              "Answer \"Task tool\" (exam name), even though current code says Agent.",
+              "Unsourced claims in a synthesis report → coordinator passed content without structured metadata.",
+              "Independent subtasks → parallel spawn; look for \"in a single response\" / \"simultaneously\".",
+              "`--resume` continues a session; `fork_session` branches from it."
+            ],
+            "traps": [
+              [
+                "Assuming subagents inherit coordinator history",
+                "isolated; pass everything explicitly."
+              ],
+              [
+                "Blaming the synthesis prompt for lost citations",
+                "pass findings as structured data with URL, doc name, page."
+              ],
+              [
+                "Sequential invocation of independent tasks",
+                "multiple Task calls in one coordinator response."
+              ],
+              [
+                "Rigid step-by-step subagent prompts",
+                "state the goal and quality criteria, let it choose how."
+              ]
+            ]
+          },
+          {
+            "id": "1.4",
+            "title": "Workflow Enforcement and Handoff",
+            "tests": "when to use programmatic enforcement over prompts, prerequisite gates, and complete human handoffs.",
+            "rules": [
+              "Most-repeated rule: prompt guidance vs programmatic enforcement. Money/security/compliance → always programmatic.",
+              "Compound requests: decompose, investigate in parallel with shared context, reply once."
+            ],
+            "traps": [
+              [
+                "Stronger system prompt or few-shot for high-stakes compliance",
+                "still probabilistic; use programmatic enforcement."
+              ],
+              [
+                "Handling multi-concern requests one at a time",
+                "decompose, parallelise, one unified resolution."
+              ],
+              [
+                "Routing classifier to fix in-agent compliance",
+                "failure is in the execution sequence; add a prerequisite gate."
+              ],
+              [
+                "Handoff summary missing fields",
+                "must be self-contained: customer ID, summary, root cause, refund amount, recommended action."
+              ]
+            ]
+          },
+          {
+            "id": "1.5",
+            "title": "Agent SDK Hooks",
+            "tests": "when PreToolUse and PostToolUse fire, and which one blocks actions vs transforms results.",
+            "rules": [
+              "Know when each hook fires. For a 100% requirement, the answer is a hook."
+            ],
+            "traps": [
+              [
+                "PostToolUse to block violations",
+                "action already happened; use PreToolUse."
+              ],
+              [
+                "Prompt instructions for 100% compliance",
+                "hooks give the deterministic guarantee."
+              ],
+              [
+                "Letting the model normalise mixed tool data formats",
+                "PostToolUse hook normalises before the model sees it."
+              ],
+              [
+                "PreToolUse to clean tool results",
+                "it sees the outgoing call, not the result; use PostToolUse."
+              ]
+            ]
+          },
+          {
+            "id": "1.6",
+            "title": "Task Decomposition Strategies",
+            "tests": "choosing fixed pipelines vs dynamic decomposition, and fixing attention dilution with per-item passes.",
+            "rules": [
+              "Match pattern to task: fixed pipeline for known steps, dynamic adaptive decomposition for open-ended investigation.",
+              "14-file single-pass review with declining quality → 14 per-file passes + 1 cross-file integration pass."
+            ],
+            "traps": [
+              [
+                "Better model / larger context / more detailed prompt for attention dilution",
+                "split into per-item passes + integration pass."
+              ],
+              [
+                "Dynamic decomposition for a structured, known task",
+                "fixed pipeline is more predictable."
+              ],
+              [
+                "Fixed pipeline for open-ended investigation",
+                "needs adaptive decomposition."
+              ],
+              [
+                "Batching files without a cross-file pass",
+                "misses cross-batch data flow and inconsistencies."
+              ]
+            ]
+          },
+          {
+            "id": "1.7",
+            "title": "Session State and Resumption",
+            "tests": "when to resume a session, when to start fresh with a summary, and stale tool results.",
+            "rules": [
+              "Prior context mostly valid → resume. Tool results stale → fresh session + injected structured summary.",
+              "Typical Q: resumed after files changed, agent contradicts itself → fresh session + summary + targeted re-analysis of changed files."
+            ],
+            "traps": [
+              [
+                "Full re-exploration of 50 files when 3 changed",
+                "tell the agent which 3 changed."
+              ],
+              [
+                "Resuming when most tool results are stale",
+                "start fresh with summary."
+              ],
+              [
+                "`fork_session` to continue one line of work",
+                "use `--resume`; fork is for comparing approaches."
+              ],
+              [
+                "`fork_session` to fix stale context",
+                "fork inherits the stale context."
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "weight": 18,
+        "title": "Tool Design & MCP Integration",
+        "sub": "Writing tool descriptions, error responses, tool scoping, and MCP setup.",
+        "lessons": [
+          {
+            "id": "2.1",
+            "title": "Tool Interface Design",
+            "tests": "fixing tool misrouting with better descriptions first, and when the toolset itself is the problem.",
+            "rules": [
+              "Sample Q2 (`get_customer` vs `lookup_order` misrouting): fix = expand descriptions. Few-shot, routing classifier and consolidation are wrong as first steps.",
+              "Exam pattern: low-effort, high-impact first. Descriptions before classifiers, scoped before full access, community servers before custom.",
+              "Descriptions fix a workable set where two tools look alike; they don't fix a too-large toolset (guide example: 18 tools vs 4 to 5).",
+              "Splitting example: `analyze_document` → `extract_data_points`, `summarize_content`, `verify_claim_against_source`."
+            ],
+            "traps": [
+              [
+                "Few-shot to fix misrouting",
+                "token cost, doesn't fix root cause; fix descriptions."
+              ],
+              [
+                "Routing classifier first",
+                "over-engineered, bypasses the LLM."
+              ],
+              [
+                "Consolidating tools first",
+                "valid long-term, too much effort as step one."
+              ],
+              [
+                "Ignoring system prompt after fixing descriptions",
+                "keyword wording in the system prompt can override; review it."
+              ]
+            ]
+          },
+          {
+            "id": "2.2",
+            "title": "Structured Error Responses",
+            "tests": "access failures vs valid empty results, the four error categories, and the `isRetryable` flag.",
+            "rules": [
+              "Key distinction: access failure vs valid empty result.",
+              "Know the four error categories and `isRetryable` by name. Ask: would resending this exact call work?"
+            ],
+            "traps": [
+              [
+                "Retrying an empty successful query",
+                "that is the answer; accept it."
+              ],
+              [
+                "Generic \"Operation failed\"",
+                "include `errorCategory`, `isRetryable`, description."
+              ],
+              [
+                "Business errors (refund over limit) as retryable",
+                "never resolve by retry; escalate."
+              ],
+              [
+                "Validation error marked `isRetryable: true`",
+                "false; the input must change first."
+              ],
+              [
+                "Reading `isRetryable: false` as \"abandon\"",
+                "recover via corrected input, alternative path or escalation."
+              ],
+              [
+                "Subagent returning empty-as-success on error",
+                "return structured error context (type, query, partial results)."
+              ]
+            ]
+          },
+          {
+            "id": "2.3",
+            "title": "Tool Distribution & Tool Choice",
+            "tests": "how many tools each agent should hold, scoped cross-role tools, and `tool_choice` modes.",
+            "rules": [
+              "\"18 vs 4 to 5 tools per agent\" is illustrative, not a hard limit. Use that framing on the exam (current docs say 30 to 50).",
+              "Consolidation and constraint can both be right in one system.",
+              "Sample Q9: 85% of verifications are simple → give synthesis agent a scoped `verify_fact` tool; complex 15% still via coordinator (least privilege)."
+            ],
+            "traps": [
+              [
+                "Routing all simple lookups via coordinator",
+                "scoped cross-role tool cuts hops and latency."
+              ],
+              [
+                "`tool_choice: \"auto\"` when structured output is required",
+                "exam answer is `\"any\"` (or forced tool)."
+              ],
+              [
+                "18 tools on one agent",
+                "split by role into small sets."
+              ],
+              [
+                "Generic `fetch_url` for documents",
+                "constrained `load_document` (least privilege)."
+              ]
+            ]
+          },
+          {
+            "id": "2.4",
+            "title": "MCP Server Integration",
+            "tests": "community vs custom MCP servers, project vs user config scope, and keeping secrets out of git.",
+            "rules": [
+              "Standard integration → \"evaluate community servers first\" is always right. Build custom only for explicit team-specific needs.",
+              "Project `.mcp.json` = shared, version-controlled. User `~/.claude.json` = personal. Use `${ENV_VAR}` for credentials."
+            ],
+            "traps": [
+              [
+                "Custom server for Jira",
+                "use a community server."
+              ],
+              [
+                "Team config in `~/.claude.json`",
+                "goes in project `.mcp.json`."
+              ],
+              [
+                "Token pasted in `.mcp.json` because repo is private",
+                "use `${GITHUB_TOKEN}`."
+              ],
+              [
+                "System prompt rule or removing built-ins to force MCP tool use",
+                "expand the MCP tool's description."
+              ]
+            ]
+          },
+          {
+            "id": "2.5",
+            "title": "Built-in Tools",
+            "tests": "picking the right built-in tool (Grep vs Glob, Edit vs Read + Write) and exploring incrementally.",
+            "rules": [
+              "Grep = file contents. Glob = file paths. This distinction matters most.",
+              "Edit first; Read + Write only when Edit can't find a unique anchor. Never read all files upfront.",
+              "Deprecation question: Grep → Glob → Grep again for wrapped/renamed callers. Starting with Glob is wrong.",
+              "Treat Grep and Glob as built-in tools on the exam."
+            ],
+            "traps": [
+              [
+                "Glob to find function callers",
+                "Grep."
+              ],
+              [
+                "Grep to find files by name pattern",
+                "Glob."
+              ],
+              [
+                "Reading all source files upfront",
+                "Grep for entry points, then Read incrementally."
+              ],
+              [
+                "Read + Write by default",
+                "Edit first."
+              ],
+              [
+                "Widening `old_string` / `replace_all` on non-unique match",
+                "exam answer is Read + Write."
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "weight": 20,
+        "title": "Claude Code Configuration & Workflows",
+        "sub": "CLAUDE.md levels, skills, path rules, plan mode, refinement, and CI/CD.",
+        "lessons": [
+          {
+            "id": "3.1",
+            "title": "CLAUDE.md Hierarchy",
+            "tests": "which CLAUDE.md level applies where, and diagnosing config stored at the wrong level.",
+            "rules": [
+              "Favourite trap: \"new team member\" + \"inconsistent behaviour\" → conventions sit in user-level `~/.claude/CLAUDE.md`; move to project level.",
+              "Answer `/memory` as the command that shows loaded files (exam guide), though `/context` is the real-world one."
+            ],
+            "traps": [
+              [
+                "New teammate missing instructions",
+                "move from `~/.claude/CLAUDE.md` to `.claude/CLAUDE.md`."
+              ],
+              [
+                "Thinking `/memory` triggers loading",
+                "it's diagnostic only; loading follows the hierarchy."
+              ],
+              [
+                "Directory-level CLAUDE.md for cross-directory conventions",
+                "`.claude/rules/` with glob paths."
+              ]
+            ]
+          },
+          {
+            "id": "3.2",
+            "title": "Custom Slash Commands and Skills",
+            "tests": "skills vs CLAUDE.md, correct file paths and scope, frontmatter options, and `context: fork`.",
+            "rules": [
+              "On-demand workflow (skill) vs persistent config (CLAUDE.md / rules).",
+              "Verbose output cluttering main chat → `context: fork`.",
+              "Three frontmatter options tested; answer with guide wording: `allowed-tools` \"restricts\" tool access; `argument-hint` prompts for missing parameters."
+            ],
+            "traps": [
+              [
+                "Flat `.claude/skills/review.md`",
+                "skill needs `.claude/skills/review/SKILL.md` (flat files go in `.claude/commands/`)."
+              ],
+              [
+                "Team command in `~/.claude/...`",
+                "project-scoped path in the repo."
+              ],
+              [
+                "Skills for always-on guidance",
+                "use CLAUDE.md or rules."
+              ],
+              [
+                "Verbose skill running inline",
+                "`context: fork`."
+              ],
+              [
+                "Task workflows in CLAUDE.md",
+                "put them in skills."
+              ]
+            ]
+          },
+          {
+            "id": "3.3",
+            "title": "Path-Specific Rules",
+            "tests": "using `.claude/rules/` with glob paths for conventions spread across many directories.",
+            "rules": [
+              "Co-located test files across many directories → always path-specific rules with glob patterns."
+            ],
+            "traps": [
+              [
+                "CLAUDE.md in every directory",
+                "path rules instead."
+              ],
+              [
+                "File-type conventions in root CLAUDE.md",
+                "wastes tokens; path rules load only on matching files."
+              ],
+              [
+                "Skills vs rules for auto conventions",
+                "rules (they stay in context and shape every edit)."
+              ]
+            ]
+          },
+          {
+            "id": "3.4",
+            "title": "Plan Mode vs Direct Execution",
+            "tests": "picking plan mode or direct execution for a task, and the plan-then-execute hybrid.",
+            "rules": [
+              "Common right answer: hybrid. Plan mode first, then direct execution."
+            ],
+            "traps": [
+              [
+                "Direct execution for multi-file architectural change",
+                "plan mode."
+              ],
+              [
+                "Plan mode for single-file fix with clear stack trace",
+                "direct execution."
+              ],
+              [
+                "Verbose discovery in main chat",
+                "Explore subagent."
+              ],
+              [
+                "Switching to plan mode only when complexity appears",
+                "if complexity is stated upfront, plan upfront."
+              ]
+            ]
+          },
+          {
+            "id": "3.5",
+            "title": "Iterative Refinement Techniques",
+            "tests": "which refinement technique to use first: examples, test-driven iteration, interview, or batched feedback.",
+            "rules": [
+              "Prose interpreted inconsistently → 2 to 3 concrete input/output examples.",
+              "Complex transformation with many edge cases → test-driven iteration.",
+              "Unfamiliar domain → interview pattern.",
+              "Interacting issues → one batched message. Independent issues → sequential."
+            ],
+            "traps": [
+              [
+                "More precise prose",
+                "examples instead."
+              ],
+              [
+                "Interacting fixes one at a time",
+                "send together."
+              ],
+              [
+                "Interview pattern when transformation is known",
+                "examples."
+              ]
+            ]
+          },
+          {
+            "id": "3.6",
+            "title": "CI/CD Integration",
+            "tests": "running Claude Code headless in CI (`-p`), independent review sessions, and batch vs real-time API.",
+            "rules": [
+              "Most-tested D3 fact (sample Q10): CI job hangs waiting for input → `-p` flag. `CLAUDE_HEADLESS` and `--batch` don't exist.",
+              "Also tested: session isolation, headless flags, append vs replace, Batch API decision (sample Q11).",
+              "Reported: 4 to 5 questions on GitHub Actions; worktrees appear in practice questions."
+            ],
+            "traps": [
+              [
+                "`CLAUDE_HEADLESS`, `--batch`, stdin redirect",
+                "`-p`."
+              ],
+              [
+                "Self-review in the same session",
+                "independent review instance."
+              ],
+              [
+                "Batch API for pre-merge checks",
+                "real-time API for blocking work; batch for overnight."
+              ],
+              [
+                "Reviewing only the new diff or resuming the old session to avoid repeats",
+                "fresh whole-PR run with previous findings passed in."
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "weight": 20,
+        "title": "Prompt Engineering & Structured Output",
+        "sub": "Explicit criteria, few-shot, structured output, retries, batch, and review.",
+        "lessons": [
+          {
+            "id": "4.1",
+            "title": "System Prompts with Explicit Criteria",
+            "tests": "replacing vague instructions with explicit criteria, and managing false positives by category.",
+            "rules": [
+              "Vague instructions (\"be conservative\", \"only high-confidence findings\") are the classic wrong options.",
+              "False positives in one category reduce trust in every category."
+            ],
+            "traps": [
+              [
+                "\"Be conservative\"",
+                "specific categorical criteria: what to flag, what to skip."
+              ],
+              [
+                "Confidence thresholds for false positives",
+                "explicit criteria with code examples first."
+              ],
+              [
+                "Keeping noisy categories on while fixing them",
+                "temporarily disable them."
+              ]
+            ]
+          },
+          {
+            "id": "4.2",
+            "title": "Few-Shot Prompting",
+            "tests": "when few-shot examples beat more instructions, and which other technique fits each output problem.",
+            "rules": [
+              "Inconsistent output despite detailed instructions → add few-shot examples.",
+              "Technique map: formatting → few-shot · malformed JSON → tool_use + schema · fabricated values → nullable fields · wrong tool → descriptions first · missed narrative info → few-shot · sum mismatch → validation-retry loop."
+            ],
+            "traps": [
+              [
+                "More instructions for inconsistent format",
+                "show examples."
+              ],
+              [
+                "Many examples for every case",
+                "2 to 4 targeted examples with reasoning (exam guide)."
+              ],
+              [
+                "Confidence thresholds for inconsistent judgement",
+                "few-shot on ambiguous cases."
+              ]
+            ]
+          },
+          {
+            "id": "4.3",
+            "title": "Structured Output with Tool Use",
+            "tests": "`tool_choice` modes, what schemas do and don't prevent, and nullable vs required fields.",
+            "rules": [
+              "Exam uses three `tool_choice` modes (auto / any / forced). Guaranteed structured output for unknown doc type → `\"any\"`.",
+              "Usual trap: believing tool_use prevents all extraction errors."
+            ],
+            "traps": [
+              [
+                "tool_use prevents all errors",
+                "fixes syntax only, not semantic errors; validate separately."
+              ],
+              [
+                "`\"auto\"` to guarantee a tool call",
+                "`\"any\"` (exam answer)."
+              ],
+              [
+                "All fields required",
+                "make possibly-missing fields nullable to avoid fabrication."
+              ]
+            ]
+          },
+          {
+            "id": "4.4",
+            "title": "Validation, Retry, and Feedback Loops",
+            "tests": "which extraction failures a retry can fix, and what a good retry request must include.",
+            "rules": [
+              "Most tested: retry effectiveness boundary, meaning which failures are fixable by retry.",
+              "Retry request includes document + failed extraction + specific validation error."
+            ],
+            "traps": [
+              [
+                "Retries always work",
+                "can't create info absent from the source; send to review or return null."
+              ],
+              [
+                "Retry without the specific error",
+                "include it (e.g., \"items sum to £450, total says £500\")."
+              ],
+              [
+                "Source contradicts itself",
+                "extract both (`calculated_total`, `stated_total`, `conflict_detected`) and route to review."
+              ],
+              [
+                "Pydantic redundant with schema",
+                "schemas can't express cross-field rules; Pydantic does."
+              ]
+            ]
+          },
+          {
+            "id": "4.5",
+            "title": "Batch Processing Strategies",
+            "tests": "matching workflows to batch or synchronous APIs, the 24-hour window, and tool-call limits in batch.",
+            "rules": [
+              "Sample Q11: keep blocking workflows synchronous; batch only latency-tolerant ones.",
+              "Batch can't run your own tool mid-request and continue → that step needs the synchronous API.",
+              "Scheduling questions may work back from an SLA to submission frequency."
+            ],
+            "traps": [
+              [
+                "Everything to batch for savings",
+                "no latency SLA, up to 24h."
+              ],
+              [
+                "Assuming batch is usually fast",
+                "design for the 24h maximum."
+              ],
+              [
+                "Batch with mid-request client tool calls",
+                "run that step synchronously."
+              ]
+            ]
+          },
+          {
+            "id": "4.6",
+            "title": "Multi-Instance and Multi-Pass Review",
+            "tests": "independent review instances, multi-pass review for large changes, and calibrated confidence.",
+            "rules": [
+              "Better review → separate model instance. Not \"review carefully\" in the same session, not extended thinking in that session.",
+              "Raw confidence = unreliable; calibrated thresholds (validated on labelled sets) = OK for routing."
+            ],
+            "traps": [
+              [
+                "Same-session self-review",
+                "independent instance."
+              ],
+              [
+                "Single pass for large multi-file reviews",
+                "per-file passes + integration pass."
+              ],
+              [
+                "Larger context model for attention dilution",
+                "focused per-file passes."
+              ],
+              [
+                "Uncalibrated confidence for routing",
+                "calibrate on labelled sets first."
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "weight": 15,
+        "title": "Context Management & Reliability",
+        "sub": "Context windows, escalation, error handling, degradation, review, and provenance.",
+        "lessons": [
+          {
+            "id": "5.1",
+            "title": "Context Window Management",
+            "tests": "keeping key facts through summarisation, lost-in-the-middle fixes, and trimming tool results.",
+            "rules": [
+              "Agent loses amounts/dates after summarisation → persistent case facts block.",
+              "Prompt caching: only its existence and purpose are tested."
+            ],
+            "traps": [
+              [
+                "Progressive summarisation for transactional data",
+                "keep numbers/dates/IDs in a case facts block."
+              ],
+              [
+                "\"Pay attention to everything\" for lost-in-the-middle",
+                "key findings at the start + section headers."
+              ],
+              [
+                "Keeping full tool results \"just in case\"",
+                "trim to relevant fields."
+              ],
+              [
+                "Selective truncation of history",
+                "API is stateless; pass full history, use facts block + summarisation."
+              ]
+            ]
+          },
+          {
+            "id": "5.2",
+            "title": "Escalation & Ambiguity Resolution",
+            "tests": "valid vs unreliable escalation triggers, and how to handle ambiguous customer matches.",
+            "rules": [
+              "Valid triggers: explicit human request (immediately), policy gaps, inability to progress.",
+              "Unreliable triggers: sentiment and self-reported confidence."
+            ],
+            "traps": [
+              [
+                "Escalating on frustration",
+                "sentiment doesn't track complexity."
+              ],
+              [
+                "Self-reported confidence for escalation",
+                "explicit criteria + few-shot."
+              ],
+              [
+                "Trying to resolve before honouring \"I want a human\"",
+                "escalate in that reply."
+              ],
+              [
+                "Picking the most recent/active of ambiguous customer matches",
+                "ask for more identifiers."
+              ]
+            ]
+          },
+          {
+            "id": "5.3",
+            "title": "Error Propagation in Multi-Agent Systems",
+            "tests": "passing structured error context to the coordinator, and recovery without stopping the pipeline.",
+            "rules": [
+              "Subagent timeout → subagent returns structured error context so the coordinator decides recovery.",
+              "Access failures may warrant retry; valid empty results never."
+            ],
+            "traps": [
+              [
+                "Timeout returned as empty success",
+                "structured error (type, query, partial results, alternatives)."
+              ],
+              [
+                "Terminating the whole pipeline on one timeout",
+                "targeted recovery, keep partial results."
+              ],
+              [
+                "Generic \"search unavailable\" after retries",
+                "structured error context."
+              ],
+              [
+                "Retrying a valid empty result",
+                "that is the answer."
+              ]
+            ]
+          },
+          {
+            "id": "5.4",
+            "title": "Codebase Exploration & Context Degradation",
+            "tests": "spotting context degradation, and fixing it with scratchpads, subagents and state manifests.",
+            "rules": [
+              "Symptom: agent cites \"typical patterns\" instead of classes it found → scratchpad files.",
+              "Degradation is not a token problem. Subagents are mainly for isolation. Use `/compact` proactively.",
+              "Crash recovery → state manifest loaded on resume and injected into prompts (exam answer)."
+            ],
+            "traps": [
+              [
+                "Bigger context window",
+                "scratchpad file for key findings."
+              ],
+              [
+                "Expecting next-phase subagents to inherit history, or passing full transcripts",
+                "inject a summary of key findings."
+              ],
+              [
+                "Restarting without saving state",
+                "persist via scratchpad/manifest first."
+              ],
+              [
+                "`/compact` only at the limit",
+                "use it proactively."
+              ]
+            ]
+          },
+          {
+            "id": "5.5",
+            "title": "Human Review & Confidence Calibration",
+            "tests": "validating accuracy by segment, calibrating confidence, and allocating limited reviewer time.",
+            "rules": [
+              "Wrong answers: trust aggregate accuracy, sample only low-confidence, raw scores, even reviewer spread.",
+              "97% overall can hide 40% error on one doc type → validate by doc type and field."
+            ],
+            "traps": [
+              [
+                "Aggregate accuracy to automate",
+                "segment by type/field first."
+              ],
+              [
+                "Sampling only low-confidence items",
+                "stratified random sampling of high-confidence too."
+              ],
+              [
+                "Raw confidence scores",
+                "calibrate on labelled sets."
+              ],
+              [
+                "Even reviewer allocation",
+                "prioritise highest-uncertainty items."
+              ]
+            ]
+          },
+          {
+            "id": "5.6",
+            "title": "Information Provenance & Multi-Source Synthesis",
+            "tests": "keeping claim-source links through synthesis, handling conflicting sources, and matching format to content.",
+            "rules": [
+              "Two credible conflicting values → annotate both with attribution and dates. Never pick most recent, average or most authoritative.",
+              "Map each claim to URL, document, excerpt, date, preserved through synthesis. Match format to content."
+            ],
+            "traps": [
+              [
+                "Picking the most recent source",
+                "keep both, let the reader decide."
+              ],
+              [
+                "Treating different numbers as contradictions",
+                "dates often explain them; require dates."
+              ],
+              [
+                "Synthesis paraphrasing loses mappings",
+                "subagents emit structured claim-source data."
+              ],
+              [
+                "One format for everything",
+                "tables for financials, prose for news, lists for technical findings."
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "pairWith": "Pair these tips with the CCAR-F practice question bank to test yourself on every domain.",
+    "packExam": "Anthropic · Foundations",
+    "insideIntro": "Exam facts and the rules that come up again and again",
+    "endNote": "Thank you for studying with this guide.",
+    "exam": "CCAR-F"
+  },
+  {
+    "slug": "ccar-p-exam-tips",
+    "status": "live",
+    "track": "claude-architect",
+    "kicker": "Free guide · Claude Certified Architect, Professional",
+    "title": "CCAR-P Exam Tips Study Guide",
+    "seoTitle": "CCAR-P Exam Tips: 38 Lessons and 148 Exam Traps, Free | Harisankar Sivankutty",
+    "pitch": "How the Claude Certified Architect Professional exam thinks. 38 lessons, 114 key rules and 148 exam traps across all 7 domains, plus the five meta-rules that decide questions in every domain.",
+    "description": "Free CCAR-P study guide: 38 lessons, 114 key rules and 148 exam traps across the 7 domains of the Claude Certified Architect Professional exam, plus five meta-rules and a PDF download.",
+    "added": "2026-11-26",
+    "edition": "Edition 1",
+    "logo": "/images/logos/claude.svg",
+    "pdf": "ccar-p-exam-tips-study-guide-edition-1.pdf",
+    "pdfPages": 29,
+    "packExam": "Anthropic · Professional",
+    "stats": [
+      {
+        "n": "38",
+        "label": "lessons"
+      },
+      {
+        "n": "114",
+        "label": "key rules"
+      },
+      {
+        "n": "148",
+        "label": "exam traps"
+      },
+      {
+        "n": "7",
+        "label": "domains"
+      }
+    ],
+    "insideIntro": "Exam facts and the five meta-rules",
+    "intro": {
+      "lead": "38 lessons across 7 domains, cut down to what the exam rewards: 114 key rules and 148 traps. Every lesson has three parts.",
+      "parts": [
+        [
+          "What the exam tests",
+          "The one decision the questions on that lesson keep asking you to make."
+        ],
+        [
+          "Key rules",
+          "Short rules you can apply to a scenario in seconds to find the right option."
+        ],
+        [
+          "Traps",
+          "A tempting wrong answer the exam likes to offer, and the answer that beats it."
+        ]
+      ],
+      "passes": [
+        [
+          "Read the key rules.",
+          "Go domain by domain and read only the rules first. Aim to say each one aloud without looking."
+        ],
+        [
+          "Cover the right answer.",
+          "For each trap, hide the right side, read the wrong answer and say why it fails and what wins. Then check."
+        ],
+        [
+          "Practise and name the trap.",
+          "Do mock questions. For every option you reject, name the trap from this guide that it matches."
+        ]
+      ],
+      "versionNote": "Exam guide first. When the exam guide and the current product disagree, answer as the exam guide says. Product details change faster than the exam does. A few lessons note newer product behaviour; treat those as background, not as the scored answer.",
+      "facts": [
+        {
+          "n": "63",
+          "label": "questions",
+          "sub": "multiple choice and multiple response"
+        },
+        {
+          "n": "120 min",
+          "label": "time allowed",
+          "sub": "about 1 min 54 s per question"
+        },
+        {
+          "n": "720",
+          "label": "pass mark",
+          "sub": "scaled score, 100 to 1,000"
+        },
+        {
+          "n": "$175",
+          "label": "price",
+          "sub": "USD per attempt"
+        },
+        {
+          "n": "12 months",
+          "label": "validity",
+          "sub": "from the award date"
+        },
+        {
+          "n": "Pearson VUE",
+          "label": "delivery",
+          "sub": "online proctored or test centre"
+        }
+      ],
+      "metaTitle": "Five meta-rules",
+      "metaLead": "These patterns recur in lesson after lesson. When two options both look right, check them against these first.",
+      "metaRules": [
+        [
+          "Start from the stated need, not the impressive option",
+          "When a scenario names a measured cost driver, constraint or requirement, the narrow option that targets it beats the broad, sophisticated one. Over-engineering is marked wrong as often as under-engineering."
+        ],
+        [
+          "A bigger model is almost never the first fix",
+          "Upgrading the model, raising the tier or loading more context is a favourite wrong answer. Find the failing stage first: prompt, retrieval, validation, configuration or feedback loop."
+        ],
+        [
+          "An instruction is not a control",
+          "A system prompt line or a shared instruction file shapes behaviour but enforces nothing. If something must never happen, remove or scope the capability, or enforce it in code or config."
+        ],
+        [
+          "Prevent where the requirement says never",
+          "Logging and periodic review detect harm after it happens. Confirmations and alerts compensate. When a role never needs a capability, or harm must never reach a user, the preventive answer wins: remove it or gate it before the action."
+        ],
+        [
+          "Evidence before change, and protect every fix",
+          "Read traces and correlate with recent changes before editing anything. Change one thing at a time, re-run evals in both directions, and turn each failure into a regression case."
+        ]
+      ],
+      "disclaimer": "Independent study material written by Harisankar Sivankutty. It is not affiliated with or endorsed by Anthropic and contains no actual exam questions. Exam facts were correct when this edition was written; check the official exam page before you book."
+    },
+    "domains": [
+      {
+        "n": 1,
+        "weight": 17,
+        "title": "Solution Design & Architecture",
+        "sub": "Turn a business problem into the simplest architecture that meets measured requirements.",
+        "lessons": [
+          {
+            "id": "1.1",
+            "title": "Translating Business Problems",
+            "tests": "Whether you start from the problem and its measurement, and know where a model does not belong.",
+            "rules": [
+              "Sequence is fixed: problem, constraints, success criterion, then architecture.",
+              "When one option hits the named cost driver and another is broader, pick the targeted one.",
+              "Rule-specified work (calculations, fixed-schema checks) belongs in plain code."
+            ],
+            "traps": [
+              [
+                "General-purpose assistant for one named high-volume workflow",
+                "Narrow workflow aimed at the measured cost driver"
+              ],
+              [
+                "Choosing an architecture before constraints and criteria are known",
+                "Capture constraints and success criteria first; they rule out shapes"
+              ],
+              [
+                "Sending a deterministic calculation through a model call",
+                "Deterministic code: cheaper, faster, exactly right"
+              ]
+            ]
+          },
+          {
+            "id": "1.2",
+            "title": "End-to-End Architectures and Feedback Loops",
+            "tests": "Spotting the missing stage in a pipeline and fixing that root cause.",
+            "rules": [
+              "Walk every stage in order and name the one that is absent.",
+              "Unexplained, inconsistent quality means no feedback loop, not a weak model.",
+              "Model output is untrusted until it passes schema and business-rule checks."
+            ],
+            "traps": [
+              [
+                "Model output fed straight into downstream systems",
+                "Validate schema and business rules, with a designed failure path"
+              ],
+              [
+                "No way to capture quality signals after launch",
+                "Log corrections and graded samples and feed them into prompt changes"
+              ],
+              [
+                "Errors caught and turned into empty or default output",
+                "Explicit degraded path: human queue, cached answer or clear error"
+              ],
+              [
+                "Upgrading the model to fix unmeasurable quality",
+                "Add evaluation and feedback capture so quality can be measured"
+              ]
+            ]
+          },
+          {
+            "id": "1.3",
+            "title": "Selecting Architectural Patterns",
+            "tests": "Picking the one pattern whose preconditions the scenario actually meets.",
+            "rules": [
+              "Known steps, consistency, latency or audit needs point to a workflow, not an agent.",
+              "Distinct input categories mean routing; dependent stages mean chaining.",
+              "Evaluator-optimizer needs written criteria and real value from iteration."
+            ],
+            "traps": [
+              [
+                "Autonomous agent for a fixed, well-specified pipeline",
+                "Predictable, auditable workflow"
+              ],
+              [
+                "Prompt chaining when inputs fall into categories",
+                "Routing: classify, then dispatch to specialised handlers"
+              ],
+              [
+                "Evaluator-optimizer with no clear evaluation criteria",
+                "Write the criteria first, then judge if a loop is worth it"
+              ],
+              [
+                "One big prompt for a task needing quality gates",
+                "Chained steps with programmatic gates between them"
+              ]
+            ]
+          },
+          {
+            "id": "1.4",
+            "title": "Multi-Agent Systems and Orchestration",
+            "tests": "Diagnosing a broken multi-agent system back to how the coordinator delegated.",
+            "rules": [
+              "Subagents start with a fresh context; the coordinator must brief each one fully.",
+              "Delegation quality sets system quality.",
+              "Split into agents only when work needs separate tools and permissions."
+            ],
+            "traps": [
+              [
+                "Overlap and gaps blamed on weak subagents",
+                "Coordinator decomposition was not partitioned; fix the briefs"
+              ],
+              [
+                "Assuming subagents see the parent chat or each other",
+                "Brief each subagent explicitly (exam default)"
+              ],
+              [
+                "Multi-agent for a task that fits one context window",
+                "Single agent; avoid the large token multiplier and latency"
+              ],
+              [
+                "Adding more subagents to close coverage gaps",
+                "Mutually exclusive, clearly bounded briefs"
+              ]
+            ]
+          },
+          {
+            "id": "1.5",
+            "title": "Decomposition Techniques",
+            "tests": "Decomposing only when it measurably helps, with no named failure mode left open.",
+            "rules": [
+              "Attention dilution across a large input is fixed by structure, not window size.",
+              "Local passes need an integration pass for cross-unit issues.",
+              "Pass structured outputs with acceptance gates between stages."
+            ],
+            "traps": [
+              [
+                "Splitting a working one-call task into many stages",
+                "Decompose only when evals show quality improves"
+              ],
+              [
+                "Bigger model or window for uneven depth",
+                "Structural decomposition of the material"
+              ],
+              [
+                "Local passes only",
+                "Local depth plus a cross-unit integration pass"
+              ],
+              [
+                "Free-text summaries handed between stages",
+                "Structured intermediate outputs with acceptance gates"
+              ]
+            ]
+          },
+          {
+            "id": "1.6",
+            "title": "Aligning to Business Value Pillars",
+            "tests": "Naming the value pillar an initiative serves and respecting stated cost and SLA limits.",
+            "rules": [
+              "Automating what already exists is efficiency; a new capability is transformation.",
+              "Caching cuts cost and latency on the request path; batching cuts cost off it.",
+              "Stage latencies add up; sum them against the p95 before choosing."
+            ],
+            "traps": [
+              [
+                "Most capable model for every task",
+                "Smallest model that meets the measured quality bar, per task"
+              ],
+              [
+                "Calling automation of an existing process transformation",
+                "Efficiency; ask whether the capability already existed"
+              ],
+              [
+                "Batch for an interactive flow, or caching for one-off async volume",
+                "Caching for repeated prefixes live; batch for async volume"
+              ],
+              [
+                "Sequential large-model calls under a tight p95, or no fallback",
+                "Budget each stage, move calls off the path, add queue or human fallback"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "weight": 13,
+        "title": "Claude Models, Prompting & Context Engineering",
+        "sub": "Choose models on evidence, write firm prompt contracts and manage the context window as a budget.",
+        "lessons": [
+          {
+            "id": "2.1",
+            "title": "Model Selection Trade-offs",
+            "tests": "Choosing models on measured constraints and demanding eval evidence before any move.",
+            "rules": [
+              "Pick the smallest model that clears the measured bar.",
+              "A cascade that escalates on a trigger usually wins cost versus quality questions.",
+              "Re-run evals before moving a model up or down."
+            ],
+            "traps": [
+              [
+                "Biggest model everywhere to be safe",
+                "Smallest model that clears the bar, with escalation"
+              ],
+              [
+                "Dropping to the smallest model without evals",
+                "Re-run quality evals before switching"
+              ],
+              [
+                "Running production on an alias or retiring model",
+                "Pin versions, watch deprecations, re-test before migrating"
+              ],
+              [
+                "Upgrading because outputs are inconsistent",
+                "Fix instruction clarity first"
+              ]
+            ]
+          },
+          {
+            "id": "2.2",
+            "title": "System Prompts, Templates and Guardrails",
+            "tests": "Designing the prompt contract and knowing instructions alone never complete a defence.",
+            "rules": [
+              "Standing policy lives in the system prompt, not repeated per request.",
+              "Cut hallucination with scope limits plus permission to say 'not found'.",
+              "Wrap the model in code-level input and output validation."
+            ],
+            "traps": [
+              [
+                "Policy restated in each user turn",
+                "Put it once in the system prompt; it also caches"
+              ],
+              [
+                "Bigger model or lower temperature for invented facts",
+                "Answer only from given text, with an escape hatch"
+              ],
+              [
+                "System prompt as the only guardrail",
+                "Programmatic validation before any later step uses output"
+              ],
+              [
+                "All fields mandatory plus a bold 'never invent' rule",
+                "Allow null and let the model say data is missing"
+              ]
+            ]
+          },
+          {
+            "id": "2.3",
+            "title": "Zero-Shot, Few-Shot and Chain-of-Thought",
+            "tests": "Matching the cheapest technique to the failure class you observe.",
+            "rules": [
+              "Format problems: examples. Multi-step reasoning problems: CoT or thinking.",
+              "For the exam, prompted CoT stays correct for reasoning failures.",
+              "Splitting into multiple calls is an architecture (Domain 1) choice."
+            ],
+            "traps": [
+              [
+                "Bigger model for format drift or boundary confusion",
+                "Examples or clearer instructions"
+              ],
+              [
+                "CoT for a format failure",
+                "An exact-format few-shot example"
+              ],
+              [
+                "Few-shot for a reasoning failure",
+                "Reasoning instructions or built-in thinking"
+              ],
+              [
+                "CoT mixed into parsed output",
+                "Separate the final answer, for example with answer tags"
+              ]
+            ]
+          },
+          {
+            "id": "2.4",
+            "title": "Context Window Optimisation",
+            "tests": "Treating the window as a budget you curate rather than space to fill.",
+            "rules": [
+              "Caching changes token cost, never whether tokens fit.",
+              "Curate by relevance; never truncate by position.",
+              "Compact or edit stale content out of long agent sessions."
+            ],
+            "traps": [
+              [
+                "Move to a bigger window and load more",
+                "Curate what goes in; more load means more rot and cost"
+              ],
+              [
+                "Enable caching to make room near the limit",
+                "Curate, compact or edit context"
+              ],
+              [
+                "Cut context to a fixed token count",
+                "Select by relevance to the task"
+              ],
+              [
+                "Carrying every old tool result forward",
+                "Compaction and context editing"
+              ]
+            ]
+          },
+          {
+            "id": "2.5",
+            "title": "Prompt Reuse: Caching, Modules and Skills",
+            "tests": "Choosing the right reuse mechanism and placing static content first.",
+            "rules": [
+              "Static content first, per-request values last, then enable caching.",
+              "Caching addresses both cost and latency on a repeated prefix.",
+              "Skills load procedures on demand instead of bloating every prompt."
+            ],
+            "traps": [
+              [
+                "Caching content that changes every request",
+                "Static first, dynamic last so the prefix matches"
+              ],
+              [
+                "Caching to fix overflow or quality",
+                "Curate or compact; fix quality in the prompt"
+              ],
+              [
+                "Trim examples or downsize to cut a repeated prefix cost",
+                "Static-first ordering plus caching"
+              ],
+              [
+                "Whole procedure library in every system prompt",
+                "Package procedures as Skills loaded on demand"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "weight": 19,
+        "title": "Integration",
+        "sub": "Connect Claude to enterprise systems with least privilege, sound identity, observability and fitting retrieval.",
+        "lessons": [
+          {
+            "id": "3.1",
+            "title": "Capability Bloat and Least Privilege",
+            "tests": "Removing capabilities a role never needs instead of guarding them.",
+            "rules": [
+              "If the role never needs it, remove it. That option wins every time.",
+              "Model size has nothing to do with authorisation scope.",
+              "Wire only the tools a named task needs; discover the rest."
+            ],
+            "traps": [
+              [
+                "Audit logging or a confirmation on an unneeded tool",
+                "Remove the tool"
+              ],
+              [
+                "System prompt forbidding a wired tool",
+                "Remove or scope it; an instruction is not access control"
+              ],
+              [
+                "Larger model to fix over-privilege",
+                "Scope the configuration"
+              ],
+              [
+                "Wiring the full tool catalogue just in case",
+                "Minimal tool set plus progressive discovery"
+              ]
+            ]
+          },
+          {
+            "id": "3.2",
+            "title": "Authentication, Authorisation and Gaps",
+            "tests": "Telling an authorisation gap from an authentication problem at the right hop.",
+            "rules": [
+              "Login strength decides who gets in, not what they can reach.",
+              "Propagate the requester's identity and scope each call to it.",
+              "Each hop authenticates with its own scoped credential."
+            ],
+            "traps": [
+              [
+                "MFA or SSO for over-broad scope or shared credentials",
+                "Narrow scope and propagate user identity"
+              ],
+              [
+                "Logging all calls to fix a privilege flaw",
+                "Make cross-user reads impossible by design"
+              ],
+              [
+                "Forwarding the user's token downstream",
+                "Per-hop scoped credentials; MCP forbids passthrough"
+              ],
+              [
+                "Securing the wrong hop",
+                "Trace the full identity chain to the gap"
+              ]
+            ]
+          },
+          {
+            "id": "3.3",
+            "title": "Accuracy and Latency Trade-offs",
+            "tests": "Meeting both a latency target and a quality target without dropping either.",
+            "rules": [
+              "Strike out any option that gives up one named requirement for the other.",
+              "Restructure: route by risk, cache the stable prefix, parallelise independent calls.",
+              "Streaming only helps a human who is watching."
+            ],
+            "traps": [
+              [
+                "Dropping verification in a critical flow to hit latency",
+                "Route, cache and parallelise; keep the control"
+              ],
+              [
+                "Streaming for a parser or batch consumer",
+                "Fewer output tokens or a right-sized model"
+              ],
+              [
+                "Expensive verification on every request",
+                "Route only high-stakes requests to it"
+              ],
+              [
+                "Parallelising dependent steps",
+                "Parallelise only independent calls"
+              ]
+            ]
+          },
+          {
+            "id": "3.4",
+            "title": "Observability at Scale",
+            "tests": "Adding instrumentation that can actually see quality failures.",
+            "rules": [
+              "Green uptime says nothing about wrong answers.",
+              "Read the trace; do not re-run and hope.",
+              "Aggregate all, sample payloads, keep every detected failure."
+            ],
+            "traps": [
+              [
+                "More uptime and latency alerts for wrong answers",
+                "Sampled automated quality evaluation"
+              ],
+              [
+                "Re-running the input a few times",
+                "Read the trace: context, tool results, prompt version"
+              ],
+              [
+                "Storing all prompts and outputs forever",
+                "Aggregate, sample and keep failures, within privacy rules"
+              ],
+              [
+                "Per-call logs without correlation ids",
+                "End-to-end traces with correlation ids"
+              ]
+            ]
+          },
+          {
+            "id": "3.5",
+            "title": "RAG Pipeline Design",
+            "tests": "Designing chunking and indexing, and diagnosing retrieval before generation.",
+            "rules": [
+              "Wrong answers right after a document refresh: check indexing first.",
+              "Measure retrieval recall and precision apart from generation.",
+              "Fix the index before tuning retrieval depth."
+            ],
+            "traps": [
+              [
+                "Model upgrade after a refresh-triggered failure",
+                "Investigate retrieval and indexing"
+              ],
+              [
+                "More chunks per query for a stale index",
+                "Fix the index"
+              ],
+              [
+                "Tuning chunk size without retrieval metrics",
+                "Measure on a labelled set first"
+              ],
+              [
+                "End-to-end evaluation only",
+                "Stage-level retrieval and generation metrics"
+              ]
+            ]
+          },
+          {
+            "id": "3.6",
+            "title": "Matching Retrieval to Data Shape",
+            "tests": "Matching each query family to the strategy that fits its data.",
+            "rules": [
+              "Live operational data is queried through a tool, never embedded.",
+              "Combined strategies are often the right answer.",
+              "Recall-critical work needs hybrid search plus reranking."
+            ],
+            "traps": [
+              [
+                "Embedding stock, balances or account records",
+                "Query the live database through a tool"
+              ],
+              [
+                "One retrieval strategy reused for every shape",
+                "Pick a strategy per data shape"
+              ],
+              [
+                "Agentic multi-hop for a simple lookup",
+                "Single query with a metadata filter"
+              ],
+              [
+                "Precision or speed first when nothing may be missed",
+                "Hybrid search plus reranking"
+              ]
+            ]
+          },
+          {
+            "id": "3.7",
+            "title": "Choosing the Integration Mechanism",
+            "tests": "Choosing on the count of consumers and surfaces, not sophistication.",
+            "rules": [
+              "Count consumers, surfaces, owners and whether the other side decides.",
+              "If the other side makes no decisions, it is a tool, not an agent.",
+              "Unattended jobs run headless, with no chat or streaming."
+            ],
+            "traps": [
+              [
+                "MCP server for a single bespoke consumer",
+                "Direct call"
+              ],
+              [
+                "Rejecting MCP because HTTP is needed",
+                "MCP over streamable HTTP for remote shared servers"
+              ],
+              [
+                "Peer agent for a deterministic operation",
+                "Plain tool call"
+              ],
+              [
+                "Chat streaming in a nightly pipeline",
+                "Headless run with parsed output"
+              ]
+            ]
+          },
+          {
+            "id": "3.8",
+            "title": "Progressive Discovery versus Monolithic Context",
+            "tests": "Weighing discovery against loading everything, using the scenario's cues.",
+            "rules": [
+              "Decide on surface size, use frequency, latency and stability, not on fit.",
+              "With a large surface and a tight SLA, choose the hybrid.",
+              "Keep the hot core loaded and cached; put the long tail behind search."
+            ],
+            "traps": [
+              [
+                "Load everything because the window holds it",
+                "Decide from the four cues"
+              ],
+              [
+                "Everything in the prompt behind a cache breakpoint",
+                "Cache the hot core; discover the long tail"
+              ],
+              [
+                "Permanent tool cap when the surface must grow",
+                "Progressive discovery"
+              ],
+              [
+                "Deferring even the most used tools",
+                "Keep the frequent few loaded"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "weight": 16,
+        "title": "Evaluation, Testing & Optimisation",
+        "sub": "Define decision-grade metrics, build honest test sets, experiment carefully and diagnose by evidence.",
+        "lessons": [
+          {
+            "id": "4.1",
+            "title": "Defining Evaluation Metrics",
+            "tests": "Whether your metrics are specific enough to make decisions with.",
+            "rules": [
+              "Set success criteria before the build, not after launch.",
+              "Latency targets use tail percentiles and say which latency matters.",
+              "Measure over-refusal alongside harmful output."
+            ],
+            "traps": [
+              [
+                "Mean latency as the SLA target",
+                "Tail percentile, naming time-to-first-token or total time"
+              ],
+              [
+                "Define metrics once production data exists",
+                "Define criteria before building"
+              ],
+              [
+                "Safety scored on harmful output alone",
+                "Score refusals in both directions"
+              ]
+            ]
+          },
+          {
+            "id": "4.2",
+            "title": "Evaluation Datasets and Test Frameworks",
+            "tests": "Covering real risks in the set and pairing each metric with an honest grader.",
+            "rules": [
+              "Code checks for exact rules, LLM judge for volume, humans to calibrate and audit.",
+              "Validate any LLM judge against human labels.",
+              "Recurring incidents with a passing suite mean missing case populations."
+            ],
+            "traps": [
+              [
+                "Trusting an unvalidated LLM judge",
+                "Calibrate against a human-labelled sample"
+              ],
+              [
+                "All-human grading as the rigorous choice",
+                "Automate volume; humans calibrate and audit"
+              ],
+              [
+                "Eval cases reused as few-shot examples",
+                "Remove the overlap, version the set, re-score"
+              ],
+              [
+                "More happy-path cases for recurring incidents",
+                "Add edge, adversarial and regression cases"
+              ]
+            ]
+          },
+          {
+            "id": "4.3",
+            "title": "A/B Testing and Iterative Improvement",
+            "tests": "Running the full improvement loop without shortcuts that hide the cause.",
+            "rules": [
+              "Change one variable per test.",
+              "Offline evals approximate; an online A/B proves impact.",
+              "Small samples need significance and a power analysis."
+            ],
+            "traps": [
+              [
+                "Model migration bundled with a prompt rewrite",
+                "Test each change separately"
+              ],
+              [
+                "Full release on a passing offline suite",
+                "Online A/B against the live baseline"
+              ],
+              [
+                "Winner declared from a handful of cases",
+                "Paired tests, standard errors, power analysis"
+              ],
+              [
+                "Rollback plan instead of staged exposure",
+                "Shadow runs and canaries first"
+              ]
+            ]
+          },
+          {
+            "id": "4.4",
+            "title": "Diagnosing Prompt, Hallucination and Mismatch Issues",
+            "tests": "Following evidence to the failing stage before naming a fix.",
+            "rules": [
+              "Evidence before conclusions; stage before failure class.",
+              "The right answer is often the first place to look, not the final fix.",
+              "Separate grounding failures from generation failures."
+            ],
+            "traps": [
+              [
+                "Upgrade the model first",
+                "Confirm a capability mismatch with a stronger-tier test first"
+              ],
+              [
+                "Prompt rewrite for hallucinations after a refresh",
+                "Fix grounding in the retrieval step"
+              ],
+              [
+                "Temperature zero to stop wrong answers",
+                "Isolate the failing stage"
+              ],
+              [
+                "Every wrong output called hallucination",
+                "Split grounding from generation to pick the layer"
+              ]
+            ]
+          },
+          {
+            "id": "4.5",
+            "title": "Token, Latency and Cost Optimisation",
+            "tests": "Matching each optimisation lever to the dominant cost or latency term.",
+            "rules": [
+              "Name the cost of every saving and re-run evals.",
+              "Right-sizing with a cascade balances cost and quality.",
+              "Check who is waiting before offering batch."
+            ],
+            "traps": [
+              [
+                "Batch discount for a user-facing flow",
+                "Batch only where nobody is waiting"
+              ],
+              [
+                "Smallest model as a cost fix with no evals",
+                "Re-run evals and ship only if it clears the bar"
+              ],
+              [
+                "Caching for overflow, wrong answers or one-off docs",
+                "Cache only a repeated prefix"
+              ]
+            ]
+          },
+          {
+            "id": "4.6",
+            "title": "Monitoring Performance in Production",
+            "tests": "Running continuous quality monitoring as an ongoing practice.",
+            "rules": [
+              "Uptime is not correctness.",
+              "Drift happens between releases; score sampled traffic continuously.",
+              "Every closed incident leaves a regression case."
+            ],
+            "traps": [
+              [
+                "Green uptime as proof of health",
+                "Scored quality signals against targets"
+              ],
+              [
+                "No continuous eval because pre-release evals exist",
+                "Continuous scoring of sampled traffic"
+              ],
+              [
+                "Closing incidents with no regression case",
+                "Turn each failure into a regression case"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "weight": 14,
+        "title": "Governance, Safety & Risk Management",
+        "sub": "Place each control on the right surface, register silent risks, place humans well and design for regulation.",
+        "lessons": [
+          {
+            "id": "5.1",
+            "title": "Guardrails and the Right Surface",
+            "tests": "Choosing the control the risk needs, not just any real control.",
+            "rules": [
+              "Find the deciding phrase: never reaches, before sending, cannot be undone, after the fact.",
+              "Removal ranks above any guard in front of an unneeded privilege.",
+              "Prompt policy is one layer, never the enforcement point."
+            ],
+            "traps": [
+              [
+                "Stronger system prompt against a possible behaviour",
+                "Scope or remove the capability"
+              ],
+              [
+                "More capable model to stop violations or injection",
+                "Scope the configuration"
+              ],
+              [
+                "Logging or periodic review for a 'never' requirement",
+                "Output gate or capability removal"
+              ],
+              [
+                "Confirmation or alert on a never-needed capability",
+                "Remove the capability"
+              ]
+            ]
+          },
+          {
+            "id": "5.2",
+            "title": "Risks, Limitations and Silent Failures",
+            "tests": "Judging risk by consequence and detectability, not headline accuracy.",
+            "rules": [
+              "Per-item accuracy says little about multi-step actions.",
+              "Rank risks by consequence and detectability, not frequency.",
+              "Every irreversible action needs a control, owner and detection signal."
+            ],
+            "traps": [
+              [
+                "High accuracy as the risk posture",
+                "Register each irreversible action with control, owner and signal"
+              ],
+              [
+                "Ranking risks by likelihood",
+                "Rank by consequence and detectability"
+              ],
+              [
+                "Disclaimer after the action has left",
+                "Checkpoint before the action plus detection"
+              ],
+              [
+                "Human review counted with no override rate",
+                "Measure the override rate"
+              ]
+            ]
+          },
+          {
+            "id": "5.3",
+            "title": "Human-in-the-Loop Validation",
+            "tests": "Choosing where the human sits, which pattern and how to prove it works.",
+            "rules": [
+              "Low-impact, reversible actions can be automated with an undo guarantee.",
+              "Split the flow: gate irreversible paths, sample reversible ones.",
+              "Reviewers need context, sources and time, and their overrides measured."
+            ],
+            "traps": [
+              [
+                "Human approval for every action",
+                "Gate only the irreversible path"
+              ],
+              [
+                "Retrospective review after harm has left",
+                "Approve before the action executes"
+              ],
+              [
+                "Adding a second or senior reviewer",
+                "Give reviewers traces and sources; measure overrides"
+              ],
+              [
+                "Escalation on an unvalidated confidence score",
+                "Validate the trigger against labelled outcomes"
+              ]
+            ]
+          },
+          {
+            "id": "5.4",
+            "title": "Regulatory Compliance as a Constraint",
+            "tests": "Turning an obligation into a design constraint and seeing its full reach.",
+            "rules": [
+              "Over-broad data flow: reduce what crosses the boundary.",
+              "Logs, traces, indexes and eval sets are in scope too.",
+              "Agreements must be in place before data is disclosed."
+            ],
+            "traps": [
+              [
+                "Notice, encryption or consent while the same fields cross",
+                "Send only needed fields, pseudonymised"
+              ],
+              [
+                "Assessment that covers only the user-facing app",
+                "Include logs, traces, indexes and eval sets"
+              ],
+              [
+                "Processor agreement at the next renewal",
+                "Agreement before disclosure"
+              ],
+              [
+                "Supplier FedRAMP status as the agency's ATO",
+                "Use an authorised service or stay in the boundary"
+              ]
+            ]
+          },
+          {
+            "id": "5.5",
+            "title": "Ethical AI: Bias, Fairness and Transparency",
+            "tests": "Naming a fairness criterion and changing what the affected person experiences.",
+            "rules": [
+              "Justify a named fairness criterion against the decision.",
+              "Disclosure happens at the moment of use.",
+              "Explanations describe the person's own outcome and how to contest it."
+            ],
+            "traps": [
+              [
+                "Fair because protected attributes are excluded",
+                "Measure outcomes by cohort against a criterion"
+              ],
+              [
+                "Blaming base-model training data",
+                "Fix framing, constraints and monitoring you own"
+              ],
+              [
+                "Model card or policy page as disclosure",
+                "Disclose to the person at the moment of use"
+              ],
+              [
+                "Explaining by describing the pipeline",
+                "Plain outcome-based explanation with a way to contest"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "weight": 14,
+        "title": "Stakeholder Communication & Lifecycle Management",
+        "sub": "Behave professionally under pressure: discover first, state trade-offs, commit honestly and manage the lifecycle.",
+        "lessons": [
+          {
+            "id": "6.1",
+            "title": "Structured Discovery and Requirements",
+            "tests": "Professional behaviour in discovery; wrong options show four bad postures.",
+            "rules": [
+              "Reject capitulation, evasion, obstruction and theatre.",
+              "An honest refusal can be the right answer.",
+              "Raise data quality, access and lawful basis during discovery."
+            ],
+            "traps": [
+              [
+                "Clickable demo before the problem is understood",
+                "Characterise the problem and data first"
+              ],
+              [
+                "Price or date from the stated request",
+                "Priced discovery phase"
+              ],
+              [
+                "Data questions deferred to design",
+                "Raise them in discovery"
+              ],
+              [
+                "Success criteria phrased as a direction",
+                "Metric, threshold and population"
+              ]
+            ]
+          },
+          {
+            "id": "6.2",
+            "title": "Communicating Decisions and Trade-offs",
+            "tests": "Complete reasoning: options, recommendation and the cost of changing course.",
+            "rules": [
+              "Give the owner the measured trade-off and a recommendation; they decide.",
+              "Once decided, record it and build what was agreed.",
+              "Escalate last, and only beyond the owner's authority."
+            ],
+            "traps": [
+              [
+                "Silently building a decision you have evidence against",
+                "Present the measured trade-off first"
+              ],
+              [
+                "Building your own way after losing the argument",
+                "Record the decision and reopen conditions; build it"
+              ],
+              [
+                "Going to the owner's boss first",
+                "Put the trade-off to the owner first"
+              ],
+              [
+                "One confident accuracy number",
+                "A range on a defined population, plus how to narrow it"
+              ]
+            ]
+          },
+          {
+            "id": "6.3",
+            "title": "Expectations and Service Levels",
+            "tests": "Committing to a measured envelope with every element stated.",
+            "rules": [
+              "A service level states metric, percentile, measurement point, window, population and breach behaviour.",
+              "Visible narrowing can be right; hidden narrowing never is.",
+              "Never meet a target by deleting a control."
+            ],
+            "traps": [
+              [
+                "Bare number in the schedule",
+                "Full envelope with all six elements"
+              ],
+              [
+                "Dropping a stage to meet latency",
+                "Commit to what the full pipeline achieves"
+              ],
+              [
+                "Streaming to a pipeline consumer",
+                "Negotiate the number from the measured breakdown"
+              ],
+              [
+                "Quietly shrinking the covered population",
+                "State exclusions and give them an owner and plan"
+              ]
+            ]
+          },
+          {
+            "id": "6.4",
+            "title": "Documentation and Implementation Guidance",
+            "tests": "Identifying the missing handover artefact, not counting documents.",
+            "rules": [
+              "Handover must show how to change safely and how to detect breakage.",
+              "Decision records explain why; evaluation baselines prove change is safe.",
+              "Keep docs with the code and change them in the same review."
+            ],
+            "traps": [
+              [
+                "A big document pack as proof of handover",
+                "Answer: safe change and breakage detection"
+              ],
+              [
+                "Architecture view with no reasons",
+                "Decision records with options and revisit conditions"
+              ],
+              [
+                "Recording, prompt archive or idea list as key artefact",
+                "Evaluation baseline: suite, data, numbers, re-run steps"
+              ],
+              [
+                "Docs in a tool the team never opens",
+                "Versioned docs beside the code"
+              ]
+            ]
+          },
+          {
+            "id": "6.5",
+            "title": "Supporting the Lifecycle Phases",
+            "tests": "What each phase must produce before the next can honestly begin.",
+            "rules": [
+              "Model deprecation is an architecture task: re-validate against the baseline.",
+              "Re-run the baseline after any corpus or model change.",
+              "When evidence contradicts discovery, go back to discovery."
+            ],
+            "traps": [
+              [
+                "No complaints, so it is healthy",
+                "Re-run the baseline after changes"
+              ],
+              [
+                "Passing a deprecation to the vendor owner",
+                "Architect re-validates on the new version"
+              ],
+              [
+                "Prompt edits after each complaint",
+                "Run edits against regression suite and baseline"
+              ],
+              [
+                "Building on a disproven assumption",
+                "Return to discovery"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "weight": 7,
+        "title": "Developer Productivity & Operational Enablement",
+        "sub": "Make proven practice shared and enforced, measure real outcomes and debug from evidence.",
+        "lessons": [
+          {
+            "id": "7.1",
+            "title": "Team Tooling: Guidance versus Enforcement",
+            "tests": "Keeping real enforcement where nobody can override it.",
+            "rules": [
+              "Instruction files guide; permission rules and hooks enforce.",
+              "Commit shared configuration so it is inherited and reviewed.",
+              "A denial at any scope stays; lower scopes cannot lift it."
+            ],
+            "traps": [
+              [
+                "Prohibition in the instruction file treated as blocked",
+                "Enforced rule or lifecycle hook"
+              ],
+              [
+                "Onboarding page for divergent setups",
+                "Committed shared configuration"
+              ],
+              [
+                "Seniors only, or retype every change",
+                "Enforced limits and independent review"
+              ],
+              [
+                "Local allow overriding a managed deny",
+                "Ask the admin to change the policy"
+              ]
+            ]
+          },
+          {
+            "id": "7.2",
+            "title": "AI-Assisted Developer Workflows",
+            "tests": "Proving the tooling changed outcomes and packaging the practice.",
+            "rules": [
+              "Usage numbers are not results; baseline cycle time, defects and review time.",
+              "Review in a fresh context or by another reviewer; a named human merges.",
+              "Automate first where checks are fast and objective."
+            ],
+            "traps": [
+              [
+                "Adoption, accept rate or survey as ROI",
+                "Outcome metrics against a baseline"
+              ],
+              [
+                "Author reviewing its own change",
+                "Fresh-context or different reviewer, human merges"
+              ],
+              [
+                "Automating unverifiable work like architecture first",
+                "Start where checks are cheap and objective"
+              ],
+              [
+                "Gains kept in individuals' heads",
+                "Commit procedures as shared, versioned artefacts"
+              ]
+            ]
+          },
+          {
+            "id": "7.3",
+            "title": "Debugging and Operational Resolution",
+            "tests": "Reading evidence first and finishing the incident properly.",
+            "rules": [
+              "Correlate onset with change history and read the failing runs.",
+              "Contain based on blast radius.",
+              "Close with a fix, a regression case and a runbook update."
+            ],
+            "traps": [
+              [
+                "Rewriting the prompt as the first move",
+                "Read traces and change history first"
+              ],
+              [
+                "Reverting several changes as a precaution",
+                "Contain only if blast radius warrants it"
+              ],
+              [
+                "Trusting the agent's own account or one clean re-run",
+                "Confirm against the trace"
+              ],
+              [
+                "Fix and close, or a plan assuming missing access",
+                "Regression case, runbook update, granted access"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "endNote": "Good luck on exam day. Read the scenario for its constraint, strike the impressive option that ignores it, and trust the rules.",
+    "pairWith": "Ready to test yourself? Practise with the CCAR-P practice question bank and name the trap behind every option you reject.",
+    "exam": "CCAR-P"
+  },
+  {
+    "slug": "ccdv-f-exam-tips",
+    "status": "live",
+    "track": "claude-architect",
+    "exam": "CCDV-F",
+    "kicker": "Free guide · Claude Certified Developer, Foundations",
+    "title": "CCDV-F Exam Tips Study Guide",
+    "seoTitle": "CCDV-F Exam Tips: 25 Lessons and 98 Exam Traps, Free | Harisankar Sivankutty",
+    "pitch": "How the CCDV-F exam thinks. 25 lessons, 75 key rules and 98 exam traps across all 8 domains, plus the five meta-rules, with the exact API, SDK and Claude Code names the exam checks.",
+    "description": "Free CCDV-F study guide: 25 lessons, 75 key rules and 98 exam traps across 8 domains, plus five meta-rules and the exact API and SDK names the exam tests. PDF download included.",
+    "added": "2026-11-26",
+    "edition": "Edition 1",
+    "logo": "/images/logos/claude.svg",
+    "pdf": "ccdv-f-exam-tips-study-guide-edition-1.pdf",
+    "pdfPages": 15,
+    "packExam": "Anthropic · Developer Foundations",
+    "stats": [
+      {
+        "n": "25",
+        "label": "lessons"
+      },
+      {
+        "n": "75",
+        "label": "key rules"
+      },
+      {
+        "n": "98",
+        "label": "exam traps"
+      },
+      {
+        "n": "8",
+        "label": "domains"
+      }
+    ],
+    "insideIntro": "Exam facts and the five meta-rules",
+    "intro": {
+      "lead": "This guide covers 25 lessons across 8 domains: 75 key rules and 98 traps. Every lesson has three parts.",
+      "parts": [
+        [
+          "What the exam tests:",
+          "the one decision the questions on that lesson keep asking you to make."
+        ],
+        [
+          "Key rules:",
+          "short rules you can apply to a scenario in seconds to find the right option."
+        ],
+        [
+          "Traps:",
+          "a tempting wrong answer the exam likes to offer, next to the right answer."
+        ]
+      ],
+      "passes": [
+        [
+          "Read the key rules.",
+          "Go domain by domain and read only the rules. Aim to say each one aloud without looking."
+        ],
+        [
+          "Cover the right answer.",
+          "For each trap, hide the right side, read the wrong answer and say why it fails and what wins. Then check."
+        ],
+        [
+          "Practise and name the trap.",
+          "Do mock questions. For every option you reject, name the trap from this guide that it matches."
+        ]
+      ],
+      "versionNote": "Exam guide first. When the exam guide and the current product disagree, answer as the exam guide says. Product details change faster than the exam does. This exam tests exact names, so where a lesson notes a recent product change, learn the mechanism and treat the newer detail as background.",
+      "factsLead": "53 questions in 120 minutes, with 720 out of 1,000 needed to pass. Domain 2 alone is a third of the exam.",
+      "facts": [
+        {
+          "n": "53",
+          "label": "questions",
+          "sub": "multiple choice and multiple response (each item says how many to pick)"
+        },
+        {
+          "n": "120 min",
+          "label": "time allowed",
+          "sub": "about 2 min 15 s per question"
+        },
+        {
+          "n": "720",
+          "label": "pass mark",
+          "sub": "scaled score on a 100 to 1,000 scale"
+        },
+        {
+          "n": "$125",
+          "label": "price",
+          "sub": "USD per attempt"
+        },
+        {
+          "n": "12 months",
+          "label": "validity",
+          "sub": "from the date the credential is awarded"
+        },
+        {
+          "n": "Pearson VUE",
+          "label": "delivery",
+          "sub": "online proctored or at a test centre"
+        }
+      ],
+      "metaTitle": "Five meta-rules",
+      "metaLead": "These five patterns decide most questions in every domain. Learn them before the lessons.",
+      "metaRules": [
+        [
+          "Enforce in the application, not the prompt.",
+          "A polite instruction, a firmer wording or a more obedient model is never the control. Hooks, deny rules, scoped tools, delimiters and validation are."
+        ],
+        [
+          "Exact names score.",
+          "The exam lists invented parameters, flags, stop reasons and error types that sound almost right. If you have not seen the name in the docs, treat it as the wrong option."
+        ],
+        [
+          "Read the signal before choosing the fix.",
+          "Check `stop_reason`, the error type and the first point where a run went wrong. Each one points to a different recovery."
+        ],
+        [
+          "Bigger model, temperature and max_tokens are the usual wrong fixes.",
+          "Fix the cause: a description, a placement, a schema, a budget, a transport or a credential."
+        ],
+        [
+          "Context is only what you send.",
+          "Subagents start fresh, sessions do not remember, and the API starts with no system prompt. Anything the model needs must be stated or stored on purpose."
+        ]
+      ],
+      "disclaimer": "Independent study material by Harisankar Sivankutty. Not affiliated with or endorsed by Anthropic. Contains no actual exam questions. Claude is a trademark of Anthropic."
+    },
+    "domains": [
+      {
+        "n": 1,
+        "weight": 14.7,
+        "title": "Agents and Workflows",
+        "sub": "Place work on the right tier, build agents with the SDK's real controls and pick the pattern that fits.",
+        "lessons": [
+          {
+            "id": "1.1",
+            "title": "Agent Architecture",
+            "tests": "whether a task belongs in a workflow or an agent, and how subagents get their information.",
+            "rules": [
+              "Fixed, auditable, high-volume steps belong in a workflow.",
+              "The tier depends on who picks the next step: code means workflow, model means agent.",
+              "A custom subagent starts fresh; its brief is all it knows."
+            ],
+            "traps": [
+              [
+                "Agent by default because it is more capable",
+                "Workflow for fixed, repeating steps"
+              ],
+              [
+                "Workers will follow a policy agreed with the lead",
+                "Put the policy in every delegation brief"
+              ],
+              [
+                "Many model calls with tools means it is an agent",
+                "Code fixes the path, so it is a workflow"
+              ],
+              [
+                "More subagents always give a better result",
+                "Parallelise only independent subtasks; scale effort to the query"
+              ]
+            ]
+          },
+          {
+            "id": "1.2",
+            "title": "Agent Construction with Claude",
+            "tests": "exact SDK limit names and result subtypes, and whether a concern belongs in code or the prompt.",
+            "rules": [
+              "Real limits: `max_turns` and `max_budget_usd`; real results: `error_max_turns` and `error_max_budget_usd`.",
+              "Prompts request, hooks enforce.",
+              "Subagent spend counts towards the parent's budget."
+            ],
+            "traps": [
+              [
+                "`max_iterations`, `budget_limit` or `turn_cap` as SDK options",
+                "`max_turns` / `max_budget_usd` only"
+              ],
+              [
+                "`error_max_turns` read as a model failure",
+                "It is a configured limit: resume with a higher limit, tighten or split the task"
+              ],
+              [
+                "A system prompt rule treated as a guardrail",
+                "PreToolUse hook that returns deny"
+              ],
+              [
+                "Subagent costs excluded from the budget",
+                "Budget is cumulative across subagents"
+              ],
+              [
+                "Managed Agents seen as the SDK hosted for you",
+                "Separate product: hosted REST API vs library in your process"
+              ]
+            ]
+          },
+          {
+            "id": "1.3",
+            "title": "Agent Patterns and Frameworks",
+            "tests": "matching a requirement profile to the pattern or framework built for it.",
+            "rules": [
+              "Subtasks known in advance: sectioning; found at runtime: orchestrator-workers.",
+              "Memory only exists if the design persists it.",
+              "Each framework puts one need first; match the need, not the API."
+            ],
+            "traps": [
+              [
+                "Sectioning for runtime-discovered subtasks (or the reverse)",
+                "Decide by who finds the subtasks and when"
+              ],
+              [
+                "Agent remembers yesterday by default",
+                "Write state to external memory and read it back"
+              ],
+              [
+                "LangGraph for typed output, Pydantic AI for graphs",
+                "LangGraph for stateful graphs, Pydantic AI for typed output"
+              ],
+              [
+                "Voting when feedback must shape the next draft",
+                "Evaluator-optimizer"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 2,
+        "weight": 33.1,
+        "title": "Applications and Integration",
+        "sub": "A third of the exam: requirements, life cycle, exact API mechanics, engineering discipline, application design and configuration.",
+        "lessons": [
+          {
+            "id": "2.1",
+            "title": "Understanding Requirements",
+            "tests": "putting each statement on the right requirement layer and deriving the one the design implies.",
+            "rules": [
+              "Latency and throughput targets are non-functional, however measurable.",
+              "Requirements name constraints; choosing a model is a later step.",
+              "Rate limits and context windows are known up front; size against them."
+            ],
+            "traps": [
+              [
+                "Latency target classed as functional",
+                "Non-functional: it limits how well, not what"
+              ],
+              [
+                "Model recommendation as a requirement",
+                "Record the constraint, not the model"
+              ],
+              [
+                "Limits discovered during load testing",
+                "Size concurrency and prompt length as requirements"
+              ]
+            ]
+          },
+          {
+            "id": "2.2",
+            "title": "Systems Life Cycle",
+            "tests": "which phase governs a given activity.",
+            "rules": [
+              "One-time switchovers are implementation; recurring work is operations.",
+              "After go-live, prompt changes are maintenance, gated by evals.",
+              "Deprecation dates differ by platform; check the one named."
+            ],
+            "traps": [
+              [
+                "Cutover plan placed in operations",
+                "Implementation: it happens once"
+              ],
+              [
+                "Same retirement date on every platform",
+                "Bedrock and Google Cloud set their own dates"
+              ],
+              [
+                "Eval suite written after an incident and called testing",
+                "Derive evals from requirements before deployment; add one per incident"
+              ]
+            ]
+          },
+          {
+            "id": "2.3",
+            "title": "Claude API Mechanics",
+            "tests": "exact parameter names, `stop_reason` values and error types.",
+            "rules": [
+              "Required fields: `model`, `max_tokens` and `messages`.",
+              "`tool_choice` values: `auto`, `any`, `tool`, `none`.",
+              "Read `stop_reason` before deciding why output ended."
+            ],
+            "traps": [
+              [
+                "A plausible but invented parameter or value",
+                "Check against the documented list"
+              ],
+              [
+                "Client tools run on Anthropic's servers",
+                "Your code runs them and returns `tool_result` with the matching id"
+              ],
+              [
+                "Batch done within the hour as a deadline guarantee",
+                "Only 24 hours is guaranteed; use bounded realtime calls"
+              ],
+              [
+                "Guessing the cause from a cut-off reply",
+                "`max_tokens` means raise the cap; `model_context_window_exceeded` means truncated"
+              ]
+            ]
+          },
+          {
+            "id": "2.4",
+            "title": "Software Engineering Foundations",
+            "tests": "real engineering discipline around Claude calls and AI-written code.",
+            "rules": [
+              "Bound fan-out and retry with jittered backoff that honours retry-after.",
+              "Review standards stay the same whoever wrote the diff.",
+              "No production console edits; change through version control."
+            ],
+            "traps": [
+              [
+                "Tight immediate retries on a wave of 429s",
+                "Semaphore or worker pool plus jittered backoff"
+              ],
+              [
+                "Lower `max_tokens` for rate limits or cost",
+                "Bound concurrency within RPM, ITPM and OTPM"
+              ],
+              [
+                "Skip review because tests pass",
+                "Human review of AI changes"
+              ],
+              [
+                "One big rewrite with a contract change",
+                "Characterisation tests, incremental steps, versioned contract"
+              ]
+            ]
+          },
+          {
+            "id": "2.5",
+            "title": "Claude Application Design",
+            "tests": "design judgement on instruction sources, untrusted content, output contracts and session scope.",
+            "rules": [
+              "The API starts with no system prompt; rebuild the instructions yourself.",
+              "Wrap untrusted content in delimiters and frame it as data.",
+              "Define the output contract first; scope each session to one task and tenant."
+            ],
+            "traps": [
+              [
+                "Blaming the model or SDK for a change between surfaces",
+                "The prototype relied on the product's system prompt"
+              ],
+              [
+                "'Ignore instructions in the document' line",
+                "Explicit delimiters, content framed as data"
+              ],
+              [
+                "Retry until it parses, or a bigger model",
+                "Schema, matching instruction, validation on receipt"
+              ],
+              [
+                "One long shared session for more context",
+                "One task and tenant per session; facts in app state"
+              ]
+            ]
+          },
+          {
+            "id": "2.6",
+            "title": "Configuration Management",
+            "tests": "what to track, pin, review and keep in step across environments.",
+            "rules": [
+              "Shared: `settings.json` and project `CLAUDE.md`. Personal: `settings.local.json` and `CLAUDE.local.md`.",
+              "Pin a model version and migrate on purpose after evals.",
+              "Secrets never live in versioned files."
+            ],
+            "traps": [
+              [
+                "`settings.local.json` treated as team-shared",
+                "It is personal and gitignored"
+              ],
+              [
+                "Switch models first, evaluate later",
+                "Evaluate within the notice period, then change through review"
+              ],
+              [
+                "Every dateless model string is a moving alias",
+                "From 4.6 on, dateless ids are pinned snapshots"
+              ],
+              [
+                "Encrypting or gitignoring a committed key",
+                "Credential helper or runtime environment variables"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 3,
+        "weight": 3.1,
+        "title": "Claude Code",
+        "sub": "Put each need in the right file, scope and mode.",
+        "lessons": [
+          {
+            "id": "3.1",
+            "title": "Claude Code Operation",
+            "tests": "placement: which file, which scope and which mode fits a stated need.",
+            "rules": [
+              "`CLAUDE.md` files are all loaded, broadest first; settings follow a precedence chain.",
+              "Skill name clashes: enterprise, then personal, then project (opposite of settings).",
+              "'Must never' needs configuration, not prose in `CLAUDE.md`."
+            ],
+            "traps": [
+              [
+                "Project `CLAUDE.md` overrides the user one",
+                "Both load; the nearer file is read last"
+              ],
+              [
+                "Project skill beats a same-named personal skill",
+                "Personal wins for skills; subagents follow settings order"
+              ],
+              [
+                "Interactive terminal needed, or flags like `--headless`",
+                "`claude -p`, `--output-format stream-json`, `--permission-mode`"
+              ],
+              [
+                "`/compact` and `/clear` are the same, and clear deletes history",
+                "`/compact` summarises; `/clear` starts fresh; `/resume` brings it back"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 4,
+        "weight": 2.6,
+        "title": "Eval, Testing, and Debugging",
+        "sub": "Identify the error class and match the recovery to it.",
+        "lessons": [
+          {
+            "id": "4.1",
+            "title": "Debugging and Error Handling",
+            "tests": "naming the error type, choosing the matching recovery and finding where a run first went wrong.",
+            "rules": [
+              "Read status, error type and error code before choosing a recovery.",
+              "A 200 can still be a refusal or end in a stream error.",
+              "Debug the first divergence, not the last visible symptom."
+            ],
+            "traps": [
+              [
+                "Retrying an auth error, or giving up on a 429 or 529",
+                "Auth needs a new credential; 429 and 529 clear with backoff, except the spend-cap 429"
+              ],
+              [
+                "Truncation fixed with a sterner prompt or bigger model",
+                "Raise `max_tokens` or narrow the task; context overflow needs less input"
+              ],
+              [
+                "try/except around the call is enough",
+                "Check `stop_reason` and handle errors inside the stream"
+              ],
+              [
+                "Debugging the last step",
+                "Find the first divergence, often a bad tool result"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 5,
+        "weight": 16.8,
+        "title": "Model Selection and Optimisation",
+        "sub": "How the model generates text, what the SDK does and does not change, picking a tier and pricing the bill.",
+        "lessons": [
+          {
+            "id": "5.1",
+            "title": "LLM Fundamentals",
+            "tests": "consequences of next-token generation and which model option fixes which complaint.",
+            "rules": [
+              "Lower temperature narrows output but does not make it identical.",
+              "Input too large fails with a 400; input plus `max_tokens` too large stops early.",
+              "Count tokens for the exact model you will call."
+            ],
+            "traps": [
+              [
+                "Low temperature guarantees identical output",
+                "Use examples and validation for stable output"
+              ],
+              [
+                "API drops the oldest messages on overflow",
+                "400 before generation, or stop at the context window"
+              ],
+              [
+                "Tokens-per-word ratio or an old count",
+                "Recount with the counting endpoint for the target model"
+              ],
+              [
+                "Smarter model for a correct but slow answer",
+                "Fast mode or streaming"
+              ]
+            ]
+          },
+          {
+            "id": "5.2",
+            "title": "Technical Fundamentals",
+            "tests": "what the SDK wraps, what it leaves unchanged and which transport carries streaming.",
+            "rules": [
+              "The SDK is a typed wrapper: same models, prices and limits.",
+              "API streaming uses server-sent events over HTTP; websockets sit between browser and your backend.",
+              "Build one client and reuse it; set timeouts and retries on purpose."
+            ],
+            "traps": [
+              [
+                "SDK gives cheaper tokens, extra models or higher limits",
+                "None; it only adds convenience"
+              ],
+              [
+                "Websocket to Anthropic for streaming",
+                "SSE to your backend; websocket only to the browser"
+              ],
+              [
+                "SDK retry defaults as full resilience, or a huge timeout",
+                "Set timeout and retries deliberately; they multiply"
+              ],
+              [
+                "A 200 means the streamed request succeeded",
+                "Handle error events while iterating"
+              ]
+            ]
+          },
+          {
+            "id": "5.3",
+            "title": "Model Selection and Trade-offs",
+            "tests": "matching the tier to the stated constraint and proving any switch with your own evals.",
+            "rules": [
+              "Meet the named constraint: latency, volume, accuracy or cost of an error.",
+              "Try effort settings before changing tier.",
+              "Gate every switch on your own eval."
+            ],
+            "traps": [
+              [
+                "Always the top model for quality, or the cheapest at volume",
+                "Meet the stated constraint; sweep effort first"
+              ],
+              [
+                "Price per token, or switching on published benchmarks",
+                "Cost per completed task on your own hardest cases"
+              ],
+              [
+                "Deprecated means requests already fail",
+                "It still works until its retirement date"
+              ]
+            ]
+          },
+          {
+            "id": "5.4",
+            "title": "Cost and Token Management",
+            "tests": "modelling the bill first, then optimising the axis that dominates.",
+            "rules": [
+              "Find whether input or output dominates before acting.",
+              "Caching pays only on a large, stable prefix reused within its lifetime.",
+              "Attribute spend per feature from per-request usage logs."
+            ],
+            "traps": [
+              [
+                "Lower `max_tokens` to save money",
+                "Give the model a task budget it can see"
+              ],
+              [
+                "Caching as pure saving",
+                "Writes cost extra; single-use prefixes lose money"
+              ],
+              [
+                "Optimising the wrong axis",
+                "Price all four usage counts, then act"
+              ],
+              [
+                "Counting endpoint or invoice to prove a saving",
+                "Log usage per request with a feature label"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 6,
+        "weight": 11,
+        "title": "Prompt and Context Engineering",
+        "sub": "Curate what the context holds, place instructions where they last and check output beyond its shape.",
+        "lessons": [
+          {
+            "id": "6.1",
+            "title": "Context Engineering",
+            "tests": "curation choices on long agent runs, and telling bloat from drift.",
+            "rules": [
+              "Rising cost and latency is bloat: prune and compact.",
+              "Wandering behaviour with flat tokens is drift: move rules to an always-present surface.",
+              "Never replay an old conversation so the model 'remembers'."
+            ],
+            "traps": [
+              [
+                "Bigger window for a degrading long run",
+                "Prune used tool payloads and compact finished work"
+              ],
+              [
+                "Pruning for drift, or placement for overflow",
+                "Match the fix to the main symptom"
+              ],
+              [
+                "Compaction keeps everything important",
+                "Write a full preservation brief; store lasting rules in memory"
+              ],
+              [
+                "Subagent inherits the main constraints",
+                "State them in the Agent tool prompt"
+              ]
+            ]
+          },
+          {
+            "id": "6.2",
+            "title": "Prompt Engineering",
+            "tests": "fixing a failing prompt by placement, format or delimiting, not by louder wording.",
+            "rules": [
+              "Standing rules go in the system field or a mid-conversation system message.",
+              "`max_tokens` is a hard cap, not a length instruction.",
+              "Change one thing at a time against a fixed eval set."
+            ],
+            "traps": [
+              [
+                "Repeating or capitalising a rule that fades",
+                "Move it to the system surface"
+              ],
+              [
+                "Temperature for format, focus or caution",
+                "Fix it in the prompt; sampling params are rejected now"
+              ],
+              [
+                "Mid-sentence cut-off read as ignored length",
+                "`stop_reason` `max_tokens`: raise the cap, state length with an example"
+              ],
+              [
+                "Prefill as the format fix",
+                "Structured outputs plus a system instruction"
+              ],
+              [
+                "More examples always better; judging by a few outputs",
+                "Three consistent examples; test changes one at a time"
+              ]
+            ]
+          },
+          {
+            "id": "6.3",
+            "title": "Output Handling",
+            "tests": "the gap between well-formed output and correct output.",
+            "rules": [
+              "Structured outputs remove parse errors, not wrong values.",
+              "Check `stop_reason` before parsing, and treat refusal as its own outcome.",
+              "Retry with the specific validation errors attached, and cap attempts."
+            ],
+            "traps": [
+              [
+                "Drop validation after adopting structured outputs",
+                "Keep range, consistency and identity checks"
+              ],
+              [
+                "Empty last field blamed on schema or prompt",
+                "Check `stop_reason` for truncation first"
+              ],
+              [
+                "Refusal handled as empty success or HTTP retry",
+                "Branch on `stop_reason` `refusal`"
+              ],
+              [
+                "Same retry, or asking the call to check itself",
+                "Re-ask with the errors, verify ids against the source system"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 7,
+        "weight": 8.1,
+        "title": "Security and Safety",
+        "sub": "Controls the application enforces: injection defence, layered guardrails, hooks and credential hygiene.",
+        "lessons": [
+          {
+            "id": "7.1",
+            "title": "AI Application Security",
+            "tests": "answers that change the application's structure, never ones that rely on the model.",
+            "rules": [
+              "Treat retrieved content as untrusted, keep it apart from instructions, gate sensitive actions.",
+              "Direct and indirect injection need different mitigations.",
+              "Resolve tenant access at the tool from the caller's identity."
+            ],
+            "traps": [
+              [
+                "Bigger model, lower temperature or firmer wording",
+                "A control the application enforces"
+              ],
+              [
+                "Input-path fix for a payload in fetched content",
+                "Guard the tool surface and outbound path"
+              ],
+              [
+                "Fetch all tenants' rows, then filter the reply",
+                "Authorise at the tool so data never enters context"
+              ],
+              [
+                "'Do not reveal' instruction, or assuming zero retention",
+                "Screen outputs, keep secrets out of context, minimise and redact"
+              ]
+            ]
+          },
+          {
+            "id": "7.2",
+            "title": "Guardrails and Safe Deployment",
+            "tests": "layered guardrails, and spotting when a scenario falls in a high-risk area.",
+            "rules": [
+              "A guardrail blocks the action; a flag only reports.",
+              "If the check cannot run, hold the action.",
+              "High-risk areas need qualified human review and disclosure of AI use."
+            ],
+            "traps": [
+              [
+                "Output check that flags to a dashboard",
+                "Make the action depend on the verdict"
+              ],
+              [
+                "Proceed when the check is down, reconcile later",
+                "Queue the action and notify an owner"
+              ],
+              [
+                "Stronger classifier for a high-risk scenario",
+                "Qualified human review plus disclosure"
+              ],
+              [
+                "`canUseTool` rejection for least privilege",
+                "Bare-name deny rule that removes the tool"
+              ]
+            ]
+          },
+          {
+            "id": "7.3",
+            "title": "Claude Hooks",
+            "tests": "a deterministic pre-execution check stops a destructive action where a prompt cannot.",
+            "rules": [
+              "Prevention needs a PreToolUse hook.",
+              "Exit code 2 blocks; other non-zero codes do not.",
+              "A hook deny holds in every mode; a hook allow does not override deny rules."
+            ],
+            "traps": [
+              [
+                "PostToolUse audit hook to prevent an action",
+                "PreToolUse block"
+              ],
+              [
+                "Exit 1 counts as a block",
+                "Exit 2 on an event that can block"
+              ],
+              [
+                "Hook allow overrides a deny; path rules cover subprocesses",
+                "Deny still wins; use the sandbox for OS-level control"
+              ]
+            ]
+          },
+          {
+            "id": "7.4",
+            "title": "Identity, Secrets and Key Management",
+            "tests": "the right first step, and prevention versus attribution.",
+            "rules": [
+              "Exposed key: disable or rotate it first, then fix the design.",
+              "Authorise each action at the point of use, as the person the agent acts for.",
+              "One key per service in its own workspace gives attribution."
+            ],
+            "traps": [
+              [
+                "Build a backend and secrets manager while the key still works",
+                "Revoke or rotate the key first"
+              ],
+              [
+                "Expiry, shorter lifetime or rate limit fixes a leak",
+                "Disable or delete the key"
+              ],
+              [
+                "Session login covers later privileged actions",
+                "Authorise each action"
+              ],
+              [
+                "Throttling or alerting for unattributed spend",
+                "Per-service keys in separate workspaces"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "n": 8,
+        "weight": 10.6,
+        "title": "Tools and MCPs",
+        "sub": "Write tools the model can choose correctly, place capabilities on the right MCP primitive and pick the right extension mechanism.",
+        "lessons": [
+          {
+            "id": "8.1",
+            "title": "Tool Implementation",
+            "tests": "what a tool's name, description, schema and failure result should contain.",
+            "rules": [
+              "Confusable tools: each description names the other and says when not to use itself.",
+              "On failure return `is_error` true with what failed and what to try next.",
+              "Anthropic-executed tools cannot reach private hosts."
+            ],
+            "traps": [
+              [
+                "Lower temperature for tool choice",
+                "Rewrite both descriptions"
+              ],
+              [
+                "A third router tool for two confusable tools",
+                "Rewrite both descriptions"
+              ],
+              [
+                "Longer timeout or retries to stop invented figures",
+                "Error result that says what failed"
+              ],
+              [
+                "Anthropic-executed tool aimed at an internal service",
+                "Client tool or MCP server where it is reachable"
+              ]
+            ]
+          },
+          {
+            "id": "8.2",
+            "title": "MCP Server Development",
+            "tests": "what MCP adds, which primitive fits a capability and which transport fits the topology.",
+            "rules": [
+              "Tools are model-controlled, resources app-controlled, prompts user-invoked.",
+              "stdio for one local client; Streamable HTTP for shared remote use.",
+              "Reuse and separate ownership point to a shared server."
+            ],
+            "traps": [
+              [
+                "MCP connector carries prompts and resources, or local servers",
+                "Tools only, public HTTP server; use a client connection otherwise"
+              ],
+              [
+                "stdio for a shared service, HTTP for a local wrapper",
+                "Swap them"
+              ],
+              [
+                "Schema doc, dataset or template exposed as tools",
+                "Resources for data, prompts for templates"
+              ],
+              [
+                "'A custom tool could do it' for an ownership question",
+                "Shared MCP server for reuse and separate maintenance"
+              ]
+            ]
+          },
+          {
+            "id": "8.3",
+            "title": "Agentic Customisation",
+            "tests": "assigning each requirement to the right mechanism: built-in tool, custom tool, MCP server or Skill.",
+            "rules": [
+              "Skills give knowledge; tools give capability.",
+              "Built-in tools do not reach arbitrary internal APIs.",
+              "One mechanism for every requirement is the sign of a wrong option."
+            ],
+            "traps": [
+              [
+                "Platform fetch tool for an internal API",
+                "Custom tool or MCP server"
+              ],
+              [
+                "Skill documenting a private system to do the lookup",
+                "A tool that can reach the system"
+              ],
+              [
+                "'A custom tool could do it' when a second app needs it",
+                "MCP server for reuse"
+              ],
+              [
+                "Anthropic-provided means Anthropic-executed",
+                "Answer from capability; assume no location not stated"
+              ]
+            ]
+          }
+        ]
+      }
+    ],
+    "endNote": "Good luck on exam day. Read each scenario for the signal it gives, reject the invented names, and fix the cause rather than the symptom.",
+    "pairWith": "A CCDV-F practice question bank is on the way. Subscribers to BrainByte Weekly hear first when it's out."
+  }
+]

@@ -1,0 +1,26 @@
+{#- One Claude exam with everything for it: the free study guide and the
+    practice question pack (set `exam` from src/_data/exams.json before
+    including). Main-domain pages only: hub #exams, /guides/ and each guide.
+    Guide comes from bbLiveGuides, pack from brainbyte.practice. -#}
+{%- set epGuide = bbLiveGuides | findBy("slug", exam.guide) -%}
+{%- set epPack = (brainbyte.practice | findBy("exam", exam.packExam)) if exam.packExam else "" -%}
+{%- set epGuideUrl = '/guides/' + exam.guide + '/' -%}
+<article class="ep-card ep-hub">
+  <div class="ep-top">
+    <span class="ep-logo"><img src="/images/logos/claude.svg" alt="" width="26" height="26" loading="lazy" /></span>
+    <span class="ep-code">{{ exam.code }}</span>
+  </div>
+  <h3 class="ep-name">{{ exam.name }}</h3>
+  <p class="ep-facts">{{ exam.facts }}</p>
+  <p class="ep-blurb">{{ exam.blurb }}</p>
+  <ul class="ep-rows">
+    <li>
+      <span class="ep-row-label"><b>Study guide</b>{% if epGuide %}{{ epGuide.domains | sumLength("lessons") }} lessons · {{ epGuide.stats[2].n }} traps{% else %}Coming soon{% endif %}</span>
+      {% if epGuide %}<a class="ep-go" href="{{ epGuideUrl }}">Read free <span aria-hidden="true">→</span></a>{% endif %}
+    </li>
+    <li>
+      <span class="ep-row-label"><b>Practice questions</b>{% if epPack and epPack.status == 'live' %}{{ epPack.count }} questions · PDF{% else %}Coming soon{% endif %}</span>
+      {% if epPack and epPack.status == 'live' %}<a class="ep-go" href="{{ epPack.url }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Get free <span aria-hidden="true">↗</span></a>{% else %}<span class="ep-soon">Soon</span>{% endif %}
+    </li>
+  </ul>
+</article>

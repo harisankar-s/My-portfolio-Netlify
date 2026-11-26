@@ -1,0 +1,50 @@
+---
+layout: hub-page.njk
+permalink: /guides/index.html
+eleventyExcludeFromCollections: true
+title: "Exam prep and guides"
+pageTitle: "Free Claude Exam Guides and Practice Questions | Harisankar Sivankutty"
+description: "Free prep for the Claude certifications: study guides and practice question banks for CCAR-F, CCAR-P and CCDV-F, with Google Cloud, data engineering and Databricks guides on the way."
+---
+{#- Exam prep library, after charliehills.ai/free-resources, grouped by exam:
+    each Claude exam (exams.json) shows its free study guide next to its
+    practice pack; then the guides still being written (brainbyte.tracks
+    without a live guide) and a signup. -#}
+{%- set liveTrackSlugs = [] -%}
+{%- for g in bbLiveGuides %}{% set liveTrackSlugs = (liveTrackSlugs.push(g.track), liveTrackSlugs) %}{% endfor -%}
+
+<header class="gl-head" id="hero">
+  <p class="hub-label">Free · {{ site.newsletter.name }}</p>
+  <h1 class="hub-h2">Exam prep and <span class="hub-accent">guides</span></h1>
+  <p class="hub-sub">Everything for each Claude certification in one place: a study guide that shows how the exam thinks, and a practice question bank to test yourself. One free sign-up opens every guide.</p>
+</header>
+
+<div class="gl-body">
+  <div class="hub-shelf">
+    <div class="hub-shelf-head"><p class="hub-label">Claude certifications</p></div>
+    <div class="ep-grid">
+      {%- for exam in exams %}{% include "exam-prep-card.njk" %}{% endfor %}
+    </div>
+  </div>
+
+  <div class="hub-practice hub-practice-under">
+    <div class="hub-glass hub-light hub-next" id="next">
+      <span class="hub-label">More guides on the way</span>
+      <ul class="hub-next-list">
+        {%- for t in brainbyte.tracks %}{% if t.slug not in liveTrackSlugs %}
+        <li>
+          <span class="hub-course-logo"><img src="{{ t.logo }}" alt="" width="22" height="22" loading="lazy" /></span>
+          <span><b>{{ t.title }}</b><small>{{ t.level }} · {{ t.modules.length }} modules</small></span>
+        </li>
+        {%- endif %}{% endfor %}
+      </ul>
+    </div>
+    <div class="hub-glass hub-light hub-next" id="join">
+      <span class="hub-label">Hear first</span>
+      <p class="hub-tile-text">New guides and practice packs go to {{ site.newsletter.name }} subscribers first. One practical AI and data engineering lesson a week, free.</p>
+      {% set nfId = 'guides' %}{% set nfClass = 'bg-gate-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% include "newsletter-form.njk" %}
+      <p class="hub-meta">Unsubscribe any time.</p>
+    </div>
+  </div>
+  <p class="hub-meta" style="margin-top:24px">Independent study material, not affiliated with or endorsed by Anthropic. Contains no actual exam questions.</p>
+</div>

@@ -1,0 +1,19 @@
+{#- Main-domain nav (hub, guides). Set hubNavBase before including: "" on the
+    hub itself (in-page anchors), homePath elsewhere so anchors jump back to
+    the hub. Exam prep goes to the /guides/ page from anywhere but the hub. -#}
+{%- set nl = site.newsletter -%}
+<nav class="pf-nav on-hero" id="nav">
+  <a href="{{ homePath }}" class="pf-logo">
+    <img src="/images/profile/hari_new.png" alt="" width="32" height="32" />
+    <span>{{ profile.name }}</span>
+  </a>
+  <div class="pf-nav-right">
+    <ul class="pf-nav-links">
+      <li><a href="{{ '#exams' if not hubNavBase else '/guides/' }}">Exam prep</a></li>
+      <li><a href="{{ hubNavBase }}#field">Articles</a></li>
+      <li><a href="{{ hubNavBase }}#kits">Starter kits</a></li>
+      <li><a href="/about/">About</a></li>
+    </ul>
+    <a href="{% if nl.username %}https://{{ nl.username }}.substack.com/{% else %}{{ hubNavBase }}#join{% endif %}" class="pf-btn pf-btn-primary pf-btn-sm pf-nav-cta hub-nav-sub"{% if nl.username %} target="_blank" rel="noopener"{% endif %}>Subscribe <span class="hub-arrow" aria-hidden="true">→</span></a>
+  </div>
+</nav>

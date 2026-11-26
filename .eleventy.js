@@ -6,6 +6,8 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/source");
   eleventyConfig.addPassthroughCopy("src/theme");
   eleventyConfig.addPassthroughCopy("src/assets");
+  // Downloadable guide PDFs, served on the main domain at /files/{name}
+  eleventyConfig.addPassthroughCopy("src/files");
 
   // Blog posts collection — sorted newest first
   eleventyConfig.addCollection("posts", function (collectionApi) {
@@ -23,6 +25,19 @@ module.exports = function (eleventyConfig) {
   // Filter: format date as "Jun 2026"
   eleventyConfig.addFilter("postDate", (dateObj) => {
     return toDateTime(dateObj).toFormat("LLL yyyy");
+  });
+
+  // Filter: long date, e.g. "26 November 2026" (guide pages)
+  eleventyConfig.addFilter("longDate", (dateObj) => {
+    return toDateTime(dateObj).toFormat("d LLLL yyyy");
+  });
+
+  // Filter: escape text, then turn `backticks` into <code> (guide data in
+  // src/_data/guides.json writes code terms in backticks). Output with | safe.
+  eleventyConfig.addFilter("ticks", (str) => {
+    const esc = String(str == null ? "" : str)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    return esc.replace(/`([^`]+)`/g, "<code>$1</code>");
   });
 
   // Filter: RFC 3339 date for RSS/Atom feeds and sitemaps
@@ -84,26 +99,12 @@ module.exports = function (eleventyConfig) {
     return m ? m[1] : "";
   });
 
-  // ---- BrainByte (brainbyte.* subdomain) -------------------------------
-  // BrainByte pages are built under /brainbyte/ and the domain-router edge
-  // function rewrites the brainbyte host's "/x" to "/brainbyte/x". So the
-  // public path drops the prefix. Under `eleventy --serve` there is no edge
-  // function, so internal links keep the prefix there to stay clickable
-  // locally. Set BRAINBYTE_BASE to force either one.
-  const BB_PREFIX = "/brainbyte";
-  const bbBase =
-    process.env.BRAINBYTE_BASE !== undefined
-      ? process.env.BRAINBYTE_BASE
-      : process.env.ELEVENTY_RUN_MODE === "build"
-        ? ""
-        : BB_PREFIX;
-
-  // Filter: internal BrainByte link, e.g. {{ "/tracks/gcp-pde/" | bb }}
-  eleventyConfig.addFilter("bb", (path) => `${bbBase}${path || "/"}`);
-
-  // Filter: a built BrainByte page.url → its public path on the subdomain
-  eleventyConfig.addFilter("bbPublicPath", (url) =>
-    url && url.startsWith(BB_PREFIX) ? url.slice(BB_PREFIX.length) || "/" : url
+  // The apex hub (src/home.njk) is built at /home/ and the domain router
+  // serves it at the apex root. Under `eleventy --serve` there is no router,
+  // so "Home" links point at /home/ locally.
+  eleventyConfig.addGlobalData(
+    "homePath",
+    process.env.ELEVENTY_RUN_MODE === "build" ? "/" : "/home/"
   );
 
   // Filter: pick posts by fileSlug, keeping the order of the slug list

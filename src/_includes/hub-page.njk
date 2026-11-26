@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  {#- Layout for main-domain pages other than the hub itself (the /guides/
+      library and each guide): same sky, nav, footer and tokens as
+      src/home.njk. Pages set title, pageTitle (full tab title) and
+      description. Guide styles: /assets/guides.css; gate: /assets/guides.js. -#}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="{{ description }}" />
+  <meta name="author" content="{{ site.author }}" />
+  <meta property="og:title" content="{{ pageTitle or (title + ' | ' + site.author) }}" />
+  <meta property="og:description" content="{{ description }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="{{ site.portfolioUrl }}{{ page.url }}" />
+  <title>{{ pageTitle or (title + ' | ' + site.author) }}</title>
+  <link rel="canonical" href="{{ site.portfolioUrl }}{{ page.url }}" />
+  <link rel="icon" href="/images/favicon.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/assets/portfolio.css" />
+  <link rel="stylesheet" href="/assets/guides.css" />
+</head>
+<body class="hub hub-page">
+  <div class="pf-progress" id="progress" aria-hidden="true"></div>
+  <div class="hub-sky" aria-hidden="true">
+    <canvas class="sky-canvas" data-galaxy></canvas>
+    <canvas class="sky-canvas" data-sky></canvas>
+    <div class="sky-shade"></div>
+  </div>
+  {% set hubNavBase = homePath %}{% include "hub-nav.njk" %}
+  <main id="top">
+    {{ content | safe }}
+  </main>
+  {% include "hub-footer.njk" %}
+  <script src="/assets/galaxy.js" defer></script>
+  <script src="/assets/space.js" defer></script>
+  <script src="/assets/guides.js" defer></script>
+  <link rel="stylesheet" href="/assets/ask-hari-widget.css">
+  <script src="/assets/ask-hari-widget.js" defer></script>
+</body>
+</html>

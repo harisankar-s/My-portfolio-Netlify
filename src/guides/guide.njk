@@ -1,0 +1,166 @@
+---
+layout: hub-page.njk
+pagination:
+  data: bbLiveGuides
+  size: 1
+  alias: guide
+permalink: "/guides/{{ guide.slug }}/index.html"
+eleventyExcludeFromCollections: true
+eleventyComputed:
+  title: "{{ guide.title }}"
+  pageTitle: "{{ guide.seoTitle }}"
+  description: "{{ guide.description }}"
+---
+{#- A free guide, after charliehills.ai/guides/*: the pitch and "What's inside"
+    up top, the intro and first lesson open to everyone, then a BrainByte
+    Weekly signup that unlocks the rest on the page (and the PDF). The gate is
+    a soft one: everything is in the HTML (readers without JS and search
+    engines see it all); /assets/guides.js hides the locked part until the form is
+    sent, and remembers it in localStorage for every guide. Content lives in
+    src/_data/guides.json. -#}
+{%- set lessonCount = guide.domains | sumLength("lessons") -%}
+{%- set pack = brainbyte.practice | findBy("exam", guide.packExam) -%}
+{%- set maxWeight = 0 -%}{%- for d in guide.domains %}{% if d.weight > maxWeight %}{% set maxWeight = d.weight %}{% endif %}{% endfor -%}
+{%- set pdfUrl = '/files/' + guide.pdf -%}
+
+<div class="bg-guide" data-bb-guide>
+
+  <!-- 1. HEADER: pitch left, what's inside right -->
+  <header class="bg-head" id="hero">
+    <div class="bg-head-grid">
+      <div class="bg-head-text">
+        <a class="bg-back" href="/guides/">← All exam prep</a>
+        <p class="bg-kicker">{{ guide.kicker }}</p>
+        <h1 class="bg-title">{{ guide.title }}</h1>
+        <p class="bg-pitch">{{ guide.pitch }}</p>
+        <div class="bg-byline">
+          <img src="/images/profile/hari_new.png" alt="" width="40" height="40" />
+          <span><b>{{ site.author }}</b><br />Added {{ guide.added | longDate }} · {{ guide.edition }} · Free</span>
+        </div>
+        <ul class="bg-stats">
+          {%- for s in guide.stats %}<li><strong>{{ s.n }}</strong> {{ s.label }}</li>{% endfor %}
+        </ul>
+        <div class="bg-head-ctas">
+          <a class="pf-btn pf-btn-primary" href="#unlock" data-bb-locked-only>Read the full guide, free</a>
+          <a class="pf-btn pf-btn-primary" href="#domain-1" data-bb-unlocked-only hidden>Start reading</a>
+          <a class="pf-btn pf-btn-ghost" href="{{ pdfUrl }}" download data-bb-unlocked-only hidden>Download the PDF ({{ guide.pdfPages }} pages)</a>
+        </div>
+        {% if pack and pack.status == 'live' %}<p class="bg-pair">Pair it with the <a href="{{ pack.url }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}free {{ pack.count }}-question {{ guide.exam }} practice pack ↗</a></p>{% endif %}
+      </div>
+
+      <aside class="bg-inside" aria-label="What's inside">
+        <p class="bg-small">What's inside</p>
+        <ol class="bg-inside-list">
+          <li><a href="#how-to-use"><span class="bg-inside-num">0</span><span class="bg-inside-name">How to use these tips<small>{{ guide.insideIntro }}</small></span></a></li>
+          {%- for d in guide.domains %}
+          <li><a href="#domain-{{ d.n }}">
+            <span class="bg-inside-num">{{ d.n }}</span>
+            <span class="bg-inside-name">{{ d.title }}<small>{{ d.lessons.length }} lessons · {{ d.weight }}% of the exam</small>
+              <span class="bg-bar" aria-hidden="true"><i style="width: {{ (d.weight / maxWeight * 100) | round }}%"></i></span></span>
+          </a></li>
+          {%- endfor %}
+        </ol>
+      </aside>
+    </div>
+  </header>
+
+  <div class="bg-wrap"><div class="bg-paper">
+  <!-- 2. FREE PART: how to use + exam facts + lesson 1.1 -->
+  <section>
+    <div class="bg-body">
+      <h2 class="bg-h2" id="how-to-use">How to use these tips</h2>
+      <p class="bg-p">{{ guide.intro.lead }}</p>
+      <div class="bg-callout">
+        {%- for part in guide.intro.parts %}<p><b>{{ part[0] }}</b> {{ part[1] }}</p>{% endfor %}
+      </div>
+      <p class="bg-p"><b>Work through each lesson in three passes:</b></p>
+      <ol class="bg-passes">
+        {%- for ps in guide.intro.passes %}<li><span><b>{{ ps[0] }}</b> {{ ps[1] }}</span></li>{% endfor %}
+      </ol>
+      <p class="bg-p bg-note">{{ guide.intro.versionNote }}</p>
+
+      <h3 class="bg-h3">Exam facts</h3>
+      {% if guide.intro.factsLead %}<p class="bg-p bg-muted">{{ guide.intro.factsLead }}</p>{% endif %}
+      <ul class="bg-facts">
+        {%- for f in guide.intro.facts %}<li><strong>{{ f.n }}</strong><span>{{ f.label }}</span>{% if f.sub %}<small>{{ f.sub }}</small>{% endif %}</li>{% endfor %}
+      </ul>
+
+      {%- if guide.intro.metaRules %}
+      <h3 class="bg-h3" id="meta-rules">{{ guide.intro.metaTitle }}</h3>
+      <p class="bg-p bg-muted">{{ guide.intro.metaLead }}</p>
+      <ol class="bg-meta-rules">
+        {%- for m in guide.intro.metaRules %}<li><b>{{ m[0] }}</b><span>{{ m[1] | ticks | safe }}</span></li>{% endfor %}
+      </ol>
+      {%- else %}
+      <h3 class="bg-h3">Rules that come up again and again</h3>
+      <ul class="bg-rules">
+        {%- for r in guide.intro.recurring %}<li>{{ r | ticks | safe }}</li>{% endfor %}
+      </ul>
+      {%- endif %}
+      <p class="bg-fine">{{ guide.intro.disclaimer }}</p>
+
+      <div class="bg-toolbar">
+        <button type="button" class="bg-cover-btn" data-bb-cover aria-pressed="false">Cover the right answers</button>
+        <span class="bg-fine">Hides every "Right" column so you can answer first. Tap an answer to reveal it.</span>
+      </div>
+
+      {%- set d1 = guide.domains[0] %}
+      <div class="bg-domain" id="domain-{{ d1.n }}">
+        <p class="bg-domain-tag">Domain {{ d1.n }} · {{ d1.weight }}% of the exam</p>
+        <h2 class="bg-h2">{{ d1.title }}</h2>
+        <p class="bg-p bg-muted">{{ d1.sub }}</p>
+      </div>
+      {%- set lesson = d1.lessons[0] %}{% include "bb-lesson.njk" %}
+
+      <!-- 3. THE GATE -->
+      <div class="bg-gate" id="unlock" data-bb-locked-only>
+        <p class="bg-gate-lead">That's the first lesson. The other {{ lessonCount - 1 }} are free too.</p>
+        <div class="bg-gate-card">
+          <p class="bg-small">Free · one sign-up opens every guide</p>
+          <h2 class="bg-gate-title">Get the full {{ guide.title }}, free</h2>
+          <p class="bg-p">The guide comes with my free weekly newsletter, {{ site.newsletter.name }}: one practical AI and data engineering lesson a week. Enter your email and the guide opens right here, with the PDF to keep.</p>
+          {% set nfId = 'gate-' + guide.slug %}{% set nfClass = 'bg-gate-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% set nfGate = true %}{% set nfBtnText = 'Open the guide' %}{% include "newsletter-form.njk" %}{% set nfGate = false %}{% set nfBtnText = '' %}
+          <p class="bg-fine">Unsubscribe any time. Substack opens in a new tab to confirm. <button type="button" class="bg-linkbtn" data-bb-unlock>Already subscribed? Open the guide</button></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. LOCKED PART: every other lesson -->
+  <section class="bg-locked" data-bb-locked aria-label="The rest of the guide">
+    <div class="bg-body">
+      {%- for lesson in d1.lessons %}{% if not loop.first %}{% include "bb-lesson.njk" %}{% endif %}{% endfor %}
+      {%- for d in guide.domains %}{% if not loop.first %}
+      <div class="bg-domain" id="domain-{{ d.n }}">
+        <p class="bg-domain-tag">Domain {{ d.n }} · {{ d.weight }}% of the exam</p>
+        <h2 class="bg-h2">{{ d.title }}</h2>
+        <p class="bg-p bg-muted">{{ d.sub }}</p>
+      </div>
+      {%- for lesson in d.lessons %}{% include "bb-lesson.njk" %}{% endfor %}
+      {%- endif %}{% endfor %}
+
+      <div class="bg-end">
+        <h2 class="bg-h2">Thank you for studying with this guide.</h2>
+        {% if guide.endNote and guide.endNote != "Thank you for studying with this guide." %}<p class="bg-p">{{ guide.endNote }}</p>{% endif %}
+        <p class="bg-p">{{ guide.pairWith }}</p>
+        <div class="bg-head-ctas">
+          <a class="pf-btn pf-btn-primary" href="{{ pdfUrl }}" download>Download the PDF ({{ guide.pdfPages }} pages)</a>
+          {% if pack %}<a class="pf-btn bg-btn-light" href="{{ pack.url }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Get the {{ pack.count }}-question {{ guide.exam }} pack ↗</a>{% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+  </div></div>
+
+  <!-- 5. MORE CLAUDE EXAM PREP: the other exams, guide + practice -->
+  <section class="bg-more">
+    <div class="bg-more-inner">
+      <p class="hub-label">More free exam prep</p>
+      <h2 class="hub-h2">The other <span class="hub-accent">Claude</span> exams</h2>
+      <div class="ep-grid">
+        {%- for exam in exams %}{% if exam.guide != guide.slug %}{% include "exam-prep-card.njk" %}{% endif %}{% endfor %}
+      </div>
+      <p class="hub-sub" style="margin-top:24px">Google Cloud, data engineering and Databricks guides are on the way. <a class="hub-textlink" href="/guides/">All exam prep <span aria-hidden="true">→</span></a></p>
+    </div>
+  </section>
+</div>

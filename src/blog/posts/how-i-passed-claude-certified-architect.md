@@ -7,6 +7,7 @@ tags:
   - Claude
   - Certification
 excerpt: "I passed Claude Certified Architect Foundations and Professional in about six weeks of part-time study, and scored lower on the one that looked easier. Here's what each exam covers, the resources I used, my plan, and the mistake to avoid."
+cover: "/images/posts/how-i-passed-claude-certified-architect/cover.svg"
 ---
 
 # How I Passed Both Claude Certified Architect Exams (and Why the Easier One Scored Lower)
@@ -35,7 +36,7 @@ Since then, a lot of people have asked me how I prepared. So here's the short an
     <div class="promo-title">Practise with my Claude exam questions</div>
     <p class="promo-text">160 questions for Foundations and 125 for Professional, grouped by exam domain, with an explanation for every answer.</p>
   </div>
-  <a class="promo-btn" href="{{ site.brainbyteUrl }}/#claude">Get the free packs</a>
+  <a class="promo-btn" href="{{ site.portfolioUrl }}/guides/">Get the free packs</a>
 </aside>
 
 The rest of this post covers what the two exams are, what I used, how I split the time, where I went wrong, and what kind of thinking the questions reward.
@@ -175,6 +176,6 @@ Neither exam is a memory test. The question is almost always "here's a situation
 
 While studying, I wrote my own scenario questions to test myself, and I've turned them into two free practice packs on BrainByte: 160 questions for Foundations and 125 for Professional, grouped by exam domain with an explanation for each answer.
 
-[Get the free Claude practice packs →]({{ site.brainbyteUrl }}/#claude)
+[Get the free Claude practice packs →]({{ site.portfolioUrl }}/guides/)
 
 If you're preparing and have a question about either exam, ask in the comments on LinkedIn or try AskHari.ai on this page. Good luck.

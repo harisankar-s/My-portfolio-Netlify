@@ -10,7 +10,7 @@
   --cw-fg-dim: var(--fg-dim, #9ca3af);
   --cw-surface: var(--surface, #f3f4f6);
   --cw-bg-elevated: var(--bg-elevated, #f9fafb);
-  --cw-pop: var(--pop, #f59e0b);
+  --cw-pop: var(--pop, #0071E3);
   --cw-font-sans: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
   --cw-font-mono: var(--font-mono, ui-monospace, monospace);
   font-family: var(--cw-font-sans);
@@ -72,7 +72,7 @@
 #comments-widget .cw-upvote-btn.cw-upvote-active {
   border-color: var(--cw-pop);
   background: var(--cw-pop);
-  color: #111827;
+  color: #FFFFFF;
 }
 
 #comments-widget .cw-upvote-count {

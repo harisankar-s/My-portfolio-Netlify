@@ -34,7 +34,7 @@
 }
 .askwriting-title-pop {
   position: relative;
-  background-image: linear-gradient(to top, rgba(245, 158, 11, 0.32) 38%, transparent 38%);
+  background-image: linear-gradient(to top, rgba(0, 113, 227, 0.32) 38%, transparent 38%);
   padding: 0 2px;
 }
 .askwriting-blurb {
@@ -70,7 +70,7 @@
 .askwriting-chip:hover {
   border-color: var(--brand, var(--pop));
   color: var(--fg);
-  background: rgba(245, 158, 11, 0.08);
+  background: rgba(0, 113, 227, 0.08);
   transform: translateY(-1px);
 }
 .askwriting-chip:hover .askwriting-chip-arrow {
@@ -89,7 +89,7 @@
 }
 #askwriting-panel:focus-within {
   border-color: var(--brand, var(--pop));
-  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+  box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.15);
 }
 
 .askwriting-panelhead {
@@ -250,7 +250,7 @@
 #askwriting-send {
   border: none;
   background: var(--pop);
-  color: #111827;
+  color: #FFFFFF;
   border-radius: 10px;
   padding: 0 20px;
   font-weight: 600;

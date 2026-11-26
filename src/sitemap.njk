@@ -10,15 +10,20 @@ eleventyExcludeFromCollections: true
   </url>
   <url>
     <loc>{{ site.portfolioUrl }}/</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>{{ site.portfolioUrl }}/about/</loc>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>{{ site.brainbyteUrl }}/</loc>
+    <loc>{{ site.portfolioUrl }}/guides/</loc>
     <changefreq>weekly</changefreq>
   </url>
-  {% for t in bbLiveTracks %}
+  {% for g in bbLiveGuides %}
   <url>
-    <loc>{{ site.brainbyteUrl }}/tracks/{{ t.slug }}/</loc>
+    <loc>{{ site.portfolioUrl }}/guides/{{ g.slug }}/</loc>
+    <lastmod>{{ g.added | dateToRfc3339 }}</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   {% endfor %}
