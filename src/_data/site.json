@@ -7,7 +7,10 @@
   "topmateUrl": "https://topmate.io/harisankar_sivankutty",
   "youtubeUrl": "",
   "newsletter": {
-    "name": "BrainByte Weekly",
+    "name": "BrainByte",
+    "tagline": "Practical AI you can actually use",
+    "cadence": "every few days",
+    "topics": "AI, data engineering, exam prep and more",
     "provider": "substack",
     "username": "harisankarsivankutty"
   }

@@ -1,5 +1,7 @@
 const fs = require("fs");
 const path = require("path");
+const site = require("../../src/_data/site.json");
+const { fetchEditions } = require("../lib/substack-feed.js");
 
 const POSTS_DIR = path.join(__dirname, "..", "..", "src", "blog", "posts");
 
@@ -10,18 +12,22 @@ const MAX_POST_CHARS = 3000;
 
 // Trench AI only ever calls free OpenRouter models — it must never
 // spend Anthropic credits, unlike the AskHari.ai widget which is
-// Anthropic-first. Keep every entry here pinned to a ":free" OpenRouter
-// model. Tried in order; a 429/5xx from one (shared free-tier pools get
-// rate-limited upstream fairly often) falls through to the next instead of
-// failing the whole request.
-const OPENROUTER_MODELS = process.env.OPENROUTER_MODEL
-  ? [process.env.OPENROUTER_MODEL]
-  : [
-      "google/gemma-4-31b-it:free",
-      "z-ai/glm-5.2:free",
-      "minimax/minimax-m3:free",
-      "google/gemma-4-26b-a4b-it:free",
-    ];
+// Anthropic-first. Keep every entry here free (":free" or the
+// "openrouter/free" router). Tried in order; a 404/429/5xx from one falls
+// through to the next instead of failing the whole request.
+//
+// Free slugs get retired without notice (glm-5.2 and minimax-m3 vanished in
+// Nov 2026 and took Trench AI down), so the list ends with
+// "openrouter/free", OpenRouter's own router that picks whichever free model
+// is currently up. Check https://openrouter.ai/api/v1/models for live slugs.
+// OPENROUTER_MODEL, when set, is tried first rather than replacing the list.
+const OPENROUTER_MODELS = [
+  ...(process.env.OPENROUTER_MODEL ? [process.env.OPENROUTER_MODEL] : []),
+  "google/gemma-4-31b-it:free",
+  "nvidia/nemotron-3.5-super-vl:free",
+  "google/gemma-4-26b-a4b-it:free",
+  "openrouter/free",
+].filter((m, i, all) => all.indexOf(m) === i);
 
 // Common words excluded from relevance scoring so they don't dilute matches
 // against real keywords in the question.
@@ -33,9 +39,10 @@ const STOPWORDS = new Set([
   "articles", "blog", "write", "written", "writing",
 ]);
 
-// Posts change independently of deploys, so this is read fresh per cold
-// start and cached for the lifetime of the warm function container rather
-// than baked in at build time.
+// Blog posts are read once per cold start and cached for the life of the
+// warm container. Newsletter editions come from the Substack feed at runtime
+// (cached 10 minutes in substack-feed.js), so a new edition is searchable
+// without a redeploy.
 let cachedPosts = null;
 
 function tokenize(text) {
@@ -77,13 +84,21 @@ function parsePost(raw, slug) {
   const tags = parseTagsBlock(frontmatter);
   const excerpt = excerptMatch ? excerptMatch[1] : "";
 
-  return {
+  return indexEntry({
     slug,
+    url: `/blog/${slug}/`,
     title,
     date: dateMatch ? dateMatch[1] : "",
     tags,
     excerpt,
     body,
+  });
+}
+
+function indexEntry(entry) {
+  const { title, tags, excerpt, body } = entry;
+  return {
+    ...entry,
     _titleFreq: buildTermFreq(tokenize(title)),
     _tagFreq: buildTermFreq(tags.flatMap(tokenize)),
     _excerptFreq: buildTermFreq(tokenize(excerpt)),
@@ -102,9 +117,22 @@ function loadPosts() {
     .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 }
 
-function getPosts() {
+function editionToEntry(e) {
+  return indexEntry({
+    slug: e.slug,
+    url: e.url,
+    title: e.title,
+    date: e.date.slice(0, 10),
+    tags: [site.newsletter.name],
+    excerpt: e.subtitle,
+    body: e.text,
+  });
+}
+
+async function getPosts() {
   if (!cachedPosts) cachedPosts = loadPosts();
-  return cachedPosts;
+  const editions = (await fetchEditions(site.newsletter && site.newsletter.username)).map(editionToEntry);
+  return [...editions, ...cachedPosts].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 }
 
 function scorePost(queryTerms, post) {
@@ -139,7 +167,7 @@ function buildIndexText(posts) {
   return posts
     .map((p) => {
       const tagsPart = p.tags.length ? `, tags: ${p.tags.join(", ")}` : "";
-      return `- "${p.title}" (${p.date}${tagsPart}) — /blog/${p.slug}/\n  ${p.excerpt}`;
+      return `- "${p.title}" (${p.date}${tagsPart}) — ${p.url}\n  ${p.excerpt}`;
     })
     .join("\n");
 }
@@ -147,14 +175,14 @@ function buildIndexText(posts) {
 function buildSystemPrompt(posts, selectedPosts) {
   const index = buildIndexText(posts);
   const articles = selectedPosts
-    .map((p) => `### "${p.title}" (/blog/${p.slug}/)\n${p.body.slice(0, MAX_POST_CHARS)}`)
+    .map((p) => `### "${p.title}" (${p.url})\n${p.body.slice(0, MAX_POST_CHARS)}`)
     .join("\n\n---\n\n");
 
-  return `You are "Trench AI", an assistant scoped only to Harisankar "Hari" Sivankutty's blog posts on data engineering, GenAI, and cloud architecture.
+  return `You are "Trench AI", an assistant scoped only to Harisankar "Hari" Sivankutty's writing on data engineering, GenAI, and cloud architecture: his blog posts and his newsletter, ${site.newsletter.name} (entries tagged "${site.newsletter.name}").
 
-Answer ONLY using the article content and index provided below. If Hari's writing doesn't cover something, say so plainly rather than guessing or using outside knowledge. When you reference a post, name it and link it in markdown like [Post Title](/blog/slug/) so the reader can open it. Keep answers concise and conversational, not a bulleted essay.
+Answer ONLY using the article content and index provided below. If Hari's writing doesn't cover something, say so plainly rather than guessing or using outside knowledge. When you reference a post or edition, name it and link it in markdown with the exact URL from the index, like [Post Title](/blog/slug/) or [Edition Title](https://${site.newsletter.username}.substack.com/p/slug), so the reader can open it. Keep answers concise and conversational, not a bulleted essay.
 
-Full index of all posts (title, date, tags, one-line excerpt):
+Full index of all posts and newsletter editions (title, date, tags, one-line excerpt):
 ${index}
 
 Full text of the posts most relevant to this question:
@@ -169,7 +197,14 @@ function sanitizeHistory(history) {
     .map((turn) => ({ role: turn.role, content: turn.content.slice(0, MAX_MESSAGE_LENGTH) }));
 }
 
-async function callOpenRouterModel(model, systemPrompt, messages) {
+// Some free providers (Gemma via Google AI Studio) reject a "system" role
+// with a 400. Those get the instructions folded into the first user turn.
+function inlineSystemPrompt(systemPrompt, messages) {
+  const [first, ...rest] = messages;
+  return [{ role: "user", content: `${systemPrompt}\n\n---\n\n${first.content}` }, ...rest];
+}
+
+async function callOpenRouterModel(model, systemPrompt, messages, inlineSystem = false) {
   const apiKey = process.env.OPENROUTER_API_KEY;
   if (!apiKey) throw new Error("OPENROUTER_API_KEY not configured");
 
@@ -184,7 +219,7 @@ async function callOpenRouterModel(model, systemPrompt, messages) {
     body: JSON.stringify({
       model,
       max_tokens: 700,
-      messages: [{ role: "system", content: systemPrompt }, ...messages],
+      messages: inlineSystem ? inlineSystemPrompt(systemPrompt, messages) : [{ role: "system", content: systemPrompt }, ...messages],
     }),
   });
 
@@ -201,20 +236,25 @@ async function callOpenRouterModel(model, systemPrompt, messages) {
   return reply.trim();
 }
 
-// A missing key or a malformed request won't be fixed by trying another
-// model, so those fail fast. But 404 here means OpenRouter doesn't
-// recognize *that specific* model slug (e.g. a free tier was retired) —
-// that's a per-model problem, not a per-request one, so it's retryable
-// against the next model in the list same as 429/5xx.
+// A bad key (401), no credit (402) or a forbidden request (403) won't be
+// fixed by trying another model, so those fail fast. 400/404/429/5xx are
+// per-model problems (a provider rejecting the request shape, a retired
+// slug, a rate-limited free pool), so they move on to the next model.
 function isRetryableOpenRouterError(err) {
-  return !err.status || err.status === 404 || err.status === 429 || err.status >= 500;
+  return !err.status || ![401, 402, 403].includes(err.status);
 }
 
 async function callOpenRouter(systemPrompt, messages) {
   let lastError;
   for (const model of OPENROUTER_MODELS) {
     try {
-      const reply = await callOpenRouterModel(model, systemPrompt, messages);
+      let reply;
+      try {
+        reply = await callOpenRouterModel(model, systemPrompt, messages);
+      } catch (err) {
+        if (err.status !== 400) throw err;
+        reply = await callOpenRouterModel(model, systemPrompt, messages, true);
+      }
       return { reply, model };
     } catch (err) {
       lastError = err;
@@ -245,7 +285,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: JSON.stringify({ error: `message must be under ${MAX_MESSAGE_LENGTH} characters` }) };
   }
 
-  const posts = getPosts();
+  const posts = await getPosts();
   if (posts.length === 0) {
     return { statusCode: 502, body: JSON.stringify({ error: "No writing is indexed yet." }) };
   }
@@ -259,13 +299,21 @@ exports.handler = async (event) => {
     const start = Date.now();
     const { reply, model } = await callOpenRouter(systemPrompt, messages);
     const latencyMs = Date.now() - start;
-    const sources = selected.map((p) => ({ title: p.title, slug: p.slug, url: `/blog/${p.slug}/` }));
+    const sources = selected.map((p) => ({ title: p.title, slug: p.slug, url: p.url }));
     return { statusCode: 200, body: JSON.stringify({ reply, provider: "openrouter", model, latencyMs, sources }) };
   } catch (openRouterError) {
     console.error("Trench AI: OpenRouter failed", openRouterError);
+    // `code` is only the upstream HTTP status (no message body, no key), so a
+    // failing deploy can be diagnosed from the browser's network tab:
+    // 401 = bad OPENROUTER_API_KEY, 402 = account out of credit, 404 on every
+    // model = slugs retired or the account's privacy settings block free
+    // models, 429 = free-tier rate limit.
     return {
       statusCode: 502,
-      body: JSON.stringify({ error: "Trench AI is temporarily unavailable. Please try again shortly." }),
+      body: JSON.stringify({
+        error: "Trench AI is temporarily unavailable. Please try again shortly.",
+        code: openRouterError.status ? `openrouter_${openRouterError.status}` : "openrouter_unreachable",
+      }),
     };
   }
 };

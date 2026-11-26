@@ -4,7 +4,7 @@ eleventyExcludeFromCollections: true
 ---
 {#-
   Apex hub ("front door"), served at harisankarsivankutty.in/ by the domain
-  router (built at /home/). Its job is to grow BrainByte Weekly (the
+  router (built at /home/). Its job is to grow BrainByte (the
   newsletter, on Substack) and BrainByte (practice packs, starter kits);
   Hari's own profile stays short here and lives in full at /about/.
   Calm, editorial dark look (Space Grotesk headings, Inter body, JetBrains
@@ -22,29 +22,19 @@ eleventyExcludeFromCollections: true
 {%- set liveKits = 0 -%}{%- for k in brainbyte.kits -%}{%- if k.status == "live" -%}{%- set liveKits = liveKits + 1 -%}{%- endif -%}{%- endfor -%}
 {%- set nl = site.newsletter -%}
 {%- set byte = brainbyte.bytes[0] -%}
-{#- glossy "3D" icon tiles (.ico3d): one glyph per name -#}
-{%- macro ico(name) -%}
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-{%- if name == "mail" %}<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M4 7l8 6 8-6"/>
-{%- elif name == "course" %}<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/>
-{%- elif name == "check" %}<path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6l7-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>
-{%- elif name == "db" %}<ellipse cx="12" cy="5.5" rx="7.5" ry="2.8"/><path d="M4.5 5.5v6.2c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8V5.5"/><path d="M4.5 11.7v6.2c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8v-6.2"/>
-{%- elif name == "code" %}<path d="M8 8l-4 4 4 4M16 8l4 4-4 4M13.5 5l-3 14"/>
-{%- elif name == "spark" %}<path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8"/>
-{%- endif %}</svg>
-{%- endmacro %}
+{%- from "ico.njk" import ico -%}
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="One practical AI and data engineering lesson every week, free on Substack. Get {{ questions }} free Claude certification practice questions and step-by-step guides for Claude, Google Cloud and Databricks." />
+  <meta name="description" content="{{ nl.tagline }}: free lessons on {{ nl.topics }}, a new issue {{ nl.cadence }} on Substack. Get {{ questions }} free Claude certification practice questions and free study guides." />
   <meta name="author" content="{{ p.name }}" />
-  <meta property="og:title" content="{{ p.name }} | {{ nl.name }}, the AI &amp; Data Engineering Newsletter" />
-  <meta property="og:description" content="One practical AI and data engineering lesson every week, free on Substack. Get {{ questions }} free Claude certification practice questions and step-by-step guides." />
+  <meta property="og:title" content="{{ p.name }} | {{ nl.name }}, the Practical AI Newsletter" />
+  <meta property="og:description" content="{{ nl.tagline }}: free lessons on {{ nl.topics }}, a new issue {{ nl.cadence }}. Get {{ questions }} free Claude certification practice questions and free study guides." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{ site.portfolioUrl }}/" />
-  <title>{{ p.name }} | {{ nl.name }}, the AI &amp; Data Engineering Newsletter</title>
+  <title>{{ p.name }} | {{ nl.name }}, the Practical AI Newsletter</title>
   <link rel="canonical" href="{{ site.portfolioUrl }}/" />
   <link rel="icon" href="/images/favicon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -73,12 +63,12 @@ eleventyExcludeFromCollections: true
     <section class="hub-hero" id="hero">
       <div class="hub-hero-inner">
         <div class="hub-hero-text">
-          <p class="hub-label">{{ nl.name }} · AI × Data Engineering</p>
-          <h1 class="hub-hero-title">AI &amp; data engineering, <span class="hub-accent">from real production.</span></h1>
-          <p class="hub-hero-lede">One practical lesson a week: Claude and data engineering guides, certification practice, and real data engineering stories from {{ p.stats.yearsExperience }} years of enterprise projects. Free, and tested on real systems first.</p>
+          <p class="hub-label">{{ nl.name }} · Free newsletter</p>
+          <h1 class="hub-hero-title">Practical AI you can <span class="hub-accent">actually use.</span></h1>
+          <p class="hub-hero-lede">Plain-English AI lessons, free exam guides and real data engineering, from someone who has built this for {{ p.stats.yearsExperience }} years. Whether you're just starting out or designing systems for a living, there's something here for you.</p>
           <div class="hub-signup" id="subscribe">
             {% set nfId = 'hero' %}{% set nfClass = 'hub-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% set nfAvatar = '/images/profile/hari_new.png' %}{% include "newsletter-form.njk" %}
-            <p class="hub-form-note">Free every week · unsubscribe anytime</p>
+            <p class="hub-form-note">Free · a new issue {{ nl.cadence }} · unsubscribe anytime</p>
           </div>
           <ul class="hub-pills">
             <li><strong>{{ questions }}</strong> practice questions</li>
@@ -106,9 +96,9 @@ eleventyExcludeFromCollections: true
         <div class="hub-tiles">
           <a class="hub-glass hub-light hub-tile hub-reveal" href="#join">
             <span class="ico3d ico3d-blue">{{ ico("mail") }}</span>
-            <span class="hub-label">01 · Every week</span>
-            <span class="hub-tile-title">One lesson per issue</span>
-            <span class="hub-tile-text">An AI or data engineering lesson you can use the same day, with the prompt, the code or the design behind it.</span>
+            <span class="hub-label">01 · Every issue</span>
+            <span class="hub-tile-title">One useful lesson</span>
+            <span class="hub-tile-text">Something about AI you can use the same day, with the prompt, the steps or the design behind it.</span>
           </a>
           <a class="hub-glass hub-light hub-tile hub-reveal" href="#exams">
             <span class="ico3d ico3d-violet">{{ ico("course") }}</span>
@@ -128,6 +118,27 @@ eleventyExcludeFromCollections: true
             <span class="hub-tile-title">Real data engineering</span>
             <span class="hub-tile-text">What actually happens on enterprise data platforms: the outages, the fixes and the trade-offs.</span>
           </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2b. WHO IT'S FOR: one card per audience (audiences.json) -> /for/{slug}/ -->
+    <section class="hub-section" id="for">
+      <div class="pf-wrap">
+        <header class="hub-head hub-reveal">
+          <div><p class="hub-label">Who it's for</p><h2 class="hub-h2">Pick your <span class="hub-accent">track</span></h2>
+          <p class="hub-sub">One newsletter, written for different readers. Start with the page that fits you.</p></div>
+        </header>
+        <div class="aud-others">
+          {%- for o in audiences.list %}
+          <a class="hub-glass hub-light aud-card hub-reveal" href="/for/{{ o.slug }}/">
+            <span class="hub-pack-top"><span class="ico3d ico3d-{{ o.color }}">{{ ico(o.icon) }}</span>{% if o.status != "live" %}<span class="hub-tag hub-tag-dim">Coming soon</span>{% endif %}</span>
+            <span class="hub-kit-title">For {{ o.name | lower }}</span>
+            <span class="hub-meta">{{ o.who }}</span>
+            <span class="hub-kit-text">{{ o.card }}</span>
+            <span class="hub-textlink">{{ "Start here" if o.status == "live" else "Join the list" }} <span aria-hidden="true">→</span></span>
+          </a>
+          {%- endfor %}
         </div>
       </div>
     </section>
@@ -179,14 +190,28 @@ eleventyExcludeFromCollections: true
     </section>
 
     {% if latest %}
-    <!-- 4. FROM THE FIELD: articles, with each post's first image -->
+    <!-- 4. FROM THE FIELD: the latest newsletter edition (Substack, via
+         src/_data/editions.js) as the big card, like charliehills.ai; without
+         one, the latest blog post. Then the three newest blog articles. -->
+    {%- set edition = editions[0] %}
     <section class="hub-section" id="field">
       <div class="pf-wrap">
         <header class="hub-head hub-reveal">
           <div><p class="hub-label">From the field</p><h2 class="hub-h2">Real <span class="hub-accent">data engineering</span>, written down</h2>
-          <p class="hub-sub">Long-form articles from enterprise projects: the architecture, the mistakes and what I'd do again.</p></div>
-          <a href="{{ site.url }}/" class="hub-textlink">All {{ collections.posts.length }} articles <span aria-hidden="true">→</span></a>
+          <p class="hub-sub">New in {{ nl.name }} {{ nl.cadence }}: what I built, what broke and what I'd do again. Plus long-form articles from enterprise projects.</p></div>
+          <a href="{{ '/newsletter/' if edition else site.url + '/' }}" class="hub-textlink">{% if edition %}All editions{% else %}All {{ collections.posts.length }} articles{% endif %} <span aria-hidden="true">→</span></a>
         </header>
+        {%- if edition %}
+        <a class="hub-glass hub-light hub-edition hub-reveal" href="{{ edition.url }}">
+          <span class="hub-edition-art{% if not edition.image %} is-empty{% endif %}">{% if edition.image %}<img src="{{ edition.image }}" alt="" loading="lazy" />{% else %}<span class="ico3d ico3d-lg ico3d-blue">{{ ico("mail") }}</span>{% endif %}</span>
+          <span class="hub-edition-text">
+            <span class="hub-label">Latest edition · {{ edition.date | longDate }}</span>
+            <span class="hub-edition-title">{{ edition.title }}</span>
+            {% if edition.subtitle %}<span class="hub-lead-text">{{ edition.subtitle }}</span>{% endif %}
+            <span class="pf-btn pf-btn-primary">Read the edition <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+        {%- else %}
         {%- set lthumb = latest.data.cover or (latest.templateContent | firstImage) %}
         <a class="hub-glass hub-light hub-edition hub-reveal" href="{{ site.url }}{{ latest.url }}">
           <span class="hub-edition-art{% if not lthumb %} is-empty{% endif %}">{% if lthumb %}<img src="{{ lthumb }}" alt="" loading="lazy" />{% else %}<span class="ico3d ico3d-lg ico3d-blue">{{ ico("db") }}</span>{% endif %}</span>
@@ -197,8 +222,10 @@ eleventyExcludeFromCollections: true
             <span class="pf-btn pf-btn-primary">Read the article <span aria-hidden="true">→</span></span>
           </span>
         </a>
+        {%- endif %}
         <div class="hub-editions">
-          {% for post in collections.posts %}{% if loop.index > 1 and loop.index <= 4 %}
+          {%- set skip = 0 if edition else 1 %}
+          {% for post in collections.posts %}{% if loop.index > skip and loop.index <= skip + 3 %}
           {%- set th = post.data.cover or (post.templateContent | firstImage) %}
           <a class="hub-glass hub-light hub-card3 hub-reveal" href="{{ site.url }}{{ post.url }}">
             <span class="hub-card3-art{% if not th %} is-empty{% endif %}">{% if th %}<img src="{{ th }}" alt="" loading="lazy" />{% else %}<span class="ico3d ico3d-violet">{{ ico("spark") }}</span>{% endif %}</span>
@@ -265,7 +292,7 @@ eleventyExcludeFromCollections: true
         <div class="hub-join-panel hub-reveal">
           <p class="hub-label">{{ nl.name }}</p>
           <h2 class="hub-join-title">Get the next <span class="hub-accent">lesson</span> first.</h2>
-          <p class="hub-sub">AI and data engineering for people who ship to production. Free, and you can unsubscribe in one click.</p>
+          <p class="hub-sub">{{ nl.tagline }}, in your inbox {{ nl.cadence }}. Free, and you can unsubscribe in one click.</p>
           {% set nfId = 'join' %}{% set nfClass = 'hub-form' %}{% set nfBtnClass = 'pf-btn pf-btn-primary' %}{% set nfAvatar = '/images/profile/hari_new.png' %}{% include "newsletter-form.njk" %}
           <p class="hub-join-contact">Prefer to talk? <a href="mailto:{{ p.contact.email }}">Email</a> · <a href="{{ p.contact.linkedin }}" target="_blank" rel="noopener">LinkedIn</a>{% if p.contact.topmate %} · <a href="{{ p.contact.topmate }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Book a 1:1 call</a>{% endif %}</p>
         </div>

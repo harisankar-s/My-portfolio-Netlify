@@ -27,6 +27,11 @@ module.exports = function (eleventyConfig) {
     return toDateTime(dateObj).toFormat("LLL yyyy");
   });
 
+  // Filter: month heading, e.g. "November 2026" (/newsletter/ archive)
+  eleventyConfig.addFilter("monthYear", (dateObj) => {
+    return toDateTime(dateObj).toFormat("LLLL yyyy");
+  });
+
   // Filter: long date, e.g. "26 November 2026" (guide pages)
   eleventyConfig.addFilter("longDate", (dateObj) => {
     return toDateTime(dateObj).toFormat("d LLLL yyyy");
@@ -116,6 +121,24 @@ module.exports = function (eleventyConfig) {
 
   // Filter: first item whose `key` equals `value` (Nunjucks `set` inside a
   // for-loop doesn't escape the loop, so lookups need a filter)
+  // Audience pages (/for/{slug}/, src/_data/audiences.json).
+  // Items of arr whose `key` is in values, in the order of values.
+  eleventyConfig.addFilter("pickBy", (arr, key, values) =>
+    (values || []).map((v) => (arr || []).find((x) => x && x[key] === v)).filter(Boolean)
+  );
+  // Substack editions tagged with any of the audience's substackTags.
+  eleventyConfig.addFilter("editionsFor", (editions, audience) =>
+    (editions || []).filter((e) => (e.tags || []).some((t) => audience.substackTags.includes(t)))
+  );
+  // Blog posts with any of the audience's blogTags, or listed in its posts.
+  eleventyConfig.addFilter("postsFor", (posts, audience) =>
+    (posts || []).filter(
+      (p) =>
+        audience.posts.includes(p.fileSlug) ||
+        (p.data.tags || []).some((t) => audience.blogTags.includes(t))
+    )
+  );
+
   eleventyConfig.addFilter("findBy", (arr, key, value) =>
     (arr || []).find((item) => item && item[key] === value)
   );

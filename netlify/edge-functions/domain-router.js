@@ -1,6 +1,8 @@
 // Routes requests by hostname so one Eleventy build serves two domains:
 //   harisankarsivankutty.in       -> hub at / (built at /home/), CV at /about/,
-//                                    exam prep at /guides/, guide PDFs at /files/
+//                                    exam prep at /guides/, guide PDFs at /files/,
+//                                    newsletter archive at /newsletter/,
+//                                    audience pages at /for/{slug}/
 //   blog.harisankarsivankutty.in  -> blog (built at /)
 //
 // The apex domain serves the hub, the CV and the exam prep pages. Anything
@@ -32,8 +34,9 @@ const SHARED_PATHS = [
   /^\/\.netlify\//,
 ];
 
-// Exam prep pages and their PDFs: apex only.
-const APEX_ONLY_PATHS = [/^\/guides(\/|$)/, /^\/files\//];
+// Exam prep pages, their PDFs, the newsletter archive and the audience
+// pages: apex only.
+const APEX_ONLY_PATHS = [/^\/guides(\/|$)/, /^\/files\//, /^\/newsletter(\/|$)/, /^\/for\//];
 
 // Paths the apex (profile) domain serves directly; everything else redirects
 // to the blog subdomain.
@@ -76,8 +79,8 @@ export default async (request, context) => {
     if (url.pathname === "/home" || url.pathname === "/home/") {
       return Response.redirect(`${url.protocol}//${host}/`, 301);
     }
-    if (url.pathname === "/guides") {
-      return Response.redirect(`${url.protocol}//${host}/guides/`, 301);
+    if (url.pathname === "/guides" || url.pathname === "/newsletter") {
+      return Response.redirect(`${url.protocol}//${host}${url.pathname}/`, 301);
     }
     if (url.pathname === "/") {
       return context.rewrite("/home/");

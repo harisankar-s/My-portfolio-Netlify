@@ -142,12 +142,7 @@
   "education": "B.Tech, Electronics & Communication · CUSAT, 2012–2016",
   "languages": ["English", "Malayalam", "Hindi", "Tamil"],
   "offerings": {
-    "brainbyte": {
-      "url": "https://harisankarsivankutty.in/guides/",
-      "description": "BrainByte is Hari's learning and products hub. Available now and FREE on Topmate: two Claude Certified Architect practice question banks, CCAR-F Foundations (160 questions, grouped by the 5 exam domains, with an explanation for every answer) and CCAR-P Professional (125 questions with an answer key). Independent study material, not affiliated with Anthropic, containing no real exam questions. Coming soon: production starter kits (tested, documented code with CI and infrastructure as code) and step-by-step learning tracks.",
-      "availableNow": ["CCAR-F: 160 Practice Questions (free) — https://topmate.io/harisankar_sivankutty/2413541", "CCAR-P Practice Question Bank: 125 Questions (free) — https://topmate.io/harisankar_sivankutty/2413543"],
-      "comingSoon": ["Production data pipeline kit (Terraform)", "Data quality starter (Great Expectations + DataHub)", "Claude RAG assistant starter", "dbt Data Vault template", "Guides for Claude, Google Cloud, production data engineering and Databricks"]
-    },
+    "_note": "The newsletter, free exam prep guides, practice packs and starter kits are not listed here on purpose: netlify/functions/ask-hari.js reads them live from site.json, exams.json, guides.json and brainbyte.json, so AskHari.ai never goes stale. Only keep offerings here that have no other data file.",
     "coaching": "1:1 certification strategy calls and architecture reviews, booked via Topmate: https://topmate.io/harisankar_sivankutty",
     "consulting": "Available for consulting on data platforms, GenAI/RAG systems and cloud architecture."
   },

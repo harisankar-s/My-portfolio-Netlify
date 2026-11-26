@@ -1,0 +1,62 @@
+{
+  "_readme": "One entry per audience page at /for/{slug}/ (src/for/audience.njk), also the hub's \"Who it's for\" row. status: \"live\" builds the full page; \"coming-soon\" builds a waitlist page and shows a Coming soon card on the hub. Editions land on a page when any of their Substack tags is in substackTags (tag them on Substack as usual). Blog posts land when any frontmatter tag is in blogTags, or their slug is in posts. exams (codes from exams.json), kits (titles from brainbyte.kits) and tracks (slugs from brainbyte.tracks) pick the products shown. icon: an ico() glyph; color: an .ico3d colour.",
+  "list": [
+    {
+      "slug": "everyone",
+      "status": "live",
+      "name": "Everyone",
+      "who": "No tech background needed",
+      "card": "AI explained in plain English, with simple ways to use it at work and at home.",
+      "headline": "AI, explained",
+      "accent": "in plain English.",
+      "pitch": "No jargon and no coding. What AI tools can actually do, how they work under the hood, and simple ways to put them to work today.",
+      "topics": ["How AI works", "Everyday AI tools", "Prompting basics", "AI at work", "Key terms explained"],
+      "icon": "spark",
+      "color": "amber",
+      "substackTags": ["AI for Everyone", "Explainer", "Beginners", "AI Basics"],
+      "blogTags": ["Explainer"],
+      "posts": ["how-ai-agents-work-simple-explanation-non-technical-readers"],
+      "exams": [],
+      "kits": ["Personal website starter kit"],
+      "tracks": []
+    },
+    {
+      "slug": "builders",
+      "status": "live",
+      "name": "Builders",
+      "who": "Engineers, architects and developers",
+      "card": "Claude, data engineering and system design from real enterprise projects, plus free certification prep.",
+      "headline": "Build AI and data systems",
+      "accent": "that hold up.",
+      "pitch": "For data engineers, architects and developers: Claude and GenAI engineering, data platforms and pipelines, and the design trade-offs behind them, from 10+ years of enterprise projects. Plus free Claude certification guides and practice questions.",
+      "topics": ["Claude & GenAI engineering", "RAG & agents", "Data platforms", "Pipelines & data quality", "System design", "Certifications"],
+      "icon": "code",
+      "color": "blue",
+      "substackTags": ["Data Engineering", "AI Engineering", "LLM Fine-Tuning", "Build in Public", "Claude", "Architecture", "Certification"],
+      "blogTags": ["Data Engineering", "Architecture", "Claude", "Certification", "RAG", "Agentic AI"],
+      "posts": [],
+      "exams": ["CCAR-F", "CCAR-P", "CCDV-F"],
+      "kits": ["Production data pipeline kit", "Data quality starter", "Claude RAG assistant starter", "dbt Data Vault template"],
+      "tracks": ["gcp-pde", "data-engineering", "databricks"]
+    },
+    {
+      "slug": "marketers",
+      "status": "coming-soon",
+      "name": "Marketers",
+      "who": "Content, video and growth teams",
+      "card": "AI for video editing, motion graphics and content, so small teams can ship like big ones.",
+      "headline": "AI for marketers,",
+      "accent": "coming soon.",
+      "pitch": "AI video editing, motion graphics and content workflows for marketers and creators. Join the list and you'll get the first issues as soon as they're out.",
+      "topics": ["AI video editing", "Motion graphics", "Content workflows", "AI design tools"],
+      "icon": "play",
+      "color": "violet",
+      "substackTags": ["Marketing", "Video Editing", "Motion Graphics"],
+      "blogTags": [],
+      "posts": [],
+      "exams": [],
+      "kits": [],
+      "tracks": []
+    }
+  ]
+}
