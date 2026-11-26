@@ -45,6 +45,21 @@ module.exports = function (eleventyConfig) {
     return esc.replace(/`([^`]+)`/g, "<code>$1</code>");
   });
 
+  // Filter: like `ticks`, plus **bold** and [text](url) links (free resources
+  // in src/_data/resources.js). Only http(s) and site-relative URLs become
+  // links; external ones open in a new tab. Output with | safe.
+  eleventyConfig.addFilter("rich", (str) => {
+    const esc = String(str == null ? "" : str)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    return esc
+      .replace(/`([^`]+)`/g, "<code>$1</code>")
+      .replace(/\*\*([^*]+)\*\*/g, "<b>$1</b>")
+      .replace(/\[([^\]]+)\]\(((?:https?:\/\/|\/)[^)\s]+)\)/g, (m, text, url) =>
+        url.startsWith("/")
+          ? `<a href="${url}">${text}</a>`
+          : `<a href="${url}" target="_blank" rel="noopener">${text}</a>`);
+  });
+
   // Filter: RFC 3339 date for RSS/Atom feeds and sitemaps
   eleventyConfig.addFilter("dateToRfc3339", (dateObj) => {
     return toDateTime(dateObj).toISO();

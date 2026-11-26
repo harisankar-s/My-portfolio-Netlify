@@ -189,6 +189,23 @@ eleventyExcludeFromCollections: true
       </div>
     </section>
 
+    {% if resources.list.length %}
+    <!-- 3b. FREE RESOURCES (src/_data/resources.js): the six newest guides,
+         then a link to the full vault at /resources/ -->
+    <section class="hub-section" id="resources">
+      <div class="pf-wrap">
+        <header class="hub-head hub-reveal">
+          <div><p class="hub-label">Free resources</p><h2 class="hub-h2">Setups and prompts <span class="hub-accent">you can paste today</span></h2>
+          <p class="hub-sub">Step-by-step guides for Claude, Claude Code and AI video. Every prompt ready to copy, a check after each step, and fixes for what goes wrong. No sign-up needed.</p></div>
+          <a href="/resources/" class="hub-textlink">All {{ resources.list.length }} guides <span aria-hidden="true">→</span></a>
+        </header>
+        <div class="hub-kits rs-cards">
+          {%- for r in resources.list %}{% if loop.index <= 6 %}{% include "rs-card.njk" %}{% endif %}{% endfor %}
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
     {% if latest %}
     <!-- 4. FROM THE FIELD: the latest newsletter edition (Substack, via
          src/_data/editions.js) as the big card, like charliehills.ai; without

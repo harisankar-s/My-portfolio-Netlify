@@ -1,0 +1,17 @@
+{#- One content block of a free resource (src/_data/resources.js), rendered
+    inside src/resources/resource.njk. Set `b` before including. Prompt and
+    code blocks get a Copy button (/assets/guides.js, [data-rs-copy]). -#}
+{%- if b.t == "p" %}<p class="bg-p">{{ b.text | rich | safe }}</p>
+{%- elif b.t == "h3" %}<h3 class="bg-h3 rs-h3">{{ b.text | rich | safe }}{% if b.meta %}<small>{{ b.meta | rich | safe }}</small>{% endif %}</h3>
+{%- elif b.t == "note" %}<div class="bg-callout rs-note">{% if b.label %}<p class="rs-note-label">{{ b.label }}</p>{% endif %}<p>{{ b.text | rich | safe }}</p></div>
+{%- elif b.t == "check" %}<div class="rs-check"><p class="rs-check-label">{{ b.label }}</p><p>{{ b.text | rich | safe }}</p></div>
+{%- elif b.t == "steps" %}<ol class="bg-passes rs-steps">{% for s in b.items %}<li><span>{{ s | rich | safe }}</span></li>{% endfor %}</ol>
+{%- elif b.t == "table" %}<div class="rs-table-wrap"><table class="rs-table">
+  {%- if b.head and (b.head | join("")) %}<thead><tr>{% for h in b.head %}<th scope="col">{{ h }}</th>{% endfor %}</tr></thead>{% endif %}
+  <tbody>{% for row in b.rows %}<tr>{% for cell in row %}<td>{{ cell | rich | safe }}</td>{% endfor %}</tr>{% endfor %}</tbody>
+</table></div>
+{%- elif b.t == "prompt" or b.t == "code" %}<figure class="rs-paste rs-{{ b.t }}">
+  <figcaption><span>{{ b.label or ("Paste this" if b.t == "prompt" else "Terminal") }}</span><button type="button" class="rs-copy" data-rs-copy>Copy</button></figcaption>
+  <pre><code>{{ b.text }}</code></pre>
+</figure>
+{%- endif %}

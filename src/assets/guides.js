@@ -64,3 +64,37 @@
     });
   }
 })();
+
+/* Free resources (src/resources/resource.njk): a Copy button on every prompt
+   and command block, and "Save as PDF", which opens the print dialog (print
+   styles in guides.css drop the sky, nav and footer). */
+(function () {
+  "use strict";
+  document.querySelectorAll("[data-rs-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var code = btn.closest(".rs-paste").querySelector("pre");
+      var text = code ? code.innerText : "";
+      var done = function () {
+        btn.textContent = "Copied";
+        btn.classList.add("is-done");
+        setTimeout(function () { btn.textContent = "Copy"; btn.classList.remove("is-done"); }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { select(code, btn); });
+      } else { select(code, btn); }
+    });
+  });
+  // No clipboard access: select the text so Ctrl/Cmd+C copies it.
+  function select(node, btn) {
+    btn.textContent = "Selected";
+    setTimeout(function () { btn.textContent = "Copy"; }, 1600);
+    var range = document.createRange();
+    range.selectNodeContents(node);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+  document.querySelectorAll("[data-rs-print]").forEach(function (btn) {
+    btn.addEventListener("click", function () { window.print(); });
+  });
+})();
