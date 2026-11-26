@@ -18,11 +18,11 @@
   </script>
   {% set bbDesc = description or 'BrainByte: Claude certification practice packs and production starter kits by Harisankar Sivankutty.' %}
   <meta name="description" content="{{ bbDesc }}" />
-  <meta property="og:title" content="{{ title }} — BrainByte" />
+  <meta property="og:title" content="{{ pageTitle or (title + ' | BrainByte') }}" />
   <meta property="og:description" content="{{ bbDesc }}" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{ site.brainbyteUrl }}{{ page.url | bbPublicPath }}" />
-  <title>{{ title }} — BrainByte</title>
+  <title>{{ pageTitle or (title + ' | BrainByte') }}</title>
   <link rel="canonical" href="{{ site.brainbyteUrl }}{{ page.url | bbPublicPath }}" />
   <link rel="icon" href="/images/favicon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -88,9 +88,9 @@
     </a>
     <div class="bb-nav-right">
       <ul class="bb-nav-links">
-        <li><a href="{{ '/' | bb }}#claude">Claude packs</a></li>
+        <li><a href="{{ '/guides/' | bb }}">Exam prep</a></li>
         <li><a href="{{ '/' | bb }}#kits">Starter kits</a></li>
-        <li><a href="{{ '/' | bb }}#coaching">1:1 help</a></li>
+        <li><a href="{{ '/' | bb }}#coaching">{% include "topmate-icon.njk" %}1:1 help</a></li>
       </ul>
       <span class="bb-xp" data-bb-xp title="Practice questions you've answered correctly on this device" hidden>
         ★ <span data-bb-xp-count>0</span>

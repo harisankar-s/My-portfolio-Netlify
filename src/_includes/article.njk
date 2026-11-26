@@ -15,11 +15,12 @@
       } catch (e) {}
     })();
   </script>
-  <meta name="description" content="{{ subtitle or description or 'Writing by Harisankar Sivankutty.' }}" />
-  <meta property="og:title" content="{{ title }} — Harisankar Sivankutty" />
-  <meta property="og:description" content="{{ subtitle or description or '' }}" />
+  {%- set seoDesc = description or subtitle or excerpt or site.description %}
+  <meta name="description" content="{{ seoDesc }}" />
+  <meta property="og:title" content="{{ pageTitle or (title + ' | ' + site.author) }}" />
+  <meta property="og:description" content="{{ seoDesc }}" />
   <meta property="og:type" content="article" />
-  <title>{{ title }} — Harisankar Sivankutty</title>
+  <title>{{ pageTitle or (title + ' | ' + site.author) }}</title>
   <link rel="canonical" href="{{ canonicalUrl or (site.url + page.url) }}" />
   <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml" />
   <link rel="icon" href="/images/favicon.png" type="image/png" />
@@ -228,7 +229,7 @@
         <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       </button>
       <a href="https://topmate.io/harisankar_sivankutty" target="_blank" rel="noopener" class="nav-cta">
-        Book a 1:1
+        {% include "topmate-icon.njk" %}Book a 1:1
       </a>
     </div>
   </nav>
@@ -273,10 +274,14 @@
 
     {#- BrainByte CTA, chosen by what the post is about:
         1) a starter kit built from this post → that kit
-        2) a GenAI post → the Claude practice packs
-        3) anything else → the starter kits -#}
+        2) a Claude / certification post → the Claude exam prep (guides + practice)
+        3) a GenAI post → the Claude practice packs
+        4) anything else → the starter kits -#}
     {%- set bbKit = brainbyte.kits | findBy("post", page.fileSlug) -%}
     {%- set isGenAI = tags and ("GenAI" in tags or "Agentic AI" in tags or "RAG" in tags) -%}
+    {%- set isClaudeCert = tags and ("Certification" in tags or "Claude" in tags) -%}
+    {%- set ccarGuide = bbLiveGuides | findBy("slug", "ccar-f-exam-tips") -%}
+    {%- set ccarpGuide = bbLiveGuides | findBy("slug", "ccar-p-exam-tips") -%}
     <aside class="bb-cta">
       <div class="bb-cta-copy">
         {% if bbKit %}
@@ -290,6 +295,14 @@
           <a class="bb-cta-btn" href="{{ site.brainbyteUrl }}/#newsletter">Get early access</a>
           {% endif %}
           <a class="bb-cta-link" href="{{ site.brainbyteUrl }}/#kits">See all starter kits →</a>
+        </div>
+        {% elif isClaudeCert and ccarGuide %}
+        <div class="bb-cta-eyebrow">BrainByte · Free guide</div>
+        <div class="bb-cta-title">Sitting a Claude certification? Get the free exam prep.</div>
+        <p class="bb-cta-sub">A study guide for each exam ({% for g in bbLiveGuides %}{{ g.exam }}{% if not loop.last %}, {% endif %}{% endfor %}) with the right answer next to every wrong one, plus free practice question banks to test yourself.</p>
+        <div class="bb-cta-actions">
+          <a class="bb-cta-btn" href="{{ site.brainbyteUrl }}/guides/">See the exam prep</a>
+          <a class="bb-cta-link" href="{{ site.brainbyteUrl }}/guides/{{ ccarGuide.slug }}/">Start with the CCAR-F guide →</a>
         </div>
         {% elif isGenAI %}
         <div class="bb-cta-eyebrow">BrainByte · Free</div>

@@ -16,10 +16,10 @@
     })();
   </script>
   <meta name="description" content="{{ description or 'Writing by Harisankar Sivankutty — data engineering, GenAI, cloud architecture.' }}" />
-  <meta property="og:title" content="{{ title or 'Harisankar Sivankutty' }}" />
+  <meta property="og:title" content="{{ pageTitle or ((title + ' | ' + site.author) if title else site.author) }}" />
   <meta property="og:description" content="{{ description or 'Writing by Harisankar Sivankutty — data engineering, GenAI, cloud architecture.' }}" />
   <meta property="og:type" content="{{ ogType or 'website' }}" />
-  <title>{{ title }} — Harisankar Sivankutty</title>
+  <title>{{ pageTitle or ((title + ' | ' + site.author) if title else site.author) }}</title>
   <link rel="canonical" href="{{ site.url }}{{ page.url }}" />
   <link rel="alternate" type="application/atom+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml" />
   <link rel="icon" href="/images/favicon.png" type="image/png" />
@@ -204,7 +204,7 @@
         <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       </button>
       <a href="https://topmate.io/harisankar_sivankutty" target="_blank" rel="noopener" class="nav-cta">
-        Book a 1:1
+        {% include "topmate-icon.njk" %}Book a 1:1
       </a>
     </div>
   </nav>

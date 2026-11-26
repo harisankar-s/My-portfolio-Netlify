@@ -8,7 +8,8 @@ permalink: "/brainbyte/tracks/{{ track.slug }}/index.html"
 eleventyExcludeFromCollections: true
 eleventyComputed:
   title: "{{ track.title }}"
-  description: "{{ track.title }} on BrainByte: {{ track.modules.length }} modules with practice questions and free reading. {{ track.pitch }}"
+  pageTitle: "{{ track.title }}: Step-by-Step Guide | BrainByte"
+  description: "{{ track.title }} guide on BrainByte: {{ track.modules.length }} modules with practice questions and free reading. {{ track.pitch }}"
 ---
 {%- set allTracks = bbLiveTracks -%}
 {%- set idx = pagination.pageNumber -%}
@@ -19,7 +20,7 @@ eleventyComputed:
   <!-- 1. HEADER -->
   <header class="bb-th">
     <div class="bb-wrap bb-wrap-narrow">
-      <a class="bb-back" href="{{ '/' | bb }}#tracks">← All tracks</a>
+      <a class="bb-back" href="{{ '/' | bb }}#tracks">← All guides</a>
       <span class="bb-track-logo bb-track-logo-lg"><img src="{{ track.logo }}" alt="" width="44" height="44" /></span>
       <h1 class="bb-h1 bb-th-title">{{ track.title }}</h1>
       <p class="bb-lede">{{ track.pitch }}</p>
@@ -77,7 +78,7 @@ eleventyComputed:
     <div class="bb-wrap bb-wrap-narrow">
       {% set newsId = track.slug %}{% set newsTag = track.slug %}{% include "bb-newsletter.njk" %}
       <a class="bb-next" href="{{ ('/tracks/' + nextTrack.slug + '/') | bb }}">
-        <span class="bb-next-label">Next track</span>
+        <span class="bb-next-label">Next guide</span>
         <span class="bb-next-title">{{ nextTrack.title }} →</span>
       </a>
     </div>

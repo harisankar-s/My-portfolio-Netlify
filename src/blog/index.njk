@@ -1,6 +1,6 @@
 ---
 title: Notes from the data trenches
-description: "Notes on data engineering and AI engineering — the patterns, trade-offs, and hard-won lessons from 10+ years building data platforms and GenAI systems for enterprise clients."
+description: "Long-form articles on data engineering and AI from 10+ years of enterprise projects: pipelines, data quality, migrations, Claude and GenAI. Free to read, with the code behind them."
 permalink: /
 ---
 <!DOCTYPE html>
@@ -21,10 +21,10 @@ permalink: /
     })();
   </script>
   <meta name="description" content="{{ description }}" />
-  <meta property="og:title" content="Harisankar Sivankutty — Notes from the data trenches" />
+  <meta property="og:title" content="Data Engineering &amp; AI Articles | {{ site.author }}" />
   <meta property="og:description" content="{{ description }}" />
   <meta property="og:type" content="website" />
-  <title>Harisankar Sivankutty — Notes from the data trenches</title>
+  <title>Data Engineering &amp; AI Articles | {{ site.author }}</title>
   <link rel="icon" href="/images/favicon.png" type="image/png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -468,7 +468,7 @@ permalink: /
         <svg class="theme-icon theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
       </button>
       <a href="https://topmate.io/harisankar_sivankutty" target="_blank" rel="noopener" class="nav-cta">
-        Book a 1:1
+        {% include "topmate-icon.njk" %}Book a 1:1
       </a>
     </div>
   </nav>
@@ -552,7 +552,7 @@ permalink: /
               <span class="promo-text">A portfolio site for freshers, live in 15 minutes. More kits coming.</span>
               <span class="promo-link">Get it free →</span>
             </a>
-            <a class="promo-link" href="{{ site.topmateUrl }}" target="_blank" rel="noopener">Or book a 1:1 on Topmate ↗</a>
+            <a class="promo-link" href="{{ site.topmateUrl }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Or book a 1:1 on Topmate ↗</a>
           </div>
         </div>
 

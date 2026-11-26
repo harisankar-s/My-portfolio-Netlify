@@ -1,0 +1,26 @@
+[
+  {
+    "code": "CCAR-F",
+    "name": "Claude Certified Architect, Foundations",
+    "facts": "60 questions · 120 min · pass 720",
+    "guide": "ccar-f-exam-tips",
+    "packExam": "Anthropic · Foundations",
+    "blurb": "Agent loops, tool design, Claude Code configuration, prompting and context management."
+  },
+  {
+    "code": "CCAR-P",
+    "name": "Claude Certified Architect, Professional",
+    "facts": "63 questions · 120 min · pass 720",
+    "guide": "ccar-p-exam-tips",
+    "packExam": "Anthropic · Professional",
+    "blurb": "Solution design, integration, evaluation, governance and the architect's stakeholder work."
+  },
+  {
+    "code": "CCDV-F",
+    "name": "Claude Certified Developer, Foundations",
+    "facts": "53 questions · 120 min · pass 720",
+    "guide": "ccdv-f-exam-tips",
+    "packExam": "",
+    "blurb": "API mechanics, the Agent SDK, tools and MCP, security, and the exact names the exam checks."
+  }
+]

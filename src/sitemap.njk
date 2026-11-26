@@ -20,6 +20,17 @@ eleventyExcludeFromCollections: true
     <loc>{{ site.brainbyteUrl }}/</loc>
     <changefreq>weekly</changefreq>
   </url>
+  <url>
+    <loc>{{ site.brainbyteUrl }}/guides/</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  {% for g in bbLiveGuides %}
+  <url>
+    <loc>{{ site.brainbyteUrl }}/guides/{{ g.slug }}/</loc>
+    <lastmod>{{ g.added | dateToRfc3339 }}</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  {% endfor %}
   {% for t in bbLiveTracks %}
   <url>
     <loc>{{ site.brainbyteUrl }}/tracks/{{ t.slug }}/</loc>

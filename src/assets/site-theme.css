@@ -189,3 +189,6 @@ html body .t-title { font-weight: 900; }
 .article-body li { margin-bottom: 14px; }
 .article-body h3 { font-size: 21px; margin-top: 44px; margin-bottom: 12px; }
 .article-body h2 + h3 { margin-top: 20px; }
+
+/* Topmate mark before "Book a 1:1" links (_includes/topmate-icon.njk) */
+.tm-icon { display: inline-block; flex: none; width: 18px; height: 18px; vertical-align: -4px; margin-right: 7px; border-radius: 6px; }

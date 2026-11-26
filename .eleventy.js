@@ -6,6 +6,9 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/source");
   eleventyConfig.addPassthroughCopy("src/theme");
   eleventyConfig.addPassthroughCopy("src/assets");
+  // Downloadable files for BrainByte guides (e.g. the CCAR-F PDF); served on
+  // the brainbyte subdomain at /files/{name}
+  eleventyConfig.addPassthroughCopy("src/brainbyte/files");
 
   // Blog posts collection — sorted newest first
   eleventyConfig.addCollection("posts", function (collectionApi) {
@@ -23,6 +26,19 @@ module.exports = function (eleventyConfig) {
   // Filter: format date as "Jun 2026"
   eleventyConfig.addFilter("postDate", (dateObj) => {
     return toDateTime(dateObj).toFormat("LLL yyyy");
+  });
+
+  // Filter: long date, e.g. "26 November 2026" (guide pages)
+  eleventyConfig.addFilter("longDate", (dateObj) => {
+    return toDateTime(dateObj).toFormat("d LLLL yyyy");
+  });
+
+  // Filter: escape text, then turn `backticks` into <code> (guide data in
+  // src/_data/guides.json writes code terms in backticks). Output with | safe.
+  eleventyConfig.addFilter("ticks", (str) => {
+    const esc = String(str == null ? "" : str)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    return esc.replace(/`([^`]+)`/g, "<code>$1</code>");
   });
 
   // Filter: RFC 3339 date for RSS/Atom feeds and sitemaps

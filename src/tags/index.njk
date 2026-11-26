@@ -10,7 +10,8 @@ pagination:
 eleventyExcludeFromCollections: true
 eleventyComputed:
   title: "{{ tag }}"
-  description: "Articles tagged {{ tag }} — Harisankar Sivankutty"
+  pageTitle: "{{ tag }} Articles and Tutorials | Harisankar Sivankutty"
+  description: "Every Harisankar Sivankutty article on {{ tag }}: long-form pieces from real enterprise data and AI projects, free to read."
 permalink: /tags/{{ tag | slugify }}/
 ---
 

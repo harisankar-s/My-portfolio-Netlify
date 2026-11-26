@@ -16,7 +16,7 @@ permalink: /about/index.html
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Harisankar Sivankutty — Data Engineering Architect with 10+ years designing and delivering enterprise data platforms, GenAI systems and cloud-native analytics across AWS, GCP, Snowflake and on-premises infrastructure." />
+  <meta name="description" content="{{ p.name }} is a data and AI architect with {{ p.stats.yearsExperience }} years building enterprise data platforms and GenAI systems across AWS, Google Cloud, Azure and Snowflake. He holds {{ p.stats.certifications }} certifications and writes {{ site.newsletter.name }}." />
   <meta name="author" content="{{ p.name }}" />
   <script>
     (function () {
@@ -29,11 +29,11 @@ permalink: /about/index.html
       } catch (e) {}
     })();
   </script>
-  <meta property="og:title" content="{{ p.name }} — Data Engineering Architect" />
-  <meta property="og:description" content="10+ years engineering enterprise data platforms, GenAI systems and cloud-native analytics." />
+  <meta property="og:title" content="About {{ p.name }} | Data &amp; AI Architect and {{ site.newsletter.name }} Writer" />
+  <meta property="og:description" content="Data and AI architect with {{ p.stats.yearsExperience }} years building enterprise data platforms and GenAI systems. {{ p.stats.certifications }} certifications." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="{{ site.portfolioUrl }}/about/" />
-  <title>{{ p.name }} — Data Engineering Architect</title>
+  <title>About {{ p.name }} | Data &amp; AI Architect and {{ site.newsletter.name }} Writer</title>
   <link rel="canonical" href="{{ site.portfolioUrl }}/about/" />
   <link rel="icon" href="/images/favicon.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -260,7 +260,7 @@ permalink: /about/index.html
           <a href="mailto:{{ p.contact.email }}" class="pf-btn pf-btn-primary">Email me</a>
           <a href="{{ p.contact.linkedin }}" class="pf-btn pf-btn-secondary" target="_blank" rel="noopener">Connect on LinkedIn</a>
         </div>
-        <p class="pf-contact-note">Prefer a quick call? <a class="pf-link" href="{{ site.topmateUrl }}" target="_blank" rel="noopener">Book 30 minutes on Topmate ↗</a></p>
+        <p class="pf-contact-note">Prefer a quick call? <a class="pf-link" href="{{ site.topmateUrl }}" target="_blank" rel="noopener">{% include "topmate-icon.njk" %}Book a 30-minute 1:1 on Topmate ↗</a></p>
       </div>
     </section>
   </main>

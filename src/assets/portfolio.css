@@ -349,6 +349,12 @@ body.hub .pf-logo { font-family: var(--font-display); font-size: 16px; font-weig
 body.hub .pf-btn { font-size: 15px; font-weight: 600; padding: 12px 22px; border-width: 1px; gap: 6px; }
 body.hub .pf-btn-sm { padding: 8px 16px; font-size: 14px; }
 body.hub .pf-btn-primary { box-shadow: none; }
+/* Nav Subscribe, after charliehills.ai: a blue pill with a soft blue glow that links
+   straight to Substack; the arrow nudges right on hover. */
+body.hub .pf-nav .hub-nav-sub { border-radius: 999px; padding: 8px 20px; font-weight: 500; box-shadow: 0 6px 20px rgba(0,113,227,.45); transition: opacity .15s, transform .15s; }
+body.hub .pf-nav .hub-nav-sub:hover { background: var(--pop); opacity: .85; }
+.hub-nav-sub .hub-arrow { display: inline-block; transition: transform .15s; }
+.hub-nav-sub:hover .hub-arrow { transform: translateX(3px); }
 body.hub .pf-btn:hover { transform: none; }
 
 /* shared pieces */
@@ -379,46 +385,6 @@ body.hub .pf-btn:hover { transform: none; }
 .hub-hero-title { font-family: var(--font-display); font-weight: 600; font-size: clamp(40px, 4.8vw, 68px); line-height: 1.03; letter-spacing: -0.035em; margin: 20px 0 22px; text-wrap: balance; }
 .hub-hero-lede { font-size: clamp(17px, 1.35vw, 19px); line-height: 1.65; color: var(--fg-muted); max-width: 560px; }
 .hub-hero-ctas { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; margin-top: 30px; }
-
-/* hero: the live pipeline panel */
-.hub-system { border: 1px solid rgba(255,255,255,.12); border-radius: 16px; background: rgba(8,10,18,.42);
-  -webkit-backdrop-filter: blur(14px) saturate(140%); backdrop-filter: blur(14px) saturate(140%);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 30px 80px rgba(0,0,0,.35); overflow: hidden; }
-.hub-system-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 18px; border-bottom: 1px solid var(--border);
-  font-family: var(--font-mono); font-size: 12px; color: var(--fg-dim); }
-.hub-live { display: inline-flex; align-items: center; gap: 7px; text-transform: uppercase; letter-spacing: .12em; font-size: 11px; color: var(--hi); }
-.hub-live i { width: 6px; height: 6px; border-radius: 50%; background: var(--hi); animation: hub-blink 2s ease-in-out infinite; }
-@keyframes hub-blink { 50% { opacity: .25; } }
-.hub-steps { --cycle: 9s; list-style: none; position: relative; padding: 10px 18px; }
-/* the line, and a pulse of light running down it on a loop */
-.hub-steps::before { content: ""; position: absolute; left: 37px; top: 30px; bottom: 30px; width: 1px; background: var(--border-strong); }
-.hub-steps::after { content: ""; position: absolute; left: 36px; top: 30px; width: 3px; height: 56px; border-radius: 2px;
-  background: linear-gradient(transparent, var(--hi), transparent); box-shadow: 0 0 12px var(--hi);
-  animation: hub-pulse var(--cycle) linear infinite; }
-@keyframes hub-pulse { from { transform: translateY(-40px); opacity: 0; } 4% { opacity: 1; } 92% { opacity: 1; } to { transform: translateY(calc(var(--n) * 54px - 30px)); opacity: 0; } }
-.hub-step { position: relative; display: grid; grid-template-columns: 40px 1fr auto; align-items: center; gap: 14px; height: 54px; }
-.hub-step + .hub-step { border-top: 1px dashed rgba(255,255,255,.05); }
-.hub-step-node { position: relative; z-index: 1; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px;
-  background: #0C0F14; border: 1px solid var(--border); color: var(--fg-muted);
-  animation: hub-node var(--cycle) linear infinite; /* lights as the pulse passes: rows are 54px, the pulse travels (54n + 10)px */
-  animation-delay: calc(var(--i) * 54 / (var(--n) * 54 + 10) * var(--cycle)); }
-.hub-step-node img { width: 22px; height: 22px; object-fit: contain; background: #fff; border-radius: 6px; padding: 2px; }
-.hub-step-node svg { width: 20px; height: 20px; }
-@keyframes hub-node { 0%, 14%, 100% { border-color: var(--border); box-shadow: none; color: var(--fg-muted); }
-  4% { border-color: rgba(138,180,255,.75); box-shadow: 0 0 0 4px rgba(138,180,255,.1), 0 0 22px rgba(138,180,255,.35); color: var(--hi); } }
-.hub-step-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
-.hub-step-text b { font-family: var(--font-mono); font-size: 10.5px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; color: var(--fg-dim); }
-.hub-step-text span { font-size: 15px; font-weight: 500; color: var(--fg); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.hub-step-where { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; color: var(--fg-dim); text-align: right; white-space: nowrap; }
-
-/* how I build: text left, pipeline panel right */
-.hub-how { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
-.hub-how .hub-sub { margin-bottom: 24px; }
-@media (max-width: 900px) { .hub-how { grid-template-columns: 1fr; } }
-@media (max-width: 560px) {
-  .hub-step-where { display: none; }
-  .hub-step { grid-template-columns: 40px 1fr; }
-}
 
 /* sections */
 .hub-section { padding: clamp(72px, 12vh, 128px) var(--pad-x) 0; position: relative; }
@@ -665,5 +631,90 @@ a.hub-glass:hover .ico3d { transform: perspective(300px) rotateX(0) rotateY(0) t
 }
 @keyframes hub-reveal { from { opacity: 0; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
 @media (prefers-reduced-motion: reduce) {
-  .hub-hero-text > *, .hub-steps::after, .hub-step-node, .hub-live i { animation: none !important; }
+  .hub-hero-text > * { animation: none !important; }
 }
+
+/* ---- light cards: the white, faint-grid surface of the course cards, reused on
+   the content cards so long text reads dark-on-white. Re-points the colour tokens,
+   so labels, tags and links inside pick up dark values. Hero, stack panel and the
+   closing subscribe panel stay dark over the sky. ---- */
+.hub-glass.hub-light {
+  --fg: #0B1220; --fg-muted: #3A4458; --fg-dim: #5A6478; --hi: #1F4FE0;
+  --border: rgba(11,18,32,.1); --border-strong: rgba(11,18,32,.2);
+  color: #0B1220; border-color: rgba(255,255,255,.6);
+  background:
+    linear-gradient(rgba(11,18,32,.045) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(90deg, rgba(11,18,32,.045) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(160deg, #FFFFFF, #EEF2FA);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 18px 40px -18px rgba(0,0,0,.6);
+}
+a.hub-glass.hub-light:hover { border-color: rgba(31,79,224,.35); box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 26px 50px -18px rgba(0,0,0,.7);
+  background:
+    linear-gradient(rgba(11,18,32,.045) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(90deg, rgba(11,18,32,.045) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(160deg, #FFFFFF, #E8EEFA); }
+body.hub .hub-light .hub-label { color: #5A6478; }
+.hub-light .hub-tile-text, .hub-light .hub-kit-text, .hub-light .hub-pack-count, .hub-light .hub-lead-text,
+.hub-light .hub-about-text, .hub-light .hub-byte-a p { color: #3A4458; }
+.hub-light .hub-pack-count strong, .hub-light .hub-byte-a b { color: #0B1220; }
+.hub-light .hub-tag { background: rgba(31,79,224,.08); border-color: rgba(31,79,224,.25); }
+.hub-light .hub-tag-dim { color: #5A6478; background: rgba(11,18,32,.04); border-color: rgba(11,18,32,.16); }
+.hub-light .hub-byte-opts li { color: #1E2636; background: #fff; border-color: rgba(11,18,32,.12); }
+.hub-byte.hub-light:has(details[open]) li[data-answer] { border-color: #0E9F6E; background: #E6F8F0; color: #064E36; }
+.hub-kit.hub-light.is-soon { background: linear-gradient(160deg, #F7F9FD, #ECF0F7); border-style: dashed; border-color: rgba(11,18,32,.18); }
+.hub-light .hub-card3-art { border-bottom-color: rgba(11,18,32,.08); }
+.hub-light .hub-pills li { color: #3A4458; background: #fff; border-color: rgba(11,18,32,.12); -webkit-backdrop-filter: none; backdrop-filter: none; }
+.hub-light .hub-pills strong { color: #0B1220; }
+.hub-light .pf-btn-ghost { background: #0B1220; border-color: #0B1220; color: #fff; }
+.hub-light .pf-btn-ghost:hover { background: #1E2636; }
+.hub-light .hub-about-photo { border-color: rgba(11,18,32,.1); box-shadow: 0 0 0 6px rgba(31,79,224,.08), 0 24px 50px -24px rgba(31,79,224,.5); }
+
+/* Topmate mark before every "Book a 1:1" link (_includes/topmate-icon.njk) */
+.tm-icon { display: inline-block; flex: none; width: 18px; height: 18px; vertical-align: -4px; margin-right: 6px; border-radius: 6px; }
+.hub-textlink .tm-icon, .pf-link .tm-icon { margin-right: 0; }
+.hub-join-contact .tm-icon { width: 16px; height: 16px; vertical-align: -3px; margin-right: 5px; }
+
+.hub-course-tag-live { color: #0B6B4B; border-color: rgba(14,159,110,.35); background: #E6F8F0; }
+/* guides grid: live guides take half a row each, coming-soon ones a third */
+.hub-courses { grid-template-columns: repeat(6, 1fr); }
+.hub-course { grid-column: span 2; }
+.hub-course.is-guide { grid-column: span 3; }
+@media (max-width: 1060px) { .hub-courses { grid-template-columns: repeat(2, 1fr); } .hub-course, .hub-course.is-guide { grid-column: span 1; } }
+@media (max-width: 560px) { .hub-courses { grid-template-columns: 1fr; } }
+@media (max-width: 1060px) and (min-width: 561px) { .hub-course:last-child:nth-child(odd) { grid-column: span 2; } }
+
+/* ---- Claude exam prep (hub): one light card per exam, guide + practice ---- */
+.ep-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; text-align: left; }
+@media (max-width: 1000px) { .ep-grid { grid-template-columns: 1fr; max-width: 560px; margin-inline: auto; } }
+.ep-hub { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 22px; border-radius: 18px; color: #0B1220; overflow: hidden;
+  background:
+    linear-gradient(rgba(11,18,32,.045) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(90deg, rgba(11,18,32,.045) 1px, transparent 1px) 0 0 / 22px 22px,
+    linear-gradient(160deg, #FFFFFF, #EEF2FA);
+  box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 18px 40px -18px rgba(0,0,0,.6); }
+.ep-hub::after { content: ""; position: absolute; right: -40px; top: -40px; width: 140px; height: 140px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(217,119,87,.28), transparent 70%); pointer-events: none; }
+.ep-hub .ep-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.ep-hub .ep-logo { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 13px; background: #fff;
+  box-shadow: inset 0 -3px 6px rgba(11,18,32,.08), 0 8px 18px -6px rgba(217,119,87,.55), 0 0 0 1px rgba(11,18,32,.06); }
+.ep-hub .ep-code { position: relative; z-index: 1; font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .08em; color: #0B1220;
+  border: 1px solid rgba(11,18,32,.16); border-radius: 6px; padding: 3px 8px; background: rgba(255,255,255,.8); }
+.ep-hub .ep-name { font-family: var(--font-display); font-size: 19px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+.ep-hub .ep-facts { font-family: var(--font-mono); font-size: 11px; letter-spacing: .06em; color: #5A6478; }
+.ep-hub .ep-blurb { font-size: 14px; line-height: 1.55; color: #3A4458; flex: 1; }
+.ep-hub .ep-rows { list-style: none; margin-top: 8px; border-top: 1px solid rgba(11,18,32,.1); }
+.ep-hub .ep-rows li { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 11px 0; border-bottom: 1px solid rgba(11,18,32,.08); }
+.ep-hub .ep-row-label { display: flex; flex-direction: column; font-size: 12.5px; color: #5A6478; line-height: 1.35; }
+.ep-hub .ep-row-label b { font-size: 14.5px; color: #0B1220; font-weight: 600; }
+.ep-hub .ep-go { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; font-size: 13.5px; font-weight: 600; color: #fff; background: #0071E3; padding: 7px 12px; border-radius: 999px; }
+.ep-hub .ep-go:hover { background: #0077ED; }
+.ep-hub .ep-go .tm-icon { width: 15px; height: 15px; margin-right: 0; vertical-align: -3px; }
+.ep-hub .ep-soon { font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #5A6478; border: 1px dashed rgba(11,18,32,.25); border-radius: 999px; padding: 5px 10px; }
+.hub-practice-under { margin-top: 20px; }
+.hub-next { gap: 14px; }
+.hub-next-list { list-style: none; display: grid; gap: 10px; flex: 1; }
+.hub-next-list li { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 12px; background: #fff; border: 1px solid rgba(11,18,32,.08); }
+.hub-next-list .hub-course-logo { width: 38px; height: 38px; border-radius: 11px; flex: none; }
+.hub-next-list b { display: block; font-size: 15px; color: #0B1220; font-weight: 600; }
+.hub-next-list small { font-family: var(--font-mono); font-size: 11px; color: #5A6478; letter-spacing: .04em; }

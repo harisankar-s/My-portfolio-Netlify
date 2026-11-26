@@ -1,0 +1,26 @@
+{#- One guide lesson (set `lesson` before including): what the exam tests, key
+    rules, and a two-column traps table (wrong → right). Used by
+    src/brainbyte/guides.njk. Text comes from src/_data/guides.json, where
+    code terms are in backticks; the `ticks` filter turns them into <code>. -#}
+<article class="bg-lesson" id="lesson-{{ lesson.id | replace('.', '-') }}">
+  <h3 class="bg-lesson-title"><span class="bg-lesson-num">{{ lesson.id }}</span> {{ lesson.title }}</h3>
+  <div class="bg-tests">
+    <span class="bg-small">What the exam tests</span>
+    <p>{{ lesson.tests | ticks | safe }}</p>
+  </div>
+  <span class="bg-small">Key rules</span>
+  <ul class="bg-rules">
+    {%- for r in lesson.rules %}
+    <li>{{ r | ticks | safe }}</li>
+    {%- endfor %}
+  </ul>
+  <span class="bg-small">Traps <em>cover the right column and answer first</em></span>
+  <div class="bg-traps" role="table" aria-label="Traps for lesson {{ lesson.id }}">
+    {%- for t in lesson.traps %}
+    <div class="bg-trap" role="row">
+      <div class="bg-wrong" role="cell"><span class="bg-tag bg-tag-wrong">Wrong</span>{{ t[0] | ticks | safe }}</div>
+      <div class="bg-right" role="cell" tabindex="0"><span class="bg-tag bg-tag-right">Right</span>{{ t[1] | ticks | safe }}</div>
+    </div>
+    {%- endfor %}
+  </div>
+</article>
