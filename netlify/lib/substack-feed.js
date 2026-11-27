@@ -31,11 +31,17 @@ function decodeEntities(str) {
   });
 }
 
-function field(item, tag) {
+// Plain-text fields are decoded even inside CDATA: Substack puts HTML entities
+// there too (a title or subtitle can carry `I&#8217;ve`), and the templates
+// escape the text, so an undecoded entity would show up literally on the page.
+// `html` fields (content:encoded) keep their CDATA as-is; htmlToText decodes
+// them after stripping the tags.
+function field(item, tag, html = false) {
   const m = item.match(new RegExp(`<${tag}[^>]*>([\\s\\S]*?)</${tag}>`));
   if (!m) return "";
   const cdata = m[1].match(/^\s*<!\[CDATA\[([\s\S]*?)\]\]>\s*$/);
-  return cdata ? cdata[1] : decodeEntities(m[1]);
+  if (cdata) return html ? cdata[1] : decodeEntities(cdata[1]);
+  return decodeEntities(m[1]);
 }
 
 function htmlToText(html) {
@@ -66,7 +72,7 @@ function parseFeed(xml) {
         slug: slugMatch ? slugMatch[1] : url,
         date: Number.isNaN(date.getTime()) ? null : date.toISOString(),
         image: decodeEntities(image),
-        text: htmlToText(field(item, "content:encoded")).slice(0, MAX_TEXT_CHARS),
+        text: htmlToText(field(item, "content:encoded", true)).slice(0, MAX_TEXT_CHARS),
         tags: [],
       };
     })
