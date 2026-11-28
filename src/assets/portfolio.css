@@ -127,6 +127,7 @@ img { max-width: 100%; display: block; }
 .bb-ic-medium { background: #111111; }
 :root[data-theme="dark"] .bb-ic-medium { background: #3A414D; }
 .bb-ic-youtube { background: #FF0000; }
+.bb-ic-instagram { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
 
 /* ---------- STATS ---------- */
 .pf-stats-band { padding-top: 36px; padding-bottom: 36px; }
